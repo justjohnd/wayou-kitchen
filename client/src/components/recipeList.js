@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 // This will require to npm install axios
 import axios from 'axios';
-import { Outlet, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Record = (props) => (
   <tr>
-    <td>{props.record.recipe_name}</td>
-    <td>{props.record.recipe_ingredients}</td>
-    <td>{props.record.difficulty_level}</td>
+    <td>{props.record.title}</td>
+    <td>{props.record.preparationMinutes}</td>
+    <td>{props.record.cookingMinutes}</td>
     <td>
       <Link to={'/edit/' + props.record._id}>Edit</Link> |
       <a
@@ -75,8 +75,8 @@ export default class RecipeList extends Component {
           <thead>
             <tr>
               <th>Name</th>
-              <th>Ingredients</th>
-              <th>Difficulty</th>
+              <th>Preparation Minutes</th>
+              <th>Cooking Minutes</th>
               <th>Action</th>
             </tr>
           </thead>

@@ -1,15 +1,65 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import InstructionsInputs from './instructionsInputs';
+
 // This will require to npm install axios
 import axios from 'axios';
 
 export default function Create() {
   const [newRecipe, setNewRecipe] = useState({
-      recipe_name: '',
-      recipe_ingredients: '',
-      difficulty_level: '',
+      title: '',
+      preparationMinutes: '',
+      cookingMinutes: '',
+      analyzedInstructions: []
   });
+
+  // data and dataArray contain instructions data
+    const [data, setData] = useState('');
+    const [dataArray, setDataArray] = useState([]);
+
+  //These functions use callbacks from instructionsInputs to set data and dataArray for instructions information
+  function handleDataCallback(e) {
+    setData(e.target.value);
+  }
+
+  function addInstructionCallback() {
+    setDataArray((prevVal) => [...prevVal, data]);
+    setData('');
+  }
+
+  function changeInstructionCallback(index, value) {
+          setDataArray((prevVal) => {
+            const newArray = [...prevVal];
+            newArray.splice(index, 1, value);
+            return newArray;
+          });
+  }
+
+  function deleteInstructionCallback(id) {
+          setDataArray((prevItems) => {
+            return prevItems.filter((item, index) => {
+              return index !== id;
+            });
+          });
+  }
+
+  function insertInstructionCallback(idx) {
+        setDataArray((prevVal) => {
+          const newArray = [...prevVal];
+          newArray.splice(idx, 0, '');
+          return newArray;
+        });
+  }
+
+  function AddInstructionToRecipe() {
+    // const analyzedInstructionsValues = instructions.map((instruction, index) => {
+    //   return {
+    //     number: index,
+    //     step: instruction
+    //   };
+    // });
+  }
 
   function handleData(e) {
     const { name, value } = e.target;
@@ -30,9 +80,9 @@ export default function Create() {
 
   //   // When post request is sent to the create url, axios will add a new record(newrecipe) to the database.
     const newperson = {
-      recipe_name: newRecipe.recipe_name,
-      recipe_ingredients: newRecipe.recipe_ingredients,
-      difficulty_level: newRecipe.difficulty_level,
+      title: newRecipe.title,
+      preparationMinutes: newRecipe.preparationMinutes,
+      cookingMinutes: newRecipe.cookingMinutes,
     };
 
     axios
@@ -41,14 +91,16 @@ export default function Create() {
 
     // We will empty the state after posting the data to the database
     setNewRecipe({
-      recipe_name: '',
-      recipe_ingredients: '',
-      difficulty_level: '',
+      title: '',
+      preparationMinutes: '',
+      cookingMinutes: '',
     });
 
     navigate('/');
   }
 
+  console.log(dataArray);
+  console.log(data);
   // This following section will display the form that takes the input from the user.
   // render() {
     return (
@@ -58,61 +110,43 @@ export default function Create() {
           <div className="form-group">
             <label>Name of the recipe: </label>
             <input
-              name="recipe_name"
+              name="title"
               type="text"
               className="form-control"
-              value={newRecipe.recipe_name}
-              onChange={e => handleData(e)}
+              value={newRecipe.title}
+              onChange={(e) => handleData(e)}
             />
           </div>
+          <InstructionsInputs
+          data = {data}
+          dataArray = {dataArray}
+          handleDataCallback = {handleDataCallback}
+          addInstructionCallback= {addInstructionCallback}
+          changeInstructionCallback={changeInstructionCallback}
+          deleteInstructionCallback={deleteInstructionCallback}
+          insertInstructionCallback={insertInstructionCallback}
+          />
           <div className="form-group">
-            <label>Ingredients: </label>
+            <label>Preparation Minutes: </label>
             <input
-              name="recipe_ingredients"
+              name="preparationMinutes"
               type="text"
               className="form-control"
-              value={newRecipe.recipe_ingredients}
-              onChange={e => handleData(e)}
+              value={newRecipe.preparationMinutes}
+              onChange={(e) => handleData(e)}
             />
           </div>
           <div className="form-group">
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="difficulty_level"
-                id="priorityLow"
-                value="Easy"
-                checked={newRecipe.difficulty_level === 'Easy'}
-                onChange={e => handleData(e)}
-              />
-              <label className="form-check-label">Easy</label>
-            </div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="difficulty_level"
-                id="priorityMedium"
-                value="Moderate"
-                checked={newRecipe.difficulty_level === 'Moderate'}
-                onChange={e => handleData(e)}
-              />
-              <label className="form-check-label">Moderate</label>
-            </div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="difficulty_level"
-                id="priorityHigh"
-                value="Difficult"
-                checked={newRecipe.difficulty_level === 'Difficult'}
-                onChange={e => handleData(e)}
-              />
-              <label className="form-check-label">Difficult</label>
-            </div>
+            <label>Cooking Minutes: </label>
+            <input
+              name="cookingMinutes"
+              type="text"
+              className="form-control"
+              value={newRecipe.cookingMinutes}
+              onChange={(e) => handleData(e)}
+            />
           </div>
+
           <div className="form-group">
             <input
               type="submit"
@@ -123,5 +157,4 @@ export default function Create() {
         </form>
       </div>
     );
- // }
 }

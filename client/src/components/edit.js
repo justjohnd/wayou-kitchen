@@ -5,9 +5,9 @@ import axios from 'axios';
 
 export default function Edit() {
   const [editRecipe, setEditRecipe] = useState({
-      recipe_name: '',
-      recipe_ingredients: '',
-      difficulty_level: '',
+      title: '',
+      preparationMinutes: '',
+      cookingMinutes: '',
       records: [],
   });
 
@@ -30,9 +30,9 @@ export default function Edit() {
       .get('http://localhost:5000/record/' + params.id)
       .then((response) => {
         setEditRecipe({
-          recipe_name: response.data.recipe_name,
-          recipe_ingredients: response.data.recipe_ingredients,
-          difficulty_level: response.data.difficulty_level,
+          title: response.data.title,
+          preparationMinutes: response.data.preparationMinutes,
+          cookingMinutes: response.data.cookingMinutes,
         });
       })
       .catch(function (error) {
@@ -44,9 +44,9 @@ export default function Edit() {
   function handleEditRecipe(e) {
     e.preventDefault();
     const newEditedPerson = {
-      recipe_name: editRecipe.recipe_name,
-      recipe_ingredients: editRecipe.recipe_ingredients,
-      difficulty_level: editRecipe.difficulty_level,
+      title: editRecipe.title,
+      preparationMinutes: editRecipe.preparationMinutes,
+      cookingMinutes: editRecipe.cookingMinutes,
     };
     
 
@@ -67,72 +67,45 @@ export default function Edit() {
         <h3 align="center">Update Record</h3>
         <form onSubmit={handleEditRecipe}>
           <div className="form-group">
-            <label>Person's Name: </label>
+            <label>Recipe: </label>
             <input
-              name="recipe_name"
+              name="title"
               type="text"
               className="form-control"
-              value={editRecipe.recipe_name}
+              value={editRecipe.title}
               onChange={(e) => handleChange(e)}
             />
           </div>
           <div className="form-group">
-            <label>Position: </label>
+            <label>Preparation Minutes: </label>
             <input
-              name="recipe_ingredients"
+              name="preparationMinutes"
               type="text"
               className="form-control"
-              value={editRecipe.recipe_ingredients}
+              value={editRecipe.preparationMinutes}
               onChange={(e) => handleChange(e)}
             />
           </div>
           <div className="form-group">
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="difficulty_level"
-                id="priorityLow"
-                value="Easy"
-                checked={editRecipe.difficulty_level === 'Easy'}
-                onChange={(e) => handleChange(e)}
-              />
-              <label className="form-check-label">Easy</label>
-            </div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="difficulty_level"
-                id="priorityMedium"
-                value="Moderate"
-                checked={editRecipe.difficulty_level === 'Moderate'}
-                onChange={(e) => handleChange(e)}
-              />
-              <label className="form-check-label">Moderate</label>
-            </div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="difficulty_level"
-                id="priorityHigh"
-                value="Difficult"
-                checked={editRecipe.difficulty_level === 'Difficult'}
-                onChange={(e) => handleChange(e)}
-              />
-              <label className="form-check-label">Difficult</label>
-            </div>
+            <label>Cooking Minutes: </label>
+            <input
+              name="cookingMinutes"
+              type="text"
+              className="form-control"
+              value={editRecipe.cookingMinutes}
+              onChange={(e) => handleChange(e)}
+            />
           </div>
+
           <br />
 
-            <div className="form-group">
-              <input
-                type="submit"
-                value="Update Record"
-                className="btn btn-primary"
-              />
-            </div>
+          <div className="form-group">
+            <input
+              type="submit"
+              value="Update Record"
+              className="btn btn-primary"
+            />
+          </div>
         </form>
       </div>
     );

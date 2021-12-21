@@ -8,20 +8,19 @@ import Navbar from "./components/navbar";
 import Edit from "./components/edit";
 import Create from "./components/create";
 import RecipeList from "./components/recipeList";
+import UrlSearch from "./components/urlSearch";
 
 const App = () => {
   return (
     <div>
       <h1>Wayou Kitchen!</h1>
       <Navbar />
+      <UrlSearch />
       <Routes>
         <Route path="/" element={<RecipeList />} />
         <Route path="/edit/:id" element={<Edit />} />
         <Route path="/create" element={<Create />} />
-        <Route 
-        path="*" 
-        element={<RecipeList to="/" />} 
-        />
+        <Route path="*" element={<RecipeList to="/" />} />
       </Routes>
     </div>
   );
