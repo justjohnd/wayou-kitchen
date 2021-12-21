@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import IngredientsInputs from './ingredientsInputs';
 import InstructionsInputs from './instructionsInputs';
 
 // This will require to npm install axios
@@ -23,6 +24,38 @@ export default function Create() {
   const [data, setData] = useState('');
   const [dataArray, setDataArray] = useState([]);
 
+  // Ingredients data
+  const [ingredient, setIngredient] = useState({
+    nameClean: '',
+    amount: '',
+    unit: '',
+  });
+  const [ingredients, setIngredients] = useState([]);
+
+  //These functions are for use in setting the ingredients data
+    function handleIngredientCallback(e) {
+      const { name, value } = e.target;
+
+      setIngredient((prevValue) => {
+        return {
+          ...prevValue,
+          [name]: value,
+        };
+      });
+    }
+
+    function addIngredientCallback() {
+      setIngredients((prevVal) => [...prevVal, ingredient]);
+
+      setIngredient({
+        nameClean: '',
+        amount: '',
+        unit: '',
+      });
+    }
+
+console.log(ingredients);
+console.log(ingredient);
   //These functions use callbacks from instructionsInputs to set data and dataArray for instructions information
 
   // Any time dataArray is changed, instructions are updated in NewRecipe
@@ -132,6 +165,12 @@ export default function Create() {
           deleteInstructionCallback={deleteInstructionCallback}
           insertInstructionCallback={insertInstructionCallback}
         />
+      <IngredientsInputs
+        ingredient={ingredient}
+        ingredients={ingredients}
+        handleIngredientCallback={handleIngredientCallback}
+        addIngredientCallback={addIngredientCallback}
+       />
         <div className="form-group">
           <label>Preparation Minutes: </label>
           <input
