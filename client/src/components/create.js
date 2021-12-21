@@ -12,6 +12,10 @@ export default function Create() {
     title: '',
     preparationMinutes: '',
     cookingMinutes: '',
+    readyInMinutes: '',
+    sourceUrl: '',
+    image: '',
+    extendedIngredients: [],
     analyzedInstructions: [],
   });
 

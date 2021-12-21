@@ -5,10 +5,15 @@ import axios from 'axios';
 
 export default function Edit() {
   const [editRecipe, setEditRecipe] = useState({
-      title: '',
-      preparationMinutes: '',
-      cookingMinutes: '',
-      records: [],
+    title: '',
+    preparationMinutes: '',
+    cookingMinutes: '',
+    readyInMinutes: '',
+    sourceUrl: '',
+    image: '',
+    extendedIngredients: [],
+    analyzedInstructions: [],
+    records: [],
   });
 
     function handleChange(e) {
@@ -33,6 +38,11 @@ export default function Edit() {
           title: response.data.title,
           preparationMinutes: response.data.preparationMinutes,
           cookingMinutes: response.data.cookingMinutes,
+          readyInMinutes: response.data.readyInMinutes,
+          sourceUrl: response.data.sourceUrl,
+          image: response.data.image,
+          extendedIngredients: response.data.extendedIngredients,
+          analyzedInstructions: response.data.analyzedInstructions,
         });
       })
       .catch(function (error) {
@@ -43,18 +53,12 @@ export default function Edit() {
   // This function will handle the submission.
   function handleEditRecipe(e) {
     e.preventDefault();
-    const newEditedPerson = {
-      title: editRecipe.title,
-      preparationMinutes: editRecipe.preparationMinutes,
-      cookingMinutes: editRecipe.cookingMinutes,
-    };
-    
 
     // This will send a post request to update the data in the database.
     axios
       .post(
         'http://localhost:5000/update/' + params.id,
-        newEditedPerson
+        editRecipe
       )
       .then((res) => console.log(res.data));
 
