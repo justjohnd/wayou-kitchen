@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import DataField from './dataField';
 
 export default function InstructionsInputs(props) {
-    function changeData(index, value) {
-      props.changeInstructionCallback(index, value);
+    function editInstruction(index, value) {
+      props.editInstructionCallback(index, value);
     }
 
-    function deleteButton(e, id) {
+    function deleteInstruction(e, id) {
       e.preventDefault();
       props.deleteInstructionCallback(id);
     }
 
-    function insertStep(e, idx) {
+    function insertInstruction(e, idx) {
       e.preventDefault();
       props.insertInstructionCallback(idx);
     }
@@ -24,7 +24,7 @@ export default function InstructionsInputs(props) {
         type="text"
         className="form-control"
         value={props.data}
-        onChange={ e => {props.handleDataCallback(e);}}
+        onChange={ e => {props.handleInstructionCallback(e);}}
         placeholder="Start Entering Instructions Here"
       />
         <button onClick={e => {
@@ -41,9 +41,9 @@ export default function InstructionsInputs(props) {
               key={index}
               index={index}
               dataArray={props.dataArray}
-              changeData={changeData}
-              deleteButton={deleteButton}
-              insertStep={insertStep}
+              editInstruction={editInstruction}
+              deleteInstruction={deleteInstruction}
+              insertInstruction={insertInstruction}
             />
           ))}
       </section>

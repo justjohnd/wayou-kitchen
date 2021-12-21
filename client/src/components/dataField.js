@@ -6,13 +6,13 @@ function DataField(props) {
     <div>
       <div className="step-number">{props.index + 1}</div>
       <input
-        onChange={(e) => props.changeData(props.index, e.target.value)}
+        onChange={(e) => props.editInstruction(props.index, e.target.value)}
         value={props.dataArray[props.index]}
       />
       <button onClick={e => {
-        props.deleteButton(e, props.index);
+        props.deleteInstruction(e, props.index);
         }}>Delete</button>
-      <button onClick={e => props.insertStep(e, props.index)}>
+      <button onClick={e => props.insertInstruction(e, props.index)}>
         Insert Step Above
       </button>
     </div>

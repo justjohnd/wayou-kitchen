@@ -41,6 +41,7 @@ recordRoutes.route('/record/add').post(function (req, response) {
     extendedIngredients: req.body.extendedIngredients,
     preparationMinutes: req.body.preparationMinutes,
     cookingMinutes: req.body.cookingMinutes,
+    analyzedInstructions: req.body.analyzedInstructions
   };
   db_connect.collection('records').insertOne(myobj, function (err, res) {
     if (err) throw err;

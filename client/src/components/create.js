@@ -18,17 +18,30 @@ export default function Create() {
     const [data, setData] = useState('');
     const [dataArray, setDataArray] = useState([]);
 
+    let analyzedInstructionsValues = [];
+
   //These functions use callbacks from instructionsInputs to set data and dataArray for instructions information
-  function handleDataCallback(e) {
+  function handleInstructionCallback(e) {
     setData(e.target.value);
   }
 
   function addInstructionCallback() {
     setDataArray((prevVal) => [...prevVal, data]);
+
+    setNewRecipe((prevValue) => {
+      return {
+        ...prevValue,
+        analyzedInstructions: dataArray.map((data, index) => ({
+            number: index,
+            step: data,
+        }))
+      };
+    });
+
     setData('');
   }
 
-  function changeInstructionCallback(index, value) {
+  function editInstructionCallback(index, value) {
           setDataArray((prevVal) => {
             const newArray = [...prevVal];
             newArray.splice(index, 1, value);
@@ -83,6 +96,7 @@ export default function Create() {
       title: newRecipe.title,
       preparationMinutes: newRecipe.preparationMinutes,
       cookingMinutes: newRecipe.cookingMinutes,
+      analyzedInstructions: newRecipe.analyzedInstructions
     };
 
     axios
@@ -99,8 +113,8 @@ export default function Create() {
     navigate('/');
   }
 
-  console.log(dataArray);
-  console.log(data);
+  console.log(newRecipe);
+
   // This following section will display the form that takes the input from the user.
   // render() {
     return (
@@ -120,9 +134,9 @@ export default function Create() {
           <InstructionsInputs
           data = {data}
           dataArray = {dataArray}
-          handleDataCallback = {handleDataCallback}
+          handleInstructionCallback = {handleInstructionCallback}
           addInstructionCallback= {addInstructionCallback}
-          changeInstructionCallback={changeInstructionCallback}
+          editInstructionCallback={editInstructionCallback}
           deleteInstructionCallback={deleteInstructionCallback}
           insertInstructionCallback={insertInstructionCallback}
           />
