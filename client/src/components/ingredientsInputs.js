@@ -1,6 +1,5 @@
 import React from 'react';
 import IngredientDataField from './ingredientDataField';
-// import { v4 as uuidv4 } from 'uuid';
 
 export default function IngredientsInputs(props) {
     function deleteIngredient(e, id) {
@@ -65,21 +64,21 @@ export default function IngredientsInputs(props) {
       <br />
       <br />
       <section className="output">
-          {props.ingredients &&
-            props.ingredients.map((ingredient, index) => (
-              <IngredientDataField
-                key={index}
-                index={index}
-                ingredient={ingredient}
-                ingredients={props.ingredients}
-                editIngredient={props.editIngredient}
-                onEdit={props.onEdit}
-                onSave={props.onSave}
-                editIngredientCallback={props.editIngredientCallback}
-                deleteIngredient={deleteIngredient}
-                insertIngredient={insertIngredient}
-              />
-            ))}
+        {props.ingredients &&
+          props.ingredients.map((ingredient, index) => (
+            <IngredientDataField
+              key={index}
+              index={index}
+              ingredient={ingredient}
+              ingredients={props.ingredients}
+              editIngredient={props.editIngredient}
+              onEdit={props.onEdit}
+              onSave={props.onSave}
+              editIngredientCallback={props.editIngredientCallback}
+              deleteIngredient={deleteIngredient}
+              insertIngredient={insertIngredient}
+            />
+          ))}
       </section>
     </div>
   );

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
 import IngredientsInputs from './ingredientsInputs';
 import InstructionsInputs from './instructionsInputs';
@@ -28,6 +29,7 @@ export default function Create() {
     nameClean: '',
     amount: '',
     unit: '',
+    id: '',
   });
   const [ingredients, setIngredients] = useState([]);
 
@@ -36,6 +38,7 @@ export default function Create() {
       nameClean: '',
       amount: '',
       unit: '',
+      id: '',
     });
 
   // These functions control editing ingredients properties
@@ -44,10 +47,11 @@ export default function Create() {
       nameClean: ingredient.nameClean,
       amount: ingredient.amount,
       unit: ingredient.unit,
+      id: ingredient.id
     });
   }
 
-  function onSave(e) {
+  function onSave() {
     setIngredients((ingredients) => {
       return ingredients.filter((ingredient) => {
         return ingredient.id !== editIngredient.id;
@@ -56,8 +60,12 @@ export default function Create() {
     setIngredients((ingredients) => {
       return [...ingredients, editIngredient];
     });
-    setEditIngredient({});
-    e.preventDefault();
+    setEditIngredient({
+      nameClean: '',
+      amount: '',
+      unit: '',
+      id: '',
+    });
   }
 
   function editIngredientCallback(e) {
@@ -86,11 +94,13 @@ export default function Create() {
     }
 
     function addIngredientCallback() {
+      ingredient.id = uuidv4();
       setIngredients((prevVal) => [...prevVal, ingredient]);
       setIngredient({
         nameClean: '',
         amount: '',
         unit: '',
+        id: ''
       });
     }
 
