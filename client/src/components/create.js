@@ -8,7 +8,6 @@ import InstructionsInputs from './instructionsInputs';
 import axios from 'axios';
 
 export default function Create() {
-
   const [newRecipe, setNewRecipe] = useState({
     title: '',
     preparationMinutes: '',
@@ -32,6 +31,48 @@ export default function Create() {
   });
   const [ingredients, setIngredients] = useState([]);
 
+  // Edit ingredients
+    const [editIngredient, setEditIngredient] = useState({
+      nameClean: '',
+      amount: '',
+      unit: '',
+    });
+
+  // These functions control editing ingredients properties
+  function onEdit(ingredient) {
+    setEditIngredient({
+      nameClean: ingredient.nameClean,
+      amount: ingredient.amount,
+      unit: ingredient.unit,
+    });
+  }
+
+  function onSave(e) {
+    setIngredients((ingredients) => {
+      return ingredients.filter((ingredient) => {
+        return ingredient.id !== editIngredient.id;
+      });
+    })
+    setIngredients((ingredients) => {
+      return [...ingredients, editIngredient];
+    });
+    setEditIngredient({});
+    e.preventDefault();
+  }
+
+  function editIngredientCallback(e) {
+    const { name, value } = e.target;
+
+    setEditIngredient((prevValue) => {
+      return {
+        ...prevValue,
+        [name]: value,
+      };
+    });
+  }
+
+  console.log(ingredients);
+
   //These functions are for use in setting the ingredients data
     function handleIngredientCallback(e) {
       const { name, value } = e.target;
@@ -46,7 +87,6 @@ export default function Create() {
 
     function addIngredientCallback() {
       setIngredients((prevVal) => [...prevVal, ingredient]);
-
       setIngredient({
         nameClean: '',
         amount: '',
@@ -54,8 +94,27 @@ export default function Create() {
       });
     }
 
-console.log(ingredients);
-console.log(ingredient);
+      function deleteIngredientCallback(id) {
+        setIngredients((prevItems) => {
+          return prevItems.filter((item, index) => {
+            return index !== id;
+          });
+        });
+      }
+
+        function insertIngredientCallback(idx) {
+          setIngredients((prevVal) => {
+            const newArray = [...prevVal];
+            newArray.splice(idx, 0, {
+              nameClean: '',
+              amount: '',
+              unit: '',
+            });
+            console.log(idx);
+            return newArray;
+          });
+        }
+
   //These functions use callbacks from instructionsInputs to set data and dataArray for instructions information
 
   // Any time dataArray is changed, instructions are updated in NewRecipe
@@ -168,8 +227,14 @@ console.log(ingredient);
       <IngredientsInputs
         ingredient={ingredient}
         ingredients={ingredients}
+        editIngredient={editIngredient}
+        onEdit={onEdit}
+        onSave={onSave}
         handleIngredientCallback={handleIngredientCallback}
         addIngredientCallback={addIngredientCallback}
+        editIngredientCallback={editIngredientCallback}
+        deleteIngredientCallback={deleteIngredientCallback}
+        insertIngredientCallback={insertIngredientCallback}
        />
         <div className="form-group">
           <label>Preparation Minutes: </label>

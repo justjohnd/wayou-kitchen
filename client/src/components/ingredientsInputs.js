@@ -1,11 +1,8 @@
 import React from 'react';
 import IngredientDataField from './ingredientDataField';
+// import { v4 as uuidv4 } from 'uuid';
 
 export default function IngredientsInputs(props) {
-    function editIngredient(index, value) {
-      props.editIngredientCallback(index, value);
-    }
-
     function deleteIngredient(e, id) {
       e.preventDefault();
       props.deleteIngredientCallback(id);
@@ -38,7 +35,7 @@ export default function IngredientsInputs(props) {
           type="number"
           className="form-control"
           value={props.ingredient.amount}
-          onChange={e => props.handleIngredientCallback(e)}
+          onChange={(e) => props.handleIngredientCallback(e)}
           placeholder=""
         />
       </div>
@@ -67,19 +64,23 @@ export default function IngredientsInputs(props) {
 
       <br />
       <br />
-      {/* <section className="output">
-        {props.ingredients &&
-          props.ingredients.map((item, index) => (
-            <IngredientDataField
-              key={index}
-              index={index}
-              dataArray={props.ingredients}
-              editIngredient={editIngredient}
-              deleteIngredient={deleteIngredient}
-              insertIngredient={insertIngredient}
-            />
-          ))}
-      </section> */}
+      <section className="output">
+          {props.ingredients &&
+            props.ingredients.map((ingredient, index) => (
+              <IngredientDataField
+                key={index}
+                index={index}
+                ingredient={ingredient}
+                ingredients={props.ingredients}
+                editIngredient={props.editIngredient}
+                onEdit={props.onEdit}
+                onSave={props.onSave}
+                editIngredientCallback={props.editIngredientCallback}
+                deleteIngredient={deleteIngredient}
+                insertIngredient={insertIngredient}
+              />
+            ))}
+      </section>
     </div>
   );
 }
