@@ -60,6 +60,7 @@ export default function Create() {
     setIngredients((ingredients) => {
       return [...ingredients, editIngredient];
     });
+    
     setEditIngredient({
       nameClean: '',
       amount: '',

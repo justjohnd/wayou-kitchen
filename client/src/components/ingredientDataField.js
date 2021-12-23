@@ -1,44 +1,49 @@
 import React, { useState } from 'react';
+import IngredientInput from './ingredientInput';
 
 function IngredientDataField(props) {
   const [isVisible, setIsVisible] = useState(true);
 
   function handleEdit(e) {
     e.preventDefault(); 
-    setIsVisible(false);
+    setIsVisible(!isVisible);
     props.onEdit(props.ingredient);
   }
 
     function handleSave(e) {
       e.preventDefault();
-      setIsVisible(false);
+      setIsVisible(!isVisible);
       props.onSave();
     }
 
   return (
     <div>
-      <div>Name: {props.ingredient.nameClean}</div>
-      <input
+      <IngredientInput
+        isVisible={isVisible}
+        inputName="Name"
+        inputValue={props.ingredient.nameClean}
         className="ingredient"
         name="nameClean"
         onChange={(e) => props.editIngredientCallback(e)}
         value={props.editIngredient.nameClean}
       />
-      <div>Name: {props.ingredient.amount}</div>
-      <input
+      <IngredientInput
+        isVisible={isVisible}
+        inputName="Amount"
+        inputValue={props.ingredient.amount}
         className="amount"
         name="amount"
         onChange={(e) => props.editIngredientCallback(e)}
         value={props.editIngredient.amount}
       />
-      <div>Name: {props.ingredient.unit}</div>
-      <input
+      <IngredientInput
+        isVisible={isVisible}
+        inputName="Unit"
+        inputValue={props.ingredient.unit}
         className="unit"
         name="unit"
-        onChange={(e) =>
-          props.editIngredientCallback(e)
-        }
-        value={props.ingredient.unit}
+        onChange={(e) => props.editIngredientCallback(e)}
+        value={props.editIngredient.unit}
       />
       <button
         onClick={(e) => {
@@ -57,13 +62,3 @@ function IngredientDataField(props) {
 }
 
 export default IngredientDataField;
-
-      // <button
-      //   onClick={
-      //     !props.onEdit
-      //       ? props.onEdit(props.ingredient)
-      //       : props.onSave(props.ingredient)
-      //   }
-      // >
-      //   {!props.onEdit ? 'Edit' : 'Save'}
-      // </button>;
