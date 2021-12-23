@@ -52,24 +52,6 @@ export default function Create() {
     });
   }
 
-  function onSave() {
-    setIngredients((ingredients) => {
-      return ingredients.filter((ingredient) => {
-        return ingredient.id !== editIngredient.id;
-      });
-    })
-    setIngredients((ingredients) => {
-      return [...ingredients, editIngredient];
-    });
-    
-    setEditIngredient({
-      nameClean: '',
-      amount: '',
-      unit: '',
-      id: '',
-    });
-  }
-
   function editIngredientCallback(e) {
     const { name, value } = e.target;
 
@@ -81,60 +63,88 @@ export default function Create() {
     });
   }
 
-  console.log(ingredients);
-
   //These functions are for use in setting the ingredients data
-    function handleIngredientCallback(e) {
-      const { name, value } = e.target;
+  function handleIngredientCallback(e) {
+    const { name, value } = e.target;
+    setIngredient((prevValue) => {
+      return {
+        ...prevValue,
+        [name]: value,
+      };
+    });
+  }
 
-      setIngredient((prevValue) => {
-        return {
-          ...prevValue,
-          [name]: value,
-        };
+  function onSave() {
+    const ingredientsClone = [...ingredients];
+    const filtered = ingredientsClone.filter((ingredient) => {
+        return ingredient.id !== editIngredient.id;
       });
-    }
+    setIngredients(filtered);
 
-    function addIngredientCallback() {
-      ingredient.id = uuidv4();
-      setIngredients((prevVal) => [...prevVal, ingredient]);
-      setIngredient({
-        nameClean: '',
-        amount: '',
-        unit: '',
-        id: ''
-      });
-    }
+    const includeEditIngredient = [...filtered, editIngredient];
+    setIngredients(includeEditIngredient);
 
-      function deleteIngredientCallback(id) {
-        setIngredients((prevItems) => {
-          return prevItems.filter((item, index) => {
-            return index !== id;
-          });
-        });
-      }
+    AddIngredientsToRecipe(includeEditIngredient);
+    setEditIngredient({
+      nameClean: '',
+      amount: '',
+      unit: '',
+      id: '',
+    });
+  }
 
-        function insertIngredientCallback(idx) {
-          setIngredients((prevVal) => {
-            const newArray = [...prevVal];
-            newArray.splice(idx, 0, {
-              nameClean: '',
-              amount: '',
-              unit: '',
-            });
-            console.log(idx);
-            return newArray;
-          });
-        }
-
-  //These functions use callbacks from instructionsInputs to set data and dataArray for instructions information
-
-  // Any time dataArray is changed, instructions are updated in NewRecipe
-  function AddInstructionToRecipe() {
+  function addIngredientCallback() {
+    ingredient.id = uuidv4();
+    const ingredientsClone = [...ingredients, ingredient];
+    setIngredients(ingredientsClone);
+    AddIngredientsToRecipe(ingredientsClone);
+    setIngredient({
+      nameClean: '',
+      amount: '',
+      unit: '',
+      id: ''
+    });
+  }
+  
+  function AddIngredientsToRecipe(ingredientsParameter) {
     setNewRecipe((prevValue) => {
       return {
         ...prevValue,
-        analyzedInstructions: dataArray.map((data, index) => ({
+        extendedIngredients: ingredientsParameter,
+      };
+    });
+  }
+  
+  function deleteIngredientCallback(id) {
+    const ingredientsClone = [...ingredients];
+    const filtered = ingredientsClone.filter((item, index) => {
+        return index !== id;
+      });
+    setIngredients(filtered);
+    AddIngredientsToRecipe(filtered);
+  }
+
+  function insertIngredientCallback(idx) {
+    setIngredients((prevVal) => {
+      const newArray = [...prevVal];
+      newArray.splice(idx, 0, {
+        nameClean: '',
+        amount: '',
+        unit: '',
+      });
+      console.log(idx);
+      return newArray;
+    });
+  }
+  //These functions use callbacks from instructionsInputs to set data and dataArray for instructions information
+
+  // Any time dataArray is changed, instructions are updated in NewRecipe
+  function AddInstructionToRecipe(arrayParameter) {
+
+    setNewRecipe((prevValue) => {
+      return {
+        ...prevValue,
+        analyzedInstructions: arrayParameter.map((data, index) => ({
           number: index,
           step: data,
         })),
@@ -148,35 +158,34 @@ export default function Create() {
 
   function addInstructionCallback() {
     setDataArray((prevVal) => [...prevVal, data]);
-    AddInstructionToRecipe();
+    const dataArrayClone = [...dataArray, data];
+    AddInstructionToRecipe(dataArrayClone);
     setData('');
   }
+  
+      console.log(newRecipe);
 
   function editInstructionCallback(index, value) {
-    setDataArray((prevVal) => {
-      const newArray = [...prevVal];
-      newArray.splice(index, 1, value);
-      return newArray;
-    });
-    AddInstructionToRecipe();
+    const newArray = [...dataArray];
+    newArray.splice(index, 1, value);
+    setDataArray(newArray);
+    AddInstructionToRecipe(newArray);
   }
 
   function deleteInstructionCallback(id) {
-    setDataArray((prevItems) => {
-      return prevItems.filter((item, index) => {
+    const newArray = [...dataArray];
+    const filtered = newArray.filter((item, index) => {
         return index !== id;
       });
-    });
-    AddInstructionToRecipe();
+    setDataArray(filtered);
+    AddInstructionToRecipe(filtered);
   }
 
   function insertInstructionCallback(idx) {
-    setDataArray((prevVal) => {
-      const newArray = [...prevVal];
-      newArray.splice(idx, 0, '');
-      return newArray;
-    });
-    AddInstructionToRecipe();
+    const newArray = [...dataArray];
+    newArray.splice(idx, 0, '');
+    setDataArray(newArray);
+    AddInstructionToRecipe(newArray);
   }
 
   function handleData(e) {
