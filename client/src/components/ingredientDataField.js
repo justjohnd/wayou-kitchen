@@ -8,13 +8,11 @@ function IngredientDataField(props) {
     e.preventDefault(); 
     setIsVisible(!isVisible);
     props.onEdit(props.ingredient);
-  }
 
-    function handleSave(e) {
-      e.preventDefault();
-      setIsVisible(!isVisible);
+    if (isVisible === false) {
       props.onSave();
     }
+  }
 
   return (
     <div>
@@ -55,8 +53,7 @@ function IngredientDataField(props) {
       <button onClick={(e) => props.insertIngredient(e, props.index)}>
         Insert Step Above
       </button>
-      <button onClick={handleEdit}>Edit</button>
-      <button onClick={handleSave}>Save</button>
+      <button onClick={handleEdit}>{isVisible === true ? "Edit" : "Save"}</button>
     </div>
   );
 }
