@@ -1,5 +1,6 @@
 import React from 'react';
 import IngredientDataField from './ingredientDataField';
+import Input from './input';
 
 export default function IngredientsInputs(props) {
     function deleteIngredient(e, id) {
@@ -13,46 +14,46 @@ export default function IngredientsInputs(props) {
     }
 
   return (
-    <div className="form-group">
-      <div>
-        <label>Ingredient:</label>
-        <input
-          name="nameClean"
-          type="text"
-          className="form-control"
-          value={props.ingredient.nameClean}
-          onChange={(e) => {
-            props.handleIngredientCallback(e);
-          }}
-          placeholder="Enter Ingredient"
-        />
-      </div>
-      <div>
-        <label>Amount:</label>
-        <input
-          name="amount"
-          type="number"
-          className="form-control"
-          value={props.ingredient.amount}
-          onChange={(e) => props.handleIngredientCallback(e)}
-          placeholder=""
-        />
-      </div>
-      <div>
-        <label>Unit:</label>
-        <input
-          name="unit"
-          type="text"
-          className="form-control"
-          value={props.ingredient.unit}
-          onChange={(e) => {
-            props.handleIngredientCallback(e);
-          }}
-          placeholder=""
-        />
-      </div>
-
+    <div className="form-group mb-5">
+      <h4>Ingredients</h4>
+      <Input
+        label="Ingredient:"
+        wrapperClassName="d-inline-block"
+        fieldWidth="w-25"
+        name="nameClean"
+        type="text"
+        value={props.ingredient.nameClean}
+        onChange={(e) => {
+          props.handleIngredientCallback(e);
+        }}
+        placeholder="Enter Ingredient"
+      />
+      <Input
+        label="Amount:"
+        wrapperClassName="d-inline-block ms-2"
+        fieldWidth="w-25"
+        name="amount"
+        type="number"
+        value={props.ingredient.amount}
+        onChange={(e) => {
+          props.handleIngredientCallback(e);
+        }}
+        placeholder=""
+      />
+      <Input
+        label="Units:"
+        wrapperClassName="d-inline-block ms-2"
+        fieldWidth="w-25"
+        name="unit"
+        type="text"
+        value={props.ingredient.unit}
+        onChange={(e) => {
+          props.handleIngredientCallback(e);
+        }}
+        placeholder=""
+      />
       <button
+        className="btn btn-primary d-inline-block ms-2 mb-1"
         onClick={(e) => {
           e.preventDefault();
           props.addIngredientCallback();
@@ -63,7 +64,7 @@ export default function IngredientsInputs(props) {
 
       <br />
       <br />
-      <section className="output">
+      <section className="output output-wrapper">
         {props.ingredients &&
           props.ingredients.map((ingredient, index) => (
             <IngredientDataField

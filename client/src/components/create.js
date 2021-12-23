@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import IngredientsInputs from './ingredientsInputs';
 import InstructionsInputs from './instructionsInputs';
+import Input from './input';
 
 // This will require to npm install axios
 import axios from 'axios';
@@ -213,19 +214,17 @@ export default function Create() {
   // This following section will display the form that takes the input from the user.
   // render() {
   return (
-    <div style={{ marginTop: 20 }}>
+    <div className="my-5 container">
       <h3>Create New Record</h3>
       <form onSubmit={handleAddRecipe}>
-        <div className="form-group">
-          <label>Name of the recipe: </label>
-          <input
-            name="title"
-            type="text"
-            className="form-control"
-            value={newRecipe.title}
-            onChange={(e) => handleData(e)}
-          />
-        </div>
+        <Input
+          label="Name of the recipe:"
+          wrapperClassName="mb-5"
+          name="title"
+          type="text"
+          value={newRecipe.title}
+          onChange={(e) => handleData(e)}
+        />
         <InstructionsInputs
           data={data}
           dataArray={dataArray}
@@ -235,46 +234,37 @@ export default function Create() {
           deleteInstructionCallback={deleteInstructionCallback}
           insertInstructionCallback={insertInstructionCallback}
         />
-      <IngredientsInputs
-        ingredient={ingredient}
-        ingredients={ingredients}
-        editIngredient={editIngredient}
-        onEdit={onEdit}
-        onSave={onSave}
-        handleIngredientCallback={handleIngredientCallback}
-        addIngredientCallback={addIngredientCallback}
-        editIngredientCallback={editIngredientCallback}
-        deleteIngredientCallback={deleteIngredientCallback}
-        insertIngredientCallback={insertIngredientCallback}
-       />
-        <div className="form-group">
-          <label>Preparation Minutes: </label>
-          <input
-            name="preparationMinutes"
-            type="text"
-            className="form-control"
-            value={newRecipe.preparationMinutes}
-            onChange={(e) => handleData(e)}
-          />
-        </div>
-        <div className="form-group">
-          <label>Cooking Minutes: </label>
-          <input
-            name="cookingMinutes"
-            type="text"
-            className="form-control"
-            value={newRecipe.cookingMinutes}
-            onChange={(e) => handleData(e)}
-          />
-        </div>
-
-        <div className="form-group">
-          <input
-            type="submit"
-            value="Create recipe"
-            className="btn btn-primary"
-          />
-        </div>
+        <IngredientsInputs
+          ingredient={ingredient}
+          ingredients={ingredients}
+          editIngredient={editIngredient}
+          onEdit={onEdit}
+          onSave={onSave}
+          handleIngredientCallback={handleIngredientCallback}
+          addIngredientCallback={addIngredientCallback}
+          editIngredientCallback={editIngredientCallback}
+          deleteIngredientCallback={deleteIngredientCallback}
+          insertIngredientCallback={insertIngredientCallback}
+        />
+        <Input
+          label="Preparation Minutes:"
+          wrapperClassName="mb-3"
+          name="preparationMinutes"
+          type="text"
+          value={newRecipe.preparationMinutes}
+          onChange={(e) => handleData(e)}
+        />
+        <Input
+          label="Cooking Minutes: "
+          wrapperClassName="mb-5"
+          name="cookingMinutes"
+          type="text"
+          value={newRecipe.cookingMinutes}
+          onChange={(e) => handleData(e)}
+        />
+        <button type="submit" className="btn btn-primary">
+          Create Recipe
+        </button>
       </form>
     </div>
   );

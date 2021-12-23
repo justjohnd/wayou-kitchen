@@ -1,5 +1,6 @@
 import React from 'react';
-import DataField from './dataField';
+import InstructionOutput from './instructionOutput';
+import Input from './input';
 
 export default function InstructionsInputs(props) {
     function editInstruction(index, value) {
@@ -16,28 +17,39 @@ export default function InstructionsInputs(props) {
       props.insertInstructionCallback(idx);
     }
 
-  return (
-    <div className="form-group">
-      <label>Instructions: </label>
-      <input
-        name="instruction"
-        type="text"
-        className="form-control"
-        value={props.data}
-        onChange={ e => {props.handleInstructionCallback(e);}}
-        placeholder="Start Entering Instructions Here"
-      />
-        <button onClick={e => {
-          e.preventDefault();
-          props.addInstructionCallback();
-        }}>Add</button>
+    function handleKeyUp(e) {
+      if (e.keyCode === 13) {
+        e.preventDefault();
+        props.addInstructionCallback();
+      }
+    }
 
-      <br />
-      <br />
-      <section className="output">
+  return (
+    <div className="form-group mb-5">
+        <h4>Instructions</h4>
+        <Input
+          wrapperClassName="d-inline-block mb-3"
+          labelClassName="d-none"
+          name="instruction"
+          type="text"
+          value={props.data}
+          onChange={(e) => props.handleInstructionCallback(e)}
+          placeholder="Start Entering Instructions Here"
+        />
+        <button
+          className="btn btn-primary d-inline-block ms-2 mb-1"
+          onKeyUp={handleKeyUp}
+          onClick={(e) => {
+            e.preventDefault();
+            props.addInstructionCallback();
+          }}
+        >
+          Add
+        </button>
+      <section className="output output-wrapper">
         {props.dataArray &&
           props.dataArray.map((item, index) => (
-            <DataField
+            <InstructionOutput
               key={index}
               index={index}
               dataArray={props.dataArray}

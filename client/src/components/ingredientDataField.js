@@ -44,16 +44,16 @@ function IngredientDataField(props) {
         value={props.editIngredient.unit}
       />
       <button
+        className="btn btn-secondary ms-2 mb-1"
         onClick={(e) => {
           props.deleteIngredient(e, props.index);
         }}
       >
         Delete
       </button>
-      <button onClick={(e) => props.insertIngredient(e, props.index)}>
-        Insert Step Above
+      <button className="btn btn-secondary ms-2 mb-1" onClick={handleEdit}>
+        {isVisible === true ? 'Edit' : 'Save'}
       </button>
-      <button onClick={handleEdit}>{isVisible === true ? "Edit" : "Save"}</button>
     </div>
   );
 }

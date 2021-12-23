@@ -48,15 +48,15 @@ export default function UrlSearch() {
   }
 
     return (
-      <div style={{ marginTop: 20 }}>
+      <div className="mt-4 container">
         <h3>Get Recipe from Url</h3>
         <form onSubmit={handleShowRecipe}>
-          <div className="form-group">
+          <div className="form-group mb-3">
             <label>Name of the recipe: </label>
             <input
               name="url"
               type="text"
-              className="form-control"
+              className="form-control w-50"
               value={url}
               onChange={(e) => handleData(e)}
             />
