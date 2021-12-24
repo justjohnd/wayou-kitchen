@@ -9,6 +9,7 @@ const Record = (props) => (
     <td>{props.record.preparationMinutes}</td>
     <td>{props.record.cookingMinutes}</td>
     <td>
+      <Link to={'/show/' + props.record._id}>Show</Link> |
       <Link to={'/edit/' + props.record._id}>Edit</Link> |
       <a
         href="/"

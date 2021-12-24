@@ -89,7 +89,10 @@ export default function Create() {
   }
 
   function addIngredientCallback() {
-    ingredient.id = uuidv4();
+    if (!ingredient.id) {
+      ingredient.id = uuidv4();
+    }
+    
     const ingredientsClone = [...ingredients, ingredient];
     setIngredients(ingredientsClone);
     AddIngredientsToRecipe(ingredientsClone);

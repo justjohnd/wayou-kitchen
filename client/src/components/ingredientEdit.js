@@ -45,6 +45,7 @@ function IngredientEdit(props) {
         value={props.editIngredient.unit}
       />
       <Button
+        buttonWrapper="d-inline-block"
         className="ms-2 mb-1"
         onClick={(e) => {
           props.deleteIngredient(e, props.index);
@@ -53,6 +54,7 @@ function IngredientEdit(props) {
         buttonStyle="btn-secondary"
       />
       <Button
+        buttonWrapper="d-inline-block"
         buttonText={isVisible === true ? 'Edit' : 'Save'}
         buttonStyle="btn-secondary"
         className="ms-2 mb-1"

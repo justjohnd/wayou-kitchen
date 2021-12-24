@@ -9,6 +9,7 @@ import Edit from "./components/edit";
 import Create from "./components/create";
 import RecipeList from "./components/recipeList";
 import UrlSearch from "./components/urlSearch";
+import Show from "./components/show";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
       <UrlSearch />
       <Routes>
         <Route path="/" element={<RecipeList />} />
+        <Route path="/show/:id" element={<Show />} />
         <Route path="/edit/:id" element={<Edit />} />
         <Route path="/create" element={<Create />} />
         <Route path="*" element={<RecipeList to="/" />} />
