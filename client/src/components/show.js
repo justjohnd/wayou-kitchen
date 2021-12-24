@@ -5,6 +5,7 @@ import RECIPE_PROPERTIES from '../javascript/RECIPE_PROPERTIES';
 
 // This will require to npm install axios
 import axios from 'axios';
+import RecipeList from './recipeList';
 
 export default function Edit() {
   const [showRecipe, setShowRecipe] = useState(RECIPE_PROPERTIES);
@@ -41,8 +42,38 @@ export default function Edit() {
   }, []);
 
   return (
-    <div>
-      
+    <div className="container m-5 p-5">
+      <section className="d-flex">
+        <img className="recipe-image" src={showRecipe.image} />
+        <div className="recipe-header ms-5">
+          <h1>{showRecipe.title}</h1>
+          <p className="mb-0 pb-0">
+            Ready in {showRecipe.readyInMinutes} minutes
+          </p>
+          <p className="mb-0 pb-0">{showRecipe.servings} servings</p>
+          <a
+            href={showRecipe.sourceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mb-0 pb-0"
+          >
+            Original Website
+          </a>
+        </div>
+      </section>
+      <section className="ingredients">
+        <h2>Ingredients</h2>
+        {ingredients.map(ingredient => (
+          <li>{ingredient.amount}{ingredient.unit} {ingredient.nameClean}</li>
+        ))}
+      </section>
+
+      <section className="instructions">
+        <h2>Instructions</h2>
+        {instructions.map(instruction => (
+          <li>{instruction}</li>
+        ))}
+      </section>
     </div>
   );
 }

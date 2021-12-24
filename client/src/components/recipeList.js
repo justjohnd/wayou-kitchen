@@ -70,7 +70,7 @@ export default class RecipeList extends Component {
   // This following section will display the table with the records of individuals.
   render() {
     return (
-      <div>
+      <div className="p-3">
         <h3>Recipes</h3>
         <table className="table table-striped" style={{ marginTop: 20 }}>
           <thead>

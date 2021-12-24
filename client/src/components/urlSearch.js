@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
+
+import Input from './input';
+import Button from './button';
 
 // This will require to npm install axios
 import axios from 'axios';
 
 export default function UrlSearch() {
   const [url, setUrl] = useState('');
-  const [newRecipeFromUrl, setNewRecipeFromUrl] = useState({});
+
+  let navigate = useNavigate();
 
   function handleData(e) {
     const { value } = e.target;
@@ -15,61 +19,54 @@ export default function UrlSearch() {
   }
 
   // // This function will handle getting the recipe from a url
-  function handleShowRecipe(e) {
+  function handleGetRecipe(e) {
     e.preventDefault();
     
     axios.get(`https://api.spoonacular.com/recipes/extract?url=${url}&apiKey=cb1c464d94f142c08b156c5beddade8b`)
     .then((response) => {
-      const allData = response.data;
-      setNewRecipeFromUrl({
-        title: allData.title,
-        extendedIngredients: allData.extendedIngredients,
-        preparationMinutes: allData.preparationMinutes,
-        cookingMinutes: allData.cookingMinutes,
-      });
+
+      const recipe = {
+        title: response.data.title,
+        preparationMinutes: response.data.preparationMinutes,
+        cookingMinutes: response.data.cookingMinutes,
+        readyInMinutes: response.data.readyInMinutes,
+        sourceUrl: response.data.sourceUrl,
+        image: response.data.image,
+        extendedIngredients: response.data.extendedIngredients,
+        analyzedInstructions: response.data.analyzedInstructions[0].steps,
+        servings: response.data.servings
+      };
+
+      axios
+        .post('http://localhost:5000/record/add', recipe)
+        .then((res) => console.log(res.data))
+        .catch((error) => console.error(`error: ${error}`));
+
       setUrl('');
     })
     .catch(error => console.error(`error: ${error}`));
-  }
 
-  function handleAddRecipe(e) {
-        e.preventDefault();
-
-        const newRecipe = {
-          title: newRecipeFromUrl.title,
-          extendedIngredients: newRecipeFromUrl.extendedIngredients,
-          preparationMinutes: newRecipeFromUrl.preparationMinutes,
-          cookingMinutes: newRecipeFromUrl.cookingMinutes,
-        };
-        
-        axios
-          .post('http://localhost:5000/record/add', newRecipe)
-          .then((res) => console.log(res.data));
+    navigate('/');
   }
 
     return (
       <div className="mt-4 container">
-        <h3>Get Recipe from Url</h3>
-        <form onSubmit={handleShowRecipe}>
-          <div className="form-group mb-3">
-            <label>Name of the recipe: </label>
-            <input
-              name="url"
-              type="text"
-              className="form-control w-50"
-              value={url}
-              onChange={(e) => handleData(e)}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="submit"
-              value="Show recipe"
-              className="btn btn-primary"
-            />
-          </div>
+        <form onSubmit={handleGetRecipe}>
+          <Input
+            wrapperClassName="d-inline-block"
+            name="url"
+            type="text"
+            className="form-control w-50"
+            value={url}
+            onChange={(e) => handleData(e)}
+            placeholder="Enter a URL to get the recipe"
+          />
+          <Button
+            buttonWrapper="d-inline-block"
+            type="submit"
+            buttonText="Show Recipe"
+          />
         </form>
-        <button onClick={handleAddRecipe}>Add to Cookbook</button>
       </div>
     );
 }

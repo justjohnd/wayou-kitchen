@@ -2,15 +2,18 @@ import React from 'react';
 
 // We import bootstrap to make our application look better.
 import 'bootstrap/dist/css/bootstrap.css';
+import '../index.css';
 
 // We import NavLink to utilize the react router.
 import { NavLink } from 'react-router-dom';
+import UrlSearch from './urlSearch';
 
 // Here, we display our Navbar
 const Navbar = () => {
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="p-3 navbar navbar-expand-lg navbar-light bg-light">
+        <h1>Wayou Kitchen!</h1>
         <NavLink className="navbar-brand" to="/">
           Home
         </NavLink>
@@ -34,6 +37,7 @@ const Navbar = () => {
               </NavLink>
             </li>
           </ul>
+          <UrlSearch />
         </div>
       </nav>
     </div>
