@@ -1,6 +1,7 @@
 import React from 'react';
 import InstructionEdit from './instructionEdit';
 import Input from './input';
+import Button from './button';
 
 export default function InstructionCreate(props) {
     function editInstruction(index, value) {
@@ -17,13 +18,6 @@ export default function InstructionCreate(props) {
       props.insertInstructionCallback(idx);
     }
 
-    function handleKeyUp(e) {
-      if (e.keyCode === 13) {
-        e.preventDefault();
-        props.addInstructionCallback();
-      }
-    }
-
   return (
     <div className="form-group mb-5">
         <h4>Instructions</h4>
@@ -36,16 +30,16 @@ export default function InstructionCreate(props) {
           onChange={(e) => props.handleInstructionCallback(e)}
           placeholder="Start Entering Instructions Here"
         />
-        <button
-          className="btn btn-primary d-inline-block ms-2 mb-1"
-          onKeyUp={handleKeyUp}
+        <Button
+          className="ms-2 mb-1"
+          buttonWrapper="d-inline-block"
           onClick={(e) => {
             e.preventDefault();
             props.addInstructionCallback();
           }}
-        >
-          Add
-        </button>
+          buttonText="Add"
+        />
+
       <section className="output output-wrapper">
         {props.dataArray &&
           props.dataArray.map((item, index) => (

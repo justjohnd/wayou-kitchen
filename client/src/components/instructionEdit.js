@@ -1,5 +1,6 @@
 import React from 'react';
 import Input from './input';
+import Button from './button';
 import '../index.css';
 
 function InstructionEdit(props) {
@@ -12,20 +13,22 @@ function InstructionEdit(props) {
         onChange={(e) => props.editInstruction(props.index, e.target.value)}
         value={props.dataArray[props.index]}
       />
-      <button
-        className="btn btn-secondary ms-2 d-inline-block mb-1"
+      <Button
+        className="ms-2 mb-1"
+        buttonStyle="btn-secondary"
+        buttonWrapper="d-inline-block"
         onClick={(e) => {
           props.deleteInstruction(e, props.index);
         }}
-      >
-        Delete
-      </button>
-      <button
-        className="btn btn-secondary ms-2 d-inline-block mb-1"
+        buttonText="Delete"
+      />
+      <Button
+        buttonWrapper="d-inline-block"
+        className="ms-2 mb-1"
+        buttonStyle="btn-secondary"
         onClick={(e) => props.insertInstruction(e, props.index)}
-      >
-        Insert Step Above
-      </button>
+        buttonText="Insert Step Above"
+      />
     </div>
   );
 }

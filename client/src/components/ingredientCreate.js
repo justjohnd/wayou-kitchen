@@ -1,6 +1,7 @@
 import React from 'react';
 import IngredientEdit from './ingredientEdit';
 import Input from './input';
+import Button from './button';
 
 export default function IngredientCreate(props) {
     function deleteIngredient(e, id) {
@@ -24,6 +25,7 @@ export default function IngredientCreate(props) {
         type="text"
         value={props.ingredient.nameClean}
         onChange={(e) => {
+          e.preventDefault();
           props.handleIngredientCallback(e);
         }}
         placeholder="Enter Ingredient"
@@ -52,18 +54,15 @@ export default function IngredientCreate(props) {
         }}
         placeholder=""
       />
-      <button
-        className="btn btn-primary d-inline-block ms-2 mb-1"
+      <Button
+        buttonWrapper="d-inline-block"
+        className="ms-2 mb-1"
         onClick={(e) => {
           e.preventDefault();
           props.addIngredientCallback();
         }}
-      >
-        Add
-      </button>
-
-      <br />
-      <br />
+        buttonText="Add"
+      />
       <section className="output output-wrapper">
         {props.ingredients &&
           props.ingredients.map((ingredient, index) => (

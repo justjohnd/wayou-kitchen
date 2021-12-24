@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import IngredientCreate from './ingredientCreate';
 import InstructionCreate from './instructionCreate';
 import Input from './input';
+import Button from './button';
 
 // This will require to npm install axios
 import axios from 'axios';
@@ -35,20 +36,32 @@ export default function Create() {
   const [ingredients, setIngredients] = useState([]);
 
   // Edit ingredients
-    const [editIngredient, setEditIngredient] = useState({
-      nameClean: '',
-      amount: '',
-      unit: '',
-      id: '',
-    });
+  const [editIngredient, setEditIngredient] = useState({
+    nameClean: '',
+    amount: '',
+    unit: '',
+    id: '',
+  });
 
   // These functions control editing ingredients properties
+
+  //Set ingredient based on data entered into ingredientsCreate fields
+  function handleIngredientCallback(e) {
+    const { name, value } = e.target;
+    setIngredient((prevValue) => {
+      return {
+        ...prevValue,
+        [name]: value,
+      };
+    });
+  }
+
   function onEdit(ingredient) {
     setEditIngredient({
       nameClean: ingredient.nameClean,
       amount: ingredient.amount,
       unit: ingredient.unit,
-      id: ingredient.id
+      id: ingredient.id,
     });
   }
 
@@ -63,22 +76,11 @@ export default function Create() {
     });
   }
 
-  //These functions are for use in setting the ingredients data
-  function handleIngredientCallback(e) {
-    const { name, value } = e.target;
-    setIngredient((prevValue) => {
-      return {
-        ...prevValue,
-        [name]: value,
-      };
-    });
-  }
-
   function onSave() {
     const ingredientsClone = [...ingredients];
     const filtered = ingredientsClone.filter((ingredient) => {
-        return ingredient.id !== editIngredient.id;
-      });
+      return ingredient.id !== editIngredient.id;
+    });
     setIngredients(filtered);
 
     const includeEditIngredient = [...filtered, editIngredient];
@@ -102,10 +104,10 @@ export default function Create() {
       nameClean: '',
       amount: '',
       unit: '',
-      id: ''
+      id: '',
     });
   }
-  
+
   function AddIngredientsToRecipe(ingredientsParameter) {
     setNewRecipe((prevValue) => {
       return {
@@ -114,12 +116,12 @@ export default function Create() {
       };
     });
   }
-  
+
   function deleteIngredientCallback(id) {
     const ingredientsClone = [...ingredients];
     const filtered = ingredientsClone.filter((item, index) => {
-        return index !== id;
-      });
+      return index !== id;
+    });
     setIngredients(filtered);
     AddIngredientsToRecipe(filtered);
   }
@@ -140,7 +142,6 @@ export default function Create() {
 
   // Any time dataArray is changed, instructions are updated in NewRecipe
   function AddInstructionToRecipe(arrayParameter) {
-
     setNewRecipe((prevValue) => {
       return {
         ...prevValue,
@@ -162,8 +163,9 @@ export default function Create() {
     AddInstructionToRecipe(dataArrayClone);
     setData('');
   }
-  
-      console.log(newRecipe);
+
+  console.log(dataArray);
+  console.log(newRecipe);
 
   function editInstructionCallback(index, value) {
     const newArray = [...dataArray];
@@ -175,8 +177,8 @@ export default function Create() {
   function deleteInstructionCallback(id) {
     const newArray = [...dataArray];
     const filtered = newArray.filter((item, index) => {
-        return index !== id;
-      });
+      return index !== id;
+    });
     setDataArray(filtered);
     AddInstructionToRecipe(filtered);
   }
@@ -189,6 +191,7 @@ export default function Create() {
   }
 
   function handleData(e) {
+    e.preventDefault();
     const { name, value } = e.target;
 
     setNewRecipe((prevValue) => {
@@ -271,9 +274,9 @@ export default function Create() {
           value={newRecipe.cookingMinutes}
           onChange={(e) => handleData(e)}
         />
-        <button type="submit" className="btn btn-primary">
-          Create Recipe
-        </button>
+        <Button 
+        type="submit" 
+        buttonText="Create Recipe" />
       </form>
     </div>
   );

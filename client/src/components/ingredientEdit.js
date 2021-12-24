@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import IngredientInput from './ingredientInput';
+import Button from './button';
 
 function IngredientEdit(props) {
   const [isVisible, setIsVisible] = useState(true);
@@ -43,17 +44,20 @@ function IngredientEdit(props) {
         onChange={(e) => props.editIngredientCallback(e)}
         value={props.editIngredient.unit}
       />
-      <button
-        className="btn btn-secondary ms-2 mb-1"
+      <Button
+        className="ms-2 mb-1"
         onClick={(e) => {
           props.deleteIngredient(e, props.index);
         }}
-      >
-        Delete
-      </button>
-      <button className="btn btn-secondary ms-2 mb-1" onClick={handleEdit}>
-        {isVisible === true ? 'Edit' : 'Save'}
-      </button>
+        buttonText="Delete"
+        buttonStyle="btn-secondary"
+      />
+      <Button
+        buttonText={isVisible === true ? 'Edit' : 'Save'}
+        buttonStyle="btn-secondary"
+        className="ms-2 mb-1"
+        onClick={handleEdit}
+      />
     </div>
   );
 }
