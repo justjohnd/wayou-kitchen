@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import IngredientInput from './ingredientInput';
 
-function IngredientDataField(props) {
+function IngredientEdit(props) {
   const [isVisible, setIsVisible] = useState(true);
 
   function handleEdit(e) {
@@ -58,4 +58,4 @@ function IngredientDataField(props) {
   );
 }
 
-export default IngredientDataField;
+export default IngredientEdit;

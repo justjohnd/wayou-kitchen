@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
-import IngredientsInputs from './ingredientsInputs';
-import InstructionsInputs from './instructionsInputs';
+import IngredientCreate from './ingredientCreate';
+import InstructionCreate from './instructionCreate';
 import Input from './input';
 
 // This will require to npm install axios
@@ -136,7 +136,7 @@ export default function Create() {
       return newArray;
     });
   }
-  //These functions use callbacks from instructionsInputs to set data and dataArray for instructions information
+  //These functions use callbacks from InstructionCreate to set data and dataArray for instructions information
 
   // Any time dataArray is changed, instructions are updated in NewRecipe
   function AddInstructionToRecipe(arrayParameter) {
@@ -234,7 +234,7 @@ export default function Create() {
           value={newRecipe.title}
           onChange={(e) => handleData(e)}
         />
-        <InstructionsInputs
+        <InstructionCreate
           data={data}
           dataArray={dataArray}
           handleInstructionCallback={handleInstructionCallback}
@@ -243,7 +243,7 @@ export default function Create() {
           deleteInstructionCallback={deleteInstructionCallback}
           insertInstructionCallback={insertInstructionCallback}
         />
-        <IngredientsInputs
+        <IngredientCreate
           ingredient={ingredient}
           ingredients={ingredients}
           editIngredient={editIngredient}

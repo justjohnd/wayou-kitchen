@@ -1,8 +1,8 @@
 import React from 'react';
-import InstructionOutput from './instructionOutput';
+import InstructionEdit from './instructionEdit';
 import Input from './input';
 
-export default function InstructionsInputs(props) {
+export default function InstructionCreate(props) {
     function editInstruction(index, value) {
       props.editInstructionCallback(index, value);
     }
@@ -49,7 +49,7 @@ export default function InstructionsInputs(props) {
       <section className="output output-wrapper">
         {props.dataArray &&
           props.dataArray.map((item, index) => (
-            <InstructionOutput
+            <InstructionEdit
               key={index}
               index={index}
               dataArray={props.dataArray}

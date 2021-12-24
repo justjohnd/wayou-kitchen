@@ -1,8 +1,8 @@
 import React from 'react';
-import IngredientDataField from './ingredientDataField';
+import IngredientEdit from './ingredientEdit';
 import Input from './input';
 
-export default function IngredientsInputs(props) {
+export default function IngredientCreate(props) {
     function deleteIngredient(e, id) {
       e.preventDefault();
       props.deleteIngredientCallback(id);
@@ -67,7 +67,7 @@ export default function IngredientsInputs(props) {
       <section className="output output-wrapper">
         {props.ingredients &&
           props.ingredients.map((ingredient, index) => (
-            <IngredientDataField
+            <IngredientEdit
               key={index}
               index={index}
               ingredient={ingredient}

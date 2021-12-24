@@ -2,7 +2,7 @@ import React from 'react';
 import Input from './input';
 import '../index.css';
 
-function InstructionOutput(props) {
+function InstructionEdit(props) {
 
   return (
     <div>
@@ -30,4 +30,4 @@ function InstructionOutput(props) {
   );
 }
 
-export default InstructionOutput;
+export default InstructionEdit;
