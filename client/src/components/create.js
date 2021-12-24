@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
+import RECIPE_PROPERTIES from '../javascript/RECIPE_PROPERTIES';
+
 import IngredientCreate from './ingredientCreate';
 import InstructionCreate from './instructionCreate';
 import Input from './input';
@@ -11,16 +13,7 @@ import Button from './button';
 import axios from 'axios';
 
 export default function Create() {
-  const [newRecipe, setNewRecipe] = useState({
-    title: '',
-    preparationMinutes: '',
-    cookingMinutes: '',
-    readyInMinutes: '',
-    sourceUrl: '',
-    image: '',
-    extendedIngredients: [],
-    analyzedInstructions: [],
-  });
+  const [newRecipe, setNewRecipe] = useState(RECIPE_PROPERTIES);
 
   // data and dataArray contain instructions data
   const [data, setData] = useState('');
@@ -214,11 +207,7 @@ export default function Create() {
       .then((res) => console.log(res.data));
 
     // We will empty the state after posting the data to the database
-    setNewRecipe({
-      title: '',
-      preparationMinutes: '',
-      cookingMinutes: '',
-    });
+    setNewRecipe(RECIPE_PROPERTIES);
 
     navigate('/');
   }
@@ -267,16 +256,30 @@ export default function Create() {
           onChange={(e) => handleData(e)}
         />
         <Input
-          label="Cooking Minutes: "
+          label="Cooking Minutes:"
           wrapperClassName="mb-5"
           name="cookingMinutes"
           type="text"
           value={newRecipe.cookingMinutes}
           onChange={(e) => handleData(e)}
         />
-        <Button 
-        type="submit" 
-        buttonText="Create Recipe" />
+        <Input
+          label="Number of Servings:"
+          wrapperClassName="mb-5"
+          name="servings"
+          type="number"
+          value={newRecipe.servings}
+          onChange={(e) => handleData(e)}
+        />
+        <Input
+          label="Reference Web Page:"
+          wrapperClassName="mb-5"
+          name="sourceUrl"
+          type="text"
+          value={newRecipe.sourceUrl}
+          onChange={(e) => handleData(e)}
+        />
+        <Button type="submit" buttonText="Create Recipe" />
       </form>
     </div>
   );
