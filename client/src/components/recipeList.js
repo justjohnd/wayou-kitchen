@@ -5,10 +5,12 @@ import { Link } from 'react-router-dom';
 
 const Record = (props) => (
   <tr>
+    <td><img className="recipe-image small" src={props.record.image}/></td>
     <td>{props.record.title}</td>
     <td>{props.record.preparationMinutes}</td>
     <td>{props.record.cookingMinutes}</td>
     <td>
+      <Link to={'/show/' + props.record._id}>Show</Link> |
       <Link to={'/edit/' + props.record._id}>Edit</Link> |
       <a
         href="/"
@@ -69,7 +71,7 @@ export default class RecipeList extends Component {
   // This following section will display the table with the records of individuals.
   render() {
     return (
-      <div>
+      <div className="p-3">
         <h3>Recipes</h3>
         <table className="table table-striped" style={{ marginTop: 20 }}>
           <thead>
