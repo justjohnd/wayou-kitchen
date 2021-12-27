@@ -42,7 +42,7 @@ export default function Edit() {
   }, []);
 
   return (
-    <div className="container m-5 p-5">
+    <div className="recipe-container container my-5 p-5">
       <section className="d-flex">
         <img className="recipe-image" src={showRecipe.image} />
         <div className="recipe-header ms-5">
@@ -61,19 +61,25 @@ export default function Edit() {
           </a>
         </div>
       </section>
-      <section className="ingredients">
-        <h2>Ingredients</h2>
-        {ingredients.map(ingredient => (
-          <li>{ingredient.amount}{ingredient.unit} {ingredient.nameClean}</li>
-        ))}
-      </section>
-
-      <section className="instructions">
-        <h2>Instructions</h2>
-        {instructions.map(instruction => (
-          <li>{instruction}</li>
-        ))}
-      </section>
+      <div className="recipe-wrapper">
+        <section className="ingredients">
+          <h2>Ingredients</h2>
+          {ingredients.map((ingredient, index) => (
+            <li key={index}>
+              {ingredient.amount} {ingredient.unit} {ingredient.nameClean}
+            </li>
+          ))}
+        </section>
+        <section className="instructions">
+          <h2>Instructions</h2>
+          {instructions.map((instruction, index) => (
+            <li key={index}>
+              <span className="instruction-number">{index + 1} </span>
+              {instruction}
+            </li>
+          ))}
+        </section>
+      </div>
     </div>
   );
 }

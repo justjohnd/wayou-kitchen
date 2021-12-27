@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 const Record = (props) => (
   <tr>
+    <td><img className="recipe-image small" src={props.record.image}/></td>
     <td>{props.record.title}</td>
     <td>{props.record.preparationMinutes}</td>
     <td>{props.record.cookingMinutes}</td>

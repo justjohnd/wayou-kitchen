@@ -50,19 +50,21 @@ export default function UrlSearch() {
   }
 
     return (
-      <div className="mt-4 container">
+      <div className="container">
         <form onSubmit={handleGetRecipe}>
           <Input
+            fieldWidth=" "
             wrapperClassName="d-inline-block"
             name="url"
             type="text"
-            className="form-control w-50"
+            inputClassName="form-control url-input"
             value={url}
             onChange={(e) => handleData(e)}
             placeholder="Enter a URL to get the recipe"
           />
           <Button
             buttonWrapper="d-inline-block"
+            className="ms-2"
             type="submit"
             buttonText="Show Recipe"
           />

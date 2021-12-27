@@ -12,6 +12,15 @@ code {
     monospace;
 }
 
+a {
+  color: #77d970;
+  font-weight: 500;
+}
+
+a:hover {
+  color: #f90716;
+}
+
 .output-wrapper {
   background-color: #77d97010;
   border: 1px solid #77d970;
@@ -20,8 +29,70 @@ code {
 }
 
 /* Show page */
+.recipe-container {
+  border: 1px solid #77d970;
+  border-radius: 28px;
+  width: 900px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.recipe-wrapper {
+  margin-top: 32px;
+  display: flex;
+  justify-content: space-between;
+  gap: 84px;
+}
+
+.recipe-wrapper li {
+  list-style-type: none;
+}
+
 .recipe-image {
   object-fit: cover;
   width: 200px;
   height: 200px;
+  border-radius: 8px;
+}
+
+.recipe-image.small {
+  width: 120px;
+  height: 120px;
+}
+
+.ingredients li {
+  line-height: 1.9;
+}
+
+.instruction-number {
+  font-weight: 700;
+  color: #f90716;
+  font-size: 20px;
+}
+
+/* Navbar */
+
+.navbar {
+  align-items: end;
+}
+
+.nav-item {
+  align-self: end;
+}
+
+.url-input {
+  width: 400px;
+}
+
+.btn {
+  vertical-align: unset;
+}
+
+.collapse.navbar-collapse {
+  justify-content: space-evenly;
+}
+
+.navbar-nav {
+  gap: 40px;
 }

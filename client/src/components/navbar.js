@@ -13,9 +13,8 @@ const Navbar = () => {
   return (
     <div>
       <nav className="p-3 navbar navbar-expand-lg navbar-light bg-light">
-        <h1>Wayou Kitchen!</h1>
         <NavLink className="navbar-brand" to="/">
-          Home
+          Wayou Kitchen!
         </NavLink>
         <button
           className="navbar-toggler"
@@ -33,11 +32,13 @@ const Navbar = () => {
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
               <NavLink className="nav-link" to="/create">
-                Create Record
+                Create New Recipe
               </NavLink>
             </li>
+            <li>
+              <UrlSearch />
+            </li>
           </ul>
-          <UrlSearch />
         </div>
       </nav>
     </div>
