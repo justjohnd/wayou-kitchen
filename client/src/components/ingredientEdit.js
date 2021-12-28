@@ -5,7 +5,7 @@ import Button from './button';
 function IngredientEdit(props) {
   const [isVisible, setIsVisible] = useState(true);
 
-  function handleEdit(e, id) {
+  function handleEdit(e) {
     e.preventDefault(); 
     setIsVisible(!isVisible);
 
@@ -50,7 +50,10 @@ function IngredientEdit(props) {
           buttonWrapper="d-inline-block"
           className="ms-2 mb-1"
           onClick={(e) => {
-            props.deleteIngredient(e, props.index);
+            props.deleteIngredient(e, props.ingredient.id);
+            if (isVisible === false) {
+            setIsVisible(true);
+            }
           }}
           buttonText="Delete"
           buttonStyle="btn-secondary"

@@ -62,8 +62,6 @@ export default function TemplateCreateEdit(props) {
     }
   }
 
-  console.log(activeIngredient);
-
   function editIngredientCallback(e) {
     const { name, value } = e.target;
 
@@ -121,8 +119,8 @@ export default function TemplateCreateEdit(props) {
 
   function deleteIngredientCallback(id) {
     const ingredientsClone = [...props.ingredients];
-    const filtered = ingredientsClone.filter((item, index) => {
-      return index !== id;
+    const filtered = ingredientsClone.filter((ingredient) => {
+      return ingredient.id !== id;
     });
     props.ingredientsCallback(filtered);
     AddIngredientsToRecipe(filtered);

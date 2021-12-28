@@ -21,6 +21,8 @@ export default function Edit() {
     setIngredients(data);
   }
 
+  console.log(ingredients);
+
   function dataArrayCallback(data) {
     setDataArray(data);
   }
