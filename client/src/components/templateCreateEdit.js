@@ -30,6 +30,9 @@ export default function TemplateCreateEdit(props) {
     id: '',
   });
 
+  //Control visibility of Delete and Edit buttons for ingredients. Only the Active Ingredient will be accessable
+  const [activeIngredient, setActiveIngredient] = useState('');
+
   let navigate = useNavigate();
 
   // These functions control editing ingredients properties
@@ -51,7 +54,15 @@ export default function TemplateCreateEdit(props) {
       unit: ingredient.unit,
       id: ingredient.id,
     });
+
+    if (activeIngredient === '') {
+      setActiveIngredient(ingredient.id);
+    } else {
+      setActiveIngredient('');
+    }
   }
+
+  console.log(activeIngredient);
 
   function editIngredientCallback(e) {
     const { name, value } = e.target;
@@ -115,6 +126,8 @@ export default function TemplateCreateEdit(props) {
     });
     props.ingredientsCallback(filtered);
     AddIngredientsToRecipe(filtered);
+
+    setActiveIngredient('');
   }
 
   function insertIngredientCallback(idx) {
@@ -222,6 +235,7 @@ export default function TemplateCreateEdit(props) {
           ingredient={ingredient}
           ingredients={props.ingredients}
           editIngredient={editIngredient}
+          activeIngredient={activeIngredient}
           onEdit={onEdit}
           onSave={onSave}
           handleIngredientCallback={handleIngredientCallback}

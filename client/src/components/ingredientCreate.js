@@ -70,6 +70,7 @@ export default function IngredientCreate(props) {
               key={index}
               index={index}
               ingredient={ingredient}
+              activeIngredient={props.activeIngredient}
               ingredients={props.ingredients}
               editIngredient={props.editIngredient}
               onEdit={props.onEdit}

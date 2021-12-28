@@ -5,15 +5,16 @@ import Button from './button';
 function IngredientEdit(props) {
   const [isVisible, setIsVisible] = useState(true);
 
-  function handleEdit(e) {
+  function handleEdit(e, id) {
     e.preventDefault(); 
     setIsVisible(!isVisible);
+
     props.onEdit(props.ingredient);
 
     if (isVisible === false) {
       props.onSave();
     }
-  }
+  };
 
   return (
     <div>
@@ -44,22 +45,26 @@ function IngredientEdit(props) {
         onChange={(e) => props.editIngredientCallback(e)}
         value={props.editIngredient.unit}
       />
-      <Button
-        buttonWrapper="d-inline-block"
-        className="ms-2 mb-1"
-        onClick={(e) => {
-          props.deleteIngredient(e, props.index);
-        }}
-        buttonText="Delete"
-        buttonStyle="btn-secondary"
-      />
-      <Button
-        buttonWrapper="d-inline-block"
-        buttonText={isVisible === true ? 'Edit' : 'Save'}
-        buttonStyle="btn-secondary"
-        className="ms-2 mb-1"
-        onClick={handleEdit}
-      />
+      <div className={props.activeIngredient === props.ingredient.id || props.activeIngredient === '' ? 'd-inline-block' : 'd-none'}>
+        <Button
+          buttonWrapper="d-inline-block"
+          className="ms-2 mb-1"
+          onClick={(e) => {
+            props.deleteIngredient(e, props.index);
+          }}
+          buttonText="Delete"
+          buttonStyle="btn-secondary"
+        />
+        <Button
+          buttonWrapper="d-inline-block"
+          buttonText={isVisible === true ? 'Edit' : 'Save'}
+          buttonStyle="btn-secondary"
+          className="ms-2 mb-1"
+          onClick={(e) => {
+            handleEdit(e);
+          }}
+        />
+      </div>
     </div>
   );
 }
