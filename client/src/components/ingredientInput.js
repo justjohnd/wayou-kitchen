@@ -14,8 +14,10 @@ export default function IngredientInput(props) {
           value={props.inputValue}
         />)}
       {!props.isVisible && (
-        <input
-          className={props.className}
+        <Input
+          label={props.inputName}
+          fieldWidth="w-100"
+          inputClassName={props.className}
           name={props.name}
           onChange={props.onChange}
           value={props.value}

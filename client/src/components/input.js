@@ -10,7 +10,7 @@ export default function Input(props) {
           disabled={props.disabled ? "disabled" : ""}
           name={props.name}
           type={props.type}
-          className={`form-control ${props.inputClassName}`}
+          className={`form-control mb-1 ${props.inputClassName}`}
           value={props.value}
           onChange={props.onChange}
           placeholder={props.placeholder}

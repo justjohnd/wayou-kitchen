@@ -5,11 +5,11 @@ import Button from './button';
 function IngredientEdit(props) {
   const [isVisible, setIsVisible] = useState(true);
 
-  function handleEdit(e) {
+  function handleEdit(e, idx) {
     e.preventDefault(); 
     setIsVisible(!isVisible);
 
-    props.onEdit(props.ingredient);
+    props.onEdit(props.ingredient, idx);
 
     if (isVisible === false) {
       props.onSave();
@@ -64,7 +64,7 @@ function IngredientEdit(props) {
           buttonStyle="btn-secondary"
           className="ms-2 mb-1"
           onClick={(e) => {
-            handleEdit(e);
+            handleEdit(e, props.index);
           }}
         />
       </div>

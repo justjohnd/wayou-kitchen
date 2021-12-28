@@ -7,8 +7,6 @@ import InstructionCreate from './instructionCreate';
 import Input from './input';
 import Button from './button';
 
-import RECIPE_PROPERTIES from '../javascript/RECIPE_PROPERTIES';
-
 export default function TemplateCreateEdit(props) {
 
   // data and dataArray contain instructions data
@@ -30,6 +28,8 @@ export default function TemplateCreateEdit(props) {
     id: '',
   });
 
+  const [editIngredientIndex, setEditIngredientIndex] = useState('');
+
   //Control visibility of Delete and Edit buttons for ingredients. Only the Active Ingredient will be accessable
   const [activeIngredient, setActiveIngredient] = useState('');
 
@@ -47,13 +47,15 @@ export default function TemplateCreateEdit(props) {
     });
   }
 
-  function onEdit(ingredient) {
+  function onEdit(ingredient, idx) {
     setEditIngredient({
       nameClean: ingredient.nameClean,
       amount: ingredient.amount,
       unit: ingredient.unit,
       id: ingredient.id,
     });
+
+    setEditIngredientIndex(idx);
 
     if (activeIngredient === '') {
       setActiveIngredient(ingredient.id);
@@ -78,12 +80,12 @@ export default function TemplateCreateEdit(props) {
     const filtered = ingredientsClone.filter((ingredient) => {
       return ingredient.id !== editIngredient.id;
     });
+
+    filtered.splice(editIngredientIndex, 0, editIngredient);
+
     props.ingredientsCallback(filtered);
 
-    const includeEditIngredient = [...filtered, editIngredient];
-    props.ingredientsCallback(includeEditIngredient);
-
-    AddIngredientsToRecipe(includeEditIngredient);
+    AddIngredientsToRecipe(filtered);
     setEditIngredient({
       nameClean: '',
       amount: '',
@@ -136,7 +138,6 @@ export default function TemplateCreateEdit(props) {
         amount: '',
         unit: '',
       });
-      console.log(idx);
       return newArray;
     });
   }
