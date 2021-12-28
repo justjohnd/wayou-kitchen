@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useState} from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from 'react-router-dom';
 
 import IngredientCreate from './ingredientCreate';
 import InstructionCreate from './instructionCreate';
@@ -8,9 +8,6 @@ import Input from './input';
 import Button from './button';
 
 import RECIPE_PROPERTIES from '../javascript/RECIPE_PROPERTIES';
-
-// This will require to npm install axios
-import axios from 'axios';
 
 export default function TemplateCreateEdit(props) {
 
@@ -33,64 +30,9 @@ export default function TemplateCreateEdit(props) {
     id: '',
   });
 
-  // Based on pageType, determine whether to propagate fields with database data based on id (for edit)
-  let params = useParams();
   let navigate = useNavigate();
 
-  if (props.pageType === 'Edit') {
-    // This will get the record based on the id from the database.
-    // useEffect(() => {
-    //   axios
-    //     .get('http://localhost:5000/record/' + params.id)
-    //     .then((response) => {
-    //       props.recipeCallback({
-    //         title: response.data.title,
-    //         preparationMinutes: response.data.preparationMinutes,
-    //         cookingMinutes: response.data.cookingMinutes,
-    //         readyInMinutes: response.data.readyInMinutes,
-    //         sourceUrl: response.data.sourceUrl,
-    //         image: response.data.image,
-    //         extendedIngredients: response.data.extendedIngredients,
-    //         analyzedInstructions: response.data.analyzedInstructions,
-    //         servings: response.data.servings,
-    //       });
-
-    //       props.ingredientsCallback(response.data.extendedIngredients);
-
-    //       const instructions = response.data.analyzedInstructions.map(
-    //         (instruction) => instruction.step
-    //       );
-    //       props.dataArrayCallback(instructions);
-    //     })
-    //     .catch(function (error) {
-    //       console.log(error);
-    //     });
-    // }, []);
-  }
-
-  // This function will handle the submission.
-  function handleRecipe(e) {
-    e.preventDefault();
-
-    if (props.pageType === "Edit") {
-    // This will send a post request to update the data in the database.
-      axios
-        .post('http://localhost:5000/update/' + params.id, props.recipe)
-        .then((res) => console.log(res.data));
-    } else {
-      // When post request is sent to the create url, axios will add a new record to the database.
-      axios
-        .post('http://localhost:5000/record/add', props.recipe)
-        .then((res) => console.log(res.data));
-
-      // We will empty the state after posting the data to the database
-      props.recipeCallback(RECIPE_PROPERTIES);
-  }
-    navigate('/');
-  }
-
   // These functions control editing ingredients properties
-
   //Set ingredient based on data entered into ingredientsCreate fields
   function handleIngredientCallback(e) {
     const { name, value } = e.target;
@@ -254,7 +196,10 @@ export default function TemplateCreateEdit(props) {
     <div className="my-5 container">
       <h3>{props.pageType} New Record</h3>
       <form
-        onSubmit={handleRecipe}
+        onSubmit={(e) => {
+          props.handleRecipe(e);
+          navigate('/');
+        }}
       >
         <Input
           label="Name of the recipe:"
