@@ -8,6 +8,9 @@ const recordRoutes = express.Router();
 // This will help us connect to the database
 const dbo = require('../db/conn');
 
+//Import record schema
+let Record = require('../models/record.model');
+
 // This help convert the id from string to ObjectId for the _id.
 const ObjectId = require('mongodb').ObjectId;
 
@@ -47,7 +50,10 @@ recordRoutes.route('/record/add').post(function (req, response) {
     analyzedInstructions: req.body.analyzedInstructions,
     servings: req.body.servings,
   };
-  db_connect.collection('records').insertOne(myobj, function (err, res) {
+
+  const newRecord = new Record(myobj);
+
+  db_connect.collection('records').insertOne(newRecord, function (err, res) {
     if (err) throw err;
     response.json(res);
   });

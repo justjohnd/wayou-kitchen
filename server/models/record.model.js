@@ -36,4 +36,4 @@ const recordSchema = new Schema({
 
 const Record = mongoose.model('Record', recordSchema);
 
-module.exports = User;
+module.exports = Record;
