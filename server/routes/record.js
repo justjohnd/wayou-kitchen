@@ -44,10 +44,8 @@ recordRoutes.route('/record/add').post(function (req, response) {
     readyInMinutes: req.body.readyInMinutes,
     sourceUrl: req.body.sourceUrl,
     image: req.body.image,
-    extendedIngredients: req.body.extendedIngredients,
     analyzedInstructions: req.body.analyzedInstructions,
     servings: req.body.servings,
-    sourceUrl: req.body.sourceUrl
   };
   db_connect.collection('records').insertOne(myobj, function (err, res) {
     if (err) throw err;
@@ -68,10 +66,8 @@ recordRoutes.route('/update/:id').post(function (req, response) {
       readyInMinutes: req.body.readyInMinutes,
       sourceUrl: req.body.sourceUrl,
       image: req.body.image,
-      extendedIngredients: req.body.extendedIngredients,
       analyzedInstructions: req.body.analyzedInstructions,
       servings: req.body.servings,
-      sourceUrl: req.body.sourceUrl,
     },
   };
   db_connect
