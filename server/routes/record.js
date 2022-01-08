@@ -1,4 +1,7 @@
 const express = require('express');
+const multer = require('multer');
+const { v4: uuidv4 } = require('uuid');
+let path = require('path');
 
 // recordRoutes is an instance of the express router.
 // We use it to define our routes.
@@ -13,6 +16,26 @@ let Record = require('../models/record.model');
 
 // This help convert the id from string to ObjectId for the _id.
 const ObjectId = require('mongodb').ObjectId;
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'images');
+  },
+  filename: function (req, file, cb) {
+    cb(null, uuidv4() + '-' + Date.now() + path.extname(file.originalname));
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  const allowedFileTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+  if (allowedFileTypes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+let upload = multer({ storage, fileFilter });
 
 // This section will help you get a list of all the records.
 recordRoutes.route('/record').get(function (req, res) {
@@ -37,7 +60,7 @@ recordRoutes.route('/record/:id').get(function (req, res) {
 });
 
 // This section will help you create a new record.
-recordRoutes.route('/record/add').post(function (req, response) {
+recordRoutes.route('/record/add').post(upload.single('photo'), (req, response) => {
   let db_connect = dbo.getDb();
   let myObj = {
     title: req.body.title,
