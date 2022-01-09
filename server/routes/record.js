@@ -60,7 +60,7 @@ recordRoutes.route('/record/:id').get(function (req, res) {
 });
 
 // This section will help you create a new record.
-recordRoutes.route('/record/add').post(upload.single('photo'), (req, response) => {
+recordRoutes.route('/record/add').post(upload.single('image'), (req, response) => {
   let db_connect = dbo.getDb();
   let myObj = {
     title: req.body.title,
@@ -69,7 +69,7 @@ recordRoutes.route('/record/add').post(upload.single('photo'), (req, response) =
     cookingMinutes: req.body.cookingMinutes,
     readyInMinutes: req.body.readyInMinutes,
     sourceUrl: req.body.sourceUrl,
-    image: req.body.image,
+    image: req.file.filename,
     analyzedInstructions: req.body.analyzedInstructions,
     servings: req.body.servings,
   };

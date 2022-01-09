@@ -196,6 +196,7 @@ export default function TemplateCreateEdit(props) {
     <div className="my-5 container">
       <h3>{props.pageType} New Record</h3>
       <form
+        encType="multipart/form-data"
         onSubmit={(e) => {
           props.handleRecipe(e);
           navigate('/');
@@ -208,6 +209,12 @@ export default function TemplateCreateEdit(props) {
           type="text"
           value={props.recipe.title}
           onChange={(e) => handleData(e)}
+        />
+        <Input
+          type="file"
+          accept=".png, .jpg, .jpeg"
+          name="image"
+          onChange={(e) => props.imageCallback(e.target.files[0])}
         />
         <InstructionCreate
           data={data}

@@ -8,7 +8,6 @@ const RECIPE_PROPERTIES = {
   extendedIngredients: [],
   analyzedInstructions: [],
   servings: '',
-  sourceUrl: ''
 };
 
 export default RECIPE_PROPERTIES;

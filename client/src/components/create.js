@@ -16,6 +16,18 @@ export default function Create() {
     setRecipe(data);
   }
 
+  function imageCallback(data) {
+    setRecipe((prevValue) => 
+    { 
+      return {
+      ...prevValue, 
+      image: data
+    }
+  });
+}
+
+console.log(recipe);
+
   function ingredientsCallback(data) {
     setIngredients(data);
   }
@@ -27,8 +39,20 @@ export default function Create() {
   function handleRecipe(e) {
     e.preventDefault();
     // When post request is sent to the create url, axios will add a new record to the database.
+
+    const formData = new FormData();
+    formData.append('title', recipe.title);
+    formData.append('preparationMinutes', recipe.preparationMinutes);
+    formData.append('cookingMinutes', recipe.cookingMinutes);
+    formData.append('readyInMinutes', recipe.readyInMinutes);
+    formData.append('sourceUrl', recipe.sourceUrl);
+    formData.append('image', recipe.image);
+    formData.append('extendedIngredients', recipe.extendedIngredients);
+    formData.append('analyzedInstructions', recipe.analyzedInstructions);
+    formData.append('servings', recipe.servings);
+
     axios
-      .post('http://localhost:5000/record/add', recipe)
+      .post('http://localhost:5000/record/add', formData)
       .then((res) => console.log(res.data));
 
     // We will empty the state after posting the data to the database
@@ -47,6 +71,7 @@ export default function Create() {
         ingredientsCallback={ingredientsCallback}
         dataArray={dataArray}
         dataArrayCallback={dataArrayCallback}
+        imageCallback={imageCallback}
       />
     </div>
   );
