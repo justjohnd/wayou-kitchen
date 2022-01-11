@@ -17,6 +17,15 @@ export default function Edit() {
     setRecipe(data);
   }
 
+    function imageCallback(data) {
+      setRecipe((prevValue) => {
+        return {
+          ...prevValue,
+          image: data,
+        };
+      });
+    }
+
   function ingredientsCallback(data) {
     setIngredients(data);
   }
@@ -31,9 +40,20 @@ export default function Edit() {
   function handleRecipe(e) {
     e.preventDefault();
 
+    const formData = new FormData();
+    formData.append('title', recipe.title);
+    formData.append('preparationMinutes', recipe.preparationMinutes);
+    formData.append('cookingMinutes', recipe.cookingMinutes);
+    formData.append('readyInMinutes', recipe.readyInMinutes);
+    formData.append('sourceUrl', recipe.sourceUrl);
+    formData.append('image', recipe.image);
+    formData.append('extendedIngredients', recipe.extendedIngredients);
+    formData.append('analyzedInstructions', recipe.analyzedInstructions);
+    formData.append('servings', recipe.servings);
+
       // This will send a post request to update the data in the database.
       axios
-        .post('http://localhost:5000/update/' + params.id, recipe)
+        .post('http://localhost:5000/update/' + params.id, formData)
         .then((res) => console.log(res.data));
   }
 
@@ -77,6 +97,7 @@ export default function Edit() {
         ingredientsCallback={ingredientsCallback}
         dataArray={dataArray}
         dataArrayCallback={dataArrayCallback}
+        imageCallback={imageCallback}
       />
     </div>
   );

@@ -83,7 +83,7 @@ recordRoutes.route('/record/add').post(upload.single('image'), (req, response) =
 });
 
 // This section will help you update a record by id.
-recordRoutes.route('/update/:id').post(function (req, response) {
+recordRoutes.route('/update/:id').post(upload.single('image'), (req, response) => {
   let db_connect = dbo.getDb();
   let myQuery = { _id: ObjectId(req.params.id) };
   let newvalues = {
@@ -94,7 +94,7 @@ recordRoutes.route('/update/:id').post(function (req, response) {
       cookingMinutes: req.body.cookingMinutes,
       readyInMinutes: req.body.readyInMinutes,
       sourceUrl: req.body.sourceUrl,
-      image: req.body.image,
+      image: req.file.filename,
       analyzedInstructions: req.body.analyzedInstructions,
       servings: req.body.servings,
     },

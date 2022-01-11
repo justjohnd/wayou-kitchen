@@ -44,7 +44,14 @@ export default function Edit() {
   return (
     <div className="recipe-container container my-5 p-5">
       <section className="d-flex">
-        <img className="recipe-image" src={showRecipe.image} />
+        <img
+          className="recipe-image"
+          src={
+            showRecipe.image.slice(0, 4) === 'http'
+              ? showRecipe.image
+              : '../../images/' + showRecipe.image
+          }
+        />
         <div className="recipe-header ms-5">
           <h1>{showRecipe.title}</h1>
           <p className="mb-0 pb-0">
