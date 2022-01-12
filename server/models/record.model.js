@@ -8,9 +8,9 @@ const recordSchema = new Schema({
     required: true,
     trim: true,
   },
-    extendedIngredients: {
-    type: String,
-  },
+  //   extendedIngredients: {
+  //   type: [String],
+  // },
     preparationMinutes: {
     type: String,
   },
@@ -26,9 +26,9 @@ const recordSchema = new Schema({
     image: {
     type: String,
   },
-    analyzedInstructions: {
-    type: String,
-  },
+  //   analyzedInstructions: {
+  //   type: [String],
+  // },
   servings: {
     type: String,
   },

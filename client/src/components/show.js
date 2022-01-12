@@ -41,6 +41,8 @@ export default function Edit() {
       });
   }, []);
 
+  console.log(ingredients);
+
   return (
     <div className="recipe-container container my-5 p-5">
       <section className="d-flex">
@@ -71,11 +73,11 @@ export default function Edit() {
       <div className="recipe-wrapper">
         <section className="ingredients">
           <h2>Ingredients</h2>
-          {ingredients.map((ingredient, index) => (
+          {ingredients[0] ? ingredients.map((ingredient, index) => (
             <li key={index}>
-              {ingredient.amount} {ingredient.unit} {ingredient.nameClean}
+              {ingredient.amount ? ingredient.amount : ''} {ingredient.unit ? ingredient.unit : ''} {ingredient.nameClean ? ingredient.nameClean : ''}
             </li>
-          ))}
+          )) : ''}
         </section>
         <section className="instructions">
           <h2>Instructions</h2>
