@@ -47,8 +47,8 @@ export default function Edit() {
     formData.append('readyInMinutes', recipe.readyInMinutes);
     formData.append('sourceUrl', recipe.sourceUrl);
     formData.append('image', recipe.image);
-    formData.append('extendedIngredients', recipe.extendedIngredients);
-    formData.append('analyzedInstructions', recipe.analyzedInstructions);
+    formData.append('extendedIngredients', JSON.stringify(recipe.extendedIngredients));
+    formData.append('analyzedInstructions', JSON.stringify(recipe.analyzedInstructions));
     formData.append('servings', recipe.servings);
 
       // This will send a post request to update the data in the database.

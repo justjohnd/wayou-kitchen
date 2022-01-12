@@ -89,13 +89,13 @@ recordRoutes.route('/update/:id').post(upload.single('image'), (req, response) =
   let newvalues = {
     $set: {
       title: req.body.title,
-      extendedIngredients: req.body.extendedIngredients,
+      extendedIngredients: JSON.parse(req.body.extendedIngredients),
       preparationMinutes: req.body.preparationMinutes,
       cookingMinutes: req.body.cookingMinutes,
       readyInMinutes: req.body.readyInMinutes,
       sourceUrl: req.body.sourceUrl,
       image: req.file.filename,
-      analyzedInstructions: req.body.analyzedInstructions,
+      analyzedInstructions: JSON.parse(req.body.analyzedInstructions),
       servings: req.body.servings,
     },
   };
