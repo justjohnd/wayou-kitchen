@@ -41,8 +41,6 @@ export default function Edit() {
       });
   }, []);
 
-  console.log(ingredients);
-
   return (
     <div className="recipe-container container my-5 p-5">
       <section className="d-flex">

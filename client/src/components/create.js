@@ -26,8 +26,6 @@ export default function Create() {
   });
 }
 
-console.log(recipe);
-
   function ingredientsCallback(data) {
     setIngredients(data);
   }
@@ -47,8 +45,8 @@ console.log(recipe);
     formData.append('readyInMinutes', recipe.readyInMinutes);
     formData.append('sourceUrl', recipe.sourceUrl);
     formData.append('image', recipe.image);
-    formData.append('extendedIngredients', recipe.extendedIngredients);
-    formData.append('analyzedInstructions', recipe.analyzedInstructions);
+    formData.append('extendedIngredients', JSON.stringify(recipe.extendedIngredients));
+    formData.append('analyzedInstructions', JSON.stringify(recipe.analyzedInstructions));
     formData.append('servings', recipe.servings);
 
     axios

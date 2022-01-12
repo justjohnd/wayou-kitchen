@@ -64,13 +64,13 @@ recordRoutes.route('/record/add').post(upload.single('image'), (req, response) =
   let db_connect = dbo.getDb();
   let myObj = {
     title: req.body.title,
-    extendedIngredients: req.body.extendedIngredients,
+    extendedIngredients: JSON.parse(req.body.extendedIngredients),
     preparationMinutes: req.body.preparationMinutes,
     cookingMinutes: req.body.cookingMinutes,
     readyInMinutes: req.body.readyInMinutes,
     sourceUrl: req.body.sourceUrl,
     image: req.file.filename,
-    analyzedInstructions: req.body.analyzedInstructions,
+    analyzedInstructions: JSON.parse(req.body.analyzedInstructions),
     servings: req.body.servings,
   };
 

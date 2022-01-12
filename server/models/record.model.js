@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { stringify } = require('uuid');
 
 const Schema = mongoose.Schema;
 
@@ -8,9 +9,11 @@ const recordSchema = new Schema({
     required: true,
     trim: true,
   },
-  //   extendedIngredients: {
-  //   type: [String],
-  // },
+    extendedIngredients: [{
+    nameClean: String,
+    amount: Number,
+    unit: String,
+  }],
     preparationMinutes: {
     type: String,
   },
@@ -26,9 +29,7 @@ const recordSchema = new Schema({
     image: {
     type: String,
   },
-  //   analyzedInstructions: {
-  //   type: [String],
-  // },
+    analyzedInstructions: [{number: Number, step: String}],
   servings: {
     type: String,
   },
