@@ -214,7 +214,11 @@ export default function TemplateCreateEdit(props) {
           type="file"
           accept=".png, .jpg, .jpeg"
           name="image"
-          onChange={(e) => props.imageCallback(e.target.files[0])}
+          onChange={(e) => {
+            props.imageCallback(e.target.files[0]);
+            console.log(e.target.files[0]);
+          }
+        }
         />
         <InstructionCreate
           data={data}

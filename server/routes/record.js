@@ -69,10 +69,12 @@ recordRoutes.route('/record/add').post(upload.single('image'), (req, response) =
     cookingMinutes: req.body.cookingMinutes,
     readyInMinutes: req.body.readyInMinutes,
     sourceUrl: req.body.sourceUrl,
-    image: req.file.filename,
+    image: req.file === undefined ? "placeholder.jpg" : req.file.filename,
     analyzedInstructions: JSON.parse(req.body.analyzedInstructions),
     servings: req.body.servings,
   };
+
+  console.log(myObj.image);
 
   const newRecord = new Record(myObj);
 
