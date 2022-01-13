@@ -31,7 +31,7 @@ export default function Edit() {
           servings: response.data.servings
         });
 
-        setIngredients([response.data.extendedIngredients]);
+        setIngredients(response.data.extendedIngredients);
         
         const instructions = response.data.analyzedInstructions.map(instruction => instruction.step);
         setInstructions(instructions);
@@ -71,7 +71,7 @@ export default function Edit() {
       <div className="recipe-wrapper">
         <section className="ingredients">
           <h2>Ingredients</h2>
-          {ingredients[0] ? ingredients.map((ingredient, index) => (
+          {ingredients[0] !== undefined ? ingredients.map((ingredient, index) => (
             <li key={index}>
               {ingredient.amount ? ingredient.amount : ''} {ingredient.unit ? ingredient.unit : ''} {ingredient.nameClean ? ingredient.nameClean : ''}
             </li>

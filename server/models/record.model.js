@@ -11,7 +11,7 @@ const recordSchema = new Schema({
   },
     extendedIngredients: [{
     nameClean: String,
-    amount: Number,
+    amount: String,
     unit: String,
   }],
     preparationMinutes: {
