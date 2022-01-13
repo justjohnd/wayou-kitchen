@@ -7,8 +7,6 @@ import InstructionCreate from './instructionCreate';
 import Input from './input';
 import Button from './button';
 
-import RECIPE_PROPERTIES from '../javascript/RECIPE_PROPERTIES';
-
 export default function TemplateCreateEdit(props) {
 
   // data and dataArray contain instructions data
@@ -209,16 +207,21 @@ export default function TemplateCreateEdit(props) {
           type="text"
           value={props.recipe.title}
           onChange={(e) => handleData(e)}
-        />
+        />{ props.pageType === "Edit" && 
+        (<img
+          className="recipe-image"
+          src={
+            props.recipe.image.slice(0, 4) === 'http'
+              ? props.recipe.image
+              : '../../images/' + props.recipe.image
+          }
+        />)
+}
         <Input
           type="file"
           accept=".png, .jpg, .jpeg"
           name="image"
-          onChange={(e) => {
-            props.imageCallback(e.target.files[0]);
-            console.log(e.target.files[0]);
-          }
-        }
+          onChange={(e) => props.imageCallback(e.target.files[0])}
         />
         <InstructionCreate
           data={data}
