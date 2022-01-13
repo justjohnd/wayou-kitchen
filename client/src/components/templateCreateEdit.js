@@ -8,6 +8,7 @@ import Input from './input';
 import Button from './button';
 
 export default function TemplateCreateEdit(props) {
+  const [changeImage, setChangeImage] = useState('false');
 
   // data and dataArray contain instructions data
   const [data, setData] = useState('');
@@ -188,6 +189,10 @@ export default function TemplateCreateEdit(props) {
     });
   }
 
+  function handleImage() {
+    setChangeImage(true);
+  }
+
   // This following section will display the form that takes the input from the user.
   // render() {
   return (
@@ -207,22 +212,28 @@ export default function TemplateCreateEdit(props) {
           type="text"
           value={props.recipe.title}
           onChange={(e) => handleData(e)}
-        />{ props.pageType === "Edit" && 
-        (<img
-          className="recipe-image"
-          src={
-            props.recipe.image.slice(0, 4) === 'http'
-              ? props.recipe.image
-              : '../../images/' + props.recipe.image
-          }
-        />)
-}
-        <Input
+        />
+        {props.pageType === 'Edit' && (
+          <div>
+            <img
+              className="recipe-image"
+              src={
+                props.image.slice(0, 4) === 'http'
+                  ? props.image
+                  : '../../images/' + props.image
+              }
+            />
+            <Button buttonText="Edit Image" onClick={handleImage}></Button>
+          </div>
+        )}
+        { props.pageType === "Create" || changeImage === true &&
+        (<Input
           type="file"
           accept=".png, .jpg, .jpeg"
           name="image"
           onChange={(e) => props.imageCallback(e.target.files[0])}
-        />
+        />)
+            }
         <InstructionCreate
           data={data}
           dataArray={props.dataArray}

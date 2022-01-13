@@ -2,28 +2,32 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import TemplateCreateEdit from './templateCreateEdit';
 
-import RECIPE_PROPERTIES from '../javascript/RECIPE_PROPERTIES';
-
 // This will require to npm install axios
 import axios from 'axios';
 
 export default function Edit() {
   const [pageType, setPageType] = useState('Edit');
-  const [recipe, setRecipe] = useState(RECIPE_PROPERTIES);
+  const [recipe, setRecipe] = useState({
+    title: '',
+    preparationMinutes: '',
+    cookingMinutes: '',
+    readyInMinutes: '',
+    sourceUrl: '',
+    extendedIngredients: [],
+    analyzedInstructions: [],
+    servings: '',
+  });
   const [ingredients, setIngredients] = useState([]);
   const [dataArray, setDataArray] = useState([]);
+  const [newImage, setNewImage] = useState('');
+  const [image, setImage] = useState('');
 
   function recipeCallback(data) {
     setRecipe(data);
   }
 
     function imageCallback(data) {
-      setRecipe((prevValue) => {
-        return {
-          ...prevValue,
-          image: data,
-        };
-      });
+      setNewImage(data);
     }
 
   function ingredientsCallback(data) {
@@ -46,12 +50,17 @@ export default function Edit() {
     formData.append('cookingMinutes', recipe.cookingMinutes);
     formData.append('readyInMinutes', recipe.readyInMinutes);
     formData.append('sourceUrl', recipe.sourceUrl);
-    formData.append('image', recipe.image);
     formData.append('extendedIngredients', JSON.stringify(recipe.extendedIngredients));
     formData.append('analyzedInstructions', JSON.stringify(recipe.analyzedInstructions));
     formData.append('servings', recipe.servings);
 
-      // This will send a post request to update the data in the database.
+    if (newImage.name !== undefined && image !== newImage.name) {
+      formData.append('image', newImage);
+    } else {
+      formData.append('image', image);
+    }
+
+      // This will send a post{} request to update the data in the database.
       axios
         .post('http://localhost:5000/update/' + params.id, formData)
         .then((res) => console.log(res.data));
@@ -68,11 +77,11 @@ export default function Edit() {
             cookingMinutes: response.data.cookingMinutes,
             readyInMinutes: response.data.readyInMinutes,
             sourceUrl: response.data.sourceUrl,
-            image: response.data.image,
             extendedIngredients: response.data.extendedIngredients,
             analyzedInstructions: response.data.analyzedInstructions,
             servings: response.data.servings,
           });
+          setImage(response.data.image);
           setIngredients(response.data.extendedIngredients);
           const instructions = response.data.analyzedInstructions.map(
             (instruction) => instruction.step
@@ -83,7 +92,6 @@ export default function Edit() {
           console.log(error);
         });
     }, []);
-
 
   // This following section will display the form that takes the input from the user.
   return (
@@ -97,6 +105,7 @@ export default function Edit() {
         ingredientsCallback={ingredientsCallback}
         dataArray={dataArray}
         dataArrayCallback={dataArrayCallback}
+        image={image}
         imageCallback={imageCallback}
       />
     </div>
