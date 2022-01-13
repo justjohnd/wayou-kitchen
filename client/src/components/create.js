@@ -11,6 +11,7 @@ export default function Create() {
   const [recipe, setRecipe] = useState(RECIPE_PROPERTIES);
   const [ingredients, setIngredients] = useState([]);
   const [dataArray, setDataArray] = useState([]);
+  const [changeImage, setChangeImage] = useState(true);
 
   function recipeCallback(data) {
     setRecipe(data);
@@ -71,6 +72,7 @@ export default function Create() {
         dataArray={dataArray}
         dataArrayCallback={dataArrayCallback}
         imageCallback={imageCallback}
+        changeImage={changeImage}
       />
     </div>
   );

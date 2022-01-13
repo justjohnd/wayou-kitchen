@@ -8,7 +8,6 @@ import Input from './input';
 import Button from './button';
 
 export default function TemplateCreateEdit(props) {
-  const [changeImage, setChangeImage] = useState('false');
 
   // data and dataArray contain instructions data
   const [data, setData] = useState('');
@@ -189,9 +188,7 @@ export default function TemplateCreateEdit(props) {
     });
   }
 
-  function handleImage() {
-    setChangeImage(true);
-  }
+  console.log(props.pageType);
 
   // This following section will display the form that takes the input from the user.
   // render() {
@@ -223,10 +220,10 @@ export default function TemplateCreateEdit(props) {
                   : '../../images/' + props.image
               }
             />
-            <Button buttonText="Edit Image" onClick={handleImage}></Button>
+            <Button buttonText="Edit Image" onClick={() => props.changeImageCallback()}></Button>
           </div>
         )}
-        { props.pageType === "Create" || changeImage === true &&
+        { props.changeImage === true &&
         (<Input
           type="file"
           accept=".png, .jpg, .jpeg"

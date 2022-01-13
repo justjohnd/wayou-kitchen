@@ -21,6 +21,11 @@ export default function Edit() {
   const [dataArray, setDataArray] = useState([]);
   const [newImage, setNewImage] = useState('');
   const [image, setImage] = useState('');
+  const [changeImage, setChangeImage] = useState(false);
+
+  function changeImageCallback() {
+    setChangeImage(true);
+  }
 
   function recipeCallback(data) {
     setRecipe(data);
@@ -107,6 +112,8 @@ export default function Edit() {
         dataArrayCallback={dataArrayCallback}
         image={image}
         imageCallback={imageCallback}
+        changeImage={changeImage}
+        changeImageCallback={changeImageCallback}
       />
     </div>
   );
