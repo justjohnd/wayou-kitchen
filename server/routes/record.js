@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('fs');
 const multer = require('multer');
 const { v4: uuidv4 } = require('uuid');
 let path = require('path');
@@ -37,6 +38,12 @@ const fileFilter = (req, file, cb) => {
 
 let upload = multer({ storage, fileFilter });
 
+
+// route middleware that will happen on every request
+recordRoutes
+
+
+
 // This section will help you get a list of all the records.
 recordRoutes.route('/record').get(function (req, res) {
   let db_connect = dbo.getDb('recipes');
@@ -47,7 +54,8 @@ recordRoutes.route('/record').get(function (req, res) {
       if (err) throw err;
       res.json(result);
     });
-});
+})
+
 
 // This section will help you get a single record by id
 recordRoutes.route('/record/:id').get(function (req, res) {
@@ -110,14 +118,33 @@ recordRoutes.route('/update/:id').post(upload.single('image'), (req, response) =
     });
 });
 
+async function returnDocument(db, query) {
+  let returnedDocument = db.collection('records').findOne(query);
+  return returnedDocument;
+};
+
 // This section will help you delete a record
 recordRoutes.route('/:id').delete((req, response) => {
   let db_connect = dbo.getDb();
   let myQuery = { _id: ObjectId(req.params.id) };
-  db_connect.collection('records').deleteOne(myQuery, function (err, obj) {
-    if (err) throw err;
-    console.log('1 document deleted');
-    response.status(obj);
+
+  returnDocument(db_connect, myQuery)
+  .then( (returnedDocument) => {
+
+    // Delete image file from server
+    let filePathAndName = `../client/public/images/${returnedDocument.image}`;
+    if (returnedDocument.image !== 'placeholder.jpg') {
+    fs.unlink(filePathAndName, (err) => {
+      if (err) console.log(err);
+      }
+    );
+    }
+
+    db_connect.collection('records').deleteOne(myQuery, function (err, obj) {
+      if (err) throw err;
+      console.log('1 document deleted');
+      response.status(obj);
+    });
   });
 });
 
