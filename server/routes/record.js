@@ -38,12 +38,6 @@ const fileFilter = (req, file, cb) => {
 
 let upload = multer({ storage, fileFilter });
 
-
-// route middleware that will happen on every request
-recordRoutes
-
-
-
 // This section will help you get a list of all the records.
 recordRoutes.route('/record').get(function (req, res) {
   let db_connect = dbo.getDb('recipes');
@@ -70,6 +64,15 @@ recordRoutes.route('/record/:id').get(function (req, res) {
 // This section will help you create a new record.
 recordRoutes.route('/record/add').post(upload.single('image'), (req, response) => {
   let db_connect = dbo.getDb();
+  let imageValue = '';
+  if (req.body.image) {
+    imageValue = req.body.image;
+  } else if (req.file === undefined) {
+    imageValue = 'placeholder.jpg'
+  } else {
+    imageValue = req.file.filename;
+  };
+
   let myObj = {
     title: req.body.title,
     extendedIngredients: JSON.parse(req.body.extendedIngredients),
@@ -77,12 +80,10 @@ recordRoutes.route('/record/add').post(upload.single('image'), (req, response) =
     cookingMinutes: req.body.cookingMinutes,
     readyInMinutes: req.body.readyInMinutes,
     sourceUrl: req.body.sourceUrl,
-    image: req.file === undefined ? "placeholder.jpg" : req.file.filename,
+    image: imageValue,
     analyzedInstructions: JSON.parse(req.body.analyzedInstructions),
     servings: req.body.servings,
   };
-
-  console.log(myObj.image);
 
   const newRecord = new Record(myObj);
 
