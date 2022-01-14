@@ -32,9 +32,9 @@ export default function UrlSearch() {
         readyInMinutes: response.data.readyInMinutes,
         sourceUrl: response.data.sourceUrl,
         image: response.data.image,
-        extendedIngredients: response.data.extendedIngredients,
-        analyzedInstructions: response.data.analyzedInstructions[0].steps,
-        servings: response.data.servings
+        extendedIngredients: JSON.stringify(response.data.extendedIngredients),
+        analyzedInstructions: JSON.stringify(response.data.analyzedInstructions[0].steps),
+        servings: response.data.servings,
       };
 
       axios
