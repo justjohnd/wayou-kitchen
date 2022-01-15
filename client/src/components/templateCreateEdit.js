@@ -62,6 +62,9 @@ export default function TemplateCreateEdit(props) {
     });
   }
 
+  console.log(props.ingredients);
+  console.log(editIngredient);
+
   function onSave() {
     const ingredientsClone = [...props.ingredients];
     const filtered = ingredientsClone.filter((ingredient) => {
@@ -188,7 +191,6 @@ export default function TemplateCreateEdit(props) {
     });
   }
 
-  console.log(props.pageType);
 
   // This following section will display the form that takes the input from the user.
   // render() {

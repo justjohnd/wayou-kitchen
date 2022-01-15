@@ -87,7 +87,18 @@ export default function Edit() {
             servings: response.data.servings,
           });
           setImage(response.data.image);
-          setIngredients(response.data.extendedIngredients);
+
+          const ingredientsWithId = response.data.extendedIngredients.map(
+            (ingredient) => {
+              return {
+                ...ingredient,
+                id: ingredient._id,
+              };
+            }
+          );
+
+        setIngredients(ingredientsWithId);
+
           const instructions = response.data.analyzedInstructions.map(
             (instruction) => instruction.step
           );
