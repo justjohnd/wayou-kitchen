@@ -41,15 +41,14 @@ export default function Create() {
     // When post request is sent to the create url, axios will add a new record to the database.
 
     const formData = new FormData();
-    formData.append('title', recipe.title);
-    formData.append('preparationMinutes', recipe.preparationMinutes);
-    formData.append('cookingMinutes', recipe.cookingMinutes);
-    formData.append('readyInMinutes', recipe.readyInMinutes);
-    formData.append('sourceUrl', recipe.sourceUrl);
-    formData.append('image', recipe.image);
-    formData.append('extendedIngredients', JSON.stringify(recipe.extendedIngredients));
-    formData.append('analyzedInstructions', JSON.stringify(recipe.analyzedInstructions));
-    formData.append('servings', recipe.servings);
+    for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
+
+      if (RECIPE_PROPERTIES[i] === 'image') {
+        formData.append('image', recipe.image);
+      } else {
+        formData.append(RECIPE_PROPERTIES[i], JSON.stringify(recipe[RECIPE_PROPERTIES[i]]));
+    }
+  }
 
     axios
       .post('http://localhost:5000/record/add', formData)

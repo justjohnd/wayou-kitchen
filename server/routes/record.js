@@ -74,15 +74,15 @@ recordRoutes.route('/record/add').post(upload.single('image'), (req, response) =
   };
 
   let myObj = {
-    title: req.body.title,
+    title: JSON.parse(req.body.title),
     extendedIngredients: JSON.parse(req.body.extendedIngredients),
-    preparationMinutes: req.body.preparationMinutes,
-    cookingMinutes: req.body.cookingMinutes,
-    readyInMinutes: req.body.readyInMinutes,
-    sourceUrl: req.body.sourceUrl,
+    preparationMinutes: JSON.parse(req.body.preparationMinutes),
+    cookingMinutes: JSON.parse(req.body.cookingMinutes),
+    readyInMinutes: JSON.parse(req.body.readyInMinutes),
+    sourceUrl: JSON.parse(req.body.sourceUrl),
     image: imageValue,
     analyzedInstructions: JSON.parse(req.body.analyzedInstructions),
-    servings: req.body.servings,
+    servings: JSON.parse(req.body.servings),
   };
 
   const newRecord = new Record(myObj);
