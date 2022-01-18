@@ -75,17 +75,17 @@ export default function Edit() {
       axios
         .get('http://localhost:5000/record/' + params.id)
         .then((response) => {
-          setRecipe({
-            title: response.data.title,
-            preparationMinutes: response.data.preparationMinutes,
-            cookingMinutes: response.data.cookingMinutes,
-            readyInMinutes: response.data.readyInMinutes,
-            sourceUrl: response.data.sourceUrl,
-            extendedIngredients: response.data.extendedIngredients,
-            analyzedInstructions: response.data.analyzedInstructions,
-            servings: response.data.servings,
-          });
-          setImage(response.data.image);
+
+              let myObj = {};
+              for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
+                if (RECIPE_PROPERTIES[i] === 'image') {
+                  setImage(response.data.image);
+                } else {
+                  myObj[RECIPE_PROPERTIES[i]] = response.data[RECIPE_PROPERTIES[i]];
+                }
+              }
+
+          setRecipe(myObj);
 
           const ingredientsWithId = response.data.extendedIngredients.map(
             (ingredient) => {
