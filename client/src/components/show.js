@@ -8,7 +8,17 @@ import axios from 'axios';
 import RecipeList from './recipeList';
 
 export default function Edit() {
-  const [showRecipe, setShowRecipe] = useState(RECIPE_PROPERTIES);
+  const [showRecipe, setShowRecipe] = useState({
+  title: '',
+  preparationMinutes: '',
+  cookingMinutes: '',
+  readyInMinutes: '',
+  sourceUrl: '',
+  image: '',
+  extendedIngredients: [],
+  analyzedInstructions: [],
+  servings: '',
+});
   const [ingredients, setIngredients] = useState([]);
   const [instructions, setInstructions] = useState([]);
 

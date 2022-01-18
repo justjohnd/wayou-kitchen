@@ -2,21 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import TemplateCreateEdit from './templateCreateEdit';
 
+import { RECIPE_OBJECT } from '../javascript/RECIPE_PROPERTIES';
+
 // This will require to npm install axios
 import axios from 'axios';
 
 export default function Edit() {
   const [pageType, setPageType] = useState('Edit');
-  const [recipe, setRecipe] = useState({
-    title: '',
-    preparationMinutes: '',
-    cookingMinutes: '',
-    readyInMinutes: '',
-    sourceUrl: '',
-    extendedIngredients: [],
-    analyzedInstructions: [],
-    servings: '',
-  });
+  const [recipe, setRecipe] = useState(RECIPE_OBJECT);
   const [ingredients, setIngredients] = useState([]);
   const [dataArray, setDataArray] = useState([]);
   const [newImage, setNewImage] = useState({name: 'noImage'});

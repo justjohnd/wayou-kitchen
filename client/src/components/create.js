@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import TemplateCreateEdit from './templateCreateEdit';
 
-import RECIPE_PROPERTIES from '../javascript/RECIPE_PROPERTIES';
+import RECIPE_PROPERTIES, { RECIPE_OBJECT } from '../javascript/RECIPE_PROPERTIES';
 
 // This will require to npm install axios
 import axios from 'axios';
 
 export default function Create() {
   const [pageType, setPageType] = useState('Create');
-  const [recipe, setRecipe] = useState(RECIPE_PROPERTIES);
+  const [recipe, setRecipe] = useState(RECIPE_OBJECT);
   const [ingredients, setIngredients] = useState([]);
   const [dataArray, setDataArray] = useState([]);
   const [changeImage, setChangeImage] = useState(true);
@@ -56,7 +56,7 @@ export default function Create() {
       .then((res) => console.log(res.data));
 
     // We will empty the state after posting the data to the database
-    setRecipe(RECIPE_PROPERTIES);
+    setRecipe(RECIPE_OBJECT);
   }
 
   // This following section will display the form that takes the input from the user.
