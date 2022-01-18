@@ -19,13 +19,16 @@ export default function Edit() {
   });
   const [ingredients, setIngredients] = useState([]);
   const [dataArray, setDataArray] = useState([]);
-  const [newImage, setNewImage] = useState('');
+  const [newImage, setNewImage] = useState({name: 'noImage'});
   const [image, setImage] = useState('');
   const [changeImage, setChangeImage] = useState(false);
 
-  function changeImageCallback() {
+  function changeImageCallback(data) {
     setChangeImage(true);
+    if (data === 'remove') {
+      setImage('placeholder.jpg');
   }
+}
 
   function recipeCallback(data) {
     setRecipe(data);
@@ -59,7 +62,7 @@ export default function Edit() {
     formData.append('analyzedInstructions', JSON.stringify(recipe.analyzedInstructions));
     formData.append('servings', recipe.servings);
 
-    if (newImage.name !== undefined && image !== newImage.name) {
+    if (image !== newImage.name && image !== 'placeholder.jpg') {
       formData.append('image', newImage);
     } else {
       formData.append('image', image);
