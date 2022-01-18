@@ -4,6 +4,8 @@ const multer = require('multer');
 const { v4: uuidv4 } = require('uuid');
 let path = require('path');
 
+const RECIPE_PROPERTIES = require('../../client/src/javascript/PROPERTIES_FOR_BACKEND.js');
+
 // recordRoutes is an instance of the express router.
 // We use it to define our routes.
 // The router will be added as a middleware and will take control of requests starting with path /record.
@@ -68,22 +70,21 @@ recordRoutes.route('/record/add').post(upload.single('image'), (req, response) =
   if (req.body.image) {
     imageValue = req.body.image;
   } else if (req.file === undefined) {
-    imageValue = 'placeholder.jpg'
+    imageValue = 'placeholder.jpg';
   } else {
     imageValue = req.file.filename;
   };
 
-  let myObj = {
-    title: JSON.parse(req.body.title),
-    extendedIngredients: JSON.parse(req.body.extendedIngredients),
-    preparationMinutes: JSON.parse(req.body.preparationMinutes),
-    cookingMinutes: JSON.parse(req.body.cookingMinutes),
-    readyInMinutes: JSON.parse(req.body.readyInMinutes),
-    sourceUrl: JSON.parse(req.body.sourceUrl),
-    image: imageValue,
-    analyzedInstructions: JSON.parse(req.body.analyzedInstructions),
-    servings: JSON.parse(req.body.servings),
-  };
+    // Generate new object based on record properties defined in RECIPE_PROPERTIES array
+    //JSON.stringify and JSON.parse are use on front and backend respectively, specifically to handle object data coming from extendedIngredients and analyzedInstructions
+      let myObj = {};
+      for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
+        if (RECIPE_PROPERTIES[i] === 'image') {
+          myObj['image'] = imageValue;
+        } else {
+          myObj[RECIPE_PROPERTIES[i]] = JSON.parse(req.body[RECIPE_PROPERTIES[i]]);
+        }
+      }
 
   const newRecord = new Record(myObj);
 
