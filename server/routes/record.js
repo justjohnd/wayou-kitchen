@@ -1,4 +1,8 @@
 const express = require('express');
+const fs = require('fs');
+const multer = require('multer');
+const { v4: uuidv4 } = require('uuid');
+let path = require('path');
 
 // recordRoutes is an instance of the express router.
 // We use it to define our routes.
@@ -8,8 +12,31 @@ const recordRoutes = express.Router();
 // This will help us connect to the database
 const dbo = require('../db/conn');
 
+//Import record schema
+let Record = require('../models/record.model');
+
 // This help convert the id from string to ObjectId for the _id.
 const ObjectId = require('mongodb').ObjectId;
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, '../client/public/images');
+  },
+  filename: function (req, file, cb) {
+    cb(null, uuidv4() + '-' + Date.now() + path.extname(file.originalname));
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  const allowedFileTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+  if (allowedFileTypes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+let upload = multer({ storage, fileFilter });
 
 // This section will help you get a list of all the records.
 recordRoutes.route('/record').get(function (req, res) {
@@ -21,76 +48,104 @@ recordRoutes.route('/record').get(function (req, res) {
       if (err) throw err;
       res.json(result);
     });
-});
+})
+
 
 // This section will help you get a single record by id
 recordRoutes.route('/record/:id').get(function (req, res) {
   let db_connect = dbo.getDb();
-  let myquery = { _id: ObjectId(req.params.id) };
-  db_connect.collection('records').findOne(myquery, function (err, result) {
+  let myQuery = { _id: ObjectId(req.params.id) };
+  db_connect.collection('records').findOne(myQuery, function (err, result) {
     if (err) throw err;
     res.json(result);
   });
 });
 
 // This section will help you create a new record.
-recordRoutes.route('/record/add').post(function (req, response) {
+recordRoutes.route('/record/add').post(upload.single('image'), (req, response) => {
   let db_connect = dbo.getDb();
-  let myobj = {
+  let imageValue = '';
+  if (req.body.image) {
+    imageValue = req.body.image;
+  } else if (req.file === undefined) {
+    imageValue = 'placeholder.jpg'
+  } else {
+    imageValue = req.file.filename;
+  };
+
+  let myObj = {
     title: req.body.title,
-    extendedIngredients: req.body.extendedIngredients,
+    extendedIngredients: JSON.parse(req.body.extendedIngredients),
     preparationMinutes: req.body.preparationMinutes,
     cookingMinutes: req.body.cookingMinutes,
     readyInMinutes: req.body.readyInMinutes,
     sourceUrl: req.body.sourceUrl,
-    image: req.body.image,
-    extendedIngredients: req.body.extendedIngredients,
-    analyzedInstructions: req.body.analyzedInstructions,
+    image: imageValue,
+    analyzedInstructions: JSON.parse(req.body.analyzedInstructions),
     servings: req.body.servings,
-    sourceUrl: req.body.sourceUrl
   };
-  db_connect.collection('records').insertOne(myobj, function (err, res) {
+
+  const newRecord = new Record(myObj);
+
+  db_connect.collection('records').insertOne(newRecord, function (err, res) {
     if (err) throw err;
     response.json(res);
   });
 });
 
 // This section will help you update a record by id.
-recordRoutes.route('/update/:id').post(function (req, response) {
+recordRoutes.route('/update/:id').post(upload.single('image'), (req, response) => {
   let db_connect = dbo.getDb();
-  let myquery = { _id: ObjectId(req.params.id) };
+  let myQuery = { _id: ObjectId(req.params.id) };
   let newvalues = {
     $set: {
       title: req.body.title,
-      extendedIngredients: req.body.extendedIngredients,
+      extendedIngredients: JSON.parse(req.body.extendedIngredients),
       preparationMinutes: req.body.preparationMinutes,
       cookingMinutes: req.body.cookingMinutes,
       readyInMinutes: req.body.readyInMinutes,
       sourceUrl: req.body.sourceUrl,
-      image: req.body.image,
-      extendedIngredients: req.body.extendedIngredients,
-      analyzedInstructions: req.body.analyzedInstructions,
+      image: req.file ? req.file.filename : req.body.image,
+      analyzedInstructions: JSON.parse(req.body.analyzedInstructions),
       servings: req.body.servings,
-      sourceUrl: req.body.sourceUrl,
     },
   };
   db_connect
     .collection('records')
-    .updateOne(myquery, newvalues, function (err, res) {
+    .updateOne(myQuery, newvalues, function (err, res) {
       if (err) throw err;
       console.log('1 document updated');
       response.json(res);
     });
 });
 
+async function returnDocument(db, query) {
+  let returnedDocument = db.collection('records').findOne(query);
+  return returnedDocument;
+};
+
 // This section will help you delete a record
 recordRoutes.route('/:id').delete((req, response) => {
   let db_connect = dbo.getDb();
-  let myquery = { _id: ObjectId(req.params.id) };
-  db_connect.collection('records').deleteOne(myquery, function (err, obj) {
-    if (err) throw err;
-    console.log('1 document deleted');
-    response.status(obj);
+  let myQuery = { _id: ObjectId(req.params.id) };
+
+  returnDocument(db_connect, myQuery)
+  .then( (returnedDocument) => {
+
+    // Delete image file from server
+    let filePathAndName = `../client/public/images/${returnedDocument.image}`;
+    if (returnedDocument.image !== 'placeholder.jpg') {
+    fs.unlink(filePathAndName, (err) => {
+      if (err) console.log(err);
+      }
+    );
+    }
+
+    db_connect.collection('records').deleteOne(myQuery, function (err, obj) {
+      if (err) throw err;
+      console.log('1 document deleted');
+      response.status(obj);
+    });
   });
 });
 

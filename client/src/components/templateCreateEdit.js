@@ -7,8 +7,6 @@ import InstructionCreate from './instructionCreate';
 import Input from './input';
 import Button from './button';
 
-import RECIPE_PROPERTIES from '../javascript/RECIPE_PROPERTIES';
-
 export default function TemplateCreateEdit(props) {
 
   // data and dataArray contain instructions data
@@ -63,6 +61,9 @@ export default function TemplateCreateEdit(props) {
       };
     });
   }
+
+  console.log(props.ingredients);
+  console.log(editIngredient);
 
   function onSave() {
     const ingredientsClone = [...props.ingredients];
@@ -190,12 +191,14 @@ export default function TemplateCreateEdit(props) {
     });
   }
 
+
   // This following section will display the form that takes the input from the user.
   // render() {
   return (
     <div className="my-5 container">
       <h3>{props.pageType} New Record</h3>
       <form
+        encType="multipart/form-data"
         onSubmit={(e) => {
           props.handleRecipe(e);
           navigate('/');
@@ -209,6 +212,27 @@ export default function TemplateCreateEdit(props) {
           value={props.recipe.title}
           onChange={(e) => handleData(e)}
         />
+        {props.pageType === 'Edit' && (
+          <div>
+            <img
+              className="recipe-image"
+              src={
+                props.image.slice(0, 4) === 'http'
+                  ? props.image
+                  : '../../images/' + props.image
+              }
+            />
+            <Button buttonText="Edit Image" onClick={() => props.changeImageCallback()}></Button>
+          </div>
+        )}
+        { props.changeImage === true &&
+        (<Input
+          type="file"
+          accept=".png, .jpg, .jpeg"
+          name="image"
+          onChange={(e) => props.imageCallback(e.target.files[0])}
+        />)
+            }
         <InstructionCreate
           data={data}
           dataArray={props.dataArray}
