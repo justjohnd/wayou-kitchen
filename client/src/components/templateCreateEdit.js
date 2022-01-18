@@ -62,9 +62,6 @@ export default function TemplateCreateEdit(props) {
     });
   }
 
-  console.log(props.ingredients);
-  console.log(editIngredient);
-
   function onSave() {
     const ingredientsClone = [...props.ingredients];
     const filtered = ingredientsClone.filter((ingredient) => {
@@ -222,17 +219,24 @@ export default function TemplateCreateEdit(props) {
                   : '../../images/' + props.image
               }
             />
-            <Button buttonText="Edit Image" onClick={() => props.changeImageCallback()}></Button>
+            <Button
+              buttonText="Edit Image"
+              onClick={() => props.changeImageCallback()}
+            ></Button>
+            <Button
+              buttonText="Remove Image"
+              onClick={() => props.changeImageCallback('remove')}
+            ></Button>
           </div>
         )}
-        { props.changeImage === true &&
-        (<Input
-          type="file"
-          accept=".png, .jpg, .jpeg"
-          name="image"
-          onChange={(e) => props.imageCallback(e.target.files[0])}
-        />)
-            }
+        {props.changeImage === true && (
+          <Input
+            type="file"
+            accept=".png, .jpg, .jpeg"
+            name="image"
+            onChange={(e) => props.imageCallback(e.target.files[0])}
+          />
+        )}
         <InstructionCreate
           data={data}
           dataArray={props.dataArray}
