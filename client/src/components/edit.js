@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import TemplateCreateEdit from './templateCreateEdit';
 
-import { RECIPE_OBJECT } from '../javascript/RECIPE_PROPERTIES';
+import RECIPE_PROPERTIES, { RECIPE_OBJECT } from '../javascript/RECIPE_PROPERTIES';
 
 // This will require to npm install axios
 import axios from 'axios';
@@ -46,19 +46,22 @@ export default function Edit() {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append('title', recipe.title);
-    formData.append('preparationMinutes', recipe.preparationMinutes);
-    formData.append('cookingMinutes', recipe.cookingMinutes);
-    formData.append('readyInMinutes', recipe.readyInMinutes);
-    formData.append('sourceUrl', recipe.sourceUrl);
-    formData.append('extendedIngredients', JSON.stringify(recipe.extendedIngredients));
-    formData.append('analyzedInstructions', JSON.stringify(recipe.analyzedInstructions));
-    formData.append('servings', recipe.servings);
 
-    if (image !== newImage.name && image !== 'placeholder.jpg') {
-      formData.append('image', newImage);
-    } else {
-      formData.append('image', image);
+    for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
+      if (RECIPE_PROPERTIES[i] === 'image') {
+
+        if (image !== newImage.name && image !== 'placeholder.jpg') {
+          formData.append('image', newImage);
+        } else {
+          formData.append('image', image);
+        }
+
+      } else {
+        formData.append(
+          RECIPE_PROPERTIES[i],
+          JSON.stringify(recipe[RECIPE_PROPERTIES[i]])
+        );
+      }
     }
 
       // This will send a post{} request to update the data in the database.

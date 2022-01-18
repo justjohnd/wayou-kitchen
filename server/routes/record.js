@@ -98,18 +98,24 @@ recordRoutes.route('/record/add').post(upload.single('image'), (req, response) =
 recordRoutes.route('/update/:id').post(upload.single('image'), (req, response) => {
   let db_connect = dbo.getDb();
   let myQuery = { _id: ObjectId(req.params.id) };
+
+    let myObj = {};
+    for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
+      if (RECIPE_PROPERTIES[i] === 'image') {
+        if (req.file) {
+          myObj['image'] = req.file.filename;
+        } else {
+          myObj['image'] = req.body.image;
+        }
+      } else {
+        myObj[RECIPE_PROPERTIES[i]] = JSON.parse(
+          req.body[RECIPE_PROPERTIES[i]]
+        );
+      }
+    }
+
   let newvalues = {
-    $set: {
-      title: req.body.title,
-      extendedIngredients: JSON.parse(req.body.extendedIngredients),
-      preparationMinutes: req.body.preparationMinutes,
-      cookingMinutes: req.body.cookingMinutes,
-      readyInMinutes: req.body.readyInMinutes,
-      sourceUrl: req.body.sourceUrl,
-      image: req.file ? req.file.filename : req.body.image,
-      analyzedInstructions: JSON.parse(req.body.analyzedInstructions),
-      servings: req.body.servings,
-    },
+    $set: myObj,
   };
   db_connect
     .collection('records')
