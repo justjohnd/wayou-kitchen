@@ -29,7 +29,7 @@ const recordSchema = new Schema({
     image: {
     type: String,
   },
-    analyzedInstructions: [{number: Number, step: String}],
+    analyzedInstructions: [{number: Number, step: String, isHeader: Boolean}],
   servings: {
     type: String,
   },

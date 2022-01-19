@@ -11,7 +11,7 @@ function InstructionEdit(props) {
       <Input
         wrapperClassName="d-inline-block ms-2"
         onChange={(e) => props.editInstruction(props.index, e.target.value)}
-        value={props.dataArray[props.index]}
+        value={props.dataArray[props.index].step}
       />
       <Button
         className="ms-2 mb-1"

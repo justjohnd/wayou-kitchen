@@ -17,6 +17,8 @@ export default function Create() {
     setRecipe(data);
   }
 
+  console.log(recipe);
+
   function imageCallback(data) {
 
     setRecipe((prevValue) => 

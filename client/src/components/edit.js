@@ -98,15 +98,17 @@ export default function Edit() {
 
         setIngredients(ingredientsWithId);
 
-          const instructions = response.data.analyzedInstructions.map(
-            (instruction) => instruction.step
-          );
-          setDataArray(instructions);
+          // const instructions = response.data.analyzedInstructions.map(
+          //   (instruction) => instruction.step
+          // );
+          setDataArray(response.data.analyzedInstructions);
         })
         .catch(function (error) {
           console.log(error);
         });
     }, []);
+
+      console.log(dataArray);
 
   // This following section will display the form that takes the input from the user.
   return (
