@@ -138,7 +138,6 @@ export default function TemplateCreateEdit(props) {
           number: index,
           step: data.step,
           isHeader: data.isHeader,
-          sup: 'dude'
         })),
       };
     });
@@ -161,16 +160,30 @@ export default function TemplateCreateEdit(props) {
     setData('');
   }
 
-  function editInstructionCallback(index, value) {
+  function editInstructionCallback(index, value, header) {
     const newArray = [...props.dataArray];
     newArray.splice(index, 1, 
       {
         number: index,
-        step: value
+        step: value,
+        isHeader: header
       });
     props.dataArrayCallback(newArray);
     AddInstructionToRecipe(newArray);
   }
+
+  function headerCallback(index, header) {
+    let instructionClone = props.dataArray[index];
+    instructionClone.isHeader = header;
+    const newArray = [...props.dataArray];
+    newArray.splice(index, 1, instructionClone);
+    props.dataArrayCallback(newArray);
+    AddInstructionToRecipe(newArray);
+  }
+
+
+
+
 
   function deleteInstructionCallback(id) {
     const newArray = [...props.dataArray];
@@ -181,9 +194,12 @@ export default function TemplateCreateEdit(props) {
     AddInstructionToRecipe(filtered);
   }
 
-  function insertInstructionCallback(idx) {
+  function insertInstruction(idx) {
     const newArray = [...props.dataArray];
-    newArray.splice(idx, 0, {step: ''});
+    newArray.splice(idx, 0, {
+      step: '',
+      isHeader: false
+    });
     props.dataArrayCallback(newArray);
     AddInstructionToRecipe(newArray);
   }
@@ -199,7 +215,6 @@ export default function TemplateCreateEdit(props) {
       };
     });
   }
-
 
   // This following section will display the form that takes the input from the user.
   // render() {
@@ -256,7 +271,8 @@ export default function TemplateCreateEdit(props) {
           addInstructionCallback={addInstructionCallback}
           editInstructionCallback={editInstructionCallback}
           deleteInstructionCallback={deleteInstructionCallback}
-          insertInstructionCallback={insertInstructionCallback}
+          insertInstruction={insertInstruction}
+          headerCallback={headerCallback}
         />
         <IngredientCreate
           ingredient={ingredient}

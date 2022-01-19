@@ -6,18 +6,9 @@ import Button from './button';
 export default function InstructionCreate(props) {
     const [header, setHeader] = useState(false);
 
-    function editInstruction(index, value) {
-      props.editInstructionCallback(index, value);
-    }
-
     function deleteInstruction(e, id) {
       e.preventDefault();
       props.deleteInstructionCallback(id);
-    }
-
-    function insertInstruction(e, idx) {
-      e.preventDefault();
-      props.insertInstructionCallback(idx);
     }
 
     function handleHeader() {
@@ -52,14 +43,15 @@ export default function InstructionCreate(props) {
 
       <section className="output output-wrapper">
         {props.dataArray &&
-          props.dataArray.map((item, index) => (
+          props.dataArray.map((data, index) => (
             <InstructionEdit
               key={index}
               index={index}
               dataArray={props.dataArray}
-              editInstruction={editInstruction}
+              editInstructionCallback={props.editInstructionCallback}
               deleteInstruction={deleteInstruction}
-              insertInstruction={insertInstruction}
+              insertInstruction={props.insertInstruction}
+              headerCallback={props.headerCallback}
             />
           ))}
       </section>
