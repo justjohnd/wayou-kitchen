@@ -54,6 +54,19 @@ export default function IngredientCreate(props) {
         }}
         placeholder=""
       />
+      <label>
+        <select
+          onChange={(e) => props.handleIngredientCallback(e)}
+          value={props.ingredient.group}
+          selected
+          name="group"
+          type="number"
+        >
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+        </select>
+      </label>
       <Button
         buttonWrapper="d-inline-block"
         className="ms-2 mb-1"

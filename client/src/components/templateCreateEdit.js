@@ -17,6 +17,7 @@ export default function TemplateCreateEdit(props) {
     nameClean: '',
     amount: '',
     unit: '',
+    group: 0,
     id: '',
   });
 
@@ -25,6 +26,7 @@ export default function TemplateCreateEdit(props) {
     nameClean: '',
     amount: '',
     unit: '',
+    group: 0,
     id: '',
   });
 
@@ -42,11 +44,14 @@ export default function TemplateCreateEdit(props) {
     });
   }
 
+  console.log(ingredient);
+
   function onEdit(ingredient) {
     setEditIngredient({
       nameClean: ingredient.nameClean,
       amount: ingredient.amount,
       unit: ingredient.unit,
+      group: ingredient.group,
       id: ingredient.id,
     });
   }
@@ -77,6 +82,7 @@ export default function TemplateCreateEdit(props) {
       nameClean: '',
       amount: '',
       unit: '',
+      group: 0,
       id: '',
     });
   }
@@ -93,6 +99,7 @@ export default function TemplateCreateEdit(props) {
       nameClean: '',
       amount: '',
       unit: '',
+      group: 0,
       id: '',
     });
   }
@@ -122,6 +129,7 @@ export default function TemplateCreateEdit(props) {
         nameClean: '',
         amount: '',
         unit: '',
+        group: 0,
       });
       console.log(idx);
       return newArray;

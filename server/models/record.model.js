@@ -13,6 +13,7 @@ const recordSchema = new Schema({
     nameClean: String,
     amount: String,
     unit: String,
+    group: Number
   }],
     preparationMinutes: {
     type: String,
