@@ -42,9 +42,8 @@ export default function Edit() {
         });
 
         setIngredients(response.data.extendedIngredients);
-        
-        const instructions = response.data.analyzedInstructions.map(instruction => instruction.step);
-        setInstructions(instructions);
+
+        setInstructions(response.data.analyzedInstructions);
       })
       .catch(function (error) {
         console.log(error);
@@ -92,7 +91,7 @@ export default function Edit() {
           {instructions.map((instruction, index) => (
             <li key={index}>
               <span className="instruction-number">{index + 1} </span>
-              {instruction}
+              {instruction.step}
             </li>
           ))}
         </section>
