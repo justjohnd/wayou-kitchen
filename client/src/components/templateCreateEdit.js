@@ -247,10 +247,12 @@ export default function TemplateCreateEdit(props) {
               }
             />
             <Button
+              buttonWrapper="d-inline mx-3"
               buttonText="Edit Image"
               onClick={() => props.changeImageCallback()}
             ></Button>
             <Button
+              buttonWrapper="d-inline mx-3"
               buttonText="Remove Image"
               onClick={() => props.changeImageCallback('remove')}
             ></Button>

@@ -27,9 +27,9 @@ export default function InstructionCreate(props) {
         onChange={(e) => props.handleInstructionCallback(e)}
         placeholder="Start Entering Instructions Here"
       />
-      <div>
+      <div className="d-inline mx-3">
         <input title="header" type="checkbox" onClick={handleHeader} />
-        <label htmlFor="header">Make Header?</label>
+        <label className="mx-1" htmlFor="header">Make Header?</label>
       </div>
       <Button
         className="ms-2 mb-1"

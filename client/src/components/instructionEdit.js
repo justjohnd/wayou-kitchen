@@ -39,7 +39,7 @@ function InstructionEdit(props) {
         }}
         buttonText="Insert Step Above"
       />
-      <div>
+      <div className="d-inline mx-3">
         <input 
         name="isHeader"
         onChange={handleHeader}
