@@ -2,21 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import TemplateCreateEdit from './templateCreateEdit';
 
+import RECIPE_PROPERTIES, { RECIPE_OBJECT } from '../javascript/RECIPE_PROPERTIES';
+
 // This will require to npm install axios
 import axios from 'axios';
 
 export default function Edit() {
   const [pageType, setPageType] = useState('Edit');
-  const [recipe, setRecipe] = useState({
-    title: '',
-    preparationMinutes: '',
-    cookingMinutes: '',
-    readyInMinutes: '',
-    sourceUrl: '',
-    extendedIngredients: [],
-    analyzedInstructions: [],
-    servings: '',
-  });
+  const [recipe, setRecipe] = useState(RECIPE_OBJECT);
   const [ingredients, setIngredients] = useState([]);
   const [dataArray, setDataArray] = useState([]);
   const [newImage, setNewImage] = useState({name: 'noImage'});
@@ -53,19 +46,25 @@ export default function Edit() {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append('title', recipe.title);
-    formData.append('preparationMinutes', recipe.preparationMinutes);
-    formData.append('cookingMinutes', recipe.cookingMinutes);
-    formData.append('readyInMinutes', recipe.readyInMinutes);
-    formData.append('sourceUrl', recipe.sourceUrl);
-    formData.append('extendedIngredients', JSON.stringify(recipe.extendedIngredients));
-    formData.append('analyzedInstructions', JSON.stringify(recipe.analyzedInstructions));
-    formData.append('servings', recipe.servings);
 
-    if (image !== newImage.name && image !== 'placeholder.jpg') {
-      formData.append('image', newImage);
-    } else {
-      formData.append('image', image);
+    for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
+      if (RECIPE_PROPERTIES[i] === 'image') {
+
+        // First check to seet if image is a url
+        if (image.slice(0, 4) === 'http') {
+          formData.append('image', image);
+        } else if (image !== newImage.name && image !== 'placeholder.jpg') {
+            formData.append('image', newImage);
+          } else {
+            formData.append('image', image);
+          }
+
+      } else {
+        formData.append(
+          RECIPE_PROPERTIES[i],
+          JSON.stringify(recipe[RECIPE_PROPERTIES[i]])
+        );
+      }
     }
 
       // This will send a post{} request to update the data in the database.
@@ -79,17 +78,17 @@ export default function Edit() {
       axios
         .get('http://localhost:5000/record/' + params.id)
         .then((response) => {
-          setRecipe({
-            title: response.data.title,
-            preparationMinutes: response.data.preparationMinutes,
-            cookingMinutes: response.data.cookingMinutes,
-            readyInMinutes: response.data.readyInMinutes,
-            sourceUrl: response.data.sourceUrl,
-            extendedIngredients: response.data.extendedIngredients,
-            analyzedInstructions: response.data.analyzedInstructions,
-            servings: response.data.servings,
-          });
-          setImage(response.data.image);
+          // image will load separately in the image varialbe, apart from other properties in the receipe variable
+          let myObj = {};
+          for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
+            if (RECIPE_PROPERTIES[i] === 'image') {
+              setImage(response.data.image);
+            } else {
+              myObj[RECIPE_PROPERTIES[i]] = response.data[RECIPE_PROPERTIES[i]];
+            }
+          }
+
+          setRecipe(myObj);
 
           const ingredientsWithId = response.data.extendedIngredients.map(
             (ingredient) => {
@@ -100,12 +99,12 @@ export default function Edit() {
             }
           );
 
-        setIngredients(ingredientsWithId);
+          setIngredients(ingredientsWithId);
 
-          const instructions = response.data.analyzedInstructions.map(
-            (instruction) => instruction.step
-          );
-          setDataArray(instructions);
+          // const instructions = response.data.analyzedInstructions.map(
+          //   (instruction) => instruction.step
+          // );
+          setDataArray(response.data.analyzedInstructions);
         })
         .catch(function (error) {
           console.log(error);

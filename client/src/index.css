@@ -71,6 +71,11 @@ a:hover {
   font-size: 20px;
 }
 
+.instruction-header {
+  font-weight: 800;
+  font-size: 32px;
+}
+
 /* Navbar */
 
 .navbar {

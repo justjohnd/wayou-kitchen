@@ -9,7 +9,7 @@ import Button from './button';
 
 export default function TemplateCreateEdit(props) {
 
-  // data and dataArray contain instructions data
+  // data contains instruction (or header) content
   const [data, setData] = useState('');
 
   // Ingredients data
@@ -136,7 +136,8 @@ export default function TemplateCreateEdit(props) {
         ...prevValue,
         analyzedInstructions: arrayParameter.map((data, index) => ({
           number: index,
-          step: data,
+          step: data.step,
+          isHeader: data.isHeader,
         })),
       };
     });
@@ -146,19 +147,43 @@ export default function TemplateCreateEdit(props) {
     setData(e.target.value);
   }
 
-  function addInstructionCallback() {
-    props.dataArrayCallback((prevVal) => [...prevVal, data]);
-    const dataArrayClone = [...props.dataArray, data];
+  function addInstructionCallback(header) {
+
+    let instructionObject = {
+      step: data,
+      isHeader: header,
+    }
+
+    props.dataArrayCallback((prevVal) => [...prevVal, instructionObject]);
+    const dataArrayClone = [...props.dataArray, instructionObject];
     AddInstructionToRecipe(dataArrayClone);
     setData('');
   }
 
-  function editInstructionCallback(index, value) {
+  function editInstructionCallback(index, value, header) {
     const newArray = [...props.dataArray];
-    newArray.splice(index, 1, value);
+    newArray.splice(index, 1, 
+      {
+        number: index,
+        step: value,
+        isHeader: header
+      });
     props.dataArrayCallback(newArray);
     AddInstructionToRecipe(newArray);
   }
+
+  function headerCallback(index, header) {
+    let instructionClone = props.dataArray[index];
+    instructionClone.isHeader = header;
+    const newArray = [...props.dataArray];
+    newArray.splice(index, 1, instructionClone);
+    props.dataArrayCallback(newArray);
+    AddInstructionToRecipe(newArray);
+  }
+
+
+
+
 
   function deleteInstructionCallback(id) {
     const newArray = [...props.dataArray];
@@ -169,9 +194,12 @@ export default function TemplateCreateEdit(props) {
     AddInstructionToRecipe(filtered);
   }
 
-  function insertInstructionCallback(idx) {
+  function insertInstruction(idx) {
     const newArray = [...props.dataArray];
-    newArray.splice(idx, 0, '');
+    newArray.splice(idx, 0, {
+      step: '',
+      isHeader: false
+    });
     props.dataArrayCallback(newArray);
     AddInstructionToRecipe(newArray);
   }
@@ -187,7 +215,6 @@ export default function TemplateCreateEdit(props) {
       };
     });
   }
-
 
   // This following section will display the form that takes the input from the user.
   // render() {
@@ -220,10 +247,12 @@ export default function TemplateCreateEdit(props) {
               }
             />
             <Button
+              buttonWrapper="d-inline mx-3"
               buttonText="Edit Image"
               onClick={() => props.changeImageCallback()}
             ></Button>
             <Button
+              buttonWrapper="d-inline mx-3"
               buttonText="Remove Image"
               onClick={() => props.changeImageCallback('remove')}
             ></Button>
@@ -244,7 +273,8 @@ export default function TemplateCreateEdit(props) {
           addInstructionCallback={addInstructionCallback}
           editInstructionCallback={editInstructionCallback}
           deleteInstructionCallback={deleteInstructionCallback}
-          insertInstructionCallback={insertInstructionCallback}
+          insertInstruction={insertInstruction}
+          headerCallback={headerCallback}
         />
         <IngredientCreate
           ingredient={ingredient}

@@ -8,7 +8,17 @@ import axios from 'axios';
 import RecipeList from './recipeList';
 
 export default function Edit() {
-  const [showRecipe, setShowRecipe] = useState(RECIPE_PROPERTIES);
+  const [showRecipe, setShowRecipe] = useState({
+  title: '',
+  preparationMinutes: '',
+  cookingMinutes: '',
+  readyInMinutes: '',
+  sourceUrl: '',
+  image: '',
+  extendedIngredients: [],
+  analyzedInstructions: [],
+  servings: '',
+});
   const [ingredients, setIngredients] = useState([]);
   const [instructions, setInstructions] = useState([]);
 
@@ -19,27 +29,42 @@ export default function Edit() {
     axios
       .get('http://localhost:5000/record/' + params.id)
       .then((response) => {
-        setShowRecipe({
-          title: response.data.title,
-          preparationMinutes: response.data.preparationMinutes,
-          cookingMinutes: response.data.cookingMinutes,
-          readyInMinutes: response.data.readyInMinutes,
-          sourceUrl: response.data.sourceUrl,
-          image: response.data.image,
-          extendedIngredients: response.data.extendedIngredients,
-          analyzedInstructions: response.data.analyzedInstructions,
-          servings: response.data.servings
-        });
+
+        let myObj = {};
+        for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
+            myObj[RECIPE_PROPERTIES[i]] =
+              response.data[RECIPE_PROPERTIES[i]];
+          }
+
+        setShowRecipe(myObj);
 
         setIngredients(response.data.extendedIngredients);
-        
-        const instructions = response.data.analyzedInstructions.map(instruction => instruction.step);
-        setInstructions(instructions);
+
+        setInstructions(response.data.analyzedInstructions);
       })
       .catch(function (error) {
         console.log(error);
       });
   }, []);
+
+  // Create sequence of step numbers that omit headers
+  const filtered = instructions.filter((instruction) => instruction.isHeader !== 'true');
+  
+  let j = [];
+  for (let i = 1; i < filtered.length + 1; i++) {
+    j.push(i);
+  }
+
+  const numberArray = instructions.map((instruction) => {
+    let number;
+    if (instruction.isHeader === true) {
+      number = 'none';
+    } else {
+      number = j[0];
+      j.shift();
+    }
+    return number;
+  });
 
   return (
     <div className="recipe-container container my-5 p-5">
@@ -71,20 +96,32 @@ export default function Edit() {
       <div className="recipe-wrapper">
         <section className="ingredients">
           <h2>Ingredients</h2>
-          {ingredients[0] !== undefined ? ingredients.map((ingredient, index) => (
-            <li key={index}>
-              {ingredient.amount ? ingredient.amount : ''} {ingredient.unit ? ingredient.unit : ''} {ingredient.nameClean ? ingredient.nameClean : ''}
-            </li>
-          )) : ''}
+          {ingredients[0] !== undefined
+            ? ingredients.map((ingredient, index) => (
+                <li key={index}>
+                  {ingredient.amount ? ingredient.amount : ''}{' '}
+                  {ingredient.unit ? ingredient.unit : ''}{' '}
+                  {ingredient.nameClean ? ingredient.nameClean : ''}
+                </li>
+              ))
+            : ''}
         </section>
         <section className="instructions">
           <h2>Instructions</h2>
-          {instructions.map((instruction, index) => (
-            <li key={index}>
-              <span className="instruction-number">{index + 1} </span>
-              {instruction}
+          {instructions.map((instruction, index) => {
+
+            return (
+            <li
+              className={instruction.isHeader ? 'instruction-header' : ''}
+              key={index}
+            >
+              {!instruction.isHeader && (
+                <span className="instruction-number">{numberArray[index]} </span>
+              )}
+              {instruction.step}
             </li>
-          ))}
+          );
+              })}
         </section>
       </div>
     </div>

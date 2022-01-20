@@ -4,6 +4,8 @@ const multer = require('multer');
 const { v4: uuidv4 } = require('uuid');
 let path = require('path');
 
+const RECIPE_PROPERTIES = require('../../client/src/javascript/PROPERTIES_FOR_BACKEND.js');
+
 // recordRoutes is an instance of the express router.
 // We use it to define our routes.
 // The router will be added as a middleware and will take control of requests starting with path /record.
@@ -68,22 +70,21 @@ recordRoutes.route('/record/add').post(upload.single('image'), (req, response) =
   if (req.body.image) {
     imageValue = req.body.image;
   } else if (req.file === undefined) {
-    imageValue = 'placeholder.jpg'
+    imageValue = 'placeholder.jpg';
   } else {
     imageValue = req.file.filename;
   };
 
-  let myObj = {
-    title: req.body.title,
-    extendedIngredients: JSON.parse(req.body.extendedIngredients),
-    preparationMinutes: req.body.preparationMinutes,
-    cookingMinutes: req.body.cookingMinutes,
-    readyInMinutes: req.body.readyInMinutes,
-    sourceUrl: req.body.sourceUrl,
-    image: imageValue,
-    analyzedInstructions: JSON.parse(req.body.analyzedInstructions),
-    servings: req.body.servings,
-  };
+    // Generate new object based on record properties defined in RECIPE_PROPERTIES array
+    //JSON.stringify and JSON.parse are use on front and backend respectively, specifically to handle object data coming from extendedIngredients and analyzedInstructions
+      let myObj = {};
+      for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
+        if (RECIPE_PROPERTIES[i] === 'image') {
+          myObj['image'] = imageValue;
+        } else {
+          myObj[RECIPE_PROPERTIES[i]] = JSON.parse(req.body[RECIPE_PROPERTIES[i]]);
+        }
+      }
 
   const newRecord = new Record(myObj);
 
@@ -97,18 +98,28 @@ recordRoutes.route('/record/add').post(upload.single('image'), (req, response) =
 recordRoutes.route('/update/:id').post(upload.single('image'), (req, response) => {
   let db_connect = dbo.getDb();
   let myQuery = { _id: ObjectId(req.params.id) };
+
+    let myObj = {};
+    for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
+      if (RECIPE_PROPERTIES[i] === 'image') {
+
+        //First, check to see if image is a url
+        if (req.body.image.slice(0, 4) === 'http') {
+          myObj['image'] = req.body.image;
+        } else if (req.file) {
+            myObj['image'] = req.file.filename;
+          } else {
+            myObj['image'] = req.body.image;
+          }
+      } else {
+        myObj[RECIPE_PROPERTIES[i]] = JSON.parse(
+          req.body[RECIPE_PROPERTIES[i]]
+        );
+      }
+    }
+
   let newvalues = {
-    $set: {
-      title: req.body.title,
-      extendedIngredients: JSON.parse(req.body.extendedIngredients),
-      preparationMinutes: req.body.preparationMinutes,
-      cookingMinutes: req.body.cookingMinutes,
-      readyInMinutes: req.body.readyInMinutes,
-      sourceUrl: req.body.sourceUrl,
-      image: req.file ? req.file.filename : req.body.image,
-      analyzedInstructions: JSON.parse(req.body.analyzedInstructions),
-      servings: req.body.servings,
-    },
+    $set: myObj,
   };
   db_connect
     .collection('records')
