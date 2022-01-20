@@ -27,18 +27,11 @@ export default function UrlSearch() {
     axios.get(`https://api.spoonacular.com/recipes/extract?url=${url}&apiKey=cb1c464d94f142c08b156c5beddade8b`)
     .then((response) => {
 
-        // const instructions = response.data.analyzedInstructions[0].steps.map(
-        //   (instruction) => {
-        //     if (instruction.isHeader === undefined) {
-        //       return {
-        //         ...instruction,
-        //         isHeader: false,
-        //       };
-        //     } else {
-        //       return instruction;
-        //     }
-        //   }
-        // );
+        const instructions = response.data.analyzedInstructions[0].steps;
+        const addIsHeader = instructions.map(instruction => ({
+              ...instruction,
+              isHeader: false
+          }));
 
         const formData = new FormData()
         for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
@@ -46,7 +39,7 @@ export default function UrlSearch() {
           if (RECIPE_PROPERTIES[i] === 'analyzedInstructions') {
             formData.append(
               'analyzedInstructions',
-              JSON.stringify(response.data.analyzedInstructions[0].steps)
+              JSON.stringify(addIsHeader)
             );
           } else if (RECIPE_PROPERTIES[i] === 'image') {
             formData.append('image', response.data.image);
