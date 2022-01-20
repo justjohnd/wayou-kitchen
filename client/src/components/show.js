@@ -47,6 +47,25 @@ export default function Edit() {
       });
   }, []);
 
+  // Create sequence of step numbers that omit headers
+  const filtered = instructions.filter((instruction) => instruction.isHeader !== 'true');
+  
+  let j = [];
+  for (let i = 1; i < filtered.length + 1; i++) {
+    j.push(i);
+  }
+
+  const numberArray = instructions.map((instruction) => {
+    let number;
+    if (instruction.isHeader === true) {
+      number = 'none';
+    } else {
+      number = j[0];
+      j.shift();
+    }
+    return number;
+  });
+
   return (
     <div className="recipe-container container my-5 p-5">
       <section className="d-flex">
@@ -77,20 +96,32 @@ export default function Edit() {
       <div className="recipe-wrapper">
         <section className="ingredients">
           <h2>Ingredients</h2>
-          {ingredients[0] !== undefined ? ingredients.map((ingredient, index) => (
-            <li key={index}>
-              {ingredient.amount ? ingredient.amount : ''} {ingredient.unit ? ingredient.unit : ''} {ingredient.nameClean ? ingredient.nameClean : ''}
-            </li>
-          )) : ''}
+          {ingredients[0] !== undefined
+            ? ingredients.map((ingredient, index) => (
+                <li key={index}>
+                  {ingredient.amount ? ingredient.amount : ''}{' '}
+                  {ingredient.unit ? ingredient.unit : ''}{' '}
+                  {ingredient.nameClean ? ingredient.nameClean : ''}
+                </li>
+              ))
+            : ''}
         </section>
         <section className="instructions">
           <h2>Instructions</h2>
-          {instructions.map((instruction, index) => (
-            <li className={instruction.isHeader ? "instruction-header" : ""} key={index}>
-              <span className="instruction-number">{index + 1} </span>
+          {instructions.map((instruction, index) => {
+
+            return (
+            <li
+              className={instruction.isHeader ? 'instruction-header' : ''}
+              key={index}
+            >
+              {!instruction.isHeader && (
+                <span className="instruction-number">{numberArray[index]} </span>
+              )}
               {instruction.step}
             </li>
-          ))}
+          );
+              })}
         </section>
       </div>
     </div>
