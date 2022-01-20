@@ -50,11 +50,14 @@ export default function Edit() {
     for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
       if (RECIPE_PROPERTIES[i] === 'image') {
 
-        if (image !== newImage.name && image !== 'placeholder.jpg') {
-          formData.append('image', newImage);
-        } else {
+        // First check to seet if image is a url
+        if (image.slice(0, 4) === 'http') {
           formData.append('image', image);
-        }
+        } else if (image !== newImage.name && image !== 'placeholder.jpg') {
+            formData.append('image', newImage);
+          } else {
+            formData.append('image', image);
+          }
 
       } else {
         formData.append(
@@ -75,15 +78,15 @@ export default function Edit() {
       axios
         .get('http://localhost:5000/record/' + params.id)
         .then((response) => {
-
-              let myObj = {};
-              for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
-                if (RECIPE_PROPERTIES[i] === 'image') {
-                  setImage(response.data.image);
-                } else {
-                  myObj[RECIPE_PROPERTIES[i]] = response.data[RECIPE_PROPERTIES[i]];
-                }
-              }
+          // image will load separately in the image varialbe, apart from other properties in the receipe variable
+          let myObj = {};
+          for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
+            if (RECIPE_PROPERTIES[i] === 'image') {
+              setImage(response.data.image);
+            } else {
+              myObj[RECIPE_PROPERTIES[i]] = response.data[RECIPE_PROPERTIES[i]];
+            }
+          }
 
           setRecipe(myObj);
 
@@ -96,7 +99,7 @@ export default function Edit() {
             }
           );
 
-        setIngredients(ingredientsWithId);
+          setIngredients(ingredientsWithId);
 
           // const instructions = response.data.analyzedInstructions.map(
           //   (instruction) => instruction.step

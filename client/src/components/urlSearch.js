@@ -52,18 +52,6 @@ export default function UrlSearch() {
           }
         }
 
-      // const recipe = {
-      //   title: response.data.title,
-      //   preparationMinutes: response.data.preparationMinutes,
-      //   cookingMinutes: response.data.cookingMinutes,
-      //   readyInMinutes: response.data.readyInMinutes,
-      //   sourceUrl: response.data.sourceUrl,
-      //   image: response.data.image,
-      //   extendedIngredients: JSON.stringify(response.data.extendedIngredients),
-      //   analyzedInstructions: JSON.stringify(response.data.analyzedInstructions[0].steps),
-      //   servings: response.data.servings,
-      // };
-
       axios
         .post('http://localhost:5000/record/add', formData)
         .then((res) => console.log(res.data))

@@ -29,17 +29,14 @@ export default function Edit() {
     axios
       .get('http://localhost:5000/record/' + params.id)
       .then((response) => {
-        setShowRecipe({
-          title: response.data.title,
-          preparationMinutes: response.data.preparationMinutes,
-          cookingMinutes: response.data.cookingMinutes,
-          readyInMinutes: response.data.readyInMinutes,
-          sourceUrl: response.data.sourceUrl,
-          image: response.data.image,
-          extendedIngredients: response.data.extendedIngredients,
-          analyzedInstructions: response.data.analyzedInstructions,
-          servings: response.data.servings
-        });
+
+        let myObj = {};
+        for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
+            myObj[RECIPE_PROPERTIES[i]] =
+              response.data[RECIPE_PROPERTIES[i]];
+          }
+
+        setShowRecipe(myObj);
 
         setIngredients(response.data.extendedIngredients);
 
@@ -89,7 +86,7 @@ export default function Edit() {
         <section className="instructions">
           <h2>Instructions</h2>
           {instructions.map((instruction, index) => (
-            <li key={index}>
+            <li className={instruction.isHeader ? "instruction-header" : ""} key={index}>
               <span className="instruction-number">{index + 1} </span>
               {instruction.step}
             </li>

@@ -102,11 +102,15 @@ recordRoutes.route('/update/:id').post(upload.single('image'), (req, response) =
     let myObj = {};
     for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
       if (RECIPE_PROPERTIES[i] === 'image') {
-        if (req.file) {
-          myObj['image'] = req.file.filename;
-        } else {
+
+        //First, check to see if image is a url
+        if (req.body.image.slice(0, 4) === 'http') {
           myObj['image'] = req.body.image;
-        }
+        } else if (req.file) {
+            myObj['image'] = req.file.filename;
+          } else {
+            myObj['image'] = req.body.image;
+          }
       } else {
         myObj[RECIPE_PROPERTIES[i]] = JSON.parse(
           req.body[RECIPE_PROPERTIES[i]]
