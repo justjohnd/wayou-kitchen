@@ -73,8 +73,8 @@ export default function TemplateCreateEdit(props) {
     setEditIngredient(ingredientClone);
   }
 
-  console.log('ingredient', ingredient);
-  console.log('editIngredient', editIngredient);
+  // console.log('ingredient', ingredient);
+  // console.log('editIngredient', editIngredient);
 
   function onSave() {
     const ingredientsClone = [...props.ingredients];
@@ -301,7 +301,8 @@ export default function TemplateCreateEdit(props) {
           deleteIngredientCallback={deleteIngredientCallback}
           insertIngredientCallback={insertIngredientCallback}
         />
-        <CategoryDropdown></CategoryDropdown>
+        <CategoryDropdown
+        categoriesCallback={props.categoriesCallback}></CategoryDropdown>
         <Input
           label="Preparation Minutes:"
           wrapperClassName="mb-3"

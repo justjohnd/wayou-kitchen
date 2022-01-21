@@ -4,8 +4,6 @@ import { default as ReactSelect } from 'react-select';
 import { components } from 'react-select';
 
 const Option = (props) => {
-
-  console.log(props);
   
   return (
     <div>
@@ -21,11 +19,12 @@ const Option = (props) => {
   );
 };
 
-export default function CategoryDropdown()  {
+export default function CategoryDropdown(props)  {
   const [optionSelected, setOptionSelected] = useState(null);
 
  function handleChange(selected) {
     setOptionSelected(selected);
+    props.categoriesCallback(selected);
   };
 
     return (
