@@ -20,10 +20,9 @@ const Option = (props) => {
 };
 
 export default function CategoryDropdown(props)  {
-  const [optionSelected, setOptionSelected] = useState(null);
 
  function handleChange(selected) {
-    setOptionSelected(selected);
+    // setOptionSelected(selected);
     props.categoriesCallback(selected);
   };
 
@@ -44,7 +43,7 @@ export default function CategoryDropdown(props)  {
           }}
           onChange={handleChange}
           allowSelectAll={true}
-          value={optionSelected}
+          value={props.recipe.categories}
         />
       </span>
     );
