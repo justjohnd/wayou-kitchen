@@ -36,15 +36,17 @@ export default function TemplateCreateEdit(props) {
   //Set ingredient based on data entered into ingredientsCreate fields
   function handleIngredientCallback(e) {
     const { name, value } = e.target;
-    setIngredient((prevValue) => {
-      return {
-        ...prevValue,
-        [name]: value,
-      };
-    });
-  }
 
-  console.log(ingredient);
+    const ingredientClone = {
+      ...ingredient,
+      [name]: value
+    }
+
+    const string = ingredientClone.group;
+    ingredientClone.group = parseInt(string, 10);
+
+    setIngredient(ingredientClone);
+  }
 
   function onEdit(ingredient) {
     setEditIngredient({
@@ -55,6 +57,8 @@ export default function TemplateCreateEdit(props) {
       id: ingredient.id,
     });
   }
+  console.log('ingredient', ingredient);
+  console.log('editIngredient', editIngredient);
 
   function editIngredientCallback(e) {
     const { name, value } = e.target;

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import RECIPE_PROPERTIES from '../javascript/RECIPE_PROPERTIES';
+import IngredientGroup from './ingredientGroup';
 
 // This will require to npm install axios
 import axios from 'axios';
@@ -66,6 +67,20 @@ export default function Edit() {
     return number;
   });
 
+  //Put ingredients in their on groups
+  const numberOfGroups = 3;
+  const groupArray = (numberOfGroups) => {
+    let newArray = [];
+    for (let i = 0; i < numberOfGroups; i++) {
+      const group = ingredients.filter((ingredient) => ingredient.group === i);
+      newArray.push(group);
+    }
+
+    return newArray;
+  }
+
+  const ingredientGroups = groupArray(3);
+
   return (
     <div className="recipe-container container my-5 p-5">
       <section className="d-flex">
@@ -94,34 +109,29 @@ export default function Edit() {
         </div>
       </section>
       <div className="recipe-wrapper">
-        <section className="ingredients">
-          <h2>Ingredients</h2>
-          {ingredients[0] !== undefined
-            ? ingredients.map((ingredient, index) => (
-                <li key={index}>
-                  {ingredient.amount ? ingredient.amount : ''}{' '}
-                  {ingredient.unit ? ingredient.unit : ''}{' '}
-                  {ingredient.nameClean ? ingredient.nameClean : ''}
-                </li>
-              ))
-            : ''}
-        </section>
+        {ingredients[0] !== undefined && (
+          <section className="ingredients">
+            <h2>Ingredients</h2>
+            {ingredientGroups.map(group => <IngredientGroup group={group}></IngredientGroup>)}
+          </section>
+        )}
         <section className="instructions">
           <h2>Instructions</h2>
           {instructions.map((instruction, index) => {
-
             return (
-            <li
-              className={instruction.isHeader ? 'instruction-header' : ''}
-              key={index}
-            >
-              {!instruction.isHeader && (
-                <span className="instruction-number">{numberArray[index]} </span>
-              )}
-              {instruction.step}
-            </li>
-          );
-              })}
+              <li
+                className={instruction.isHeader ? 'instruction-header' : ''}
+                key={index}
+              >
+                {!instruction.isHeader && (
+                  <span className="instruction-number">
+                    {numberArray[index]}{' '}
+                  </span>
+                )}
+                {instruction.step}
+              </li>
+            );
+          })}
         </section>
       </div>
     </div>

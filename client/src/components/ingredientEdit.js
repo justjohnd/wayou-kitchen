@@ -15,8 +15,6 @@ function IngredientEdit(props) {
     }
   }
 
-  console.log(isVisible);
-
   return (
     <div>
       <IngredientInput
