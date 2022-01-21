@@ -34,42 +34,46 @@ export default function TemplateCreateEdit(props) {
 
   // These functions control editing ingredients properties
   //Set ingredient based on data entered into ingredientsCreate fields
-  function handleIngredientCallback(e) {
+
+  function sanitizeIngredient(e, stateConstant, setStateConstant) {
     const { name, value } = e.target;
 
     const ingredientClone = {
-      ...ingredient,
-      [name]: value
-    }
+      ...stateConstant,
+      [name]: value,
+    };
 
     const string = ingredientClone.group;
     ingredientClone.group = parseInt(string, 10);
 
-    setIngredient(ingredientClone);
+    setStateConstant(ingredientClone);
   }
 
-  function onEdit(ingredient) {
-    setEditIngredient({
+  function createIngredientCallback(e) {
+    sanitizeIngredient(e, ingredient, setIngredient);
+  }
+
+    function editIngredientCallback(e) {
+    sanitizeIngredient(e, editIngredient, setEditIngredient);
+  }
+
+  function showIngredientCallback(ingredient) {
+
+    const ingredientClone = {
       nameClean: ingredient.nameClean,
       amount: ingredient.amount,
       unit: ingredient.unit,
       group: ingredient.group,
       id: ingredient.id,
-    });
+    }
+    const string = ingredientClone.group;
+    ingredientClone.group = parseInt(string, 10);
+
+    setEditIngredient(ingredientClone);
   }
+
   console.log('ingredient', ingredient);
   console.log('editIngredient', editIngredient);
-
-  function editIngredientCallback(e) {
-    const { name, value } = e.target;
-
-    setEditIngredient((prevValue) => {
-      return {
-        ...prevValue,
-        [name]: value,
-      };
-    });
-  }
 
   function onSave() {
     const ingredientsClone = [...props.ingredients];
@@ -292,9 +296,9 @@ export default function TemplateCreateEdit(props) {
           ingredient={ingredient}
           ingredients={props.ingredients}
           editIngredient={editIngredient}
-          onEdit={onEdit}
+          showIngredientCallback={showIngredientCallback}
           onSave={onSave}
-          handleIngredientCallback={handleIngredientCallback}
+          createIngredientCallback={createIngredientCallback}
           addIngredientCallback={addIngredientCallback}
           editIngredientCallback={editIngredientCallback}
           deleteIngredientCallback={deleteIngredientCallback}

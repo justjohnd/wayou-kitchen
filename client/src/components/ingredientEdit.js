@@ -8,7 +8,7 @@ function IngredientEdit(props) {
   function handleEdit(e) {
     e.preventDefault(); 
     setIsVisible(!isVisible);
-    props.onEdit(props.ingredient);
+    props.showIngredientCallback(props.ingredient);
 
     if (isVisible === false) {
       props.onSave();
@@ -56,13 +56,13 @@ function IngredientEdit(props) {
             <option value="0">0</option>
             <option value="1">1</option>
             <option value="2">2</option>
+            <option value="10">Optional</option>
           </select>
         </label>
       )}
       {isVisible && (
         <label className="d-inline-block me-2">
           <select
-            onChange={(e) => props.editIngredientCallback(e)}
             value={props.ingredient.group}
             selected
             name="group"
@@ -72,6 +72,7 @@ function IngredientEdit(props) {
             <option value="0">0</option>
             <option value="1">1</option>
             <option value="2">2</option>
+            <option value="10">Optional</option>
           </select>
         </label>
       )}

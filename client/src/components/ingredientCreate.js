@@ -26,7 +26,7 @@ export default function IngredientCreate(props) {
         value={props.ingredient.nameClean}
         onChange={(e) => {
           e.preventDefault();
-          props.handleIngredientCallback(e);
+          props.createIngredientCallback(e);
         }}
         placeholder="Enter Ingredient"
       />
@@ -38,7 +38,7 @@ export default function IngredientCreate(props) {
         type="number"
         value={props.ingredient.amount}
         onChange={(e) => {
-          props.handleIngredientCallback(e);
+          props.createIngredientCallback(e);
         }}
         placeholder=""
       />
@@ -50,13 +50,13 @@ export default function IngredientCreate(props) {
         type="text"
         value={props.ingredient.unit}
         onChange={(e) => {
-          props.handleIngredientCallback(e);
+          props.createIngredientCallback(e);
         }}
         placeholder=""
       />
       <label>
         <select
-          onChange={(e) => props.handleIngredientCallback(e)}
+          onChange={(e) => props.createIngredientCallback(e)}
           value={props.ingredient.group}
           selected
           name="group"
@@ -65,6 +65,7 @@ export default function IngredientCreate(props) {
           <option value="0">0</option>
           <option value="1">1</option>
           <option value="2">2</option>
+          <option value="3">Optional Ingredients</option>
         </select>
       </label>
       <Button
@@ -85,7 +86,7 @@ export default function IngredientCreate(props) {
               ingredient={ingredient}
               ingredients={props.ingredients}
               editIngredient={props.editIngredient}
-              onEdit={props.onEdit}
+              showIngredientCallback={props.showIngredientCallback}
               onSave={props.onSave}
               editIngredientCallback={props.editIngredientCallback}
               deleteIngredient={deleteIngredient}

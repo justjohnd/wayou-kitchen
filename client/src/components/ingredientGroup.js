@@ -10,6 +10,7 @@ function IngredientGroup(props) {
 
   return (
     <div>
+      {groupNumber === 10 && <h4>Optional Ingredients</h4>}
       {props.group.length > 0 && (
         <div className={`group group${groupNumber}`}>
           {props.group.length > 0 &&
