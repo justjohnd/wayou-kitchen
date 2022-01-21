@@ -10,16 +10,16 @@ import RecipeList from './recipeList';
 
 export default function Edit() {
   const [showRecipe, setShowRecipe] = useState({
-  title: '',
-  preparationMinutes: '',
-  cookingMinutes: '',
-  readyInMinutes: '',
-  sourceUrl: '',
-  image: '',
-  extendedIngredients: [],
-  analyzedInstructions: [],
-  servings: '',
-});
+    title: '',
+    preparationMinutes: '',
+    cookingMinutes: '',
+    readyInMinutes: '',
+    sourceUrl: '',
+    image: '',
+    extendedIngredients: [],
+    analyzedInstructions: [],
+    servings: '',
+  });
   const [ingredients, setIngredients] = useState([]);
   const [instructions, setInstructions] = useState([]);
 
@@ -30,12 +30,10 @@ export default function Edit() {
     axios
       .get('http://localhost:5000/record/' + params.id)
       .then((response) => {
-
         let myObj = {};
         for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
-            myObj[RECIPE_PROPERTIES[i]] =
-              response.data[RECIPE_PROPERTIES[i]];
-          }
+          myObj[RECIPE_PROPERTIES[i]] = response.data[RECIPE_PROPERTIES[i]];
+        }
 
         setShowRecipe(myObj);
 
@@ -49,8 +47,10 @@ export default function Edit() {
   }, []);
 
   // Create sequence of step numbers that omit headers
-  const filtered = instructions.filter((instruction) => instruction.isHeader !== 'true');
-  
+  const filtered = instructions.filter(
+    (instruction) => instruction.isHeader !== 'true'
+  );
+
   let j = [];
   for (let i = 1; i < filtered.length + 1; i++) {
     j.push(i);
@@ -67,8 +67,12 @@ export default function Edit() {
     return number;
   });
 
+  //Find maximum number of possible ingredient groups presented on the page
+  const ingredientGroupNumbers = ingredients.map(ingredient => ingredient.group);
+  const maxGroupNumber = Math.max(...ingredientGroupNumbers);
+  const numberOfGroups = maxGroupNumber + 1;
+
   //Put ingredients in their on groups
-  const numberOfGroups = 3;
   const groupArray = (numberOfGroups) => {
     let newArray = [];
     for (let i = 0; i < numberOfGroups; i++) {
@@ -77,9 +81,9 @@ export default function Edit() {
     }
 
     return newArray;
-  }
+  };
 
-  const ingredientGroups = groupArray(3);
+  const ingredientGroups = groupArray(numberOfGroups);
 
   return (
     <div className="recipe-container container my-5 p-5">
@@ -112,7 +116,9 @@ export default function Edit() {
         {ingredients[0] !== undefined && (
           <section className="ingredients">
             <h2>Ingredients</h2>
-            {ingredientGroups.map(group => <IngredientGroup group={group}></IngredientGroup>)}
+            {ingredientGroups.map((group) => (
+              <IngredientGroup group={group}></IngredientGroup>
+            ))}
           </section>
         )}
         <section className="instructions">
