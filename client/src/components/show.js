@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import RECIPE_PROPERTIES from '../javascript/RECIPE_PROPERTIES';
+import IngredientGroup from './ingredientGroup';
+
+import { v4 as uuidv4 } from 'uuid';
 
 // This will require to npm install axios
 import axios from 'axios';
@@ -9,16 +12,16 @@ import RecipeList from './recipeList';
 
 export default function Edit() {
   const [showRecipe, setShowRecipe] = useState({
-  title: '',
-  preparationMinutes: '',
-  cookingMinutes: '',
-  readyInMinutes: '',
-  sourceUrl: '',
-  image: '',
-  extendedIngredients: [],
-  analyzedInstructions: [],
-  servings: '',
-});
+    title: '',
+    preparationMinutes: '',
+    cookingMinutes: '',
+    readyInMinutes: '',
+    sourceUrl: '',
+    image: '',
+    extendedIngredients: [],
+    analyzedInstructions: [],
+    servings: '',
+  });
   const [ingredients, setIngredients] = useState([]);
   const [instructions, setInstructions] = useState([]);
 
@@ -29,12 +32,10 @@ export default function Edit() {
     axios
       .get('http://localhost:5000/record/' + params.id)
       .then((response) => {
-
         let myObj = {};
         for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
-            myObj[RECIPE_PROPERTIES[i]] =
-              response.data[RECIPE_PROPERTIES[i]];
-          }
+          myObj[RECIPE_PROPERTIES[i]] = response.data[RECIPE_PROPERTIES[i]];
+        }
 
         setShowRecipe(myObj);
 
@@ -48,8 +49,10 @@ export default function Edit() {
   }, []);
 
   // Create sequence of step numbers that omit headers
-  const filtered = instructions.filter((instruction) => instruction.isHeader !== 'true');
-  
+  const filtered = instructions.filter(
+    (instruction) => instruction.isHeader !== 'true'
+  );
+
   let j = [];
   for (let i = 1; i < filtered.length + 1; i++) {
     j.push(i);
@@ -65,6 +68,31 @@ export default function Edit() {
     }
     return number;
   });
+
+  //Find maximum number of possible ingredient groups presented on the page
+  const ingredientGroupNumbers = ingredients.map(ingredient => {
+    if (!ingredient.group) {
+      ingredient.group = 0;
+    }
+    return ingredient.group;
+  });
+  const maxGroupNumber = Math.max(...ingredientGroupNumbers);
+  const numberOfGroups = maxGroupNumber + 1;
+
+  //Put ingredients in their on groups
+  const groupArray = (numberOfGroups) => {
+    let newArray = [];
+    for (let i = 0; i < numberOfGroups; i++) {
+      const group = ingredients.filter((ingredient) => ingredient.group === i);
+      newArray.push(group);
+    }
+
+    return newArray;
+  };
+
+  const ingredientGroups = groupArray(numberOfGroups);
+
+  console.log(ingredientGroups);
 
   return (
     <div className="recipe-container container my-5 p-5">
@@ -94,34 +122,34 @@ export default function Edit() {
         </div>
       </section>
       <div className="recipe-wrapper">
-        <section className="ingredients">
-          <h2>Ingredients</h2>
-          {ingredients[0] !== undefined
-            ? ingredients.map((ingredient, index) => (
-                <li key={index}>
-                  {ingredient.amount ? ingredient.amount : ''}{' '}
-                  {ingredient.unit ? ingredient.unit : ''}{' '}
-                  {ingredient.nameClean ? ingredient.nameClean : ''}
-                </li>
-              ))
-            : ''}
-        </section>
+        {ingredients[0] !== undefined && (
+          <section className="ingredients">
+            <h2>Ingredients</h2>
+            {ingredientGroups.map((group) => (
+              <IngredientGroup 
+              group={group}
+              key={uuidv4()}
+              ></IngredientGroup>
+            ))}
+          </section>
+        )}
         <section className="instructions">
           <h2>Instructions</h2>
           {instructions.map((instruction, index) => {
-
             return (
-            <li
-              className={instruction.isHeader ? 'instruction-header' : ''}
-              key={index}
-            >
-              {!instruction.isHeader && (
-                <span className="instruction-number">{numberArray[index]} </span>
-              )}
-              {instruction.step}
-            </li>
-          );
-              })}
+              <li
+                className={instruction.isHeader ? 'instruction-header' : ''}
+                key={index}
+              >
+                {!instruction.isHeader && (
+                  <span className="instruction-number">
+                    {numberArray[index]}{' '}
+                  </span>
+                )}
+                {instruction.step}
+              </li>
+            );
+          })}
         </section>
       </div>
     </div>

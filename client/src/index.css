@@ -65,6 +65,26 @@ a:hover {
   line-height: 1.9;
 }
 
+.group {
+  border-radius: 8px;
+  padding: 4px;
+  margin-bottom: 8px;
+}
+
+.group0 {
+  border: 2px solid #ea5c2b;
+}
+.group1 {
+  border: 2px solid #ff7f3f;
+}
+.group2 {
+  border: 2px solid #f6d860;
+}
+
+.group3 {
+  color: #95cd41;
+}
+
 .instruction-number {
   font-weight: 700;
   color: #f90716;

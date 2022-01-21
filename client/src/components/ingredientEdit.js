@@ -8,7 +8,7 @@ function IngredientEdit(props) {
   function handleEdit(e) {
     e.preventDefault(); 
     setIsVisible(!isVisible);
-    props.onEdit(props.ingredient);
+    props.showIngredientCallback(props.ingredient);
 
     if (isVisible === false) {
       props.onSave();
@@ -44,6 +44,39 @@ function IngredientEdit(props) {
         onChange={(e) => props.editIngredientCallback(e)}
         value={props.editIngredient.unit}
       />
+      {!isVisible && (
+        <label className="d-inline-block me-2">
+          <select
+            onChange={(e) => props.editIngredientCallback(e)}
+            value={props.editIngredient.group}
+            selected
+            name="group"
+            type="number"
+          >
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="10">Optional</option>
+          </select>
+        </label>
+      )}
+      {isVisible && (
+        <label className="d-inline-block me-2">
+          <select
+            value={props.ingredient.group}
+            selected
+            name="group"
+            type="number"
+            disabled="disabled"
+          >
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="10">Optional</option>
+          </select>
+        </label>
+      )}
+
       <Button
         buttonWrapper="d-inline-block"
         className="ms-2 mb-1"
