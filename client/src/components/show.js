@@ -4,6 +4,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import RECIPE_PROPERTIES from '../javascript/RECIPE_PROPERTIES';
 import IngredientGroup from './ingredientGroup';
 
+import { v4 as uuidv4 } from 'uuid';
+
 // This will require to npm install axios
 import axios from 'axios';
 import RecipeList from './recipeList';
@@ -68,7 +70,12 @@ export default function Edit() {
   });
 
   //Find maximum number of possible ingredient groups presented on the page
-  const ingredientGroupNumbers = ingredients.map(ingredient => ingredient.group);
+  const ingredientGroupNumbers = ingredients.map(ingredient => {
+    if (!ingredient.group) {
+      ingredient.group = 0;
+    }
+    return ingredient.group;
+  });
   const maxGroupNumber = Math.max(...ingredientGroupNumbers);
   const numberOfGroups = maxGroupNumber + 1;
 
@@ -117,7 +124,10 @@ export default function Edit() {
           <section className="ingredients">
             <h2>Ingredients</h2>
             {ingredientGroups.map((group) => (
-              <IngredientGroup group={group}></IngredientGroup>
+              <IngredientGroup 
+              group={group}
+              key={uuidv4()}
+              ></IngredientGroup>
             ))}
           </section>
         )}
