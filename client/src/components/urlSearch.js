@@ -79,7 +79,7 @@ export default function UrlSearch() {
           />
           <Button
             buttonWrapper="d-inline-block"
-            className="ms-2"
+            className="ms-2 bg-dark"
             type="submit"
             buttonText="Show Recipe"
           />

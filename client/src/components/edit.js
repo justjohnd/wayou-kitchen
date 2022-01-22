@@ -27,8 +27,6 @@ export default function Edit() {
     setRecipe(data);
   }
 
-  console.log(recipe);
-
   function imageCallback(data) {
     setNewImage(data);
   }

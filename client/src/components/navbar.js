@@ -12,7 +12,7 @@ import UrlSearch from './urlSearch';
 const Navbar = () => {
   return (
     <div>
-      <nav className="p-3 navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="p-3 container navbar navbar-expand-lg navbar-light">
         <NavLink className="navbar-brand" to="/">
           Wayou Kitchen!
         </NavLink>
