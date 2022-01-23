@@ -92,8 +92,6 @@ export default function Edit() {
 
   const ingredientGroups = groupArray(numberOfGroups);
 
-  console.log(ingredientGroups);
-
   return (
     <div className="recipe-container container my-5 p-5">
       <section className="d-flex">

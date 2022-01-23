@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-// This will require to npm install axios
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-
+import { v4 as uuidv4 } from 'uuid';
+import RecipeGroup from './recipeGroup';
 import { categories } from '../javascript/categories';
 
 export default function RecipeList() {
@@ -33,20 +32,21 @@ export default function RecipeList() {
     });
   }
 
-  console.log(records);
-
   //Put records in their on groups
+  const categoryTypes = categories.map((category) => category.value);
   const groupArray = () => {
-    const categoryTypes = categories.map(category => category.value);
 
     let newArray = [];
     for (let i = 0; i < categories.length; i++) {
       const group = records.filter((record) => {
         if (record.categories === undefined) {
           record.categories = [];
-          record.categories[0] = "other";
+          record.categories[0] = {value: "other"};
         }
-        return record.categories[0] === categoryTypes[i];
+
+        if (record.categories[0].value === categoryTypes[i]) {
+          return record;
+        };
       });
       newArray.push(group);
     }
@@ -56,41 +56,21 @@ export default function RecipeList() {
 
   const recordCategories = groupArray();
 
-  console.log(recordCategories);
+  console.log(records);
 
   // This following section will display the table with the records of individuals.
   return (
     <div className="p-3 container">
       <h3>Recipes</h3>
-      <div className="recipe-home-container">
-        {records.map((currentrecord) => {
-          return (
-            <div className="recipe-home">
-              <img
-                className="recipe-image mb-2"
-                src={
-                  currentrecord.image.slice(0, 4) === 'http'
-                    ? currentrecord.image
-                    : './images/' + currentrecord.image
-                }
-              />
-              <div className="px-1 title">{currentrecord.title}</div>
-              <div className="px-1">
-                <Link to={'/show/' + currentrecord._id}>Show</Link> |
-                <Link to={'/edit/' + currentrecord._id}>Edit</Link> |
-                <a
-                  href="/"
-                  onClick={() => {
-                    deleteRecord(currentrecord._id);
-                  }}
-                >
-                  Delete
-                </a>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      {recordCategories.map((categoryRecords, index) => (
+        <RecipeGroup
+          key={uuidv4()}
+          index={index}
+          categoryTypes={categoryTypes}
+          categoryRecords={categoryRecords}
+          deleteRecord={deleteRecord}
+        />
+      ))}
     </div>
   );
 }
