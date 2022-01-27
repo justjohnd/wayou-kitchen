@@ -120,6 +120,7 @@ recordRoutes.route('/update/:id').post(upload.single('image'), (req, response) =
 
   let newvalues = {
     $set: myObj,
+    $currentDate: { lastModified: true },
   };
   db_connect
     .collection('records')
