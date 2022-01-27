@@ -9,28 +9,32 @@ const recordSchema = new Schema({
     required: true,
     trim: true,
   },
-    extendedIngredients: [{
-    nameClean: String,
-    amount: String,
-    unit: String,
-    group: Number
-  }],
-    preparationMinutes: {
+  dateCreated: { type: Date },
+  extendedIngredients: [
+    {
+      nameClean: String,
+      amount: String,
+      unit: String,
+      group: Number,
+    },
+  ],
+  preparationMinutes: {
     type: String,
   },
-    cookingMinutes: {
+  cookingMinutes: {
     type: String,
   },
-    readyInMinutes: {
+  readyInMinutes: {
     type: String,
   },
-    sourceUrl: {
+  sourceUrl: {
     type: String,
   },
-    image: {
+  image: {
     type: String,
   },
-    analyzedInstructions: [{number: Number, step: String, isHeader: Boolean}],
+  analyzedInstructions: [{ number: Number, step: String, isHeader: Boolean }],
+  categories: [{ value: String }],
   servings: {
     type: String,
   },

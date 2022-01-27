@@ -69,6 +69,9 @@ export default function Edit() {
     return number;
   });
 
+  //Ingredient groups section
+  let ingredientGroups;
+  if(ingredients[0] !== "") {
   //Find maximum number of possible ingredient groups presented on the page
   const ingredientGroupNumbers = ingredients.map(ingredient => {
     if (!ingredient.group) {
@@ -90,9 +93,8 @@ export default function Edit() {
     return newArray;
   };
 
-  const ingredientGroups = groupArray(numberOfGroups);
-
-  console.log(ingredientGroups);
+  ingredientGroups = groupArray(numberOfGroups);
+}
 
   return (
     <div className="recipe-container container my-5 p-5">
@@ -122,7 +124,7 @@ export default function Edit() {
         </div>
       </section>
       <div className="recipe-wrapper">
-        {ingredients[0] !== undefined && (
+        {ingredients[0] !== "" && (
           <section className="ingredients">
             <h2>Ingredients</h2>
             {ingredientGroups.map((group) => (

@@ -17,18 +17,14 @@ export default function Create() {
     setRecipe(data);
   }
 
-  console.log(recipe);
-
   function imageCallback(data) {
-
-    setRecipe((prevValue) => 
-    { 
+    setRecipe((prevValue) => {
       return {
-      ...prevValue, 
-      image: data
-    }
-  });
-}
+        ...prevValue,
+        image: data,
+      };
+    });
+  }
 
   function ingredientsCallback(data) {
     setIngredients(data);
@@ -38,19 +34,34 @@ export default function Create() {
     setDataArray(data);
   }
 
+  //Receive selected categories and set to recipe
+  function categoriesCallback(optionSelected) {
+    setRecipe((prevValue) => {
+      return {
+        ...prevValue,
+        categories: optionSelected,
+      };
+    });
+  }
+
+  console.log(recipe);
+
   function handleRecipe(e) {
     e.preventDefault();
     // When post request is sent to the create url, axios will add a new record to the database.
+    recipe.dateCreated = new Date();
 
     const formData = new FormData();
     for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
-
       if (RECIPE_PROPERTIES[i] === 'image') {
         formData.append('image', recipe.image);
       } else {
-        formData.append(RECIPE_PROPERTIES[i], JSON.stringify(recipe[RECIPE_PROPERTIES[i]]));
+        formData.append(
+          RECIPE_PROPERTIES[i],
+          JSON.stringify(recipe[RECIPE_PROPERTIES[i]])
+        );
+      }
     }
-  }
 
     axios
       .post('http://localhost:5000/record/add', formData)
@@ -74,6 +85,7 @@ export default function Create() {
         dataArrayCallback={dataArrayCallback}
         imageCallback={imageCallback}
         changeImage={changeImage}
+        categoriesCallback={categoriesCallback}
       />
     </div>
   );

@@ -33,23 +33,25 @@ export default function UrlSearch() {
               isHeader: false
           }));
 
+          response.data.categories = [{value: 'other'}];
+          response.data.dateCreated = new Date();
+
         const formData = new FormData()
         for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
 
-          if (RECIPE_PROPERTIES[i] === 'analyzedInstructions') {
-            formData.append(
-              'analyzedInstructions',
-              JSON.stringify(addIsHeader)
-            );
-          } else if (RECIPE_PROPERTIES[i] === 'image') {
-            formData.append('image', response.data.image);
-          }
-          else {
-            formData.append(
-              RECIPE_PROPERTIES[i],
-              JSON.stringify(response.data[RECIPE_PROPERTIES[i]])
-            );
-          }
+            if (RECIPE_PROPERTIES[i] === 'analyzedInstructions') {
+              formData.append(
+                'analyzedInstructions',
+                JSON.stringify(addIsHeader)
+              );
+            } else if (RECIPE_PROPERTIES[i] === 'image') {
+              formData.append('image', response.data.image);
+            } else {
+              formData.append(
+                RECIPE_PROPERTIES[i],
+                JSON.stringify(response.data[RECIPE_PROPERTIES[i]])
+              );
+            }
         }
 
       axios
@@ -79,7 +81,7 @@ export default function UrlSearch() {
           />
           <Button
             buttonWrapper="d-inline-block"
-            className="ms-2"
+            className="ms-2 bg-dark"
             type="submit"
             buttonText="Show Recipe"
           />

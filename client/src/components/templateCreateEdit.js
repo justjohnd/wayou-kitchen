@@ -6,6 +6,7 @@ import IngredientCreate from './ingredientCreate';
 import InstructionCreate from './instructionCreate';
 import Input from './input';
 import Button from './button';
+import CategoryDropdown from './categoryDropdown';
 
 export default function TemplateCreateEdit(props) {
 
@@ -72,8 +73,8 @@ export default function TemplateCreateEdit(props) {
     setEditIngredient(ingredientClone);
   }
 
-  console.log('ingredient', ingredient);
-  console.log('editIngredient', editIngredient);
+  // console.log('ingredient', ingredient);
+  // console.log('editIngredient', editIngredient);
 
   function onSave() {
     const ingredientsClone = [...props.ingredients];
@@ -197,10 +198,6 @@ export default function TemplateCreateEdit(props) {
     AddInstructionToRecipe(newArray);
   }
 
-
-
-
-
   function deleteInstructionCallback(id) {
     const newArray = [...props.dataArray];
     const filtered = newArray.filter((item, index) => {
@@ -304,6 +301,9 @@ export default function TemplateCreateEdit(props) {
           deleteIngredientCallback={deleteIngredientCallback}
           insertIngredientCallback={insertIngredientCallback}
         />
+        <CategoryDropdown
+        recipe={props.recipe}
+        categoriesCallback={props.categoriesCallback}></CategoryDropdown>
         <Input
           label="Preparation Minutes:"
           wrapperClassName="mb-3"

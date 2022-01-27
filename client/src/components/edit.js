@@ -12,7 +12,7 @@ export default function Edit() {
   const [recipe, setRecipe] = useState(RECIPE_OBJECT);
   const [ingredients, setIngredients] = useState([]);
   const [dataArray, setDataArray] = useState([]);
-  const [newImage, setNewImage] = useState({name: 'noImage'});
+  const [newImage, setNewImage] = useState({ name: 'noImage' });
   const [image, setImage] = useState('');
   const [changeImage, setChangeImage] = useState(false);
 
@@ -20,16 +20,16 @@ export default function Edit() {
     setChangeImage(true);
     if (data === 'remove') {
       setImage('placeholder.jpg');
+    }
   }
-}
 
   function recipeCallback(data) {
     setRecipe(data);
   }
 
-    function imageCallback(data) {
-      setNewImage(data);
-    }
+  function imageCallback(data) {
+    setNewImage(data);
+  }
 
   function ingredientsCallback(data) {
     setIngredients(data);
@@ -37,6 +37,16 @@ export default function Edit() {
 
   function dataArrayCallback(data) {
     setDataArray(data);
+  }
+
+  //Receive selected categories and set to recipe
+  function categoriesCallback(optionSelected) {
+    setRecipe((prevValue) => {
+      return {
+        ...prevValue,
+        categories: optionSelected,
+      };
+    });
   }
 
   let params = useParams();
@@ -49,16 +59,14 @@ export default function Edit() {
 
     for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
       if (RECIPE_PROPERTIES[i] === 'image') {
-
         // First check to seet if image is a url
         if (image.slice(0, 4) === 'http') {
           formData.append('image', image);
         } else if (image !== newImage.name && image !== 'placeholder.jpg') {
-            formData.append('image', newImage);
-          } else {
-            formData.append('image', image);
-          }
-
+          formData.append('image', newImage);
+        } else {
+          formData.append('image', image);
+        }
       } else {
         formData.append(
           RECIPE_PROPERTIES[i],
@@ -67,52 +75,49 @@ export default function Edit() {
       }
     }
 
-      // This will send a post{} request to update the data in the database.
-      axios
-        .post('http://localhost:5000/update/' + params.id, formData)
-        .then((res) => console.log(res.data));
+    // This will send a post{} request to update the data in the database.
+    axios
+      .post('http://localhost:5000/update/' + params.id, formData)
+      .then((res) => console.log(res.data));
   }
 
-    // This will get the record based on the id from the database.
-    useEffect(() => {
-      axios
-        .get('http://localhost:5000/record/' + params.id)
-        .then((response) => {
-          // image will load separately in the image varialbe, apart from other properties in the receipe variable
-          let myObj = {};
-          for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
-            if (RECIPE_PROPERTIES[i] === 'image') {
-              setImage(response.data.image);
-            } else {
-              myObj[RECIPE_PROPERTIES[i]] = response.data[RECIPE_PROPERTIES[i]];
-            }
+  // This will get the record based on the id from the database.
+  useEffect(() => {
+    axios
+      .get('http://localhost:5000/record/' + params.id)
+      .then((response) => {
+        // image will load separately in the image varialbe, apart from other properties in the receipe variable
+        let myObj = {};
+        for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
+          if (RECIPE_PROPERTIES[i] === 'image') {
+            setImage(response.data.image);
+          } else {
+            myObj[RECIPE_PROPERTIES[i]] = response.data[RECIPE_PROPERTIES[i]];
           }
+        }
 
-          setRecipe(myObj);
+        setRecipe(myObj);
 
-          const ingredientsWithId = response.data.extendedIngredients.map(
-            (ingredient) => {
-              return {
-                ...ingredient,
-                id: ingredient._id,
-              };
-            }
-          );
+        const ingredientsWithId = response.data.extendedIngredients.map(
+          (ingredient) => {
+            return {
+              ...ingredient,
+              id: ingredient._id,
+            };
+          }
+        );
 
-          setIngredients(ingredientsWithId);
+        setIngredients(ingredientsWithId);
 
-          // const instructions = response.data.analyzedInstructions.map(
-          //   (instruction) => instruction.step
-          // );
-          setDataArray(response.data.analyzedInstructions);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }, []);
-
-    console.log('ingredients', ingredients);
-
+        // const instructions = response.data.analyzedInstructions.map(
+        //   (instruction) => instruction.step
+        // );
+        setDataArray(response.data.analyzedInstructions);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
 
   // This following section will display the form that takes the input from the user.
   return (
@@ -130,6 +135,7 @@ export default function Edit() {
         imageCallback={imageCallback}
         changeImage={changeImage}
         changeImageCallback={changeImageCallback}
+        categoriesCallback={categoriesCallback}
       />
     </div>
   );
