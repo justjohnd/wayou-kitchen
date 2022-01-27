@@ -49,6 +49,7 @@ export default function Create() {
   function handleRecipe(e) {
     e.preventDefault();
     // When post request is sent to the create url, axios will add a new record to the database.
+    recipe.dateCreated = new Date();
 
     const formData = new FormData();
     for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {

@@ -8,6 +8,8 @@ const RECIPE_PROPERTIES = [
   'extendedIngredients',
   'analyzedInstructions',
   'servings',
+  'categories',
+  'dateCreated'
 ];
 
 let RECIPE_OBJECT = {};

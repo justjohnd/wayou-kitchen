@@ -8,6 +8,8 @@ const RECIPE_PROPERTIES = [
   'extendedIngredients',
   'analyzedInstructions',
   'servings',
+  'categories',
+  'dateCreated',
 ];
 
 module.exports = RECIPE_PROPERTIES;

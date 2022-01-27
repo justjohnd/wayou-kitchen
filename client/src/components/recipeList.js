@@ -3,6 +3,7 @@ import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import RecipeGroup from './recipeGroup';
 import { categories } from '../javascript/categories';
+import Recipe from './recipe';
 
 export default function RecipeList() {
   const [record, setRecord] = useState({});
@@ -13,22 +14,45 @@ export default function RecipeList() {
     axios
       .get('http://localhost:5000/record/')
       .then((response) => {
-        // setRecords(response.data);
         for (let i = 0; i < response.data.length; i++) {
+          // Verify DateCreated data is available, if not, add arbitrary older date to place those items at bottom of list
+          if (!response.data[i].dateCreated) {
+            response.data[i].dateCreated = new Date('August 19, 1975 23:15:30');
+          }
+          // Verify catagegories data is available. If not add value: other
           if (!response.data[i].categories) {
-            response.data[i].categories = [{value: 'other'}];
+            response.data[i].categories = [{ value: 'other' }];
           } else if (response.data[i].categories.length === 0) {
-          response.data[i].categories.push({value: 'other'});
+            response.data[i].categories.push({ value: 'other' });
+          }
         }
-      }
 
-      console.log(response.data);
-        setRecords(response.data);
+        //Order recipes for display with most recent data created first
+        const ordered = [];
+
+        while (response.data.length > 0) {
+          const minValue = response.data.reduce((prev, cur) => {
+            if (prev.dateCreated > cur.dateCreated) {
+              return prev;
+            } else {
+              return cur;
+            }
+          });
+
+          ordered.push(minValue);
+
+          const minValueIndex = response.data.indexOf(minValue);
+          response.data.splice(minValueIndex, 1);
+        }
+
+        setRecords(ordered);
       })
       .catch(function (error) {
         console.log(error);
       });
   }, []);
+
+
 
   // This method will delete a record based on the method
   function deleteRecord(id) {
@@ -43,7 +67,6 @@ export default function RecipeList() {
 
   //Put records in their on groups
   const categoryTypes = categories.map((category) => category.value);
-  console.log(categoryTypes);
   const groupArray = () => {
 
     let newArray = [];
@@ -62,13 +85,16 @@ export default function RecipeList() {
   };
 
   const recordCategories = groupArray();
-  console.log(recordCategories);
 
   // This following section will display the table with the records of individuals.
   return (
     <div className="p-3 container">
       <h3>Recipes</h3>
-      {recordCategories.map((categoryRecords, index) => (
+      <Recipe
+      recordArray={records}
+      deleteRecord={deleteRecord}
+      />
+      {/* {recordCategories.map((categoryRecords, index) => (
         <RecipeGroup
           key={uuidv4()}
           index={index}
@@ -76,7 +102,7 @@ export default function RecipeList() {
           categoryRecords={categoryRecords}
           deleteRecord={deleteRecord}
         />
-      ))}
+      ))} */}
     </div>
   );
 }

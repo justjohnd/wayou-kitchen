@@ -9,6 +9,7 @@ const recordSchema = new Schema({
     required: true,
     trim: true,
   },
+  dateCreated: { type: Date },
   extendedIngredients: [
     {
       nameClean: String,

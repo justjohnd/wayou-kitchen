@@ -33,6 +33,8 @@ export default function UrlSearch() {
               isHeader: false
           }));
 
+        response.date.dateCreated = new Date();
+
         const formData = new FormData()
         for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
 
