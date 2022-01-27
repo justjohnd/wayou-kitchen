@@ -14,6 +14,15 @@ export default function RecipeList() {
       .get('http://localhost:5000/record/')
       .then((response) => {
         // setRecords(response.data);
+        for (let i = 0; i < response.data.length; i++) {
+          if (!response.data[i].categories) {
+            response.data[i].categories = [{value: 'other'}];
+          } else if (response.data[i].categories.length === 0) {
+          response.data[i].categories.push({value: 'other'});
+        }
+      }
+
+      console.log(response.data);
         setRecords(response.data);
       })
       .catch(function (error) {
@@ -34,15 +43,13 @@ export default function RecipeList() {
 
   //Put records in their on groups
   const categoryTypes = categories.map((category) => category.value);
+  console.log(categoryTypes);
   const groupArray = () => {
 
     let newArray = [];
     for (let i = 0; i < categories.length; i++) {
       const group = records.filter((record) => {
-        if (record.categories === undefined) {
-          record.categories = [];
-          record.categories[0] = {value: "other"};
-        }
+
 
         if (record.categories[0].value === categoryTypes[i]) {
           return record;
@@ -55,8 +62,7 @@ export default function RecipeList() {
   };
 
   const recordCategories = groupArray();
-
-  console.log(records);
+  console.log(recordCategories);
 
   // This following section will display the table with the records of individuals.
   return (

@@ -14,7 +14,7 @@ function RecipeGroup(props) {
           return (
             <div key={uuidv4()} className="recipe-home">
               <img
-                className="recipe-image mb-2"
+                className="recipe-image mb-2 mx-2"
                 src={
                   currentrecord.image.slice(0, 4) === 'http'
                     ? currentrecord.image
