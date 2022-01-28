@@ -43,7 +43,7 @@ export default function CategoryDropdown(props)  {
           }}
           onChange={handleChange}
           allowSelectAll={true}
-          value={props.recipe.categories}
+          value={props.selectedCategories}
         />
       </span>
     );

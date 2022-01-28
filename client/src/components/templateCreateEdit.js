@@ -33,9 +33,7 @@ export default function TemplateCreateEdit(props) {
 
   let navigate = useNavigate();
 
-  // These functions control editing ingredients properties
   //Set ingredient based on data entered into ingredientsCreate fields
-
   function sanitizeIngredient(e, stateConstant, setStateConstant) {
     const { name, value } = e.target;
 
@@ -76,17 +74,16 @@ export default function TemplateCreateEdit(props) {
   // console.log('ingredient', ingredient);
   // console.log('editIngredient', editIngredient);
 
-  function onSave() {
+  function onSave(idx) {
     const ingredientsClone = [...props.ingredients];
     const filtered = ingredientsClone.filter((ingredient) => {
       return ingredient.id !== editIngredient.id;
     });
+
+    filtered.splice(idx, 0, editIngredient);
     props.ingredientsCallback(filtered);
 
-    const includeEditIngredient = [...filtered, editIngredient];
-    props.ingredientsCallback(includeEditIngredient);
-
-    AddIngredientsToRecipe(includeEditIngredient);
+    AddIngredientsToRecipe(filtered);
     setEditIngredient({
       nameClean: '',
       amount: '',
@@ -302,7 +299,7 @@ export default function TemplateCreateEdit(props) {
           insertIngredientCallback={insertIngredientCallback}
         />
         <CategoryDropdown
-        recipe={props.recipe}
+        selectedCategories={props.recipe.categories}
         categoriesCallback={props.categoriesCallback}></CategoryDropdown>
         <Input
           label="Preparation Minutes:"
