@@ -152,3 +152,16 @@ a:hover {
   line-height: 1.2;
   margin-bottom: 0.5rem;
 }
+
+.form-control {
+  margin-bottom: 1rem;
+}
+
+.selector-input {
+  height: 38px;
+  border-radius: 0.25rem;
+}
+
+.selector-input.disabled {
+  background-color: #e9ecef;
+}

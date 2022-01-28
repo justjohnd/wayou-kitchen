@@ -45,10 +45,13 @@ function IngredientEdit(props) {
         value={props.editIngredient.unit}
       />
       {!isVisible && (
+        <div className="d-inline-block">
+          <div className="form-label">Group</div>
         <label className="d-inline-block me-2">
           <select
+            className="selector-input"
             onChange={(e) => props.editIngredientCallback(e)}
-            value={props.editIngredient.group || ""}
+            value={props.editIngredient.group || ''}
             selected
             name="group"
             type="number"
@@ -59,48 +62,53 @@ function IngredientEdit(props) {
             <option value="10">Optional</option>
           </select>
         </label>
+        </div>
       )}
       {isVisible && (
-        <label className="d-inline-block me-2">
-          <select
-            value={props.ingredient.group || ""}
-            selected
-            name="group"
-            type="number"
-            disabled="disabled"
-          >
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="10">Optional</option>
-          </select>
-        </label>
+        <div className="d-inline-block">
+          <div className="form-label">Group</div>
+          <label className="d-inline-block me-2">
+            <select
+              className="selector-input disabled"
+              value={props.ingredient.group || ''}
+              selected
+              name="group"
+              type="number"
+              disabled="disabled"
+            >
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="10">Optional</option>
+            </select>
+          </label>
+        </div>
       )}
-          <div
-            className={
-              props.editIngredient.id === props.ingredient.id ||
-              props.editIngredient.id === ''
-                ? 'd-inline-block'
-                : 'd-none'
-            }
-          >
-            <Button
-              buttonWrapper="d-inline-block"
-              className="ms-2 mb-1"
-              onClick={(e) => {
-                props.deleteIngredient(e, props.index);
-              }}
-              buttonText="Delete"
-              buttonStyle="btn-secondary"
-            />
-            <Button
-              buttonWrapper="d-inline-block"
-              buttonText={isVisible === true ? 'Edit' : 'Save'}
-              buttonStyle="btn-secondary"
-              className="ms-2 mb-1"
-              onClick={(e) => handleEdit(e)}
-            />
-          </div>
+      <div
+        className={
+          props.editIngredient.id === props.ingredient.id ||
+          props.editIngredient.id === ''
+            ? 'd-inline-block'
+            : 'd-none'
+        }
+      >
+        <Button
+          buttonWrapper="d-inline-block"
+          className="ms-2 mb-1"
+          onClick={(e) => {
+            props.deleteIngredient(e, props.index);
+          }}
+          buttonText="Delete"
+          buttonStyle="btn-secondary"
+        />
+        <Button
+          buttonWrapper="d-inline-block"
+          buttonText={isVisible === true ? 'Edit' : 'Save'}
+          buttonStyle="btn-secondary"
+          className="ms-2 mb-1"
+          onClick={(e) => handleEdit(e)}
+        />
+      </div>
     </div>
   );
 }

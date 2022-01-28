@@ -281,16 +281,6 @@ export default function TemplateCreateEdit(props) {
             onChange={(e) => props.imageCallback(e.target.files[0])}
           />
         )}
-        <InstructionCreate
-          data={data}
-          dataArray={props.dataArray}
-          handleInstructionCallback={handleInstructionCallback}
-          addInstructionCallback={addInstructionCallback}
-          editInstructionCallback={editInstructionCallback}
-          deleteInstructionCallback={deleteInstructionCallback}
-          insertInstruction={insertInstruction}
-          headerCallback={headerCallback}
-        />
         <IngredientCreate
           ingredient={ingredient}
           ingredients={props.ingredients}
@@ -303,10 +293,21 @@ export default function TemplateCreateEdit(props) {
           deleteIngredientCallback={deleteIngredientCallback}
           insertIngredientCallback={insertIngredientCallback}
         />
+        <InstructionCreate
+          data={data}
+          dataArray={props.dataArray}
+          handleInstructionCallback={handleInstructionCallback}
+          addInstructionCallback={addInstructionCallback}
+          editInstructionCallback={editInstructionCallback}
+          deleteInstructionCallback={deleteInstructionCallback}
+          insertInstruction={insertInstruction}
+          headerCallback={headerCallback}
+        />
         <h4>Categories</h4>
         <CategoryDropdown
-        selectedCategories={props.recipe.categories}
-        categoriesCallback={props.categoriesCallback}></CategoryDropdown>
+          selectedCategories={props.recipe.categories}
+          categoriesCallback={props.categoriesCallback}
+        ></CategoryDropdown>
         <Input
           label="Preparation Minutes:"
           wrapperClassName="mb-5 form-input"

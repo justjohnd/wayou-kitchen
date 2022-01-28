@@ -15,6 +15,7 @@ export default function IngredientInput(props) {
         />)}
       {!props.isVisible && (
         <Input
+          label={props.inputName}
           fieldWidth="w-100"
           className={props.className}
           name={props.name}

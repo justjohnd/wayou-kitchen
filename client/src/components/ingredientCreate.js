@@ -54,20 +54,24 @@ export default function IngredientCreate(props) {
         }}
         placeholder=""
       />
-      <label>
-        <select
-          onChange={(e) => props.createIngredientCallback(e)}
-          value={props.ingredient.group}
-          selected
-          name="group"
-          type="number"
-        >
-          <option value="0">0</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">Optional Ingredients</option>
-        </select>
-      </label>
+      <div className="d-inline-block ms-2">
+        <div className="form-label">Group</div>
+        <label>
+          <select
+            className="selector-input"
+            onChange={(e) => props.createIngredientCallback(e)}
+            value={props.ingredient.group}
+            selected
+            name="group"
+            type="number"
+          >
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">Optional</option>
+          </select>
+        </label>
+      </div>
       <Button
         buttonWrapper="d-inline-block"
         className="ms-2 mb-1"
