@@ -145,3 +145,10 @@ a:hover {
   font-weight: 500;
   line-height: 1;
 }
+/* Edit Page */
+.container-record-form .form-input {
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
