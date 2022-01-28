@@ -299,7 +299,7 @@ export default function TemplateCreateEdit(props) {
           insertIngredientCallback={insertIngredientCallback}
         />
         <CategoryDropdown
-        recipe={props.recipe}
+        selectedCategories={props.recipe.categories}
         categoriesCallback={props.categoriesCallback}></CategoryDropdown>
         <Input
           label="Preparation Minutes:"
