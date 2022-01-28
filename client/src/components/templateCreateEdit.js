@@ -22,9 +22,6 @@ export default function TemplateCreateEdit(props) {
     id: '',
   });
 
-  //Edit and Delete buttons only to be visible if no ingredient is currently being edited
-  const [activeIngredient, setActiveIngredient] = useState('');
-
   // Edit ingredients
   const [editIngredient, setEditIngredient] = useState({
     nameClean: '',
@@ -35,12 +32,6 @@ export default function TemplateCreateEdit(props) {
   });
 
   let navigate = useNavigate();
-
-  // These functions control editing ingredients properties
-
-  function activeIngredientCallback(id) {
-    setActiveIngredient(id);
-  }
 
   //Set ingredient based on data entered into ingredientsCreate fields
   function sanitizeIngredient(e, stateConstant, setStateConstant) {
@@ -83,17 +74,16 @@ export default function TemplateCreateEdit(props) {
   // console.log('ingredient', ingredient);
   // console.log('editIngredient', editIngredient);
 
-  function onSave() {
+  function onSave(idx) {
     const ingredientsClone = [...props.ingredients];
     const filtered = ingredientsClone.filter((ingredient) => {
       return ingredient.id !== editIngredient.id;
     });
+
+    filtered.splice(idx, 0, editIngredient);
     props.ingredientsCallback(filtered);
 
-    const includeEditIngredient = [...filtered, editIngredient];
-    props.ingredientsCallback(includeEditIngredient);
-
-    AddIngredientsToRecipe(includeEditIngredient);
+    AddIngredientsToRecipe(filtered);
     setEditIngredient({
       nameClean: '',
       amount: '',
@@ -307,8 +297,6 @@ export default function TemplateCreateEdit(props) {
           editIngredientCallback={editIngredientCallback}
           deleteIngredientCallback={deleteIngredientCallback}
           insertIngredientCallback={insertIngredientCallback}
-          activeIngredient={activeIngredient}
-          activeIngredientCallback={activeIngredientCallback}
         />
         <CategoryDropdown
         recipe={props.recipe}

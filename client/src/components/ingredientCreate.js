@@ -91,8 +91,6 @@ export default function IngredientCreate(props) {
               editIngredientCallback={props.editIngredientCallback}
               deleteIngredient={deleteIngredient}
               insertIngredient={insertIngredient}
-              activeIngredient={props.activeIngredient}
-              activeIngredientCallback={props.activeIngredientCallback}
             />
           ))}
       </section>

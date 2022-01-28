@@ -9,11 +9,9 @@ function IngredientEdit(props) {
     e.preventDefault(); 
     setIsVisible(!isVisible);
     props.showIngredientCallback(props.ingredient);
-    props.activeIngredientCallback(props.ingredient.id)
 
     if (isVisible === false) {
-      props.onSave();
-      props.activeIngredientCallback('');
+      props.onSave(props.index);
     }
   }
   
@@ -50,7 +48,7 @@ function IngredientEdit(props) {
         <label className="d-inline-block me-2">
           <select
             onChange={(e) => props.editIngredientCallback(e)}
-            value={props.editIngredient.group}
+            value={props.editIngredient.group || ""}
             selected
             name="group"
             type="number"
@@ -65,7 +63,7 @@ function IngredientEdit(props) {
       {isVisible && (
         <label className="d-inline-block me-2">
           <select
-            value={props.ingredient.group}
+            value={props.ingredient.group || ""}
             selected
             name="group"
             type="number"
@@ -80,8 +78,8 @@ function IngredientEdit(props) {
       )}
           <div
             className={
-              props.activeIngredient === props.ingredient.id ||
-              props.activeIngredient === ''
+              props.editIngredient.id === props.ingredient.id ||
+              props.editIngredient.id === ''
                 ? 'd-inline-block'
                 : 'd-none'
             }
