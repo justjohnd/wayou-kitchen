@@ -57,6 +57,10 @@ export default function Edit() {
 
     const formData = new FormData();
 
+    if(!recipe.dateCreated) {
+      recipe.dateCreated = new Date();
+    }
+
     for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
       if (RECIPE_PROPERTIES[i] === 'image') {
         // First check to seet if image is a url
@@ -102,7 +106,7 @@ export default function Edit() {
           (ingredient) => {
             return {
               ...ingredient,
-              id: ingredient._id,
+              id: ingredient.id,
             };
           }
         );

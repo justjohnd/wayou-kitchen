@@ -63,6 +63,8 @@ export default function RecipeList() {
     });
   }
 
+  console.log(records);
+
   //Put records in their on groups
   const categoryTypes = categories.map((category) => category.value);
   const groupArray = () => {

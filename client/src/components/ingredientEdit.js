@@ -9,12 +9,14 @@ function IngredientEdit(props) {
     e.preventDefault(); 
     setIsVisible(!isVisible);
     props.showIngredientCallback(props.ingredient);
+    props.activeIngredientCallback(props.ingredient.id)
 
     if (isVisible === false) {
       props.onSave();
+      props.activeIngredientCallback('');
     }
   }
-
+  
   return (
     <div>
       <IngredientInput
@@ -76,23 +78,31 @@ function IngredientEdit(props) {
           </select>
         </label>
       )}
-
-      <Button
-        buttonWrapper="d-inline-block"
-        className="ms-2 mb-1"
-        onClick={(e) => {
-          props.deleteIngredient(e, props.index);
-        }}
-        buttonText="Delete"
-        buttonStyle="btn-secondary"
-      />
-      <Button
-        buttonWrapper="d-inline-block"
-        buttonText={isVisible === true ? 'Edit' : 'Save'}
-        buttonStyle="btn-secondary"
-        className="ms-2 mb-1"
-        onClick={handleEdit}
-      />
+          <div
+            className={
+              props.activeIngredient === props.ingredient.id ||
+              props.activeIngredient === ''
+                ? 'd-inline-block'
+                : 'd-none'
+            }
+          >
+            <Button
+              buttonWrapper="d-inline-block"
+              className="ms-2 mb-1"
+              onClick={(e) => {
+                props.deleteIngredient(e, props.index);
+              }}
+              buttonText="Delete"
+              buttonStyle="btn-secondary"
+            />
+            <Button
+              buttonWrapper="d-inline-block"
+              buttonText={isVisible === true ? 'Edit' : 'Save'}
+              buttonStyle="btn-secondary"
+              className="ms-2 mb-1"
+              onClick={(e) => handleEdit(e)}
+            />
+          </div>
     </div>
   );
 }
