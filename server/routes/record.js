@@ -4,6 +4,7 @@ const multer = require('multer');
 const { v4: uuidv4 } = require('uuid');
 let path = require('path');
 const axios = require('axios');
+const API_KEY = process.env.API_KEY;
 
 const RECIPE_PROPERTIES = require('../../client/src/javascript/PROPERTIES_FOR_BACKEND.js');
 
@@ -165,7 +166,7 @@ recordRoutes.route('/:id').delete((req, response) => {
 recordRoutes.route('/urlSearch').post(upload.single('image'), function (req, topResponse) {
     axios
       .get(
-        `https://api.spoonacular.com/recipes/extract?url=${req.body.url}&apiKey=cb1c464d94f142c08b156c5beddade8b`
+        `https://api.spoonacular.com/recipes/extract?url=${req.body.url}&apiKey=${API_KEY}`
       )
       .then((response) => {
         // / This section will help you create a new record.
@@ -197,7 +198,6 @@ recordRoutes.route('/urlSearch').post(upload.single('image'), function (req, top
           .collection('records')
           .insertOne(newRecord, function (err, res) {
             if (err) throw err;
-            console.log('Added one item');
             topResponse.json(res);
           });
       })

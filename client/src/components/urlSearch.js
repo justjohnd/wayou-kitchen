@@ -4,8 +4,6 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import Input from './input';
 import Button from './button';
 
-import RECIPE_PROPERTIES, { RECIPE_OBJECT } from '../javascript/RECIPE_PROPERTIES';
-
 // This will require to npm install axios
 import axios from 'axios';
 
