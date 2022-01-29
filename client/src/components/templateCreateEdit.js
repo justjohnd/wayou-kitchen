@@ -57,6 +57,9 @@ export default function TemplateCreateEdit(props) {
   }
 
   function showIngredientCallback(ingredient) {
+    if (!ingredient.id) {
+      ingredient.id = uuidv4();
+    }
 
     const ingredientClone = {
       nameClean: ingredient.nameClean,
@@ -229,8 +232,8 @@ export default function TemplateCreateEdit(props) {
   // This following section will display the form that takes the input from the user.
   // render() {
   return (
-    <div className="my-5 container">
-      <h3>{props.pageType} New Record</h3>
+    <div className="my-5 container container-record-form">
+      <h3 className="mb-4">{props.pageType} New Record</h3>
       <form
         encType="multipart/form-data"
         onSubmit={(e) => {
@@ -240,14 +243,14 @@ export default function TemplateCreateEdit(props) {
       >
         <Input
           label="Name of the recipe:"
-          wrapperClassName="mb-5"
+          wrapperClassName="mb-5 form-input"
           name="title"
           type="text"
           value={props.recipe.title}
           onChange={(e) => handleData(e)}
         />
         {props.pageType === 'Edit' && (
-          <div>
+          <div className="mb-5">
             <img
               className="recipe-image"
               src={
@@ -276,16 +279,6 @@ export default function TemplateCreateEdit(props) {
             onChange={(e) => props.imageCallback(e.target.files[0])}
           />
         )}
-        <InstructionCreate
-          data={data}
-          dataArray={props.dataArray}
-          handleInstructionCallback={handleInstructionCallback}
-          addInstructionCallback={addInstructionCallback}
-          editInstructionCallback={editInstructionCallback}
-          deleteInstructionCallback={deleteInstructionCallback}
-          insertInstruction={insertInstruction}
-          headerCallback={headerCallback}
-        />
         <IngredientCreate
           ingredient={ingredient}
           ingredients={props.ingredients}
@@ -298,12 +291,24 @@ export default function TemplateCreateEdit(props) {
           deleteIngredientCallback={deleteIngredientCallback}
           insertIngredientCallback={insertIngredientCallback}
         />
+        <InstructionCreate
+          data={data}
+          dataArray={props.dataArray}
+          handleInstructionCallback={handleInstructionCallback}
+          addInstructionCallback={addInstructionCallback}
+          editInstructionCallback={editInstructionCallback}
+          deleteInstructionCallback={deleteInstructionCallback}
+          insertInstruction={insertInstruction}
+          headerCallback={headerCallback}
+        />
+        <h4>Categories</h4>
         <CategoryDropdown
-        selectedCategories={props.recipe.categories}
-        categoriesCallback={props.categoriesCallback}></CategoryDropdown>
+          selectedCategories={props.recipe.categories}
+          categoriesCallback={props.categoriesCallback}
+        ></CategoryDropdown>
         <Input
           label="Preparation Minutes:"
-          wrapperClassName="mb-3"
+          wrapperClassName="mb-5 form-input"
           name="preparationMinutes"
           type="text"
           value={props.recipe.preparationMinutes}
@@ -311,7 +316,7 @@ export default function TemplateCreateEdit(props) {
         />
         <Input
           label="Cooking Minutes:"
-          wrapperClassName="mb-5"
+          wrapperClassName="mb-5 form-input"
           name="cookingMinutes"
           type="text"
           value={props.recipe.cookingMinutes}
@@ -319,7 +324,7 @@ export default function TemplateCreateEdit(props) {
         />
         <Input
           label="Number of Servings:"
-          wrapperClassName="mb-5"
+          wrapperClassName="mb-5 form-input"
           name="servings"
           type="number"
           value={props.recipe.servings}
@@ -327,7 +332,7 @@ export default function TemplateCreateEdit(props) {
         />
         <Input
           label="Reference Web Page:"
-          wrapperClassName="mb-5"
+          wrapperClassName="mb-5 form-input"
           name="sourceUrl"
           type="text"
           value={props.recipe.sourceUrl}
