@@ -56,8 +56,6 @@ export default function TemplateCreateEdit(props) {
     sanitizeIngredient(e, editIngredient, setEditIngredient);
   }
 
-  console.log(props.ingredients, ingredient, editIngredient);
-
   function showIngredientCallback(ingredient) {
     if (!ingredient.id) {
       ingredient.id = uuidv4();

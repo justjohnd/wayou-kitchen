@@ -3,6 +3,7 @@ const fs = require('fs');
 const multer = require('multer');
 const { v4: uuidv4 } = require('uuid');
 let path = require('path');
+const axios = require('axios');
 
 const RECIPE_PROPERTIES = require('../../client/src/javascript/PROPERTIES_FOR_BACKEND.js');
 
@@ -51,7 +52,6 @@ recordRoutes.route('/record').get(function (req, res) {
       res.json(result);
     });
 })
-
 
 // This section will help you get a single record by id
 recordRoutes.route('/record/:id').get(function (req, res) {
@@ -160,5 +160,48 @@ recordRoutes.route('/:id').delete((req, response) => {
     });
   });
 });
+
+//Get data from urlSearch
+recordRoutes.route('/urlSearch').post(upload.single('image'), function (req, topResponse) {
+    axios
+      .get(
+        `https://api.spoonacular.com/recipes/extract?url=${req.body.url}&apiKey=cb1c464d94f142c08b156c5beddade8b`
+      )
+      .then((response) => {
+        // / This section will help you create a new record.
+        let db_connect = dbo.getDb();
+        // Generate new object based on record properties defined in RECIPE_PROPERTIES array
+        let myObj = {};
+
+        const instructions = response.data.analyzedInstructions[0].steps;
+        const addIsHeader = instructions.map((instruction) => ({
+          ...instruction,
+          isHeader: false,
+        }));
+
+        response.data.categories = [{ value: 'other' }];
+        response.data.dateCreated = new Date();
+
+        for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
+
+          if (RECIPE_PROPERTIES[i] === 'analyzedInstructions'){
+            myObj.analyzedInstructions = addIsHeader;
+          } else {
+            myObj[RECIPE_PROPERTIES[i]] = response.data[RECIPE_PROPERTIES[i]];
+          }
+          }
+
+        const newRecord = new Record(myObj);
+
+        db_connect
+          .collection('records')
+          .insertOne(newRecord, function (err, res) {
+            if (err) throw err;
+            console.log('Added one item');
+            topResponse.json(res);
+          });
+      })
+      .catch((error) => console.error(`error: ${error}`));
+  });
 
 module.exports = recordRoutes;
