@@ -169,37 +169,42 @@ recordRoutes.route('/urlSearch').post(upload.single('image'), function (req, top
         `https://api.spoonacular.com/recipes/extract?url=${req.body.url}&apiKey=${API_KEY}`
       )
       .then((response) => {
-        // / This section will help you create a new record.
-        let db_connect = dbo.getDb();
-        // Generate new object based on record properties defined in RECIPE_PROPERTIES array
-        let myObj = {};
+        //Check to see if there is any data available from the API
+        if (response.data.analyzedInstructions[0]) {
+          // This section will help you create a new record.
+          let db_connect = dbo.getDb();
+          // Generate new object based on record properties defined in RECIPE_PROPERTIES array
+          let myObj = {};
 
-        const instructions = response.data.analyzedInstructions[0].steps;
-        const addIsHeader = instructions.map((instruction) => ({
-          ...instruction,
-          isHeader: false,
-        }));
+          const instructions = response.data.analyzedInstructions[0].steps;
+          const addIsHeader = instructions.map((instruction) => ({
+            ...instruction,
+            isHeader: false,
+          }));
 
-        response.data.categories = [{ value: 'other' }];
-        response.data.dateCreated = new Date();
+          response.data.categories = [{ value: 'other' }];
+          response.data.dateCreated = new Date();
 
-        for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
-
-          if (RECIPE_PROPERTIES[i] === 'analyzedInstructions'){
-            myObj.analyzedInstructions = addIsHeader;
-          } else {
-            myObj[RECIPE_PROPERTIES[i]] = response.data[RECIPE_PROPERTIES[i]];
+          for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
+            if (RECIPE_PROPERTIES[i] === 'analyzedInstructions') {
+              myObj.analyzedInstructions = addIsHeader;
+            } else {
+              myObj[RECIPE_PROPERTIES[i]] = response.data[RECIPE_PROPERTIES[i]];
+            }
           }
-          }
 
-        const newRecord = new Record(myObj);
+          const newRecord = new Record(myObj);
 
-        db_connect
-          .collection('records')
-          .insertOne(newRecord, function (err, res) {
-            if (err) throw err;
-            topResponse.json(res);
-          });
+          db_connect
+            .collection('records')
+            .insertOne(newRecord, function (err, res) {
+              if (err) throw err;
+              topResponse.json(res);
+            });
+        } else {
+          console.log('No data available from this API call');
+        }
+        
       })
       .catch((error) => console.error(`error: ${error}`));
   });
