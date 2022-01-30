@@ -96,7 +96,8 @@ recordRoutes.route('/record/add').post(upload.single('image'), (req, response) =
 });
 
 // This section will help you update a record by id.
-recordRoutes.route('/update/:id').post(upload.single('image'), (req, response) => {git
+recordRoutes.route('/update/:id').post(upload.single('image'), (req, response) => {
+
   let db_connect = dbo.getDb();
   let myQuery = { _id: ObjectId(req.params.id) };
 

@@ -103,10 +103,11 @@ function displayAll() {
   return (
     <div className="p-3 container">
       <CategoryDropdown
+        className="ms-3"
         selectedCategories={selectedCategories}
         categoriesCallback={categoriesCallback}
       ></CategoryDropdown>
-      <h3>Recipes</h3>
+      <h1 className="mb-4 ms-3">Recipes</h1>
       {displayAll()}
       {recordCategories ? recordCategories.map((categoryRecords, index) => {
         if (categoryRecords !== []) {

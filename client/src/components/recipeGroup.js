@@ -10,7 +10,7 @@ function RecipeGroup(props) {
   }  
 
   return (
-    <div>
+    <div className="ms-3 mb-4">
       <h3>{props.categoryRecords.length > 0 && category}</h3>
       <Recipe
       recordArray={props.categoryRecords}

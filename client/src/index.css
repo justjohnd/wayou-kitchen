@@ -39,9 +39,9 @@ a:hover {
   border: 1px solid #77d970;
   border-radius: 28px;
   width: 900px;
-  display: flex;
+  /* display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: center; */
 }
 
 .recipe-wrapper {
