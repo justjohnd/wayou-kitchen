@@ -19,6 +19,7 @@ export default function Edit() {
   function changeImageCallback(data) {
     setChangeImage(true);
     if (data === 'remove') {
+      setNewImage({ name: 'noImage' });
       setImage('placeholder.jpg');
     }
   }
@@ -30,6 +31,9 @@ export default function Edit() {
   function imageCallback(data) {
     setNewImage(data);
   }
+
+  console.log(image);
+  console.log(newImage);
 
   function ingredientsCallback(data) {
     setIngredients(data);
@@ -66,7 +70,7 @@ export default function Edit() {
         // First check to seet if image is a url
         if (image.slice(0, 4) === 'http') {
           formData.append('image', image);
-        } else if (image !== newImage.name && image !== 'placeholder.jpg') {
+        } else if (image !== newImage.name && newImage.name !== 'noImage') {
           formData.append('image', newImage);
         } else {
           formData.append('image', image);

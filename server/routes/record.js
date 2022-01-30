@@ -96,19 +96,18 @@ recordRoutes.route('/record/add').post(upload.single('image'), (req, response) =
 });
 
 // This section will help you update a record by id.
-recordRoutes.route('/update/:id').post(upload.single('image'), (req, response) => {
+recordRoutes.route('/update/:id').post(upload.single('image'), (req, response) => {git
   let db_connect = dbo.getDb();
   let myQuery = { _id: ObjectId(req.params.id) };
 
     let myObj = {};
     for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
       if (RECIPE_PROPERTIES[i] === 'image') {
-
         //First, check to see if image is a url
-        if (req.body.image.slice(0, 4) === 'http') {
-          myObj['image'] = req.body.image;
-        } else if (req.file) {
+        if (req.file) {
             myObj['image'] = req.file.filename;
+          } else if (req.body.image.slice(0, 4) === 'http') {
+            myObj['image'] = req.body.image;
           } else {
             myObj['image'] = req.body.image;
           }
