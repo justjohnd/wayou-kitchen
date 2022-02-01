@@ -98,6 +98,10 @@ recordRoutes.route('/update/:id').post(upload.single('image'), (req, response) =
 
   let db_connect = dbo.getDb();
   let myQuery = { _id: ObjectId(req.params.id) };
+  
+  //Get the object in order to compare previous and new image files
+  returnDocument(db_connect, myQuery)
+  .then((returnedDocument) => {
 
     let myObj = {};
     for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
@@ -117,6 +121,16 @@ recordRoutes.route('/update/:id').post(upload.single('image'), (req, response) =
       }
     }
 
+    //Remove any previous images saved to the server that have been changed
+    if (myObj.image !== returnedDocument.image) {
+          let filePathAndName = `../client/public/images/${returnedDocument.image}`;
+          if (returnedDocument.image !== 'placeholder.jpg') {
+            fs.unlink(filePathAndName, (err) => {
+              if (err) console.log(err);
+            });
+          }
+    }
+
   let newvalues = {
     $set: myObj,
     $currentDate: { lastModified: true },
@@ -128,6 +142,7 @@ recordRoutes.route('/update/:id').post(upload.single('image'), (req, response) =
       console.log('1 document updated');
       response.json(res);
     });
+  });
 });
 
 async function returnDocument(db, query) {
