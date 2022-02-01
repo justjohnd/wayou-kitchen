@@ -47,21 +47,27 @@ function IngredientEdit(props) {
       {!isVisible && (
         <div className="d-inline-block">
           <div className="form-label">Group</div>
-        <label className="d-inline-block me-2">
-          <select
-            className="selector-input"
-            onChange={(e) => props.editIngredientCallback(e)}
-            value={props.editIngredient.group || ''}
-            selected
-            name="group"
-            type="number"
-          >
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="10">Optional</option>
-          </select>
-        </label>
+          <label className="d-inline-block me-2">
+            <select
+              className="selector-input"
+              onChange={(e) => props.editIngredientCallback(e)}
+              value={props.editIngredient.group || ''}
+              selected
+              name="group"
+              type="number"
+            >
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="10">Optional</option>
+            </select>
+          </label>
         </div>
       )}
       {isVisible && (
@@ -79,6 +85,12 @@ function IngredientEdit(props) {
               <option value="0">0</option>
               <option value="1">1</option>
               <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
               <option value="10">Optional</option>
             </select>
           </label>

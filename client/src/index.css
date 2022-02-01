@@ -78,8 +78,8 @@ a:hover {
 }
 
 .group0 {
-  border: 2px solid #ea5c2b;
 }
+
 .group1 {
   border: 2px solid #ff7f3f;
 }
@@ -88,7 +88,24 @@ a:hover {
 }
 
 .group3 {
-  color: #95cd41;
+  border: 2px solid #95cd41;
+}
+
+.group4 {
+  border: 2px solid #ea5c2b;
+}
+
+.group5 {
+  border: 2px solid #ffcc1d;
+}
+.group6 {
+  border: 2px solid #0b4619;
+}
+.group7 {
+  border: 2px solid #116530;
+}
+.group8 {
+  border: 2px solid #e8e8cc;
 }
 
 .instruction-number {
