@@ -6,7 +6,7 @@ import Recipe from './recipe';
 import RecipeGroup from './recipeGroup';
 import CategoryDropdown from './categoryDropdown';
 
-export default function RecipeList() {
+export default function RecipeList(props) {
   const [record, setRecord] = useState({});
   const [records, setRecords] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState(null);
@@ -101,7 +101,7 @@ function displayAll() {
 
   // This following section will display the table with the records of individuals.
   return (
-    <div className="p-3 container">
+    <div className="p-3 container disable-while-loading">
       <CategoryDropdown
         className="ms-3"
         selectedCategories={selectedCategories}
@@ -109,18 +109,22 @@ function displayAll() {
       ></CategoryDropdown>
       <h1 className="mb-4 ms-3">Recipes</h1>
       {displayAll()}
-      {recordCategories ? recordCategories.map((categoryRecords, index) => {
-        if (categoryRecords !== []) {
-        return (
-        <RecipeGroup
-          key={uuidv4()}
-          index={index}
-          categoryRecords={categoryRecords}
-          deleteRecord={deleteRecord}
-        />
-      );
-      }}
-      ) : <div></div>}
+      {recordCategories ? (
+        recordCategories.map((categoryRecords, index) => {
+          if (categoryRecords !== []) {
+            return (
+              <RecipeGroup
+                key={uuidv4()}
+                index={index}
+                categoryRecords={categoryRecords}
+                deleteRecord={deleteRecord}
+              />
+            );
+          }
+        })
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 }

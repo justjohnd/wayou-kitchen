@@ -9,9 +9,9 @@ import { NavLink } from 'react-router-dom';
 import UrlSearch from './urlSearch';
 
 // Here, we display our Navbar
-const Navbar = () => {
+const Navbar = (props) => {
   return (
-    <div>
+    <div className="disable-while-loading">
       <nav className="p-3 container navbar navbar-expand-lg navbar-light">
         <NavLink className="navbar-brand" to="/">
           Wayou Kitchen!
@@ -36,7 +36,8 @@ const Navbar = () => {
               </NavLink>
             </li>
             <li>
-              <UrlSearch />
+              <UrlSearch
+              loaderCallback={props.loaderCallback} />
             </li>
           </ul>
         </div>

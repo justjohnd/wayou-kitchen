@@ -1,6 +1,7 @@
 :root {
   --color-primary: #f90716;
   --color-secondary: #77d970;
+  --color-tertiary: #ff7f3f;
   --color-dark: #343a40;
 }
 
@@ -24,24 +25,21 @@ a {
 }
 
 a:hover {
-  color: #f90716;
+  color: var(--color-primary);
 }
 
 .output-wrapper {
   background-color: #77d97010;
-  border: 1px solid #77d970;
+  border: 1px solid var(--color-secondary);
   border-radius: 20px;
   padding: 1em;
 }
 
 /* Show page */
 .recipe-container {
-  border: 1px solid #77d970;
+  border: 1px solid var(--color-secondary);
   border-radius: 28px;
   width: 900px;
-  /* display: flex;
-  flex-wrap: wrap;
-  justify-content: center; */
 }
 
 .recipe-wrapper {
@@ -77,11 +75,8 @@ a:hover {
   margin-bottom: 8px;
 }
 
-.group0 {
-}
-
 .group1 {
-  border: 2px solid #ff7f3f;
+  border: 2px solid var(--color-tertiary);
 }
 .group2 {
   border: 2px solid #f6d860;
@@ -138,6 +133,34 @@ a:hover {
 
 .collapse.navbar-collapse {
   justify-content: space-evenly;
+}
+
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  color: var(--color-tertiary);
+  height: 100;
+  width: 100;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  background-color: var(--color-secondary);
+  width: 100vw;
+  height: 100vh;
+  opacity: 0.9;
+  z-index: 2;
+}
+
+.disabled {
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 /* Home */
