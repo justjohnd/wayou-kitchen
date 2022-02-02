@@ -3,8 +3,6 @@ const fs = require('fs');
 const multer = require('multer');
 const { v4: uuidv4 } = require('uuid');
 let path = require('path');
-const axios = require('axios');
-const API_KEY = process.env.API_KEY;
 
 const RECIPE_PROPERTIES = require('../../client/src/javascript/PROPERTIES_FOR_BACKEND.js');
 
@@ -97,18 +95,22 @@ recordRoutes.route('/record/add').post(upload.single('image'), (req, response) =
 
 // This section will help you update a record by id.
 recordRoutes.route('/update/:id').post(upload.single('image'), (req, response) => {
+
   let db_connect = dbo.getDb();
   let myQuery = { _id: ObjectId(req.params.id) };
+  
+  //Get the object in order to compare previous and new image files
+  returnDocument(db_connect, myQuery)
+  .then((returnedDocument) => {
 
     let myObj = {};
     for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
       if (RECIPE_PROPERTIES[i] === 'image') {
-
         //First, check to see if image is a url
-        if (req.body.image.slice(0, 4) === 'http') {
-          myObj['image'] = req.body.image;
-        } else if (req.file) {
+        if (req.file) {
             myObj['image'] = req.file.filename;
+          } else if (req.body.image.slice(0, 4) === 'http') {
+            myObj['image'] = req.body.image;
           } else {
             myObj['image'] = req.body.image;
           }
@@ -117,6 +119,16 @@ recordRoutes.route('/update/:id').post(upload.single('image'), (req, response) =
           req.body[RECIPE_PROPERTIES[i]]
         );
       }
+    }
+
+    //Remove any previous images saved to the server that have been changed
+    if (myObj.image !== returnedDocument.image) {
+          let filePathAndName = `../client/public/images/${returnedDocument.image}`;
+          if (returnedDocument.image !== 'placeholder.jpg') {
+            fs.unlink(filePathAndName, (err) => {
+              if (err) console.log(err);
+            });
+          }
     }
 
   let newvalues = {
@@ -130,6 +142,7 @@ recordRoutes.route('/update/:id').post(upload.single('image'), (req, response) =
       console.log('1 document updated');
       response.json(res);
     });
+  });
 });
 
 async function returnDocument(db, query) {
@@ -161,47 +174,5 @@ recordRoutes.route('/:id').delete((req, response) => {
     });
   });
 });
-
-//Get data from urlSearch
-recordRoutes.route('/urlSearch').post(upload.single('image'), function (req, topResponse) {
-    axios
-      .get(
-        `https://api.spoonacular.com/recipes/extract?url=${req.body.url}&apiKey=${API_KEY}`
-      )
-      .then((response) => {
-        // / This section will help you create a new record.
-        let db_connect = dbo.getDb();
-        // Generate new object based on record properties defined in RECIPE_PROPERTIES array
-        let myObj = {};
-
-        const instructions = response.data.analyzedInstructions[0].steps;
-        const addIsHeader = instructions.map((instruction) => ({
-          ...instruction,
-          isHeader: false,
-        }));
-
-        response.data.categories = [{ value: 'other' }];
-        response.data.dateCreated = new Date();
-
-        for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
-
-          if (RECIPE_PROPERTIES[i] === 'analyzedInstructions'){
-            myObj.analyzedInstructions = addIsHeader;
-          } else {
-            myObj[RECIPE_PROPERTIES[i]] = response.data[RECIPE_PROPERTIES[i]];
-          }
-          }
-
-        const newRecord = new Record(myObj);
-
-        db_connect
-          .collection('records')
-          .insertOne(newRecord, function (err, res) {
-            if (err) throw err;
-            topResponse.json(res);
-          });
-      })
-      .catch((error) => console.error(`error: ${error}`));
-  });
 
 module.exports = recordRoutes;

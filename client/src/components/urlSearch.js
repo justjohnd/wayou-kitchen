@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
 import Input from './input';
 import Button from './button';
 
-// This will require to npm install axios
-import axios from 'axios';
-
-export default function UrlSearch() {
+export default function UrlSearch(props) {
   const [getUrl, setGetUrl] = useState({
     url: ''
   });
@@ -27,6 +23,7 @@ export default function UrlSearch() {
   // // This function will handle getting the recipe from a url
   async function handleGetRecipe(e) {
     e.preventDefault();
+    props.loaderCallback(true);
 
     await fetch('http://localhost:5000/urlSearch', {
       method: 'POST',
@@ -41,7 +38,7 @@ export default function UrlSearch() {
       return;
     });
 
-    navigate('/');
+    navigate(0);
   }
 
     return (

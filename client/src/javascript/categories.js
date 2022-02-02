@@ -4,5 +4,6 @@ export const categories = [
   { value: 'snack', label: 'Snack' },
   { value: 'sauce', label: 'Dressing or Sauce' },
   { value: 'dessert', label: 'Dessert' },
+  { value: 'favorite', label: 'Favorite' },
   { value: 'other', label: 'Other' },
 ];
