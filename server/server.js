@@ -1,15 +1,24 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const cors = require('cors');
-require('dotenv').config({ path: './config.env' });
+const cors = require("cors");
+require("dotenv").config({ path: "./config.env" });
 const port = process.env.PORT || 5000;
+const errorHandler = require("./middleware/error");
 
 app.use(cors());
+
+//Middleware that allows you to get data from request.body
 app.use(express.json());
-app.use(require('./routes/record'));
-app.use(require('./routes/urlSearch'));
+//Redirect anything that goes to /api/auth to the auth route
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/private", require("./routes/private"));
+app.use(require("./routes/record"));
+app.use(require("./routes/urlSearch"));
 // get driver connection
-const dbo = require('./db/conn');
+const dbo = require("./db/conn");
+
+// Error Handler (should be last piece of middleware)
+app.use(errorHandler);
 
 app.listen(port, () => {
   // perform a database connection when server starts
