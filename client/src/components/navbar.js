@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 // We import bootstrap to make our application look better.
 import 'bootstrap/dist/css/bootstrap.css';
@@ -36,11 +37,11 @@ const Navbar = (props) => {
               </NavLink>
             </li>
             <li>
-              <UrlSearch
-              loaderCallback={props.loaderCallback} />
+              <UrlSearch loaderCallback={props.loaderCallback} />
             </li>
           </ul>
         </div>
+        <Link to="auth">Register / Sign In</Link>
       </nav>
     </div>
   );

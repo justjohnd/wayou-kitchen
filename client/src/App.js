@@ -6,6 +6,7 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Edit from "./components/edit";
 import Create from "./components/create";
+import Auth from "./components/auth";
 import RecipeList from "./components/recipeList";
 import Show from "./components/show";
 
@@ -34,6 +35,7 @@ const App = () => {
         <Route path="/show/:id" element={<Show />} />
         <Route path="/edit/:id" element={<Edit />} />
         <Route path="/create" element={<Create />} />
+        <Route path="/auth" element={<Auth />} />
         <Route path="*" element={<RecipeList to="/" />} />
       </Routes>
     </div>
