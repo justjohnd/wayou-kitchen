@@ -7,7 +7,6 @@ import Navbar from "./components/navbar";
 import Edit from "./components/edit";
 import Create from "./components/create";
 import RecipeList from "./components/recipeList";
-import UrlSearch from "./components/urlSearch";
 import Show from "./components/show";
 
 const App = () => {
