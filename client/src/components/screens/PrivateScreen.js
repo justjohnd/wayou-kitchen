@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 const PrivateScreen = () => {
   const [error, setError] = useState('');
   const [privateData, setPrivateData] = useState('');
+
+  let navigate = useNavigate();
 
   useEffect(() => {
     const fetchPrivateDate = async () => {
@@ -25,10 +28,19 @@ const PrivateScreen = () => {
 
     fetchPrivateDate();
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    navigate("/login");
+  }
+
   return error ? (
     <span className="error-message">{error}</span>
   ) : (
-    <div>{privateData}</div>
+    <div>
+      {privateData}
+      <button onClick={handleLogout}>Logout</button>
+    </div>
   );
 };
 
