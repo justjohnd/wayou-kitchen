@@ -1,18 +1,10 @@
-import { Redirect, Route } from 'react-router-dom';
+import React from "react";
+import { Outlet } from "react-router-dom";
+import LoginScreen from "../screens/LoginScreen";
 
-
-const PrivateRoute = ({ component: Component, ...rest }) => {
+const PrivateRoute = () => {
   return (
-    <Route
-      {...rest}
-      render={(props) =>
-        localStorage.getItem('authToken') ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to="/login" />
-        )
-      }
-    />
+        localStorage.getItem("authToken") ? <Outlet /> : <LoginScreen />
   );
 };
 

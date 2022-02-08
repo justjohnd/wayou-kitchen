@@ -1,22 +1,27 @@
 import React, { useState } from "react";
-import { Circles } from 'react-loader-spinner';
+import { Circles } from "react-loader-spinner";
 import { Routes, Route } from "react-router-dom";
 
 // We import all the components we need in our app
 import Navbar from "./components/navbar";
 import Edit from "./components/edit";
 import Create from "./components/create";
-import Auth from "./components/auth";
+import Home from "./components/Home";
 import RecipeList from "./components/recipeList";
 import Show from "./components/show";
+import LoginScreen from "./components/screens/LoginScreen";
+import RegisterScreen from './components/screens/RegisterScreen';
+import PrivateRoute from "./components/routing/PrivateRoute";
+import PrivateScreen from './components/screens/PrivateScreen';
+import ForgotPasswordScreen from './components/screens/ForgotPasswordScreen';
 
 const App = () => {
     const [showLoader, setShowLoader] = useState(false);
 
     function loaderCallback(data) {
-      document.body.classList.add('overlay');
-      let links = document.querySelectorAll('.disable-while-loading');
-      links.forEach(link => link.classList.add('disabled'));
+      document.body.classList.add("overlay");
+      let links = document.querySelectorAll(".disable-while-loading");
+      links.forEach(link => link.classList.add("disabled"));
       setShowLoader(data);
     }
 
@@ -35,7 +40,13 @@ const App = () => {
         <Route path="/show/:id" element={<Show />} />
         <Route path="/edit/:id" element={<Edit />} />
         <Route path="/create" element={<Create />} />
-        <Route path="/auth" element={<Auth />} />
+        <Route path="/login" element={<LoginScreen />} />
+        <Route path="/register" element={<RegisterScreen />} />
+        <Route path="/private" element={<PrivateScreen />} />
+        <Route path="/forgotpassword" element={<ForgotPasswordScreen />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/home" element={<Home />} />
+        </Route>
         <Route path="*" element={<RecipeList to="/" />} />
       </Routes>
     </div>

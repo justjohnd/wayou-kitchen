@@ -41,7 +41,7 @@ const Navbar = (props) => {
             </li>
           </ul>
         </div>
-        <Link to="auth">Register / Sign In</Link>
+        <Link to="login">Register / Sign In</Link>
       </nav>
     </div>
   );
