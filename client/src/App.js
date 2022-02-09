@@ -23,8 +23,6 @@ const App = () => {
       setLoginStatus(status);
     }
 
-    console.log(loginStatus);
-
     function loaderCallback(data) {
       document.body.classList.add("overlay");
       let links = document.querySelectorAll(".disable-while-loading");
