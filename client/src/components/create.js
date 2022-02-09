@@ -44,8 +44,6 @@ export default function Create() {
     });
   }
 
-  console.log(recipe);
-
   function handleRecipe(e) {
     e.preventDefault();
     // When post request is sent to the create url, axios will add a new record to the database.

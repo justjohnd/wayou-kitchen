@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Circles } from "react-loader-spinner";
 import { Routes, Route } from "react-router-dom";
 
@@ -17,6 +17,13 @@ import ForgotPasswordScreen from './components/screens/ForgotPasswordScreen';
 
 const App = () => {
     const [showLoader, setShowLoader] = useState(false);
+    const [loginStatus, setLoginStatus] = useState(false);
+
+    function loginCallback(status) {
+      setLoginStatus(status);
+    }
+
+    console.log(loginStatus);
 
     function loaderCallback(data) {
       document.body.classList.add("overlay");
@@ -34,18 +41,21 @@ const App = () => {
           </div>
         </div>
       )}
-      <Navbar loaderCallback={loaderCallback} />
+      <Navbar loginStatus={loginStatus} loginCallback={loginCallback} loaderCallback={loaderCallback} />
       <Routes>
         <Route path="/" element={<RecipeList />} />
         <Route path="/show/:id" element={<Show />} />
         <Route path="/edit/:id" element={<Edit />} />
-        <Route path="/create" element={<Create />} />
-        <Route path="/login" element={<LoginScreen />} />
+        <Route
+          path="/login"
+          element={<LoginScreen loginCallback={loginCallback} />}
+        />
         <Route path="/register" element={<RegisterScreen />} />
         <Route path="/private" element={<PrivateScreen />} />
         <Route path="/forgotpassword" element={<ForgotPasswordScreen />} />
         <Route element={<PrivateRoute />}>
           <Route path="/home" element={<Home />} />
+          <Route path="/create" element={<Create />} />
         </Route>
         <Route path="*" element={<RecipeList to="/" />} />
       </Routes>

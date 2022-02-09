@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { React } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 // We import bootstrap to make our application look better.
 import 'bootstrap/dist/css/bootstrap.css';
@@ -11,6 +11,15 @@ import UrlSearch from './urlSearch';
 
 // Here, we display our Navbar
 const Navbar = (props) => {
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    props.loginCallback(false);
+    navigate('/login');
+  };
+
   return (
     <div className="disable-while-loading">
       <nav className="p-3 container navbar navbar-expand-lg navbar-light">
@@ -32,16 +41,17 @@ const Navbar = (props) => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
-              <NavLink className="nav-link" to="/create">
+              { props.loginStatus ? (<NavLink className="nav-link" to="/create">
                 Create New Recipe
-              </NavLink>
+              </NavLink>) : <div></div>}
             </li>
             <li>
               <UrlSearch loaderCallback={props.loaderCallback} />
             </li>
           </ul>
         </div>
-        <Link to="login">Register / Sign In</Link>
+        { props.loginStatus ? (<Link to="login" onClick={handleLogout}>Logout</Link>) :
+        (<Link to="login">Register / Sign In</Link>) }
       </nav>
     </div>
   );
