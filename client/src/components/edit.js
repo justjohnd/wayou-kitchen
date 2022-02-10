@@ -34,9 +34,6 @@ export default function Edit() {
     setNewImage(data);
   }
 
-  console.log(image);
-  console.log(newImage);
-
   function ingredientsCallback(data) {
     setIngredients(data);
   }

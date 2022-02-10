@@ -13,6 +13,8 @@ const LoginScreen = (props) => {
   useEffect(() => {
     if(localStorage.getItem("authToken")) {
       navigate("/");
+    } else {
+      props.loginStatusCallback(false);
     }
   }, []);
 
@@ -33,7 +35,6 @@ const LoginScreen = (props) => {
       );
 
       localStorage.setItem('authToken', data.token);
-      props.loginCallback(true);
 
       navigate("/private");
     } catch (error) {

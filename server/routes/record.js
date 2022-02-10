@@ -114,7 +114,7 @@ recordRoutes.route('/update/:id').post(upload.single('image'), (req, response) =
           } else {
             myObj['image'] = req.body.image;
           }
-      } else if (req.body[RECIPE_PROPERTIES[i]]) {
+      } else if (!req.body.userId) {
         myObj[RECIPE_PROPERTIES[i]] = JSON.parse(
           req.body[RECIPE_PROPERTIES[i]]
         );

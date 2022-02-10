@@ -37,7 +37,9 @@ urlSearchRoute.route('/urlSearch').post(function (req, topResponse) {
 
           response.data.categories = [{ value: 'other' }];
           response.data.dateCreated = new Date();
+          console.log(req.body.userId);
           response.data.userId = req.body.userId;
+          console.log(response.data.userId);
 
           for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
             if (RECIPE_PROPERTIES[i] === 'analyzedInstructions') {

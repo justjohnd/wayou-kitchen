@@ -16,11 +16,8 @@ const Navbar = (props) => {
 
   const handleLogout = () => {
     localStorage.removeItem('authToken');
-    props.loginCallback(false);
     navigate('/login');
   };
-
-  console.log(props.privateData);
 
   return (
     <div className="disable-while-loading">

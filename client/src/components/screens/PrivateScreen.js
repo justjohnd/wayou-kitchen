@@ -9,6 +9,7 @@ const PrivateScreen = (props) => {
   let navigate = useNavigate();
 
   useEffect(() => {
+    props.loginStatusCallback(true);
     const fetchPrivateDate = async () => {
       const config = {
         headers: {
@@ -20,7 +21,7 @@ const PrivateScreen = (props) => {
       try {
         const { data } = await axios.get('/api/private', config);
         setData(data.data);
-        props.idCallback(data.id);
+        localStorage.setItem('userId', data.id);
       } catch (error) {
         localStorage.removeItem('authToken');
         setError('You are not authorized please login');

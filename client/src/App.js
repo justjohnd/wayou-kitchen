@@ -20,13 +20,17 @@ const App = () => {
     const [loginStatus, setLoginStatus] = useState(false);
     const [privateData, setPrivateData] = useState('');
 
-    function idCallback(id) {
-      setPrivateData(id);
-    }
+    useEffect(() => {
+      if (localStorage.getItem('authToken')) {
+        setLoginStatus(true);
+        setPrivateData(localStorage.getItem('userId'));
+      } else {
+        setLoginStatus(false);
+        setPrivateData('');
+      }
+    });
 
-    function loginCallback(status) {
-      setLoginStatus(status);
-    }
+    console.log(privateData);
 
     function loaderCallback(data) {
       document.body.classList.add("overlay");
@@ -35,7 +39,9 @@ const App = () => {
       setShowLoader(data);
     }
 
-    console.log(privateData);
+    function loginStatusCallback(status) {
+      setLoginStatus(status);
+    }
 
   return (
     <div>
@@ -48,32 +54,45 @@ const App = () => {
       )}
       <Navbar
         loginStatus={loginStatus}
-        loginCallback={loginCallback}
         privateData={privateData}
         loaderCallback={loaderCallback}
       />
       <Routes>
-        <Route path="/" element={<RecipeList />} />
-        <Route path="/show/:id" element={<Show />} />
-        <Route path="/edit/:id" element={<Edit />} />
+        <Route 
+        path="/" 
+        element={<RecipeList />} />
+        <Route 
+        path="/show/:id" 
+        element={<Show />} />
+        <Route 
+        path="/edit/:id" 
+        element={<Edit />} />
         <Route
           path="/login"
-          element={<LoginScreen loginCallback={loginCallback} />}
+          element={<LoginScreen loginStatusCallback={loginStatusCallback} />}
         />
-        <Route path="/register" element={<RegisterScreen />} />
+        <Route 
+        path="/register" 
+        element={<RegisterScreen />} />
         <Route
           path="/private"
-          element={<PrivateScreen idCallback={idCallback} />}
+          element={<PrivateScreen loginStatusCallback={loginStatusCallback} />}
         />
-        <Route path="/forgotpassword" element={<ForgotPasswordScreen />} />
+        <Route 
+        path="/forgotpassword" 
+        element={<ForgotPasswordScreen />} />
         <Route element={<PrivateRoute />}>
-          <Route path="/home" element={<Home />} />
+          <Route 
+          path="/home" 
+          element={<Home />} />
           <Route
             path="/create"
             element={<Create privateData={privateData} />}
           />
         </Route>
-        <Route path="*" element={<RecipeList to="/" />} />
+        <Route 
+        path="*" 
+        element={<RecipeList privateData={privateData} to="/" />} />
       </Routes>
     </div>
   );
