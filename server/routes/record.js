@@ -114,7 +114,8 @@ recordRoutes.route('/update/:id').post(upload.single('image'), (req, response) =
           } else {
             myObj['image'] = req.body.image;
           }
-      } else if (!req.body.userId) {
+// Note: if the record does not have a userId, it will not save
+      } else {
         myObj[RECIPE_PROPERTIES[i]] = JSON.parse(
           req.body[RECIPE_PROPERTIES[i]]
         );

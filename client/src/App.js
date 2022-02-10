@@ -30,8 +30,6 @@ const App = () => {
       }
     });
 
-    console.log(privateData);
-
     function loaderCallback(data) {
       document.body.classList.add("overlay");
       let links = document.querySelectorAll(".disable-while-loading");

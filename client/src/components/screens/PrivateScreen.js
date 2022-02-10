@@ -12,6 +12,10 @@ const PrivateScreen = (props) => {
   const [error, setError] = useState('');
   const [data, setData] = useState('data');
   const [privateScreen, setPrivateScreen] = useState(true);
+  const [record, setRecord] = useState({});
+  const [selectedCategories, setSelectedCategories] = useState(null);
+  const [recordCategories, setRecordCategories] = useState(null);
+  const records = useGetRecords('/record')
 
   let navigate = useNavigate();
 
@@ -27,6 +31,7 @@ const PrivateScreen = (props) => {
 
       try {
         const { data } = await axios.get('/api/private', config);
+        console.log(data);
         setData(data.data);
         localStorage.setItem('userId', data.id);
       } catch (error) {
@@ -42,11 +47,6 @@ const PrivateScreen = (props) => {
     localStorage.removeItem('authToken');
     navigate("/login");
   }
-
-const [record, setRecord] = useState({});
-const records = useGetRecords();
-const [selectedCategories, setSelectedCategories] = useState(null);
-const [recordCategories, setRecordCategories] = useState(null);
 
 // This method will delete a record based on the method
 function deleteRecord(id) {
@@ -86,7 +86,7 @@ function categoriesCallback(optionSelected) {
 
 function displayAll() {
   if (selectedCategories === null || selectedCategories.length === 0) {
-    return <Recipe recordArray={records} deleteRecord={deleteRecord} />;
+    return <Recipe privateScreen={privateScreen} recordArray={records} deleteRecord={deleteRecord} />;
   }
 }
 

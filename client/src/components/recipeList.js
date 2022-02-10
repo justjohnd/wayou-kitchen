@@ -9,7 +9,7 @@ import useGetRecords from "../hooks/useGetRecords";
 
 export default function RecipeList(props) {
   const [record, setRecord] = useState({});
-  const records = useGetRecords();
+  const records = useGetRecords("/record");
   const [selectedCategories, setSelectedCategories] = useState(null);
   const [recordCategories, setRecordCategories] = useState(null);
 

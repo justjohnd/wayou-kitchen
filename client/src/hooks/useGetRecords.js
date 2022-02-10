@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-export default function useGetRecords() {
+export default function useGetRecords(route) {
   const [records, setRecords] = useState([]);
 
   useEffect(() => {
     axios
-      .get('http://localhost:5000/record/')
+      .get(`http://localhost:5000${route}/`)
       .then((response) => {
         for (let i = 0; i < response.data.length; i++) {
           // Verify lastModified data is available, if not, add arbitrary older date to place   those items at bottom of list
