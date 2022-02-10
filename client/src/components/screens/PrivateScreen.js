@@ -15,7 +15,7 @@ const PrivateScreen = (props) => {
   const [record, setRecord] = useState({});
   const [selectedCategories, setSelectedCategories] = useState(null);
   const [recordCategories, setRecordCategories] = useState(null);
-  const records = useGetRecords('/record')
+  const [records, setRecords] = useState('');
 
   let navigate = useNavigate();
 
@@ -33,6 +33,7 @@ const PrivateScreen = (props) => {
         const { data } = await axios.get('/api/private', config);
         console.log(data);
         setData(data.data);
+        setRecords(data.records);
         localStorage.setItem('userId', data.id);
       } catch (error) {
         localStorage.removeItem('authToken');
@@ -90,6 +91,8 @@ function displayAll() {
   }
 }
 
+console.log(records);
+
 // This following section will display the table with the records of individuals.
 return (
   <div className="p-3 container disable-while-loading">
@@ -99,7 +102,7 @@ return (
       categoriesCallback={categoriesCallback}
     ></CategoryDropdown>
     <h1 className="mb-4 ms-3">Recipes</h1>
-    {displayAll()}
+    {records ? displayAll() : <div></div>}
     {recordCategories ? (
       recordCategories.map((categoryRecords, index) => {
         if (categoryRecords !== []) {
