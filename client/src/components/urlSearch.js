@@ -15,7 +15,8 @@ export default function UrlSearch(props) {
 
     setGetUrl(() => {
       return {
-        url: value
+        url: value,
+        userId: props.privateData,
       };
     });
   }

@@ -20,6 +20,8 @@ const Navbar = (props) => {
     navigate('/login');
   };
 
+  console.log(props.privateData);
+
   return (
     <div className="disable-while-loading">
       <nav className="p-3 container navbar navbar-expand-lg navbar-light">
@@ -45,9 +47,11 @@ const Navbar = (props) => {
                 Create New Recipe
               </NavLink>) : <div></div>}
             </li>
-            <li>
-              <UrlSearch loaderCallback={props.loaderCallback} />
-            </li>
+            {props.loginStatus ? (<li>
+              <UrlSearch
+              privateData={props.privateData}
+              loaderCallback={props.loaderCallback} />
+            </li>) : <div></div> }
           </ul>
         </div>
         { props.loginStatus ? (<Link to="login" onClick={handleLogout}>Logout</Link>) :

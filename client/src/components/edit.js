@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import TemplateCreateEdit from './templateCreateEdit';
 
 import RECIPE_PROPERTIES, { RECIPE_OBJECT } from '../javascript/RECIPE_PROPERTIES';
@@ -15,6 +15,8 @@ export default function Edit() {
   const [newImage, setNewImage] = useState({ name: 'noImage' });
   const [image, setImage] = useState('');
   const [changeImage, setChangeImage] = useState(false);
+
+  const navigate = useNavigate();
 
   function changeImageCallback(data) {
     setChangeImage(true);
@@ -87,6 +89,8 @@ export default function Edit() {
     axios
       .post('http://localhost:5000/update/' + params.id, formData)
       .then((res) => console.log(res.data));
+
+      navigate("/recipeList");
   }
 
   // This will get the record based on the id from the database.
@@ -126,6 +130,8 @@ export default function Edit() {
         console.log(error);
       });
   }, []);
+
+  console.log(recipe);
 
   // This following section will display the form that takes the input from the user.
   return (

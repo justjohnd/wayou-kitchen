@@ -18,6 +18,11 @@ import ForgotPasswordScreen from './components/screens/ForgotPasswordScreen';
 const App = () => {
     const [showLoader, setShowLoader] = useState(false);
     const [loginStatus, setLoginStatus] = useState(false);
+    const [privateData, setPrivateData] = useState('');
+
+    function idCallback(id) {
+      setPrivateData(id);
+    }
 
     function loginCallback(status) {
       setLoginStatus(status);
@@ -30,6 +35,8 @@ const App = () => {
       setShowLoader(data);
     }
 
+    console.log(privateData);
+
   return (
     <div>
       {showLoader && (
@@ -39,7 +46,12 @@ const App = () => {
           </div>
         </div>
       )}
-      <Navbar loginStatus={loginStatus} loginCallback={loginCallback} loaderCallback={loaderCallback} />
+      <Navbar
+        loginStatus={loginStatus}
+        loginCallback={loginCallback}
+        privateData={privateData}
+        loaderCallback={loaderCallback}
+      />
       <Routes>
         <Route path="/" element={<RecipeList />} />
         <Route path="/show/:id" element={<Show />} />
@@ -49,11 +61,17 @@ const App = () => {
           element={<LoginScreen loginCallback={loginCallback} />}
         />
         <Route path="/register" element={<RegisterScreen />} />
-        <Route path="/private" element={<PrivateScreen />} />
+        <Route
+          path="/private"
+          element={<PrivateScreen idCallback={idCallback} />}
+        />
         <Route path="/forgotpassword" element={<ForgotPasswordScreen />} />
         <Route element={<PrivateRoute />}>
           <Route path="/home" element={<Home />} />
-          <Route path="/create" element={<Create />} />
+          <Route
+            path="/create"
+            element={<Create privateData={privateData} />}
+          />
         </Route>
         <Route path="*" element={<RecipeList to="/" />} />
       </Routes>

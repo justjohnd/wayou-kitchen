@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-const PrivateScreen = () => {
+const PrivateScreen = (props) => {
   const [error, setError] = useState('');
-  const [privateData, setPrivateData] = useState('');
+  const [data, setData] = useState('data');
 
   let navigate = useNavigate();
 
@@ -19,8 +19,8 @@ const PrivateScreen = () => {
 
       try {
         const { data } = await axios.get('/api/private', config);
-        console.log(data);
-        setPrivateData(data.data);
+        setData(data.data);
+        props.idCallback(data.id);
       } catch (error) {
         localStorage.removeItem('authToken');
         setError('You are not authorized please login');
@@ -39,7 +39,7 @@ const PrivateScreen = () => {
     <span className="error-message">{error}</span>
   ) : (
     <div>
-      {privateData}
+      {data}
       <button onClick={handleLogout}>Logout</button>
     </div>
   );

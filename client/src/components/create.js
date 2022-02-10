@@ -6,7 +6,7 @@ import RECIPE_PROPERTIES, { RECIPE_OBJECT } from '../javascript/RECIPE_PROPERTIE
 // This will require to npm install axios
 import axios from 'axios';
 
-export default function Create() {
+export default function Create(props) {
   const [pageType, setPageType] = useState('Create');
   const [recipe, setRecipe] = useState(RECIPE_OBJECT);
   const [ingredients, setIngredients] = useState([]);
@@ -48,6 +48,7 @@ export default function Create() {
     e.preventDefault();
     // When post request is sent to the create url, axios will add a new record to the database.
     recipe.dateCreated = new Date();
+    recipe.userId = props.privateData;
 
     const formData = new FormData();
     for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {

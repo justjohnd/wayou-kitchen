@@ -9,7 +9,8 @@ const RECIPE_PROPERTIES = [
   'analyzedInstructions',
   'servings',
   'categories',
-  'dateCreated'
+  'dateCreated',
+  'userId'
 ];
 
 let RECIPE_OBJECT = {};
