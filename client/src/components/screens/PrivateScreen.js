@@ -11,6 +11,7 @@ import useGetRecords from '../../hooks/useGetRecords';
 const PrivateScreen = (props) => {
   const [error, setError] = useState('');
   const [data, setData] = useState('data');
+  const [privateScreen, setPrivateScreen] = useState(true);
 
   let navigate = useNavigate();
 
@@ -108,6 +109,7 @@ return (
               index={index}
               categoryRecords={categoryRecords}
               deleteRecord={deleteRecord}
+              privateScreen={privateScreen}
             />
           );
         }

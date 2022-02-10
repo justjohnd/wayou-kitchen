@@ -15,6 +15,7 @@ function RecipeGroup(props) {
       <Recipe
       recordArray={props.categoryRecords}
       deleteRecord={props.deleteRecord}
+      privateScreen={props.privateScreen}
       />
     </div>
   );

@@ -17,18 +17,22 @@ return (
           }
         />
         <div className="px-1 title">{currentrecord.title}</div>
-        <div className="px-1">
-          <Link to={'/show/' + currentrecord._id}>Show</Link> |
-          <Link to={'/edit/' + currentrecord._id}>Edit</Link> |
-          <a
-            href="/"
-            onClick={() => {
-              props.deleteRecord(currentrecord._id);
-            }}
-          >
-            Delete
-          </a>
-        </div>
+        {props.privateScreen ? (
+          <div className="px-1">
+            <Link to={'/show/' + currentrecord._id}>Show</Link> |
+            <Link to={'/edit/' + currentrecord._id}>Edit</Link> |
+            <a
+              href="/"
+              onClick={() => {
+                props.deleteRecord(currentrecord._id);
+              }}
+            >
+              Delete
+            </a>
+          </div>
+        ) : (
+          <div></div>
+        )}
       </div>
     );
   })}
