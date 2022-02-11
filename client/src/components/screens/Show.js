@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import RECIPE_PROPERTIES from '../javascript/RECIPE_PROPERTIES';
-import IngredientGroup from './ingredientGroup';
+import RECIPE_PROPERTIES from '../../javascript/RECIPE_PROPERTIES';
+import IngredientGroup from '../ingredientGroup';
 
 import { v4 as uuidv4 } from 'uuid';
 
 // This will require to npm install axios
 import axios from 'axios';
-import RecipeList from './recipeList';
+import RecipeList from './RecipeList';
 
 export default function Edit() {
   const [showRecipe, setShowRecipe] = useState({

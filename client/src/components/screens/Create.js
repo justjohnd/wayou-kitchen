@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import TemplateCreateEdit from './templateCreateEdit';
+import TemplateCreateEdit from '../templateCreateEdit';
 
-import RECIPE_PROPERTIES, { RECIPE_OBJECT } from '../javascript/RECIPE_PROPERTIES';
+import RECIPE_PROPERTIES, { RECIPE_OBJECT } from '../../javascript/RECIPE_PROPERTIES';
 
 // This will require to npm install axios
 import axios from 'axios';
