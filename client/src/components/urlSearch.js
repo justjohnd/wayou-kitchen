@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Input from './input';
 import Button from './button';
@@ -6,16 +6,17 @@ import Button from './button';
 export default function UrlSearch(props) {
   const [getUrl, setGetUrl] = useState({
     url: ''
-  });
+    });
 
   let navigate = useNavigate();
 
   function handleData(e) {
     const { value } = e.target;
-
+    
     setGetUrl(() => {
       return {
-        url: value
+        url: value,
+        userId: localStorage.getItem('userId'),
       };
     });
   }
@@ -41,6 +42,8 @@ export default function UrlSearch(props) {
     navigate(0);
   }
 
+  console.log(getUrl);
+
     return (
       <div className="container">
         <form onSubmit={handleGetRecipe}>
@@ -49,7 +52,7 @@ export default function UrlSearch(props) {
             wrapperClassName="d-inline-block"
             name="url"
             type="text"
-            inputClassName="form-control url-input"
+            inputClassName="form-control m-0 url-input"
             value={getUrl.url}
             onChange={(e) => handleData(e)}
             placeholder="Enter a URL to get the recipe"

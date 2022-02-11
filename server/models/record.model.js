@@ -38,6 +38,9 @@ const recordSchema = new Schema({
   servings: {
     type: String,
   },
+  userId: {
+    type: String
+  }
 });
 
 const Record = mongoose.model('Record', recordSchema);

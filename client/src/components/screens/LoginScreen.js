@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import './LoginScreen.css';
 
-const LoginScreen = () => {
+const LoginScreen = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -13,6 +13,8 @@ const LoginScreen = () => {
   useEffect(() => {
     if(localStorage.getItem("authToken")) {
       navigate("/");
+    } else {
+      props.loginStatusCallback(false);
     }
   }, []);
 
@@ -63,6 +65,7 @@ const LoginScreen = () => {
           <label htmlFor="password">Password:
           <Link to="/forgotpassword" className="login-screen__forgotpassword" tabIndex={4}>Forgot Password?</Link></label>
           <input
+            autoComplete="on"
             type="password"
             required
             id="password"

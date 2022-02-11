@@ -11,7 +11,8 @@ const RECIPE_PROPERTIES = [
   'analyzedInstructions',
   'servings',
   'categories',
-  'dateCreated'
+  'dateCreated',
+  'userId',
 ];
 
 module.exports = RECIPE_PROPERTIES;

@@ -28,7 +28,7 @@ export default function CategoryDropdown(props)  {
 
     return (
       <span
-        className="d-inline-block mb-5"
+        className="d-inline-block mb-3"
         data-toggle="popover"
         data-trigger="focus"
         data-content="Please selecet account(s)"
