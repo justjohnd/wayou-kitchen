@@ -50,7 +50,7 @@ export default function UrlSearch(props) {
             wrapperClassName="d-inline-block"
             name="url"
             type="text"
-            inputClassName="form-control url-input"
+            inputClassName="form-control m-0 url-input"
             value={getUrl.url}
             onChange={(e) => handleData(e)}
             placeholder="Enter a URL to get the recipe"

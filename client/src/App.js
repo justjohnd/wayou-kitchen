@@ -6,7 +6,6 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Edit from "./components/edit";
 import Create from "./components/create";
-import Home from "./components/Home";
 import RecipeList from "./components/recipeList";
 import Show from "./components/show";
 import LoginScreen from "./components/screens/LoginScreen";
@@ -80,9 +79,6 @@ const App = () => {
         path="/forgotpassword" 
         element={<ForgotPasswordScreen />} />
         <Route element={<PrivateRoute />}>
-          <Route 
-          path="/home" 
-          element={<Home />} />
           <Route
             path="/create"
             element={<Create privateData={privateData} />}

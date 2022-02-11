@@ -47,11 +47,12 @@ function displayAll() {
   // This following section will display the table with the records of individuals.
   return (
     <div className="p-3 container disable-while-loading">
-      <CategoryDropdown
-        className="ms-3"
-        selectedCategories={selectedCategories}
-        categoriesCallback={categoriesCallback}
-      ></CategoryDropdown>
+      <div className="ms-3">
+        <CategoryDropdown
+          selectedCategories={selectedCategories}
+          categoriesCallback={categoriesCallback}
+        ></CategoryDropdown>
+      </div>
       <h1 className="mb-4 ms-3">Recipes</h1>
       {displayAll()}
       {recordCategories ? (
