@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Input from './input';
 import Button from './button';
@@ -6,17 +6,17 @@ import Button from './button';
 export default function UrlSearch(props) {
   const [getUrl, setGetUrl] = useState({
     url: ''
-  });
+    });
 
   let navigate = useNavigate();
 
   function handleData(e) {
     const { value } = e.target;
-
+    
     setGetUrl(() => {
       return {
         url: value,
-        userId: props.privateData,
+        userId: localStorage.getItem('userId'),
       };
     });
   }
@@ -41,6 +41,8 @@ export default function UrlSearch(props) {
 
     navigate(0);
   }
+
+  console.log(getUrl);
 
     return (
       <div className="container">

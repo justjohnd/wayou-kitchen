@@ -37,6 +37,7 @@ const PrivateScreen = (props) => {
         localStorage.setItem('userId', data.id);
       } catch (error) {
         localStorage.removeItem('authToken');
+        localStorage.removeItem('userId');
         setError('You are not authorized please login');
       }
     };
@@ -90,8 +91,6 @@ function displayAll() {
     return <Recipe privateScreen={privateScreen} recordArray={records} deleteRecord={deleteRecord} />;
   }
 }
-
-console.log(records);
 
 // This following section will display the table with the records of individuals.
 return (

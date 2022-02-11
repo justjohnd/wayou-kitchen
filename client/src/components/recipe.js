@@ -4,8 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 function Recipe(props) {
 
-console.log(props.privateScreen);
-
 return (
 <div className="recipe-home-container">
   {props.recordArray.map((currentrecord) => {
