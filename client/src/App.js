@@ -16,28 +16,12 @@ import ForgotPasswordScreen from './components/screens/ForgotPasswordScreen';
 
 const App = () => {
     const [showLoader, setShowLoader] = useState(false);
-    const [loginStatus, setLoginStatus] = useState(false);
-    const [privateData, setPrivateData] = useState('');
-
-    useEffect(() => {
-      if (localStorage.getItem('authToken')) {
-        setLoginStatus(true);
-        setPrivateData(localStorage.getItem('userId'));
-      } else {
-        setLoginStatus(false);
-        setPrivateData('');
-      }
-    });
 
     function loaderCallback(data) {
       document.body.classList.add("overlay");
       let links = document.querySelectorAll(".disable-while-loading");
       links.forEach(link => link.classList.add("disabled"));
       setShowLoader(data);
-    }
-
-    function loginStatusCallback(status) {
-      setLoginStatus(status);
     }
 
   return (
@@ -50,8 +34,6 @@ const App = () => {
         </div>
       )}
       <Navbar
-        loginStatus={loginStatus}
-        privateData={privateData}
         loaderCallback={loaderCallback}
       />
       <Routes>
@@ -66,14 +48,14 @@ const App = () => {
         element={<Edit />} />
         <Route
           path="/login"
-          element={<LoginScreen loginStatusCallback={loginStatusCallback} />}
+          element={<LoginScreen />}
         />
         <Route 
         path="/register" 
         element={<RegisterScreen />} />
         <Route
           path="/private"
-          element={<PrivateScreen loginStatusCallback={loginStatusCallback} />}
+          element={<PrivateScreen />}
         />
         <Route 
         path="/forgotpassword" 
@@ -81,12 +63,12 @@ const App = () => {
         <Route element={<PrivateRoute />}>
           <Route
             path="/create"
-            element={<Create privateData={privateData} />}
+            element={<Create />}
           />
         </Route>
         <Route 
         path="*" 
-        element={<RecipeList privateData={privateData} to="/" />} />
+        element={<RecipeList to="/" />} />
       </Routes>
     </div>
   );

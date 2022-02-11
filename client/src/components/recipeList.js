@@ -44,8 +44,6 @@ function displayAll() {
   } 
 }
 
-console.log(records);
-
   // This following section will display the table with the records of individuals.
   return (
     <div className="p-3 container disable-while-loading">

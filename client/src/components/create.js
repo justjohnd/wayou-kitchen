@@ -48,7 +48,7 @@ export default function Create(props) {
     e.preventDefault();
     // When post request is sent to the create url, axios will add a new record to the database.
     recipe.dateCreated = new Date();
-    recipe.userId = props.privateData;
+    recipe.userId = localStorage.getItem('userId');
 
     const formData = new FormData();
     for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {

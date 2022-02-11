@@ -11,11 +11,9 @@ const LoginScreen = (props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(localStorage.getItem("authToken")) {
+    if (localStorage.getItem("authToken")) {
       navigate("/");
-    } else {
-      props.loginStatusCallback(false);
-    }
+    } 
   }, []);
 
   const loginHandler = async (e) => {

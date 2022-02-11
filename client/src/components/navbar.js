@@ -39,7 +39,7 @@ const Navbar = (props) => {
         </button>
 
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          {props.loginStatus ? (
+          {localStorage.getItem('authToken') ? (
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
                 <NavLink className="nav-link" to="/private">
@@ -53,7 +53,6 @@ const Navbar = (props) => {
               </li>
               <li>
                 <UrlSearch
-                  privateData={props.privateData}
                   loaderCallback={props.loaderCallback}
                 />
               </li>
@@ -62,7 +61,7 @@ const Navbar = (props) => {
             <div></div>
           )}
         </div>
-        {props.loginStatus ? (
+        {localStorage.getItem('authToken') ? (
           <div className="nav-item">
             <Link to="login" onClick={handleLogout}>
               Logout
