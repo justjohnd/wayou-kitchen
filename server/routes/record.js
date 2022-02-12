@@ -3,6 +3,8 @@ const fs = require('fs');
 const multer = require('multer');
 const { v4: uuidv4 } = require('uuid');
 let path = require('path');
+// Bring in record controller function
+const { allRecords, recordById, createRecord }= require('../controllers/record');
 
 const RECIPE_PROPERTIES = require('../../client/src/javascript/PROPERTIES_FOR_BACKEND.js');
 
@@ -13,9 +15,6 @@ const recordRoutes = express.Router();
 
 // This will help us connect to the database
 const dbo = require('../db/conn');
-
-//Import record schema
-let Record = require('../models/record.model');
 
 // This help convert the id from string to ObjectId for the _id.
 const ObjectId = require('mongodb').ObjectId;
@@ -41,57 +40,13 @@ const fileFilter = (req, file, cb) => {
 let upload = multer({ storage, fileFilter });
 
 // This section will help you get a list of all the records.
-recordRoutes.route('/record').get(function (req, res) {
-  let db_connect = dbo.getDb('recipes');
-  db_connect
-    .collection('records')
-    .find({})
-    .toArray(function (err, result) {
-      if (err) throw err;
-      res.json(result);
-    });
-})
+recordRoutes.route('/record').get(allRecords);
 
 // This section will help you get a single record by id
-recordRoutes.route('/record/:id').get(function (req, res) {
-  let db_connect = dbo.getDb();
-  let myQuery = { _id: ObjectId(req.params.id) };
-  db_connect.collection('records').findOne(myQuery, function (err, result) {
-    if (err) throw err;
-    res.json(result);
-  });
-});
+recordRoutes.route('/record/:id').get(recordById);
 
 // This section will help you create a new record.
-recordRoutes.route('/record/add').post(upload.single('image'), (req, response) => {
-  let db_connect = dbo.getDb();
-  let imageValue = '';
-  if (req.body.image) {
-    imageValue = req.body.image;
-  } else if (req.file === undefined) {
-    imageValue = 'placeholder.jpg';
-  } else {
-    imageValue = req.file.filename;
-  };
-
-    // Generate new object based on record properties defined in RECIPE_PROPERTIES array
-    //JSON.stringify and JSON.parse are use on front and backend respectively, specifically to handle object data coming from extendedIngredients and analyzedInstructions
-      let myObj = {};
-      for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
-        if (RECIPE_PROPERTIES[i] === 'image') {
-          myObj['image'] = imageValue;
-        } else {
-          myObj[RECIPE_PROPERTIES[i]] = JSON.parse(req.body[RECIPE_PROPERTIES[i]]);
-        }
-      }
-
-  const newRecord = new Record(myObj);
-
-  db_connect.collection('records').insertOne(newRecord, function (err, res) {
-    if (err) throw err;
-    response.json(res);
-  });
-});
+recordRoutes.route('/record/add').post(upload.single('image'), createRecord);
 
 // This section will help you update a record by id.
 recordRoutes.route('/update/:id').post(upload.single('image'), (req, response) => {

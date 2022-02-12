@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Circles } from "react-loader-spinner";
 import { Routes, Route } from "react-router-dom";
 
