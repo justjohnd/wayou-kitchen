@@ -84,9 +84,7 @@ export default function Edit() {
 
     // This will send a post{} request to update the data in the database.
     axios
-      .post('http://localhost:5000/update/' + params.id, formData)
-      .then((res) => console.log(res.data));
-
+      .post('http://localhost:5000/update/' + params.id, formData);
       navigate("/recipeList");
   }
 
@@ -127,8 +125,6 @@ export default function Edit() {
         console.log(error);
       });
   }, []);
-
-  console.log(recipe);
 
   // This following section will display the form that takes the input from the user.
   return (

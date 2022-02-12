@@ -1,7 +1,4 @@
 const fs = require('fs');
-const multer = require('multer');
-const { v4: uuidv4 } = require('uuid');
-let path = require('path');
 
 const RECIPE_PROPERTIES = require('../../client/src/javascript/PROPERTIES_FOR_BACKEND.js');
 
@@ -13,6 +10,12 @@ let Record = require('../models/record.model');
 
 // This help convert the id from string to ObjectId for the _id.
 const ObjectId = require('mongodb').ObjectId;
+
+// This is used for editing and deleting records
+async function returnDocument(db, query) {
+  let returnedDocument = db.collection('records').findOne(query);
+  return returnedDocument;
+};
 
 //when working with the database always use async functions
 exports.allRecords = async (req, res, next) => {
@@ -31,7 +34,7 @@ exports.allRecords = async (req, res, next) => {
   }
 };
 
-exports.recordById = async (req, res, next) => {
+exports.getRecord = async (req, res, next) => {
   try {
     let db_connect = dbo.getDb();
     let myQuery = { _id: ObjectId(req.params.id) };
@@ -46,7 +49,7 @@ exports.recordById = async (req, res, next) => {
   }
 };
 
-exports.createRecord = async (req, response, next) => {
+exports.addRecord = async (req, response, next) => {
   try {
     let db_connect =  await dbo.getDb();
     let imageValue = '';
@@ -82,11 +85,80 @@ exports.createRecord = async (req, response, next) => {
   }
 };
 
+exports.updateRecord = async (req, response, next) => {
+  try {
+        let db_connect = await dbo.getDb();
+        let myQuery = { _id: ObjectId(req.params.id) };
 
+        //Get the object in order to compare previous and new image files
+        returnDocument(db_connect, myQuery).then((returnedDocument) => {
+          let myObj = {};
+          for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
+            if (RECIPE_PROPERTIES[i] === 'image') {
+              //First, check to see if image is a url
+              if (req.file) {
+                myObj['image'] = req.file.filename;
+              } else if (req.body.image.slice(0, 4) === 'http') {
+                myObj['image'] = req.body.image;
+              } else {
+                myObj['image'] = req.body.image;
+              }
+              // Note: if the record does not have a userId, it will not save
+            } else {
+              myObj[RECIPE_PROPERTIES[i]] = JSON.parse(
+                req.body[RECIPE_PROPERTIES[i]]
+              );
+            }
+          }
 
+          //Remove any previous images saved to the server that have been changed
+          if (myObj.image !== returnedDocument.image) {
+            let filePathAndName = `../client/public/images/${returnedDocument.image}`;
+            if (returnedDocument.image !== 'placeholder.jpg') {
+              fs.unlink(filePathAndName, (err) => {
+                if (err) console.log(err);
+              });
+            }
+          }
 
+          let newvalues = {
+            $set: myObj,
+            $currentDate: { lastModified: true },
+          };
+          db_connect
+            .collection('records')
+            .updateOne(myQuery, newvalues, function (err, res) {
+              if (err) throw err;
+              console.log('1 document updated');
+              response.json(res);
+            });
+        });
+  } catch (error) {
+    next(error);
+  }
+};
 
+exports.deleteRecord = async (req, response, next) => {
+  try {
+    let db_connect = await dbo.getDb();
+    let myQuery = { _id: ObjectId(req.params.id) };
 
-
-
-
+    returnDocument(db_connect, myQuery).then((returnedDocument) => {
+      // Delete image file from server
+      let filePathAndName = `../client/public/images/${returnedDocument.image}`;
+      if (returnedDocument.image !== 'placeholder.jpg') {
+        fs.unlink(filePathAndName, (err) => {
+          if (err) console.log(err);
+        });
+      }
+    
+      db_connect.collection('records').deleteOne(myQuery, function (err, obj) {
+        if (err) throw err;
+        console.log('1 document deleted');
+        response.status(obj);
+      });
+    });
+  } catch (error) {
+    next(error);
+  }
+};
