@@ -13,10 +13,7 @@ export default function Create(props) {
   const [dataArray, setDataArray] = useState([]);
   const [changeImage, setChangeImage] = useState(true);
 
-  function recipeCallback(data) {
-    setRecipe(data);
-  }
-
+  //Set image as a file before sending
   function imageCallback(data) {
     setRecipe((prevValue) => {
       return {
@@ -24,6 +21,10 @@ export default function Create(props) {
         image: data,
       };
     });
+  }
+
+  function recipeCallback(data) {
+    setRecipe(data);
   }
 
   function ingredientsCallback(data) {
@@ -51,9 +52,10 @@ export default function Create(props) {
     recipe.userId = localStorage.getItem('userId');
 
     const formData = new FormData();
+    // For File objects (such as image) do not stringify
     for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
-      if (RECIPE_PROPERTIES[i] === 'image') {
-        formData.append('image', recipe.image);
+      if (recipe[RECIPE_PROPERTIES[i]] instanceof File) {
+        formData.append(RECIPE_PROPERTIES[i], recipe[RECIPE_PROPERTIES[i]]);
       } else {
         formData.append(
           RECIPE_PROPERTIES[i],
