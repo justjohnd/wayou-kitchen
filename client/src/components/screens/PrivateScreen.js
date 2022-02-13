@@ -20,7 +20,6 @@ const PrivateScreen = (props) => {
   let navigate = useNavigate();
 
   useEffect(() => {
-    props.loginStatusCallback(true);
     const fetchPrivateDate = async () => {
       const config = {
         headers: {
@@ -31,7 +30,6 @@ const PrivateScreen = (props) => {
 
       try {
         const { data } = await axios.get('/api/private', config);
-        console.log(data);
         setData(data.data);
         setRecords(data.records);
         localStorage.setItem('userId', data.id);

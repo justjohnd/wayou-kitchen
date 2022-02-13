@@ -42,8 +42,6 @@ export default function UrlSearch(props) {
     navigate(0);
   }
 
-  console.log(getUrl);
-
     return (
       <div className="container">
         <form onSubmit={handleGetRecipe}>
