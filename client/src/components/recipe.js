@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 function Recipe(props) {
-
 return (
 <div className="recipe-home-container">
   {props.recordArray.map((currentrecord) => {
@@ -23,10 +22,11 @@ return (
         {props.privateScreen ? (
           <div className="px-1">
             <Link to={'/edit/' + currentrecord._id}>Edit</Link> |
-            <a
-              href="/"
-              onClick={() => {
+            <a 
+            className="link"
+            onClick={() => {
                 props.deleteRecord(currentrecord._id);
+                window.location.reload();
               }}
             >
               Delete

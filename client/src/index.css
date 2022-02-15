@@ -28,12 +28,15 @@ code {
     monospace;
 }
 
-a {
+a,
+link {
   color: var(--color-dark);
   font-weight: 500;
+  text-decoration: none;
 }
 
-a:hover {
+a:hover,
+link:hover {
   color: var(--color-primary);
 }
 

@@ -15,6 +15,7 @@ export default function Edit() {
   const [newImage, setNewImage] = useState({ name: 'noImage' });
   const [image, setImage] = useState('');
   const [changeImage, setChangeImage] = useState(false);
+  const [error, setError] = useState('');
 
   const navigate = useNavigate();
 
@@ -55,7 +56,7 @@ export default function Edit() {
   let params = useParams();
 
   // This function will handle the submission.
-  function handleRecipe(e) {
+  const handleRecipe = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
@@ -83,9 +84,14 @@ export default function Edit() {
     }
 
     // This will send a post{} request to update the data in the database.
-    axios
-      .post('http://localhost:5000/update/' + params.id, formData);
-      navigate("/private");
+    try {
+      await axios.post('http://localhost:5000/update/' + params.id, formData);
+    } catch (error) {
+      setError(error.response.data.error);
+      setTimeout(() => {
+        setError('');
+      }, 5000);
+    }
   }
 
   // This will get the record based on the id from the database.

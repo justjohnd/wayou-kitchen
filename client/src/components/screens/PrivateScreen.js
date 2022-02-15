@@ -11,7 +11,6 @@ const PrivateScreen = (props) => {
   const [error, setError] = useState('');
   const [data, setData] = useState('data');
   const [privateScreen, setPrivateScreen] = useState(true);
-  const [record, setRecord] = useState({});
   const [selectedCategories, setSelectedCategories] = useState(null);
   const [recordCategories, setRecordCategories] = useState(null);
   const [records, setRecords] = useState('');
@@ -47,15 +46,15 @@ const PrivateScreen = (props) => {
   }, []);
 
 // This method will delete a record based on the method
-function deleteRecord(id) {
-  axios.delete('http://localhost:5000/' + id).then((response) => {
-  });
-
-  setRecord(() => {
-    return records.filter((el) => el._id !== id);
-  });
-
-  navigate('/private');
+const deleteRecord = async (id) => {
+  try {
+    await axios.delete('http://localhost:5000/' + id);
+  } catch (error) {
+    setError(error.response.data.error);
+    setTimeout(() => {
+      setError('');
+    }, 5000);
+  }
 }
 
 //Select by categories
