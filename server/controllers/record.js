@@ -30,12 +30,9 @@ function setObject(reqData) {
       if (reqData.file) {
         myObj['image'] = reqData.file.filename;
       } else if (reqData.body.image) {
-        if (reqData.body.image.slice(0, 4) === 'http') {
-        myObj['image'] = reqData.body.image;
+        myObj['image'] = 'placeholder.jpg';
       } else {
         myObj['image'] = reqData.body.image;
-      }} else {
-        myObj['image'] = 'placeholder.jpg';
       }
       // Note: if the record does not have a userId, it will not save
     } else {
@@ -61,11 +58,11 @@ exports.allRecords = async (req, res, next) => {
         res.json(result);
       });
   } catch (error) {
-    next(error);
+    res.json(error);
   }
 };
 
-exports.getRecord = async (req, res, next) => {
+exports.getRecord = async (req, res) => {
   try {
     let db_connect = dbo.getDb();
     let myQuery = { _id: ObjectId(req.params.id) };
@@ -76,11 +73,11 @@ exports.getRecord = async (req, res, next) => {
         res.json(result);
       });
   } catch (error) {
-    next(error);
+    res.json(error);
   }
 };
 
-exports.addRecord = async (req, res, next) => {
+exports.addRecord = async (req, res) => {
   try {
     let db_connect =  await dbo.getDb();
 
@@ -93,11 +90,11 @@ exports.addRecord = async (req, res, next) => {
       res.json(response);
     });
   } catch (error) {
-    next(error);
+    res.json(error);
   }
 };
 
-exports.updateRecord = async (req, res, next) => {
+exports.updateRecord = async (req, res) => {
   try {
     let db_connect = await dbo.getDb();
     let myQuery = { _id: ObjectId(req.params.id) }
@@ -130,11 +127,11 @@ exports.updateRecord = async (req, res, next) => {
       });
 
      } catch (error) {
-    next(error);
+    res.json(error);
   }
 };
 
-exports.deleteRecord = async (req, res, next) => {
+exports.deleteRecord = async (req, res) => {
   try {
     let db_connect = await dbo.getDb();
     let myQuery = { _id: ObjectId(req.params.id) };
@@ -155,6 +152,6 @@ exports.deleteRecord = async (req, res, next) => {
       });
     });
   } catch (error) {
-    next(error);
+    res.json(error);
   }
 };

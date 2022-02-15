@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import TemplateCreateEdit from '../templateCreateEdit';
-
 import RECIPE_PROPERTIES, { RECIPE_OBJECT } from '../../javascript/RECIPE_PROPERTIES';
-
-// This will require to npm install axios
 import axios from 'axios';
 
 export default function Create(props) {
@@ -12,6 +10,8 @@ export default function Create(props) {
   const [ingredients, setIngredients] = useState([]);
   const [dataArray, setDataArray] = useState([]);
   const [changeImage, setChangeImage] = useState(true);
+
+  const navigate = useNavigate();
 
   //Set image as a file before sending
   function imageCallback(data) {
@@ -70,6 +70,8 @@ export default function Create(props) {
 
     // We will empty the state after posting the data to the database
     setRecipe(RECIPE_OBJECT);
+
+    navigate("/private");
   }
 
   // This following section will display the form that takes the input from the user.

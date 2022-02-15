@@ -1,4 +1,4 @@
-exports.getPrivateData = (req, res, next) => {
+exports.getPrivateData = (req, res) => {
     console.log('wut');
   res.status(200).json({
     success: true,

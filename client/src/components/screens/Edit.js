@@ -85,7 +85,7 @@ export default function Edit() {
     // This will send a post{} request to update the data in the database.
     axios
       .post('http://localhost:5000/update/' + params.id, formData);
-      navigate("/recipeList");
+      navigate("/private");
   }
 
   // This will get the record based on the id from the database.
