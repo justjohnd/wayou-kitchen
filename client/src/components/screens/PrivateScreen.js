@@ -11,7 +11,6 @@ const PrivateScreen = (props) => {
   const [error, setError] = useState('');
   const [data, setData] = useState('data');
   const [privateScreen, setPrivateScreen] = useState(true);
-  const [record, setRecord] = useState({});
   const [selectedCategories, setSelectedCategories] = useState(null);
   const [recordCategories, setRecordCategories] = useState(null);
   const [records, setRecords] = useState('');
@@ -46,21 +45,16 @@ const PrivateScreen = (props) => {
     fetchPrivateDate();
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem('authToken');
-    navigate("/login");
-  }
-
 // This method will delete a record based on the method
-function deleteRecord(id) {
-  axios.delete('http://localhost:5000/' + id).then((response) => {
-  });
-
-  setRecord(() => {
-    return records.filter((el) => el._id !== id);
-  });
-
-  navigate('/private');
+const deleteRecord = async (id) => {
+  try {
+    await axios.delete('http://localhost:5000/' + id);
+  } catch (error) {
+    setError(error.response.data.error);
+    setTimeout(() => {
+      setError('');
+    }, 5000);
+  }
 }
 
 //Select by categories
@@ -96,7 +90,9 @@ function displayAll() {
 
 // This following section will display the table with the records of individuals.
 return (
-  <div className="p-3 container disable-while-loading">
+  error ? (
+    <span className="error-message">{error}</span>
+  ) : <div className="p-3 container disable-while-loading">
     <div className="ms-3">
       <CategoryDropdown
         className="ms-3"
@@ -125,16 +121,6 @@ return (
     )}
   </div>
 );
-
-  // return 
-  // error ? (
-  //   <span className="error-message">{error}</span>
-  // ) : (
-  //   <div>
-  //     {data}
-  //     <button onClick={handleLogout}>Logout</button>
-  //   </div>
-  // );
 };
 
 export default PrivateScreen;
