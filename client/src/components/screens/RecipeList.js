@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { categories } from '../javascript/categories';
-import Recipe from './recipe';
-import RecipeGroup from './recipeGroup';
-import CategoryDropdown from './categoryDropdown';
-import useGetRecords from "../hooks/useGetRecords";
+import { categories } from '../../javascript/categories';
+import Recipe from '../recipe';
+import RecipeGroup from '../recipeGroup';
+import CategoryDropdown from '../categoryDropdown';
+import useGetRecords from "../../hooks/useGetRecords";
 
-export default function RecipeList(props) {
-  const [record, setRecord] = useState({});
+export default function RecipeList() {
   const records = useGetRecords("/record");
   const [selectedCategories, setSelectedCategories] = useState(null);
   const [recordCategories, setRecordCategories] = useState(null);
@@ -16,8 +14,8 @@ export default function RecipeList(props) {
   //Select by categories
   function categoriesCallback(optionSelected) {
     setSelectedCategories(optionSelected);
-    //Put records in their on groups
-    console.log(optionSelected);
+    //Put records in their on groups for display
+    console.log(selectedCategories);
     const categoryTypes = optionSelected.map((category) => category.value);
 
     const groupArray = () => {

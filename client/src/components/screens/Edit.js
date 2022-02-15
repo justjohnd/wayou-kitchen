@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import TemplateCreateEdit from './templateCreateEdit';
+import TemplateCreateEdit from '../templateCreateEdit';
 
-import RECIPE_PROPERTIES, { RECIPE_OBJECT } from '../javascript/RECIPE_PROPERTIES';
+import RECIPE_PROPERTIES, { RECIPE_OBJECT } from '../../javascript/RECIPE_PROPERTIES';
 
 // This will require to npm install axios
 import axios from 'axios';
@@ -84,10 +84,8 @@ export default function Edit() {
 
     // This will send a post{} request to update the data in the database.
     axios
-      .post('http://localhost:5000/update/' + params.id, formData)
-      .then((res) => console.log(res.data));
-
-      navigate("/recipeList");
+      .post('http://localhost:5000/update/' + params.id, formData);
+      navigate("/private");
   }
 
   // This will get the record based on the id from the database.
@@ -127,8 +125,6 @@ export default function Edit() {
         console.log(error);
       });
   }, []);
-
-  console.log(recipe);
 
   // This following section will display the form that takes the input from the user.
   return (

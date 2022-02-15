@@ -6,7 +6,6 @@ import { categories } from '../../javascript/categories';
 import Recipe from '../recipe';
 import RecipeGroup from '../recipeGroup';
 import CategoryDropdown from '../categoryDropdown';
-import useGetRecords from '../../hooks/useGetRecords';
 
 const PrivateScreen = (props) => {
   const [error, setError] = useState('');
@@ -20,6 +19,10 @@ const PrivateScreen = (props) => {
   let navigate = useNavigate();
 
   useEffect(() => {
+    if (!localStorage.getItem('authToken')) {
+      navigate("/login");
+    }
+
     const fetchPrivateDate = async () => {
       const config = {
         headers: {
@@ -51,12 +54,13 @@ const PrivateScreen = (props) => {
 // This method will delete a record based on the method
 function deleteRecord(id) {
   axios.delete('http://localhost:5000/' + id).then((response) => {
-    console.log(response.data);
   });
 
   setRecord(() => {
     return records.filter((el) => el._id !== id);
   });
+
+  navigate('/private');
 }
 
 //Select by categories
