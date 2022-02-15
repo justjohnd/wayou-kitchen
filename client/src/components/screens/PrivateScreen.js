@@ -46,11 +46,6 @@ const PrivateScreen = (props) => {
     fetchPrivateDate();
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem('authToken');
-    navigate("/login");
-  }
-
 // This method will delete a record based on the method
 function deleteRecord(id) {
   axios.delete('http://localhost:5000/' + id).then((response) => {
@@ -96,7 +91,9 @@ function displayAll() {
 
 // This following section will display the table with the records of individuals.
 return (
-  <div className="p-3 container disable-while-loading">
+  error ? (
+    <span className="error-message">{error}</span>
+  ) : <div className="p-3 container disable-while-loading">
     <div className="ms-3">
       <CategoryDropdown
         className="ms-3"
@@ -125,16 +122,6 @@ return (
     )}
   </div>
 );
-
-  // return 
-  // error ? (
-  //   <span className="error-message">{error}</span>
-  // ) : (
-  //   <div>
-  //     {data}
-  //     <button onClick={handleLogout}>Logout</button>
-  //   </div>
-  // );
 };
 
 export default PrivateScreen;
