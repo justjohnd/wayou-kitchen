@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import '../index.css';
 
+
 // We import NavLink to utilize the react router.
 import { NavLink } from 'react-router-dom';
 import UrlSearch from './urlSearch';
@@ -22,10 +23,10 @@ const Navbar = (props) => {
 
   return (
     <div className="disable-while-loading">
-      <nav className="p-3 mb-5 container navbar navbar-expand-lg navbar-light">
-        <NavLink className="navbar-brand" to="/">
-          Wayou Kitchen!
-        </NavLink>
+      <nav className="p-3 mb-5 container navbar navbar-expand-lg">
+          <NavLink className="navbar-brand" to="/">
+            veggit
+          </NavLink>
         <button
           className="navbar-toggler"
           type="button"
@@ -37,39 +38,39 @@ const Navbar = (props) => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           {localStorage.getItem('authToken') ? (
-            <ul className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/private">
-                  My Cookbook
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/create">
-                  New Recipe
-                </NavLink>
-              </li>
-              <li>
-                <UrlSearch
-                  loaderCallback={props.loaderCallback}
-                />
-              </li>
-            </ul>
+            <div>
+              <ul className="navbar-nav ml-auto">
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/private">
+                    My Cookbook
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/create">
+                    new
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <UrlSearch
+                    className="nav-link"
+                    loaderCallback={props.loaderCallback}
+                  />
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="login" onClick={handleLogout}>
+                    Logout
+                  </Link>
+                </li>
+              </ul>
+            </div>
           ) : (
-            <div></div>
+            <Link className="login-link" to="login">
+              Register / Sign In
+            </Link>
           )}
         </div>
-        {localStorage.getItem('authToken') ? (
-          <div className="nav-item">
-            <Link to="login" onClick={handleLogout}>
-              Logout
-            </Link>
-          </div>
-        ) : (
-          <Link to="login">Register / Sign In</Link>
-        )}
       </nav>
     </div>
   );
