@@ -50,16 +50,17 @@ export default function UrlSearch(props) {
             wrapperClassName="d-inline-block"
             name="url"
             type="text"
-            inputClassName="form-control m-0 url-input"
+            inputClassName="url-input"
             value={getUrl.url}
             onChange={(e) => handleData(e)}
             placeholder="Enter a URL to get the recipe"
           />
           <Button
             buttonWrapper="d-inline-block"
-            className="ms-2 bg-dark"
+            buttonStyle="btn-nav"
+            className="ms-2 me-5"
             type="submit"
-            buttonText="Show Recipe"
+            buttonText="Get from URL"
           />
         </form>
       </div>
