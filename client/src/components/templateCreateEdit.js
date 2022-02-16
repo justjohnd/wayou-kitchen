@@ -232,7 +232,7 @@ export default function TemplateCreateEdit(props) {
   // This following section will display the form that takes the input from the user.
   // render() {
   return (
-    <div className="my-5 container container-record-form">
+    <div className="my-5 w-75 container container-record-form">
       <h3 className="mb-4">{props.pageType} New Record</h3>
       <form
         encType="multipart/form-data"
@@ -244,6 +244,7 @@ export default function TemplateCreateEdit(props) {
         <Input
           label="Name of the recipe:"
           wrapperClassName="mb-5 form-input"
+          fieldWidth="w-50"
           name="title"
           type="text"
           value={props.recipe.title}

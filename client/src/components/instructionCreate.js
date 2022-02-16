@@ -17,31 +17,39 @@ export default function InstructionCreate(props) {
 
   return (
     <div className="form-group mb-5">
-      <h4>Instructions</h4>
-      <Input
-        wrapperClassName="d-inline-block mb-3"
-        labelClassName="d-none"
-        name="instruction"
-        type="text"
-        value={props.data}
-        onChange={(e) => props.handleInstructionCallback(e)}
-        placeholder="Start Entering Instructions Here"
-      />
-      <div className="d-inline mx-3">
-        <input title="header" type="checkbox" onClick={handleHeader} />
-        <label className="mx-1" htmlFor="header">Make Header?</label>
-      </div>
-      <Button
-        className="ms-2 mb-1"
-        buttonWrapper="d-inline-block"
-        onClick={(e) => {
-          e.preventDefault();
-          props.addInstructionCallback(header);
-        }}
-        buttonText="Add"
-      />
-
-      <section className="output output-wrapper">
+      <section className="recipe-section-wrapper pb-0">
+        <h4>Instructions</h4>
+        <div className="d-flex justify-content-between">
+          <div>
+            <div className="d-inline-block invisible">0</div>
+            <Input
+              wrapperClassName="d-inline-block ms-2 mb-3 instruction-input"
+              labelClassName="d-none"
+              name="instruction"
+              type="text"
+              value={props.data}
+              onChange={(e) => props.handleInstructionCallback(e)}
+              placeholder="Start Entering Instructions Here"
+            />
+            <div className="d-inline mx-3">
+              <input title="header" type="checkbox" onClick={handleHeader} />
+              <label className="mx-1" htmlFor="header">
+                Make Header?
+              </label>
+            </div>
+          </div>
+          <Button
+            className="ms-2 mb-1 btn-right"
+            buttonWrapper="d-inline-block"
+            onClick={(e) => {
+              e.preventDefault();
+              props.addInstructionCallback(header);
+            }}
+            buttonText="Add"
+          />
+        </div>
+      </section>
+      <section className="output recipe-section-wrapper">
         {props.dataArray &&
           props.dataArray.map((data, index) => (
             <InstructionEdit

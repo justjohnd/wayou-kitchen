@@ -4,20 +4,19 @@ import Input from './input';
 export default function IngredientInput(props) {
 
   return (
-    <div className="d-inline-block me-2">
+    <div className="d-inline-block me-4">
       {props.isVisible &&
         (<Input
+          inputClassName={props.className}
           disabled="disabled"
           type="text"
-          fieldWidth="w-100"
-          label={props.inputName}
+          label={props.inputName + ":"}
           value={props.inputValue}
         />)}
       {!props.isVisible && (
         <Input
           label={props.inputName}
-          fieldWidth="w-100"
-          className={props.className}
+          inputClassName={props.className}
           name={props.name}
           onChange={props.onChange}
           value={props.value}
