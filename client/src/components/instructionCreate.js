@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import InstructionEdit from './instructionEdit';
 import Input from './input';
+import TextArea from './TextArea';
 import Button from './button';
 
 export default function InstructionCreate(props) {
@@ -17,20 +18,22 @@ export default function InstructionCreate(props) {
 
   return (
     <div className="form-group mb-5">
-      <section className="recipe-section-wrapper pb-0">
-        <h4>Instructions</h4>
-        <div className="d-flex justify-content-between">
-          <div>
+      <h4 className="mb-3">Instructions</h4>
+      <section className="recipe-section-wrapper">
+        <div className="input-left">
+          <div className="input-left mb-0">
             <div className="d-inline-block invisible">0</div>
-            <Input
-              wrapperClassName="d-inline-block ms-2 mb-3 instruction-input"
-              labelClassName="d-none"
-              name="instruction"
-              type="text"
-              value={props.data}
-              onChange={(e) => props.handleInstructionCallback(e)}
-              placeholder="Start Entering Instructions Here"
-            />
+            <div className="d-inline-block ms-2 instruction-input">
+              <label className="form-label invisible"></label>
+              <TextArea
+                className="form-control textarea"
+                name="instruction"
+                type="text"
+                value={props.data}
+                callbackFunction={props.handleInstructionCallback}
+                placeholder="Start Entering Instructions Here"
+              />
+            </div>
             <div className="d-inline mx-3">
               <input title="header" type="checkbox" onClick={handleHeader} />
               <label className="mx-1" htmlFor="header">
@@ -39,7 +42,7 @@ export default function InstructionCreate(props) {
             </div>
           </div>
           <Button
-            className="ms-2 mb-1 btn-right"
+            className="ms-2 btn-right"
             buttonWrapper="d-inline-block"
             onClick={(e) => {
               e.preventDefault();
@@ -48,8 +51,6 @@ export default function InstructionCreate(props) {
             buttonText="Add"
           />
         </div>
-      </section>
-      <section className="output recipe-section-wrapper">
         {props.dataArray &&
           props.dataArray.map((data, index) => (
             <InstructionEdit

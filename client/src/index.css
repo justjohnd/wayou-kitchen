@@ -43,13 +43,10 @@ link:hover {
 }
 
 .recipe-section-wrapper {
-  padding: 1em;
-}
-
-.output.recipe-section-wrapper {
   background-color: #77d97010;
   border: 1px solid var(--color-secondary);
   border-radius: 20px;
+  padding: 1em;
 }
 
 /* Show page */
@@ -176,11 +173,6 @@ link:hover {
   margin-bottom: 0;
 }
 
-.form-control {
-  margin-bottom: 1rem;
-  /* width: unset; */
-}
-
 .nav-item a {
   color: var(--color-dark);
 }
@@ -207,8 +199,14 @@ link:hover {
 }
 
 .btn-right {
-  margin-top: 0.5rem;
-  align-self: center;
+  align-self: end;
+}
+
+.input-left {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 20px;
 }
 
 .loader {
@@ -283,30 +281,31 @@ link:hover {
   background-color: #e9ecef;
 }
 
-.instruction-input {
+.textarea {
+  box-sizing: border-box;
+  resize: none;
+  overflow: auto;
+  height: auto;
+  line-height: 24px;
+  min-height: 38px;
   width: 440px;
 }
 
 /* Auth */
-.form-group,
-.form-group label,
-.form-group input {
-  /* width: 100%; */
-  /* margin-bottom: 0.5rem; */
-}
-
 .form-group label {
   font-size: 0.8rem;
 }
 
-/* .form-group input {
+.login-input {
   padding: 10px 20px;
   border: none;
   border-bottom: 3px solid transparent;
   background-color: var(--color-gray);
   outline-width: 0;
   font-size: 1rem;
-} */
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
 
 .form-group input:focus {
   border-bottom: 3px solid var(--color-tertiary);

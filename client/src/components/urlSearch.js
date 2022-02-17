@@ -46,11 +46,10 @@ export default function UrlSearch(props) {
       <div className="container">
         <form onSubmit={handleGetRecipe}>
           <Input
-            fieldWidth=" "
             wrapperClassName="d-inline-block"
             name="url"
             type="text"
-            inputClassName="url-input"
+            className="url-input"
             value={getUrl.url}
             onChange={(e) => handleData(e)}
             placeholder="Enter a URL to get the recipe"

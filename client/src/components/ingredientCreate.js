@@ -16,9 +16,9 @@ export default function IngredientCreate(props) {
 
   return (
     <div className="form-group mb-5">
-      <section className="recipe-section-wrapper pb-0">
-        <h4>Ingredients</h4>
-        <div className="d-flex justify-content-between">
+      <h4 className="mb-3">Ingredients</h4>
+      <section className="recipe-section-wrapper">
+        <div className="input-left">
           <div>
             <Input
               label="Ingredient:"
@@ -80,7 +80,7 @@ export default function IngredientCreate(props) {
           </div>
           <Button
             buttonWrapper="btn-right"
-            className="ms-2 mb-1"
+            className="ms-2"
             onClick={(e) => {
               e.preventDefault();
               props.addIngredientCallback();
@@ -88,8 +88,6 @@ export default function IngredientCreate(props) {
             buttonText="Add"
           />
         </div>
-      </section>
-      <section className="output recipe-section-wrapper">
         {props.ingredients &&
           props.ingredients.map((ingredient, index) => (
             <IngredientEdit

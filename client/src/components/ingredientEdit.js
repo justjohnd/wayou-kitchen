@@ -16,7 +16,7 @@ function IngredientEdit(props) {
   }
   
   return (
-    <div className="d-flex justify-content-between">
+    <div className="input-left">
       <div>
         <IngredientInput
           isVisible={isVisible}
@@ -108,7 +108,7 @@ function IngredientEdit(props) {
       >
         <Button
           buttonWrapper="d-inline-block"
-          className="ms-2 mb-1"
+          className="ms-2"
           onClick={(e) => {
             props.deleteIngredient(e, props.index);
           }}
@@ -119,7 +119,7 @@ function IngredientEdit(props) {
           buttonWrapper="d-inline-block"
           buttonText={isVisible === true ? 'Edit' : 'Save'}
           buttonStyle="btn-secondary"
-          className="ms-2 mb-1"
+          className="ms-2"
           onClick={(e) => handleEdit(e)}
         />
       </div>

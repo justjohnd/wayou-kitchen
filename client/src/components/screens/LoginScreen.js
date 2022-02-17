@@ -50,6 +50,7 @@ const LoginScreen = () => {
         <div className="form-group">
           <label htmlFor="email">Email:</label>
           <input
+            className="login-input"
             type="email"
             required
             id="email"
@@ -63,6 +64,7 @@ const LoginScreen = () => {
           <label htmlFor="password">Password:
           <Link to="/forgotpassword" className="login-screen__forgotpassword" tabIndex={4}>Forgot Password?</Link></label>
           <input
+            className="login-input"
             autoComplete="on"
             type="password"
             required
