@@ -13,7 +13,7 @@ function InstructionEdit(props) {
   }
 
   return (
-    <div className="d-flex justify-content-between">
+    <div className="input-left">
       <div>
         <div className="step-number d-inline-block">{props.index + 1}</div>
         <Input
@@ -40,7 +40,7 @@ function InstructionEdit(props) {
       </div>
       <div className="btn-right">
         <Button
-          className="ms-2 mb-1"
+          className="ms-2"
           buttonStyle="btn-secondary"
           buttonWrapper="d-inline-block"
           onClick={(e) => {
@@ -50,7 +50,7 @@ function InstructionEdit(props) {
         />
         <Button
           buttonWrapper="d-inline-block"
-          className="ms-2 mb-1"
+          className="ms-2"
           buttonStyle="btn-secondary"
           onClick={(e) => {
             e.preventDefault();

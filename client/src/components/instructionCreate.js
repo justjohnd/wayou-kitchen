@@ -19,7 +19,7 @@ export default function InstructionCreate(props) {
     <div className="form-group mb-5">
       <section className="recipe-section-wrapper pb-0">
         <h4>Instructions</h4>
-        <div className="d-flex justify-content-between">
+        <div className="input-left">
           <div>
             <div className="d-inline-block invisible">0</div>
             <Input
@@ -39,7 +39,7 @@ export default function InstructionCreate(props) {
             </div>
           </div>
           <Button
-            className="ms-2 mb-1 btn-right"
+            className="ms-2 btn-right"
             buttonWrapper="d-inline-block"
             onClick={(e) => {
               e.preventDefault();
