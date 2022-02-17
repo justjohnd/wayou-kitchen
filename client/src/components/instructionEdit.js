@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Input from './input';
+import TextArea from './TextArea';
 import Button from './button';
 import '../index.css';
 
@@ -12,30 +13,33 @@ function InstructionEdit(props) {
     props.headerCallback(props.index, newHeader);
   }
 
-  return (
-    <div className="input-left">
-      <div>
-        <div className="step-number d-inline-block">{props.index + 1}</div>
-        <Input
-          wrapperClassName="d-inline-block ms-2 instruction-input"
-          onChange={(e) =>
-            props.editInstructionCallback(
+  function editInstruction(e) {
+    props.editInstructionCallback(
               props.index,
               e.target.value,
               instructionHeader
-            )
-          }
-          value={props.dataArray[props.index].step}
-        />
-        <div className="d-inline mx-3">
-          <input
-            name="isHeader"
-            onChange={handleHeader}
-            checked={instructionHeader}
-            title="header"
-            type="checkbox"
+            );
+  }
+
+  return (
+    <div className="input-left">
+      <div className="input-left mb-0">
+        <div className="step-number d-inline-block">{props.index + 1}</div>
+        <div className="d-inline-block ms-2 instruction-input">
+          <TextArea
+            className="form-control textarea"
+            name="instruction"
+            type="text"
+            value={props.dataArray[props.index].step}
+            callbackFunction={editInstruction}
+            placeholder="Start Entering Instructions Here"
           />
-          <label htmlFor="header">Make Header?</label>
+        </div>
+        <div className="d-inline mx-3">
+          <input title="header" type="checkbox" onClick={handleHeader} />
+          <label className="mx-1" htmlFor="header">
+            Make Header?
+          </label>
         </div>
       </div>
       <div className="btn-right">

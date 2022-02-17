@@ -281,7 +281,13 @@ link:hover {
   background-color: #e9ecef;
 }
 
-.instruction-input {
+.textarea {
+  box-sizing: border-box;
+  resize: none;
+  overflow: auto;
+  height: auto;
+  line-height: 24px;
+  min-height: 38px;
   width: 440px;
 }
 

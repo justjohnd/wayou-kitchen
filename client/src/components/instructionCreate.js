@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import InstructionEdit from './instructionEdit';
 import Input from './input';
+import TextArea from './TextArea';
 import Button from './button';
 
 export default function InstructionCreate(props) {
@@ -20,17 +21,19 @@ export default function InstructionCreate(props) {
       <h4 className="mb-3">Instructions</h4>
       <section className="recipe-section-wrapper">
         <div className="input-left">
-          <div>
+          <div className="input-left mb-0">
             <div className="d-inline-block invisible">0</div>
-            <Input
-              wrapperClassName="d-inline-block ms-2 instruction-input"
-              labelClassName="invisible"
-              name="instruction"
-              type="text"
-              value={props.data}
-              onChange={(e) => props.handleInstructionCallback(e)}
-              placeholder="Start Entering Instructions Here"
-            />
+            <div className="d-inline-block ms-2 instruction-input">
+              <label className="form-label invisible"></label>
+              <TextArea
+                className="form-control textarea"
+                name="instruction"
+                type="text"
+                value={props.data}
+                callbackFunction={props.handleInstructionCallback}
+                placeholder="Start Entering Instructions Here"
+              />
+            </div>
             <div className="d-inline mx-3">
               <input title="header" type="checkbox" onClick={handleHeader} />
               <label className="mx-1" htmlFor="header">
