@@ -16,8 +16,8 @@ export default function IngredientCreate(props) {
 
   return (
     <div className="form-group mb-5">
-      <section className="recipe-section-wrapper py-0">
-        <h4>Ingredients</h4>
+      <h4 className="mb-3">Ingredients</h4>
+      <section className="recipe-section-wrapper">
         <div className="input-left">
           <div>
             <Input
@@ -88,8 +88,6 @@ export default function IngredientCreate(props) {
             buttonText="Add"
           />
         </div>
-      </section>
-      <section className="output recipe-section-wrapper">
         {props.ingredients &&
           props.ingredients.map((ingredient, index) => (
             <IngredientEdit

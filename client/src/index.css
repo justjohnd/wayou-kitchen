@@ -43,13 +43,10 @@ link:hover {
 }
 
 .recipe-section-wrapper {
-  padding: 1em;
-}
-
-.output.recipe-section-wrapper {
   background-color: #77d97010;
   border: 1px solid var(--color-secondary);
   border-radius: 20px;
+  padding: 1em;
 }
 
 /* Show page */

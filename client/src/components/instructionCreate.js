@@ -17,14 +17,14 @@ export default function InstructionCreate(props) {
 
   return (
     <div className="form-group mb-5">
-      <section className="recipe-section-wrapper py-0">
-        <h4>Instructions</h4>
+      <h4 className="mb-3">Instructions</h4>
+      <section className="recipe-section-wrapper">
         <div className="input-left">
           <div>
             <div className="d-inline-block invisible">0</div>
             <Input
-              wrapperClassName="d-inline-block ms-2 mb-3 instruction-input"
-              labelClassName="d-none"
+              wrapperClassName="d-inline-block ms-2 instruction-input"
+              labelClassName="invisible"
               name="instruction"
               type="text"
               value={props.data}
@@ -48,8 +48,6 @@ export default function InstructionCreate(props) {
             buttonText="Add"
           />
         </div>
-      </section>
-      <section className="output recipe-section-wrapper">
         {props.dataArray &&
           props.dataArray.map((data, index) => (
             <InstructionEdit
