@@ -244,14 +244,14 @@ export default function TemplateCreateEdit(props) {
         <Input
           label="Name of the recipe:"
           wrapperClassName="mb-5 form-input"
-          fieldWidth="w-50"
+          className="w-50"
           name="title"
           type="text"
           value={props.recipe.title}
           onChange={(e) => handleData(e)}
         />
         {props.pageType === 'Edit' && (
-          <div className="mb-5">
+          <div className="mb-5 d-flex">
             <img
               className="recipe-image"
               src={
@@ -260,26 +260,30 @@ export default function TemplateCreateEdit(props) {
                   : '../../images/' + props.image
               }
             />
-            <Button
-              buttonWrapper="d-inline mx-3"
-              buttonText="Edit Image"
-              onClick={() => props.changeImageCallback()}
-            ></Button>
-            <Button
-              buttonWrapper="d-inline mx-3"
-              buttonText="Remove Image"
-              onClick={() => props.changeImageCallback('remove')}
-            ></Button>
+            <div>
+              <Button
+                buttonWrapper="d-inline mx-3"
+                buttonText="Edit Image"
+                onClick={() => props.changeImageCallback()}
+              />
+              <Button
+                buttonWrapper="d-inline mx-3"
+                buttonText="Remove Image"
+                onClick={() => props.changeImageCallback('remove')}
+              />
+              {props.changeImage === true && (
+                <Input
+                  type="file"
+                  accept=".png, .jpg, .jpeg"
+                  name="image"
+                  className="mx-3"
+                  onChange={(e) => props.imageCallback(e.target.files[0])}
+                />
+              )}
+            </div>
           </div>
         )}
-        {props.changeImage === true && (
-          <Input
-            type="file"
-            accept=".png, .jpg, .jpeg"
-            name="image"
-            onChange={(e) => props.imageCallback(e.target.files[0])}
-          />
-        )}
+
         <IngredientCreate
           ingredient={ingredient}
           ingredients={props.ingredients}
@@ -311,6 +315,7 @@ export default function TemplateCreateEdit(props) {
           label="Preparation Minutes:"
           wrapperClassName="mb-5 form-input"
           name="preparationMinutes"
+          className="w-50"
           type="text"
           value={props.recipe.preparationMinutes}
           onChange={(e) => handleData(e)}
@@ -319,6 +324,7 @@ export default function TemplateCreateEdit(props) {
           label="Cooking Minutes:"
           wrapperClassName="mb-5 form-input"
           name="cookingMinutes"
+          className="w-50"
           type="text"
           value={props.recipe.cookingMinutes}
           onChange={(e) => handleData(e)}
@@ -327,6 +333,7 @@ export default function TemplateCreateEdit(props) {
           label="Number of Servings:"
           wrapperClassName="mb-5 form-input"
           name="servings"
+          className="w-50"
           type="number"
           value={props.recipe.servings}
           onChange={(e) => handleData(e)}
@@ -335,6 +342,7 @@ export default function TemplateCreateEdit(props) {
           label="Reference Web Page:"
           wrapperClassName="mb-5 form-input"
           name="sourceUrl"
+          className="w-50"
           type="text"
           value={props.recipe.sourceUrl}
           onChange={(e) => handleData(e)}

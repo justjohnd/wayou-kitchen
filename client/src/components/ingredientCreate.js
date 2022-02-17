@@ -16,7 +16,7 @@ export default function IngredientCreate(props) {
 
   return (
     <div className="form-group mb-5">
-      <section className="recipe-section-wrapper pb-0">
+      <section className="recipe-section-wrapper py-0">
         <h4>Ingredients</h4>
         <div className="input-left">
           <div>

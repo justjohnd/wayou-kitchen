@@ -7,7 +7,7 @@ export default function IngredientInput(props) {
     <div className="d-inline-block me-4">
       {props.isVisible &&
         (<Input
-          inputClassName={props.className}
+          className={props.className}
           disabled="disabled"
           type="text"
           label={props.inputName + ":"}
@@ -16,7 +16,7 @@ export default function IngredientInput(props) {
       {!props.isVisible && (
         <Input
           label={props.inputName}
-          inputClassName={props.className}
+          className={props.className}
           name={props.name}
           onChange={props.onChange}
           value={props.value}

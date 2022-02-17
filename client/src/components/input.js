@@ -11,7 +11,7 @@ export default function Input(props) {
         disabled={props.disabled ? 'disabled' : ''}
         name={props.name}
         type={props.type}
-        className={`form-control ${props.inputClassName} ${props.fieldWidth}`}
+        className={`form-control ${props.className}`}
         value={props.value}
         onChange={props.onChange}
         placeholder={props.placeholder}
