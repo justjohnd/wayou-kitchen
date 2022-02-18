@@ -293,6 +293,11 @@ link:hover {
   width: 440px;
 }
 
+/* Targets react-select container */
+.css-319lph-ValueContainer {
+  width: 148px;
+}
+
 /* Auth */
 .form-label-sm {
   font-size: 0.8rem;
