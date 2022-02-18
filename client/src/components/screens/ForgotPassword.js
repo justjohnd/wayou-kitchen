@@ -47,7 +47,7 @@ const ForgotPassword = () => {
             Please enter the email address you register your account with. We
             will send you reset password confirmation to this email
           </p>
-          <label htmlFor="email">Email:</label>
+          <label className="form-label-sm" htmlFor="email">Email:</label>
           <input
             type="email"
             required

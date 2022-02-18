@@ -61,7 +61,9 @@ const ResetPasswordScreen = ({ match }) => {
           </span>
         )}
         <div className="form-group">
-          <label htmlFor="password">New Password:</label>
+          <label className="form-label-sm" htmlFor="password">
+            New Password:
+          </label>
           <input
             type="password"
             required
@@ -73,7 +75,9 @@ const ResetPasswordScreen = ({ match }) => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="confirmpassword">Confirm New Password:</label>
+          <label className="form-label-sm" htmlFor="confirmpassword">
+            Confirm New Password:
+          </label>
           <input
             type="password"
             required
