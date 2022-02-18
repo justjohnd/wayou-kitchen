@@ -30,9 +30,9 @@ function setObject(reqData) {
       if (reqData.file) {
         myObj['image'] = reqData.file.filename;
       } else if (reqData.body.image) {
-        myObj['image'] = 'placeholder.jpg';
-      } else {
         myObj['image'] = reqData.body.image;
+      } else {
+        myObj['image'] = 'placeholder.jpg';
       }
       // Note: if the record does not have a userId, it will not save
     } else {
