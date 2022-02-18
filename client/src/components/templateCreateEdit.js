@@ -75,9 +75,6 @@ export default function TemplateCreateEdit(props) {
     setEditIngredient(ingredientClone);
   }
 
-  // console.log('ingredient', ingredient);
-  // console.log('editIngredient', editIngredient);
-
   function onSave(idx) {
     const ingredientsClone = [...props.ingredients];
     const filtered = ingredientsClone.filter((ingredient) => {
@@ -230,6 +227,8 @@ export default function TemplateCreateEdit(props) {
     });
   }
 
+  console.log(props.imagePreview);
+
   // This following section will display the form that takes the input from the user.
   // render() {
   return (
@@ -258,11 +257,8 @@ export default function TemplateCreateEdit(props) {
             <div className="mb-5 d-flex">
               <img
                 className="recipe-image"
-                src={
-                  props.image.slice(0, 4) === 'http'
-                    ? props.image
-                    : '../../images/' + props.image
-                }
+                id="image-preview"
+                src={props.imagePreview}
               />
               <div>
                 <Button
@@ -285,10 +281,19 @@ export default function TemplateCreateEdit(props) {
             </div>
           )}
           {props.pageType === 'Create' && (
-            <InputFile
-              className="w-50"
-              onChange={(e) => props.imageCallback(e.target.files[0])}
-            />
+            <div className={`mb-5 ${props.imagePreview ? 'd-flex' : 'w-50'}`}>
+              {props.imagePreview && (
+                <img
+                  className="recipe-image"
+                  id="image-preview"
+                  src={props.imagePreview}
+                />
+              )}
+              <InputFile
+                onChange={(e) => props.imageCallback(e.target.files[0])}
+                className={props.imagePreview && "mx-3"}
+              />
+            </div>
           )}
         </div>
 
