@@ -11,11 +11,16 @@ export default function Create() {
   const [dataArray, setDataArray] = useState([]);
   const [changeImage, setChangeImage] = useState(true);
   const [error, setError] = useState('');
+  const [imagePreview, setImagePreview] = useState('');
 
   const navigate = useNavigate();
 
   //Set image as a file before sending
   function imageCallback(data) {
+    if (data) {
+      setImagePreview(URL.createObjectURL(data));
+    }
+
     setRecipe((prevValue) => {
       return {
         ...prevValue,
@@ -88,6 +93,7 @@ export default function Create() {
         dataArray={dataArray}
         dataArrayCallback={dataArrayCallback}
         imageCallback={imageCallback}
+        imagePreview={imagePreview}
         changeImage={changeImage}
         categoriesCallback={categoriesCallback}
       />
