@@ -16,6 +16,7 @@ export default function Edit() {
   const [image, setImage] = useState('');
   const [changeImage, setChangeImage] = useState(false);
   const [error, setError] = useState('');
+  const [imagePreview, setImagePreview] = useState('');
 
   const navigate = useNavigate();
 
@@ -31,9 +32,13 @@ export default function Edit() {
     setRecipe(data);
   }
 
+  // Triggered by image input field
   function imageCallback(data) {
     setNewImage(data);
-  }
+    if (data) {
+    setImagePreview(URL.createObjectURL(data));
+    }
+    }
 
   function ingredientsCallback(data) {
     setIngredients(data);
@@ -107,6 +112,13 @@ export default function Edit() {
         for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
           if (RECIPE_PROPERTIES[i] === 'image') {
             setImage(response.data.image);
+
+            if (response.data.image.slice(0, 4) === 'http') {
+              setImagePreview(response.data.image);
+            } else {
+              setImagePreview('../../images/' + response.data.image);
+            }
+
           } else {
             myObj[RECIPE_PROPERTIES[i]] = response.data[RECIPE_PROPERTIES[i]];
           }
@@ -124,10 +136,6 @@ export default function Edit() {
         );
 
         setIngredients(ingredientsWithId);
-
-        // const instructions = response.data.analyzedInstructions.map(
-        //   (instruction) => instruction.step
-        // );
         setDataArray(response.data.analyzedInstructions);
       })
       .catch(function (error) {
@@ -148,6 +156,7 @@ export default function Edit() {
         dataArray={dataArray}
         dataArrayCallback={dataArrayCallback}
         image={image}
+        imagePreview={imagePreview}
         imageCallback={imageCallback}
         changeImage={changeImage}
         changeImageCallback={changeImageCallback}

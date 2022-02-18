@@ -75,9 +75,6 @@ export default function TemplateCreateEdit(props) {
     setEditIngredient(ingredientClone);
   }
 
-  // console.log('ingredient', ingredient);
-  // console.log('editIngredient', editIngredient);
-
   function onSave(idx) {
     const ingredientsClone = [...props.ingredients];
     const filtered = ingredientsClone.filter((ingredient) => {
@@ -258,11 +255,8 @@ export default function TemplateCreateEdit(props) {
             <div className="mb-5 d-flex">
               <img
                 className="recipe-image"
-                src={
-                  props.image.slice(0, 4) === 'http'
-                    ? props.image
-                    : '../../images/' + props.image
-                }
+                id="image-preview"
+                src={props.imagePreview}
               />
               <div>
                 <Button
