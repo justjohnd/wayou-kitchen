@@ -177,7 +177,9 @@ link:hover {
   color: var(--color-dark);
 }
 
-.nav-item a:hover {
+.nav-item a:hover,
+.nav-link:hover,
+.nav-link:focus {
   color: var(--color-dark-green);
 }
 
