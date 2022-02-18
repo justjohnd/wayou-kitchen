@@ -48,7 +48,9 @@ const LoginScreen = () => {
         <h3 className="login-screen__title">Login</h3>
         {error && <span className="error-message">{error}</span>}
         <div className="form-group">
-          <label htmlFor="email">Email:</label>
+          <label className="form-label-sm" htmlFor="email">
+            Email:
+          </label>
           <input
             className="login-input"
             type="email"
@@ -61,8 +63,16 @@ const LoginScreen = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="password">Password:
-          <Link to="/forgotpassword" className="login-screen__forgotpassword" tabIndex={4}>Forgot Password?</Link></label>
+          <label className="form-label-sm" htmlFor="password">
+            Password:
+            <Link
+              to="/forgotpassword"
+              className="login-screen__forgotpassword"
+              tabIndex={4}
+            >
+              Forgot Password?
+            </Link>
+          </label>
           <input
             className="login-input"
             autoComplete="on"
@@ -76,10 +86,7 @@ const LoginScreen = () => {
           />
         </div>
 
-        <button 
-          type="submit" 
-          className="btn btn-primary"
-          tabIndex={3}>
+        <button type="submit" className="btn btn-primary" tabIndex={3}>
           Login
         </button>
         <span className="login-screen__subtext">

@@ -260,7 +260,7 @@ link:hover {
   line-height: 1;
 }
 /* Edit Page */
-.container-record-form .form-input {
+.form-label-lg {
   font-size: 1.5rem;
   font-weight: 500;
   line-height: 1.2;
@@ -292,7 +292,7 @@ link:hover {
 }
 
 /* Auth */
-.form-group label {
+.form-label-sm {
   font-size: 0.8rem;
 }
 
@@ -307,7 +307,9 @@ link:hover {
   margin-bottom: 0.5rem;
 }
 
-.form-group input:focus {
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
   border-bottom: 3px solid var(--color-tertiary);
 }
 

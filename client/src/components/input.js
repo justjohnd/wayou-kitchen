@@ -4,7 +4,7 @@ export default function Input(props) {
 
   return (
     <div className={`${props.wrapperClassName}`}>
-      <label className={`form-label ${props.labelClassName}`}>
+      <label className={`${props.labelClassName}`}>
         {props.label}
       </label>
       <input
