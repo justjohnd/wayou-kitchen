@@ -9,7 +9,7 @@ export default function InputFile(props) {
         accept=".png, .jpg, .jpeg"
         name="image"
         className={`form-control ${props.className}`}
-        onChange={(e) => props.imageCallback(e.target.files[0])}
+        onChange={props.onChange}
       />
     </div>
   );

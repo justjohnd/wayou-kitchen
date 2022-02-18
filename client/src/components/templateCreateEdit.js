@@ -275,11 +275,21 @@ export default function TemplateCreateEdit(props) {
                   buttonText="Remove Image"
                   onClick={() => props.changeImageCallback('remove')}
                 />
-                {props.changeImage === true && <InputFile className="mx-3" />}
+                {props.changeImage === true && (
+                  <InputFile
+                    onChange={(e) => props.imageCallback(e.target.files[0])}
+                    className="mx-3"
+                  />
+                )}
               </div>
             </div>
           )}
-          {props.pageType === 'Create' && <InputFile className="w-50" />}
+          {props.pageType === 'Create' && (
+            <InputFile
+              className="w-50"
+              onChange={(e) => props.imageCallback(e.target.files[0])}
+            />
+          )}
         </div>
 
         <IngredientCreate
