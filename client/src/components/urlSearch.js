@@ -8,6 +8,7 @@ export default function UrlSearch(props) {
   const [getUrl, setGetUrl] = useState({
     url: ''
     });
+  const [error, setError] = useState('');
 
   let navigate = useNavigate();
 
@@ -27,18 +28,24 @@ export default function UrlSearch(props) {
     e.preventDefault();
     props.loaderCallback(true);
 
-    await axios.post('http://localhost:5000/urlSearch', getUrl, {
+    try {
+      await axios.post('http://localhost:5000/urlSearch', getUrl, {
       headers: {
         'Content-Type': 'application/json',
       }
-    })
-    .then(() => console.log("Item added to database"))
-    .catch((error) => {
-      console.error(error);
-      return;
-    });
+      });
+      console.log("Item added to database");
 
-    navigate(0);
+    } catch(error) {
+      props.loaderCallback(false);
+      setError(error.response.data.error);
+      console.log(error);
+      setTimeout(() => {
+        setError('');
+      }, 5000);
+    };
+
+    window.location.reload();
   }
 
     return (
