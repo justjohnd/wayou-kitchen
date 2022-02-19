@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Input from './input';
 import Button from './button';
+import axios from 'axios';
 
 export default function UrlSearch(props) {
   const [getUrl, setGetUrl] = useState({
@@ -26,12 +27,10 @@ export default function UrlSearch(props) {
     e.preventDefault();
     props.loaderCallback(true);
 
-    await fetch('http://localhost:5000/urlSearch', {
-      method: 'POST',
+    await axios.post('http://localhost:5000/urlSearch', getUrl, {
       headers: {
         'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(getUrl),
+      }
     })
     .then(() => console.log("Item added to database"))
     .catch((error) => {
