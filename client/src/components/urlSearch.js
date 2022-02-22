@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Input from './input';
 import Button from './button';
+import axios from 'axios';
 
 export default function UrlSearch(props) {
   const [getUrl, setGetUrl] = useState({
     url: ''
     });
+  const [error, setError] = useState('');
 
   let navigate = useNavigate();
 
@@ -24,35 +26,38 @@ export default function UrlSearch(props) {
   // // This function will handle getting the recipe from a url
   async function handleGetRecipe(e) {
     e.preventDefault();
-    props.loaderCallback(true);
 
-    await fetch('http://localhost:5000/urlSearch', {
-      method: 'POST',
+    try {
+      props.loaderCallback(true);
+      await axios.post('http://localhost:5000/urlSearch', getUrl, {
       headers: {
         'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(getUrl),
-    })
-    .then(() => console.log("Item added to database"))
-    .catch((error) => {
-      console.error(error);
-      return;
-    });
+      }
+      });
+      console.log("Item added to database");
+      window.location.reload();
 
-    navigate(0);
+    } catch(error) {
+      props.loaderCallback(false);
+      setError(error.response.data.error);
+      setTimeout(() => {
+        setError('');
+        setGetUrl({url: ''});
+      }, 5000);
+    };
   }
 
-    return (
+    return (    
       <div className="container">
         <form onSubmit={handleGetRecipe}>
           <Input
             wrapperClassName="d-inline-block"
             name="url"
             type="text"
-            className="url-input"
-            value={getUrl.url}
+            className={error ? "error-message url-input" : "url-input" }
+            value={error ? error : getUrl.url}
             onChange={(e) => handleData(e)}
-            placeholder="Enter a URL to get the recipe"
+            placeholder={error ? error : "Enter a URL to get the recipe" }
           />
           <Button
             buttonWrapper="d-inline-block"

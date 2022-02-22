@@ -1,5 +1,6 @@
 const express = require('express');
 const axios = require('axios');
+const ErrorResponse = require('../utils/errorResponse');
 const API_KEY = process.env.API_KEY;
 
 const RECIPE_PROPERTIES = require('../../client/src/javascript/PROPERTIES_FOR_BACKEND.js');
@@ -14,10 +15,12 @@ const dbo = require('../db/conn');
 
 //Import record schema
 let Record = require('../models/record.model');
+const { CommandSucceededEvent } = require('mongodb');
 
 //Get data from urlSearch
-urlSearchRoute.route('/urlSearch').post(function (req, topResponse) {
-    axios
+urlSearchRoute.route('/urlSearch').post(async function (req, topResponse, next) {
+  try {
+    await axios
       .get(
         `https://api.spoonacular.com/recipes/extract?url=${req.body.url}&apiKey=${API_KEY}`
       )
@@ -58,11 +61,17 @@ urlSearchRoute.route('/urlSearch').post(function (req, topResponse) {
               topResponse.json(res);
             });
         } else {
-          console.log('No data available from this API call');
+          console.log('API call succeeded, but no viable data returned');
         }
-        
       })
-      .catch((error) => console.error(`error: ${error}`));
+      .catch((error) => {
+        console.error(`Failed to connect to API: ${error}`);
+        return next(new ErrorResponse('Failed to return recipe from URL', 400));
+      }); 
+  } catch (error) {
+    console.log(`Failed to connect with urlSearch route: ${error}`);
+    return new ErrorResponse('Failed to connect with urlSearch route', 400);
+  }
   });
 
   module.exports = urlSearchRoute;
