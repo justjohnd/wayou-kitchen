@@ -19,10 +19,18 @@ const App = () => {
 
     //Loader for urlSearch
     function loaderCallback(data) {
-      document.body.classList.add("overlay");
-      let links = document.querySelectorAll(".disable-while-loading");
-      links.forEach(link => link.classList.add("disabled"));
-      setShowLoader(data);
+      let links = document.querySelectorAll('.disable-while-loading');
+      if (data === true) {
+        document.body.classList.add('overlay');
+        links.forEach((link) => link.classList.add('disabled'));
+        setShowLoader(true);
+      } else {
+        document.body.classList.remove('overlay');
+        links.forEach((link) => link.classList.remove('disabled'));
+        setShowLoader(false);
+      }
+
+
     }
 
   return (

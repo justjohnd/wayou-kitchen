@@ -26,39 +26,38 @@ export default function UrlSearch(props) {
   // // This function will handle getting the recipe from a url
   async function handleGetRecipe(e) {
     e.preventDefault();
-    props.loaderCallback(true);
 
     try {
+      props.loaderCallback(true);
       await axios.post('http://localhost:5000/urlSearch', getUrl, {
       headers: {
         'Content-Type': 'application/json',
       }
       });
       console.log("Item added to database");
+      window.location.reload();
 
     } catch(error) {
       props.loaderCallback(false);
       setError(error.response.data.error);
-      console.log(error);
       setTimeout(() => {
         setError('');
+        setGetUrl({url: ''});
       }, 5000);
     };
-
-    window.location.reload();
   }
 
-    return (
+    return (    
       <div className="container">
         <form onSubmit={handleGetRecipe}>
           <Input
             wrapperClassName="d-inline-block"
             name="url"
             type="text"
-            className="url-input"
-            value={getUrl.url}
+            className={error ? "error-message url-input" : "url-input" }
+            value={error ? error : getUrl.url}
             onChange={(e) => handleData(e)}
-            placeholder="Enter a URL to get the recipe"
+            placeholder={error ? error : "Enter a URL to get the recipe" }
           />
           <Button
             buttonWrapper="d-inline-block"
