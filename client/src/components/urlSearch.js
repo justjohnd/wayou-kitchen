@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import Input from './input';
 import Button from './button';
 import axios from 'axios';
@@ -9,8 +8,6 @@ export default function UrlSearch(props) {
     url: ''
     });
   const [error, setError] = useState('');
-
-  let navigate = useNavigate();
 
   function handleData(e) {
     const { value } = e.target;

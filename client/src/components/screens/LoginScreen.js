@@ -3,10 +3,9 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import './LoginScreen.css';
 
-const LoginScreen = () => {
+const LoginScreen = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
 
   const navigate = useNavigate();
 
@@ -36,9 +35,9 @@ const LoginScreen = () => {
 
       navigate("/private");
     } catch (error) {
-      setError(error.response.data.error);
+      props.accessErrorCallback(error.response.data.error);
       setTimeout(() => {
-        setError('');
+        props.accessErrorCallback('');
       }, 5000);
     }
   };
@@ -46,7 +45,7 @@ const LoginScreen = () => {
     <div className="login-screen">
       <form onSubmit={loginHandler} className="login-screen__form">
         <h3 className="login-screen__title">Login</h3>
-        {error && <span className="error-message">{error}</span>}
+        {props.accessError && <span className="error-message">{props.accessError}</span>}
         <div className="form-group">
           <label className="form-label-sm" htmlFor="email">
             Email:

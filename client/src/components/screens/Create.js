@@ -71,11 +71,22 @@ export default function Create() {
     }
 
     try {
+      if (recipe.userId) {
       await axios.post('http://localhost:5000/record/add', formData);
+      navigate('/private');
+      } else {
+        setError('Sorry, you are not logged in.');
+        setTimeout(() => {
+          setError('');
+          navigate('/login');
+        }, 5000);
+
+      }
     } catch (error) {
       setError(error.response.data.error);
       setTimeout(() => {
         setError('');
+        navigate('/login');
       }, 5000);
     }
   }

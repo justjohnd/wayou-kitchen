@@ -16,6 +16,11 @@ import ForgotPassword from './components/screens/ForgotPassword';
 
 const App = () => {
     const [showLoader, setShowLoader] = useState(false);
+    const [accessError, setAccessError] = useState('');
+
+    function accessErrorCallback(error) {
+      setAccessError(error);
+    }
 
     //Loader for urlSearch
     function loaderCallback(data) {
@@ -57,14 +62,17 @@ const App = () => {
         element={<Edit />} />
         <Route
           path="/login"
-          element={<LoginScreen />}
+          element={<LoginScreen 
+            accessError={accessError}
+            accessErrorCallback={accessErrorCallback} />}
         />
         <Route 
         path="/register" 
         element={<RegisterScreen />} />
         <Route
           path="/private"
-          element={<PrivateScreen />}
+          element={<PrivateScreen
+            accessErrorCallback={accessErrorCallback} />}
         />
         <Route 
         path="/forgotpassword" 

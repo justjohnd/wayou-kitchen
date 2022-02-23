@@ -9,7 +9,6 @@ import CategoryDropdown from '../categoryDropdown';
 
 const PrivateScreen = (props) => {
   const [error, setError] = useState('');
-  const [data, setData] = useState('data');
   const [privateScreen, setPrivateScreen] = useState(true);
   const [selectedCategories, setSelectedCategories] = useState(null);
   const [recordCategories, setRecordCategories] = useState(null);
@@ -20,9 +19,10 @@ const PrivateScreen = (props) => {
   useEffect(() => {
     if (!localStorage.getItem('authToken')) {
       navigate("/login");
+      props.accessErrorCallback('Sorry, you are not logged in.');
     }
 
-    const fetchPrivateDate = async () => {
+    const fetchPrivateData = async () => {
       const config = {
         headers: {
           'Content-Type': 'application/json',
@@ -32,7 +32,6 @@ const PrivateScreen = (props) => {
 
       try {
         const { data } = await axios.get('/api/private', config);
-        setData(data.data);
         setRecords(data.records);
         localStorage.setItem('userId', data.id);
       } catch (error) {
@@ -43,7 +42,7 @@ const PrivateScreen = (props) => {
       }
     };
 
-    fetchPrivateDate();
+    fetchPrivateData();
   }, []);
 
 // This method will delete a record based on the method
