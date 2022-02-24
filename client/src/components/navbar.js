@@ -16,8 +16,6 @@ const Navbar = (props) => {
     navigate('/login');
   };
 
-  console.log(props.sessionExpired);
-
   return (
     <div className="disable-while-loading">
       <nav className="p-3 mb-5 container navbar navbar-expand-lg">

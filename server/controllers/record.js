@@ -24,16 +24,14 @@ function setObject(reqData) {
   for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
     if (RECIPE_PROPERTIES[i] === 'image') {
       //First, check to see if image is a url
-      console.log('reqData.file: ', reqData.file);
-      console.log('reqData.body.image: ', reqData.body.image);
-
       if (reqData.file) {
         myObj['image'] = reqData.file.filename;
-      } else if (reqData.body.image) {
-        myObj['image'] = reqData.body.image;
-      } else {
+      } else if (!reqData.body.image) {
         myObj['image'] = 'placeholder.jpg';
+      } else {
+        myObj['image'] = reqData.body.image;
       }
+
       // Note: if the record does not have a userId, it will not save
     } else {
       myObj[RECIPE_PROPERTIES[i]] = JSON.parse(
@@ -82,6 +80,7 @@ exports.addRecord = async (req, res) => {
     let db_connect =  await dbo.getDb();
 
     const myObj = setObject(req);
+    console.log(myObj);
 
     const newRecord = new Record(myObj);
 
