@@ -24,7 +24,9 @@ export default function Edit() {
     setChangeImage(true);
     if (data === 'remove') {
       setNewImage({ name: 'noImage' });
+      setImagePreview('../../images/placeholder.jpg');  
       setImage('placeholder.jpg');
+      setChangeImage(false);
     }
   }
 
