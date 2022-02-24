@@ -33,6 +33,7 @@ const LoginScreen = (props) => {
       );
 
       localStorage.setItem('authToken', data.token);
+      props.sessionExpiredCallback(false);
 
       navigate("/private");
     } catch (error) {
