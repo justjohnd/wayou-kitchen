@@ -57,7 +57,7 @@ const App = () => {
         element={<Edit />} />
         <Route
           path="/login"
-          element={<LoginScreen />}
+          element={<LoginScreen  />}
         />
         <Route 
         path="/register" 
