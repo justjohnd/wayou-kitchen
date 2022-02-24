@@ -19,7 +19,7 @@ const PrivateScreen = (props) => {
   useEffect(() => {
     if (!localStorage.getItem('authToken')) {
       navigate("/login");
-      props.accessErrorCallback('Sorry, you are not logged in.');
+      setError('Sorry, you are not logged in.');
     }
 
     const fetchPrivateData = async () => {

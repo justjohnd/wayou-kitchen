@@ -4,14 +4,14 @@ import TemplateCreateEdit from '../templateCreateEdit';
 import RECIPE_PROPERTIES, { RECIPE_OBJECT } from '../../javascript/RECIPE_PROPERTIES';
 import axios from 'axios';
 
-export default function Create() {
-  const [pageType, setPageType] = useState('Create');
+export default function Create(props) {
   const [recipe, setRecipe] = useState(RECIPE_OBJECT);
   const [ingredients, setIngredients] = useState([]);
   const [dataArray, setDataArray] = useState([]);
-  const [changeImage, setChangeImage] = useState(true);
-  const [error, setError] = useState('');
   const [imagePreview, setImagePreview] = useState('');
+  const [error, setError ] = useState('');
+  const pageType = 'Create';
+  const changeImage = true;
 
   const navigate = useNavigate();
 
@@ -71,17 +71,8 @@ export default function Create() {
     }
 
     try {
-      if (recipe.userId) {
       await axios.post('http://localhost:5000/record/add', formData);
       navigate('/private');
-      } else {
-        setError('Sorry, you are not logged in.');
-        setTimeout(() => {
-          setError('');
-          navigate('/login');
-        }, 5000);
-
-      }
     } catch (error) {
       setError(error.response.data.error);
       setTimeout(() => {

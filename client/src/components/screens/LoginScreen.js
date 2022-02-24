@@ -6,6 +6,7 @@ import './LoginScreen.css';
 const LoginScreen = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const navigate = useNavigate();
 
@@ -35,9 +36,9 @@ const LoginScreen = (props) => {
 
       navigate("/private");
     } catch (error) {
-      props.accessErrorCallback(error.response.data.error);
+      setError(error.response.data.error);
       setTimeout(() => {
-        props.accessErrorCallback('');
+        setError('');
       }, 5000);
     }
   };
@@ -45,7 +46,7 @@ const LoginScreen = (props) => {
     <div className="login-screen">
       <form onSubmit={loginHandler} className="login-screen__form">
         <h3 className="login-screen__title">Login</h3>
-        {props.accessError && <span className="error-message">{props.accessError}</span>}
+        {error && <span className="error-message">{error}</span>}
         <div className="form-group">
           <label className="form-label-sm" htmlFor="email">
             Email:
