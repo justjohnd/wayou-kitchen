@@ -34,7 +34,7 @@ const PrivateScreen = (props) => {
         const { data } = await axios.get('/api/private', config);
 
         for (let i = 0; i < data.records.length; i++) {
-          // Verify lastModified data is available, if not, add arbitrary older date to place   those items at bottom of list
+          // Verify lastModified data is available, if not, add arbitrary older date to place those items at bottom of list
           if (!data.records[i].lastModified) {
             data.records[i].lastModified = new Date(
               'August 19, 1975 23:15:30'
@@ -53,7 +53,9 @@ const PrivateScreen = (props) => {
 
         while (data.records.length > 0) {
           const minValue = data.records.reduce((prev, cur) => {
-            if (prev.lastModified > cur.lastModified) {
+            const prevInt = new Date(prev.lastModified).getTime();
+            const curInt = new Date(cur.lastModified).getTime();
+            if (prevInt > curInt) {
               return prev;
             } else {
               return cur;
