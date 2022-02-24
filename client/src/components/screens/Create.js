@@ -62,6 +62,11 @@ export default function Create(props) {
     for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
       if (recipe[RECIPE_PROPERTIES[i]] instanceof File) {
         formData.append(RECIPE_PROPERTIES[i], recipe[RECIPE_PROPERTIES[i]]);
+      } else if (RECIPE_PROPERTIES[i] === 'image') {
+        //Do not send recipe.image unless an image exists
+        if (recipe.image !== "") {
+          formData.append('image', recipe.image);
+        }
       } else {
         formData.append(
           RECIPE_PROPERTIES[i],

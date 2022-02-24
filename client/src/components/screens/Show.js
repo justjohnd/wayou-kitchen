@@ -8,9 +8,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 // This will require to npm install axios
 import axios from 'axios';
-import RecipeList from './RecipeList';
 
-export default function Edit() {
+export default function Show() {
   const [showRecipe, setShowRecipe] = useState({
     title: '',
     preparationMinutes: '',

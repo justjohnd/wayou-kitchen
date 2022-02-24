@@ -26,11 +26,14 @@ export default function useGetRecords(route) {
 
         while (response.data.length > 0) {
           const minValue = response.data.reduce((prev, cur) => {
-            if (prev.lastModified > cur.lastModified) {
-              return prev;
-            } else {
-              return cur;
-            }
+          //Convert data into integer for comparison of minValue
+          const prevInt = new Date(prev.lastModified).getTime();
+          const curInt = new Date(cur.lastModified).getTime();
+          if (prevInt > curInt) {
+            return prev;
+          } else {
+            return cur;
+          }
           });
 
           ordered.push(minValue);

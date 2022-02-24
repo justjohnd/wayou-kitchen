@@ -32,7 +32,43 @@ const PrivateScreen = (props) => {
 
       try {
         const { data } = await axios.get('/api/private', config);
-        setRecords(data.records);
+
+        for (let i = 0; i < data.records.length; i++) {
+          // Verify lastModified data is available, if not, add arbitrary older date to place those items at bottom of list
+          if (!data.records[i].lastModified) {
+            data.records[i].lastModified = new Date(
+              'August 19, 1975 23:15:30'
+            );
+          }
+          // Verify catagegories data is available. If not add value: other
+          if (!data.records[i].categories) {
+            data.records[i].categories = [{ value: 'other' }];
+          } else if (data.records[i].categories.length === 0) {
+            data.records[i].categories.push({ value: 'other' });
+          }
+        }
+
+        //Order recipes for display with most recent data created first
+        const ordered = [];
+
+        while (data.records.length > 0) {
+          const minValue = data.records.reduce((prev, cur) => {
+            const prevInt = new Date(prev.lastModified).getTime();
+            const curInt = new Date(cur.lastModified).getTime();
+            if (prevInt > curInt) {
+              return prev;
+            } else {
+              return cur;
+            }
+          });
+
+          ordered.push(minValue);
+
+          const minValueIndex = data.records.indexOf(minValue);
+          data.records.splice(minValueIndex, 1);
+        }
+
+        setRecords(ordered);
         localStorage.setItem('userId', data.id);
       } catch (error) {
         localStorage.removeItem('authToken');

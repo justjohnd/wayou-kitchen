@@ -227,8 +227,6 @@ export default function TemplateCreateEdit(props) {
     });
   }
 
-  console.log(props.imagePreview);
-
   // This following section will display the form that takes the input from the user.
   // render() {
   return (
