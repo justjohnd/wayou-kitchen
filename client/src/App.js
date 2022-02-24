@@ -16,6 +16,12 @@ import ForgotPassword from './components/screens/ForgotPassword';
 
 const App = () => {
     const [showLoader, setShowLoader] = useState(false);
+    const [sessionExpired, setSessionExpired] = useState(false);
+
+    // Change the navbar login link text in the case that the user's session has expired, but the authToken is still in local storage.
+    function sessionExpiredCallback(data) {
+      setSessionExpired(data);
+    }
 
     //Loader for urlSearch
     function loaderCallback(data) {
@@ -44,6 +50,8 @@ const App = () => {
       )}
       <Navbar
         loaderCallback={loaderCallback}
+        sessionExpired={sessionExpired}
+        sessionExpiredCallback={sessionExpiredCallback}
       />
       <Routes>
         <Route 
@@ -57,14 +65,15 @@ const App = () => {
         element={<Edit />} />
         <Route
           path="/login"
-          element={<LoginScreen  />}
+          element={<LoginScreen
+            sessionExpiredCallback={sessionExpiredCallback}  />}
         />
         <Route 
         path="/register" 
         element={<RegisterScreen />} />
         <Route
           path="/private"
-          element={<PrivateScreen />}
+          element={<PrivateScreen sessionExpiredCallback={sessionExpiredCallback} />}
         />
         <Route 
         path="/forgotpassword" 
