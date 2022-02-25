@@ -57,7 +57,7 @@ const App = () => {
         <Route 
         path="/" 
         element={<RecipeList />} />
-        <Route 
+        <Route
         path="/show/:id" 
         element={<Show />} />
         <Route 

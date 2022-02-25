@@ -18,7 +18,7 @@ const Navbar = (props) => {
 
   return (
     <div className="disable-while-loading">
-      <nav className="p-3 mb-5 container navbar navbar-expand-lg">
+      <nav className="p-3 mb-3 mb-sm-5 container navbar navbar-expand-lg">
           <NavLink className="navbar-brand" to="/">
             veggit
           </NavLink>
