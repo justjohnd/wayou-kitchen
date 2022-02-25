@@ -61,7 +61,11 @@ urlSearchRoute.route('/urlSearch').post(async function (req, topResponse, next) 
               topResponse.json(res);
             });
         } else {
-          console.log('API call succeeded, but no viable data returned');
+          console.log('API call succeeded but no data')
+            topResponse.json({
+              success: false,
+              data: 'API call succeeded, but no viable data returned',
+            });
         }
       })
       .catch((error) => {
