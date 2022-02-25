@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import InstructionEdit from './instructionEdit';
-import Input from './input';
 import TextArea from './TextArea';
 import Button from './button';
 

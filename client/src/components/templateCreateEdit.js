@@ -257,6 +257,7 @@ export default function TemplateCreateEdit(props) {
                 className="recipe-image"
                 id="image-preview"
                 src={props.imagePreview}
+                alt={props.recipe.title}
               />
               <div>
                 <Button
@@ -285,6 +286,7 @@ export default function TemplateCreateEdit(props) {
                   className="recipe-image"
                   id="image-preview"
                   src={props.imagePreview}
+                  alt={props.recipe.title}
                 />
               )}
               <InputFile

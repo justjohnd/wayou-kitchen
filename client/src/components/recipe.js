@@ -16,6 +16,7 @@ return (
                 ? currentrecord.image
                 : './images/' + currentrecord.image
             }
+            alt={currentrecord.title}
           />
           <div className="px-1 title">{currentrecord.title}</div>
         </Link>
