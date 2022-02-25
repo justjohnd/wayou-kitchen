@@ -35,7 +35,7 @@ export default function IngredientCreate(props) {
               label="Amount:"
               wrapperClassName="input-short d-inline-block me-4"
               name="amount"
-              type="number"
+              type="text"
               value={props.ingredient.amount}
               onChange={(e) => {
                 props.createIngredientCallback(e);
