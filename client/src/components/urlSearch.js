@@ -26,14 +26,22 @@ export default function UrlSearch(props) {
 
     try {
       props.loaderCallback(true);
-      await axios.post('http://localhost:5000/urlSearch', getUrl, {
+      const response = await axios.post('http://localhost:5000/urlSearch', getUrl, {
       headers: {
         'Content-Type': 'application/json',
       }
       });
-      console.log("Item added to database");
-      window.location.reload();
 
+      if (!response.data.success) {
+        props.loaderCallback(false);
+        setError(response.data.data);
+        setTimeout(() => {
+          setError('');
+          setGetUrl({ url: '' });
+        }, 5000);
+      } else {
+        window.location.reload();
+      }
     } catch(error) {
       props.loaderCallback(false);
       setError(error.response.data.error);
