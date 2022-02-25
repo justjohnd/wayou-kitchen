@@ -10,7 +10,7 @@ return (
       <div key={uuidv4()} className="recipe-home">
         <Link to={'/show/' + currentrecord._id}>
           <img
-            className="recipe-image mb-2 mx-2"
+            className="recipe-image mb-2 mx-sm-2"
             src={
               currentrecord.image.slice(0, 4) === 'http'
                 ? currentrecord.image
