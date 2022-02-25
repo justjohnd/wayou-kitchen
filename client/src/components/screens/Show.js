@@ -96,61 +96,62 @@ export default function Show() {
 }
 
   return (
-    <div className="recipe-container container my-5 p-5">
-      <section className="d-flex">
-        <img
-          className="recipe-image"
-          src={
-            showRecipe.image.slice(0, 4) === 'http'
-              ? showRecipe.image
-              : '../../images/' + showRecipe.image
-          }
-        />
-        <div className="recipe-header ms-5">
-          <h1>{showRecipe.title}</h1>
-          <p className="mb-0 pb-0">
-            Ready in {showRecipe.readyInMinutes} minutes
-          </p>
-          <p className="mb-0 pb-0">{showRecipe.servings} servings</p>
-          <a
-            href={showRecipe.sourceUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mb-0 pb-0"
-          >
-            Original Website
-          </a>
-        </div>
-      </section>
-      <div className="recipe-wrapper">
-        {ingredients[0] !== "" && (
-          <section className="ingredients">
-            <h2>Ingredients</h2>
-            {ingredientGroups.map((group) => (
-              <IngredientGroup 
-              group={group}
-              key={uuidv4()}
-              ></IngredientGroup>
-            ))}
-          </section>
-        )}
-        <section className="instructions">
-          <h2>Instructions</h2>
-          {instructions.map((instruction, index) => {
-            return (
-              <li
-                className={instruction.isHeader ? 'instruction-header' : ''}
-                key={index}
-              >
-                {!instruction.isHeader && (
-                  <span className="instruction-number">
-                    {numberArray[index]}{' '}
-                  </span>
-                )}
-                {instruction.step}
-              </li>
-            );
-          })}
+    <div className="show-wrapper">
+      <div className="recipe-container container-sm my-sm-5 p-sm-5">
+        <section className="d-sm-flex header-section">
+          <div className="recipe-image-wrapper">
+            <img
+              className="recipe-image"
+              src={
+                showRecipe.image.slice(0, 4) === 'http'
+                  ? showRecipe.image
+                  : '../../images/' + showRecipe.image
+              }
+            />
+          </div>
+          <div className="recipe-header">
+            <h1>{showRecipe.title}</h1>
+            <p className="mb-0 pb-0">
+              Ready in {showRecipe.readyInMinutes} minutes
+            </p>
+            <p className="mb-0 pb-0">{showRecipe.servings} servings</p>
+            <a
+              href={showRecipe.sourceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mb-0 pb-0"
+            >
+              Original Website
+            </a>
+          </div>
+        </section>
+        <section className="d-sm-flex recipe-section">
+          {ingredients[0] !== '' && (
+            <section className="recipe-ingredients">
+              <h2>Ingredients</h2>
+              {ingredientGroups.map((group) => (
+                <IngredientGroup group={group} key={uuidv4()}></IngredientGroup>
+              ))}
+            </section>
+          )}
+          <div className="recipe-instructions">
+            <h2>Instructions</h2>
+            {instructions.map((instruction, index) => {
+              return (
+                <li
+                  className={instruction.isHeader ? 'instruction-header' : ''}
+                  key={index}
+                >
+                  {!instruction.isHeader && (
+                    <span className="instruction-number">
+                      {numberArray[index]}{' '}
+                    </span>
+                  )}
+                  {instruction.step}
+                </li>
+              );
+            })}
+          </div>
         </section>
       </div>
     </div>

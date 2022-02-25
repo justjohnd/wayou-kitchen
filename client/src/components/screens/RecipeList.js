@@ -15,7 +15,6 @@ export default function RecipeList() {
   function categoriesCallback(optionSelected) {
     setSelectedCategories(optionSelected);
     //Put records in their on groups for display
-    console.log(selectedCategories);
     const categoryTypes = optionSelected.map((category) => category.value);
 
     const groupArray = () => {
