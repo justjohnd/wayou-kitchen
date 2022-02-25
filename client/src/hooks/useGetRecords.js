@@ -11,7 +11,8 @@ export default function useGetRecords(route) {
         for (let i = 0; i < response.data.length; i++) {
           // Verify lastModified data is available, if not, add arbitrary older date to place   those items at bottom of list
           if (!response.data[i].lastModified) {
-            response.data[i].lastModified = new Date('August 19, 1975 23:15:30');
+            //Verify lastModified exists to be able to show all recipes in order of most recently created/modified
+            response.data[i].lastModified = new Date(response.data[i].dateCreated);
           }
           // Verify catagegories data is available. If not add value: other
           if (!response.data[i].categories) {
@@ -27,8 +28,9 @@ export default function useGetRecords(route) {
         while (response.data.length > 0) {
           const minValue = response.data.reduce((prev, cur) => {
           //Convert data into integer for comparison of minValue
-          const prevInt = new Date(prev.lastModified).getTime();
-          const curInt = new Date(cur.lastModified).getTime();
+          let prevInt = new Date(prev.lastModified).getTime();
+          let curInt = new Date(cur.lastModified).getTime();
+
           if (prevInt > curInt) {
             return prev;
           } else {
