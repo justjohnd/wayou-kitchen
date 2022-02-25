@@ -255,13 +255,6 @@ link:hover {
   align-self: end;
 }
 
-.input-left {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 20px;
-}
-
 .loader {
   position: absolute;
   top: 50%;
@@ -336,6 +329,10 @@ link:hover {
   }
 }
 /* Edit Page */
+.container-record-form {
+  width: 100%;
+}
+
 .form-label-lg {
   font-size: 1.5rem;
   font-weight: 500;
@@ -364,7 +361,23 @@ link:hover {
   height: auto;
   line-height: 24px;
   min-height: 38px;
-  width: 440px;
+}
+
+@media (min-width: 576px) {
+  .textarea {
+    width: 440px;
+  }
+
+  .input-left {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 20px;
+  }
+
+  .container-record-form {
+    width: 75%;
+  }
 }
 
 /* Targets react-select container */

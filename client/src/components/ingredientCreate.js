@@ -22,7 +22,7 @@ export default function IngredientCreate(props) {
           <div>
             <Input
               label="Ingredient:"
-              wrapperClassName="d-inline-block me-4"
+              wrapperClassName="d-sm-inline-block me-4"
               name="nameClean"
               type="text"
               value={props.ingredient.nameClean}
@@ -80,7 +80,7 @@ export default function IngredientCreate(props) {
           </div>
           <Button
             buttonWrapper="btn-right"
-            className="ms-2"
+            className="ms-sm-2 mt-2 mt-sm-0"
             onClick={(e) => {
               e.preventDefault();
               props.addIngredientCallback();
