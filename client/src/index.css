@@ -56,15 +56,24 @@ link:hover {
   width: 900px;
 }
 
-.recipe-wrapper {
+.recipe-section {
   margin-top: 32px;
-  display: flex;
-  justify-content: space-between;
-  gap: 84px;
+  gap: 24px;
 }
 
-.recipe-wrapper li {
+.recipe-section li {
   list-style-type: none;
+}
+
+.recipe-header,
+.recipe-instructions {
+  flex: 3;
+  gap: 24px;
+}
+
+.recipe-image-wrapper,
+.recipe-ingredients {
+  flex: 1.5;
 }
 
 .recipe-image {
@@ -79,11 +88,13 @@ link:hover {
   height: 120px;
 }
 
-.ingredients li {
-  line-height: 1.9;
+.recipe-ingredients li,
+.recipe-instructions li {
+  line-height: 1.2;
+  margin-bottom: 12px;
 }
 
-.group {
+recipe-instructions .group {
   border-radius: 8px;
   padding: 4px;
   margin-bottom: 8px;

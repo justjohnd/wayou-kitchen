@@ -97,16 +97,18 @@ export default function Show() {
 
   return (
     <div className="recipe-container container my-5 p-5">
-      <section className="d-flex">
-        <img
-          className="recipe-image"
-          src={
-            showRecipe.image.slice(0, 4) === 'http'
-              ? showRecipe.image
-              : '../../images/' + showRecipe.image
-          }
-        />
-        <div className="recipe-header ms-5">
+      <section className="d-flex header-section">
+        <div className="recipe-image-wrapper">
+          <img
+            className="recipe-image"
+            src={
+              showRecipe.image.slice(0, 4) === 'http'
+                ? showRecipe.image
+                : '../../images/' + showRecipe.image
+            }
+          />
+        </div>
+        <div className="recipe-header">
           <h1>{showRecipe.title}</h1>
           <p className="mb-0 pb-0">
             Ready in {showRecipe.readyInMinutes} minutes
@@ -122,19 +124,16 @@ export default function Show() {
           </a>
         </div>
       </section>
-      <div className="recipe-wrapper">
-        {ingredients[0] !== "" && (
-          <section className="ingredients">
+      <section className="d-flex recipe-section">
+        {ingredients[0] !== '' && (
+          <section className="recipe-ingredients">
             <h2>Ingredients</h2>
             {ingredientGroups.map((group) => (
-              <IngredientGroup 
-              group={group}
-              key={uuidv4()}
-              ></IngredientGroup>
+              <IngredientGroup group={group} key={uuidv4()}></IngredientGroup>
             ))}
           </section>
         )}
-        <section className="instructions">
+        <div className="recipe-instructions">
           <h2>Instructions</h2>
           {instructions.map((instruction, index) => {
             return (
@@ -151,8 +150,8 @@ export default function Show() {
               </li>
             );
           })}
-        </section>
-      </div>
+        </div>
+      </section>
     </div>
   );
 }
