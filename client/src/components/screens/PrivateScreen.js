@@ -37,7 +37,7 @@ const PrivateScreen = (props) => {
           // Verify lastModified data is available, if not, add arbitrary older date to place those items at bottom of list
           if (!data.records[i].lastModified) {
             data.records[i].lastModified = new Date(
-              'August 19, 1975 23:15:30'
+              data.records[i].dateCreated
             );
           }
           // Verify catagegories data is available. If not add value: other

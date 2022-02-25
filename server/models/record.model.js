@@ -9,7 +9,10 @@ const recordSchema = new Schema({
     required: true,
     trim: true,
   },
-  dateCreated: { type: Date },
+  dateCreated: {
+    type: Date,
+    required: true
+  },
   extendedIngredients: [
     {
       nameClean: String,
@@ -32,6 +35,7 @@ const recordSchema = new Schema({
   },
   image: {
     type: String,
+    required: true
   },
   analyzedInstructions: [{ number: Number, step: String, isHeader: Boolean }],
   categories: [{ value: String }],
