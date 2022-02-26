@@ -230,7 +230,7 @@ export default function TemplateCreateEdit(props) {
   // This following section will display the form that takes the input from the user.
   // render() {
   return (
-    <div className="my-5 w-75 container container-record-form">
+    <div className="my-5 container container-record-form">
       <h3 className="mb-4">{props.pageType} New Record</h3>
       <form
         encType="multipart/form-data"
@@ -243,7 +243,7 @@ export default function TemplateCreateEdit(props) {
           label="Name of the recipe:"
           wrapperClassName="mb-5 form-group"
           labelClassName="form-label-lg"
-          className="w-50"
+          className="w-sm-50"
           name="title"
           type="text"
           value={props.recipe.title}
@@ -257,6 +257,7 @@ export default function TemplateCreateEdit(props) {
                 className="recipe-image"
                 id="image-preview"
                 src={props.imagePreview}
+                alt={props.recipe.title}
               />
               <div>
                 <Button
@@ -279,12 +280,13 @@ export default function TemplateCreateEdit(props) {
             </div>
           )}
           {props.pageType === 'Create' && (
-            <div className={`mb-5 ${props.imagePreview ? 'd-flex' : 'w-50'}`}>
+            <div className={`mb-5 ${props.imagePreview ? 'd-flex' : 'w-sm-50'}`}>
               {props.imagePreview && (
                 <img
                   className="recipe-image"
                   id="image-preview"
                   src={props.imagePreview}
+                  alt={props.recipe.title}
                 />
               )}
               <InputFile
@@ -329,7 +331,7 @@ export default function TemplateCreateEdit(props) {
           wrapperClassName="mb-5 form-group"
           labelClassName="form-label-lg"
           name="preparationMinutes"
-          className="w-50"
+          className="w-sm-50"
           type="text"
           value={props.recipe.preparationMinutes}
           onChange={(e) => handleData(e)}
@@ -339,7 +341,7 @@ export default function TemplateCreateEdit(props) {
           wrapperClassName="mb-5 form-group"
           labelClassName="form-label-lg"
           name="cookingMinutes"
-          className="w-50"
+          className="w-sm-50"
           type="text"
           value={props.recipe.cookingMinutes}
           onChange={(e) => handleData(e)}
@@ -349,7 +351,7 @@ export default function TemplateCreateEdit(props) {
           wrapperClassName="mb-5 form-group"
           labelClassName="form-label-lg"
           name="servings"
-          className="w-50"
+          className="w-sm-50"
           type="number"
           value={props.recipe.servings}
           onChange={(e) => handleData(e)}
@@ -359,7 +361,7 @@ export default function TemplateCreateEdit(props) {
           wrapperClassName="mb-5 form-group"
           labelClassName="form-label-lg"
           name="sourceUrl"
-          className="w-50"
+          className="w-sm-50"
           type="text"
           value={props.recipe.sourceUrl}
           onChange={(e) => handleData(e)}

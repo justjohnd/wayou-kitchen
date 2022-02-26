@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TemplateCreateEdit from '../templateCreateEdit';
 import RECIPE_PROPERTIES, { RECIPE_OBJECT } from '../../javascript/RECIPE_PROPERTIES';
+import httpAddress from '../../javascript/httpAddress';
 import axios from 'axios';
 
 export default function Create(props) {
@@ -76,7 +77,7 @@ export default function Create(props) {
     }
 
     try {
-      await axios.post('http://localhost:5000/record/add', formData);
+      await axios.post(`${httpAddress}/record/add`, formData);
       navigate('/private');
     } catch (error) {
       setError(error.response.data.error);

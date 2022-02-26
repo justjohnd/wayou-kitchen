@@ -5,6 +5,7 @@
   --color-dark: #343a40;
   --color-gray: #eee;
   --color-dark-green: #116530;
+  /* --color-dark-green rgb is 17, 101, 48 */
 }
 
 * {
@@ -167,12 +168,22 @@ link:hover {
 }
 
 /* Navbar */
+/* Change the color in the stroke property of the image data */
+.custom-toggler .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(17, 101, 48, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+/* Set the border color to the desired color */
+.custom-toggler.navbar-toggler {
+  border-color: var(--color-primary);
+}
+
 .navbar-collapse {
   flex-grow: unset;
 }
 
 .collapse.navbar-collapse {
   justify-content: unset;
+  margin-top: 16px;
 }
 
 @media screen and (min-width: 992px) {
@@ -183,7 +194,6 @@ link:hover {
 
 .navbar-brand,
 .nav-link {
-  padding: 1rem;
   line-height: 1;
 }
 
@@ -192,18 +202,25 @@ link:hover {
   font-weight: 700;
   font-size: 36px;
   color: var(--color-dark-green);
-  padding-bottom: 1.7rem;
+  padding-bottom: 1rem 1rem 1.7rem 1rem;
 }
 
 .nav-link {
   font-size: 20px;
   text-transform: lowercase;
   color: var(--color-dark);
+  padding-bottom: 0;
 }
 
 .nav-item {
+  margin-bottom: 0.5rem;
+}
+
+.nav-item,
+.nav-item a {
   display: flex;
   align-items: center;
+  padding: 0;
 }
 
 .nav-item .form-control {
@@ -230,23 +247,12 @@ link:hover {
   border: 1px solid var(--color-dark);
 }
 
-.url-input {
-  width: 400px;
-}
-
 .btn {
   vertical-align: unset;
 }
 
 .btn-right {
   align-self: end;
-}
-
-.input-left {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 20px;
 }
 
 .loader {
@@ -277,6 +283,16 @@ link:hover {
   pointer-events: none;
 }
 
+@media (min-width: 576px) {
+  .url-input {
+    width: 400px;
+  }
+
+  .nav-link {
+    padding-bottom: 0;
+  }
+}
+
 /* Home */
 .recipe-home-container {
   display: flex;
@@ -285,13 +301,14 @@ link:hover {
 }
 
 .recipe-home {
-  margin: 8px 8px 40px 8px;
-  max-width: 240px;
+  margin: 0 0 8px 0;
+  padding: 4px;
+  width: 50%;
 }
 
 .recipe-home .recipe-image {
   border-radius: 12px;
-  width: 240px;
+  width: 100%;
 }
 
 .title {
@@ -299,7 +316,23 @@ link:hover {
   font-weight: 500;
   line-height: 1;
 }
+
+@media (min-width: 576px) {
+  .recipe-home {
+    margin: 8px 8px 40px 8px;
+    padding: 0;
+    max-width: 240px;
+  }
+
+  .recipe-home .recipe-image {
+    width: 240px;
+  }
+}
 /* Edit Page */
+.container-record-form {
+  width: 100%;
+}
+
 .form-label-lg {
   font-size: 1.5rem;
   font-weight: 500;
@@ -328,7 +361,23 @@ link:hover {
   height: auto;
   line-height: 24px;
   min-height: 38px;
-  width: 440px;
+}
+
+@media (min-width: 576px) {
+  .textarea {
+    width: 440px;
+  }
+
+  .input-left {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 20px;
+  }
+
+  .container-record-form {
+    width: 75%;
+  }
 }
 
 /* Targets react-select container */

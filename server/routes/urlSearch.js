@@ -3,7 +3,20 @@ const axios = require('axios');
 const ErrorResponse = require('../utils/errorResponse');
 const API_KEY = process.env.API_KEY;
 
-const RECIPE_PROPERTIES = require('../../client/src/javascript/PROPERTIES_FOR_BACKEND.js');
+const RECIPE_PROPERTIES = [
+  'title',
+  'preparationMinutes',
+  'cookingMinutes',
+  'readyInMinutes',
+  'sourceUrl',
+  'image',
+  'extendedIngredients',
+  'analyzedInstructions',
+  'servings',
+  'categories',
+  'dateCreated',
+  'userId',
+];
 
 // urlSearchRoute is an instance of the express router.
 // We use it to define our routes.

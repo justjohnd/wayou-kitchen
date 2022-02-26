@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Input from './input';
 import Button from './button';
 import axios from 'axios';
+import httpAddress from '../javascript/httpAddress';
 
 export default function UrlSearch(props) {
   const [getUrl, setGetUrl] = useState({
@@ -26,7 +27,7 @@ export default function UrlSearch(props) {
 
     try {
       props.loaderCallback(true);
-      const response = await axios.post('http://localhost:5000/urlSearch', getUrl, {
+      const response = await axios.post(`${httpAddress}/urlSearch`, getUrl, {
       headers: {
         'Content-Type': 'application/json',
       }
@@ -53,10 +54,10 @@ export default function UrlSearch(props) {
   }
 
     return (    
-      <div className="container">
+      <div className="p-0 m-0 container">
         <form onSubmit={handleGetRecipe}>
           <Input
-            wrapperClassName="d-inline-block"
+            wrapperClassName="d-sm-inline-block"
             name="url"
             type="text"
             className={error ? "error-message url-input" : "url-input" }
@@ -65,9 +66,9 @@ export default function UrlSearch(props) {
             placeholder={error ? error : "Enter a URL to get the recipe" }
           />
           <Button
-            buttonWrapper="d-inline-block"
+            buttonWrapper="d-none d-sm-inline-block"
             buttonStyle="btn-nav"
-            className="ms-2 me-5"
+            className="ms-2 me-sm-5"
             type="submit"
             buttonText="Get from URL"
           />

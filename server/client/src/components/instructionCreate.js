@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import InstructionEdit from './instructionEdit';
-import Input from './input';
 import TextArea from './TextArea';
 import Button from './button';
 
@@ -22,9 +21,9 @@ export default function InstructionCreate(props) {
       <section className="recipe-section-wrapper">
         <div className="input-left">
           <div className="input-left mb-0">
-            <div className="d-inline-block invisible">0</div>
-            <div className="d-inline-block ms-2 instruction-input">
-              <label className="form-label invisible"></label>
+            <div className="d-sm-inline-block d-none invisible">0</div>
+            <div className="d-sm-inline-block ms-sm-2 instruction-input">
+              <label className="d-sm-inline-block d-none form-label invisible"></label>
               <TextArea
                 className="form-control textarea"
                 name="instruction"
@@ -34,7 +33,7 @@ export default function InstructionCreate(props) {
                 placeholder="Start Entering Instructions Here"
               />
             </div>
-            <div className="d-inline mx-3">
+            <div className="mt-2 mt-sm-0 d-sm-inline mx-sm-3">
               <input title="header" type="checkbox" onClick={handleHeader} />
               <label className="mx-1" htmlFor="header">
                 Make Header?
@@ -42,7 +41,7 @@ export default function InstructionCreate(props) {
             </div>
           </div>
           <Button
-            className="ms-2 btn-right"
+            className="ms-sm-2 mt-2 mt-sm-0 btn-right"
             buttonWrapper="d-inline-block"
             onClick={(e) => {
               e.preventDefault();

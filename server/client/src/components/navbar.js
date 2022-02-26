@@ -1,8 +1,9 @@
-import { React, useState } from 'react';
+import { React } from 'react';
 import { Link, useNavigate, NavLink } from 'react-router-dom';
 
 // We import bootstrap to make our application look better.
 import 'bootstrap/dist/css/bootstrap.css';
+import bootstrap from 'bootstrap';
 import '../index.css';
 import UrlSearch from './urlSearch';
 
@@ -18,20 +19,20 @@ const Navbar = (props) => {
 
   return (
     <div className="disable-while-loading">
-      <nav className="p-3 mb-3 mb-sm-5 container navbar navbar-expand-lg">
+      <nav className="p-3 my-3 my-sm-5 container navbar navbar-expand-lg">
           <NavLink className="navbar-brand" to="/">
             veggit
           </NavLink>
         <button
-          className="navbar-toggler"
+          className="navbar-toggler custom-toggler"
           type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent"
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span className="navbar-toggler-icon"></span>
+          <span className="custom-toggler navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           {(!props.sessionExpired && localStorage.getItem('authToken')) ? (
