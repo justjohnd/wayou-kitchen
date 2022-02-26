@@ -1,18 +1,21 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import httpAddress from '../javascript/httpAddress';
 
 export default function useGetRecords(route) {
   const [records, setRecords] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000${route}/`)
+      .get(`${httpAddress}${route}/`)
       .then((response) => {
         for (let i = 0; i < response.data.length; i++) {
           // Verify lastModified data is available, if not, add arbitrary older date to place   those items at bottom of list
           if (!response.data[i].lastModified) {
             //Verify lastModified exists to be able to show all recipes in order of most recently created/modified
-            response.data[i].lastModified = new Date(response.data[i].dateCreated);
+            response.data[i].lastModified = new Date(
+              response.data[i].dateCreated
+            );
           }
           // Verify catagegories data is available. If not add value: other
           if (!response.data[i].categories) {
@@ -27,15 +30,15 @@ export default function useGetRecords(route) {
 
         while (response.data.length > 0) {
           const minValue = response.data.reduce((prev, cur) => {
-          //Convert data into integer for comparison of minValue
-          let prevInt = new Date(prev.lastModified).getTime();
-          let curInt = new Date(cur.lastModified).getTime();
+            //Convert data into integer for comparison of minValue
+            let prevInt = new Date(prev.lastModified).getTime();
+            let curInt = new Date(cur.lastModified).getTime();
 
-          if (prevInt > curInt) {
-            return prev;
-          } else {
-            return cur;
-          }
+            if (prevInt > curInt) {
+              return prev;
+            } else {
+              return cur;
+            }
           });
 
           ordered.push(minValue);

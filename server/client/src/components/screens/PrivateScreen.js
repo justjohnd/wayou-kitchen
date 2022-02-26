@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import { categories } from '../../javascript/categories';
+import httpAddress from '../../javascript/httpAddress';
 import Recipe from '../recipe';
 import RecipeGroup from '../recipeGroup';
 import CategoryDropdown from '../categoryDropdown';
@@ -85,7 +86,7 @@ const PrivateScreen = (props) => {
 // This method will delete a record based on the method
 const deleteRecord = async (id) => {
   try {
-    await axios.delete('http://localhost:5000/' + id);
+    await axios.delete(`${httpAddress}/${id}`);
   } catch (error) {
     setError(error.response.data.error);
     setTimeout(() => {

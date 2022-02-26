@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Input from './input';
 import Button from './button';
 import axios from 'axios';
+import httpAddress from '../javascript/httpAddress';
 
 export default function UrlSearch(props) {
   const [getUrl, setGetUrl] = useState({
@@ -26,7 +27,7 @@ export default function UrlSearch(props) {
 
     try {
       props.loaderCallback(true);
-      const response = await axios.post('http://localhost:5000/urlSearch', getUrl, {
+      const response = await axios.post(`${httpAddress}/urlSearch`, getUrl, {
       headers: {
         'Content-Type': 'application/json',
       }

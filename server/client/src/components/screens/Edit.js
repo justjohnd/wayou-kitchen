@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import TemplateCreateEdit from '../templateCreateEdit';
 
 import RECIPE_PROPERTIES, { RECIPE_OBJECT } from '../../javascript/RECIPE_PROPERTIES';
+import httpAddress from '../../javascript/httpAddress';
 
 // This will require to npm install axios
 import axios from 'axios';
@@ -95,7 +96,7 @@ export default function Edit() {
 
     // This will send a post{} request to update the data in the database.
     try {
-      await axios.post('http://localhost:5000/update/' + params.id, formData);
+      await axios.post(`${httpAddress}/update/${params.id}`, formData);
     } catch (error) {
       setError(error.response.data.error);
       setTimeout(() => {
@@ -107,7 +108,7 @@ export default function Edit() {
   // This will get the record based on the id from the database.
   useEffect(() => {
     axios
-      .get('http://localhost:5000/record/' + params.id)
+      .get(`${httpAddress}/record/${params.id}`)
       .then((response) => {
         // image will load separately in the image varialbe, apart from other properties in the receipe variable
         let myObj = {};

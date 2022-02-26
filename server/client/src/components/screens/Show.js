@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import RECIPE_PROPERTIES from '../../javascript/RECIPE_PROPERTIES';
+import httpAddress from '../../javascript/httpAddress';
 import IngredientGroup from '../ingredientGroup';
 
 import { v4 as uuidv4 } from 'uuid';
@@ -29,7 +30,7 @@ export default function Show() {
   // This will get the record based on the id from the database.
   useEffect(() => {
     axios
-      .get('http://localhost:5000/record/' + params.id)
+      .get(`${httpAddress}/record/${params.id}`)
       .then((response) => {
         let myObj = {};
         for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
