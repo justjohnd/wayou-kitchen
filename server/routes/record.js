@@ -34,13 +34,12 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-aws.config.update({
+const s3 = new aws.S3({
   secretAccessKey: S3_SECRET,
   accessKeyId: S3_KEY_ID,
-  region: 'ap-northeast-1'
+  region: 'ap-northeast-1',
+  Bucket: 'veggit-images',
 });
-
-const s3 = new aws.S3();
 
 let upload = multer({ storage, fileFilter });
 
