@@ -38,7 +38,8 @@ function setObject(reqData) {
     if (RECIPE_PROPERTIES[i] === 'image') {
       //First, check to see if image is a url
       if (reqData.file) {
-        myObj['image'] = reqData.file.filename;
+        // Replace reqData.file.location with reqData.file.filename if storing images on a local server
+        myObj['image'] = reqData.file.location;
       } else if (!reqData.body.image) {
         myObj['image'] = 'placeholder.jpg';
       } else {

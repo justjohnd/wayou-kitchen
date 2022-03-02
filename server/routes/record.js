@@ -55,8 +55,8 @@ let uploadS3 = multer({
     key: function (req, file, cb) {
       console.log(file);
       cb(null, uuidv4() + '-' + Date.now() + path.extname(file.originalname));
-    },
-  }),
+    }
+   }),
 });
 
 // This section will help you get a list of all the records.
@@ -66,7 +66,7 @@ recordRoutes.route('/record').get(allRecords);
 recordRoutes.route('/record/:id').get(getRecord);
 
 // This section will help you create a new record.
-recordRoutes.route('/record/add').post(uploadS3.array('image', 1), addRecord);
+recordRoutes.route('/record/add').post(uploadS3.single('image'), addRecord);
 
 // This section will help you update a record by id.
 recordRoutes.route('/update/:id').post(upload.single('image'), updateRecord);

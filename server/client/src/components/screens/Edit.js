@@ -63,9 +63,6 @@ export default function Edit() {
 
   let params = useParams();
 
-  console.log('image: ', image);
-  console.log('newImage: ', newImage);
-
   // This function will handle the submission.
   const handleRecipe = async (e) => {
     e.preventDefault();
