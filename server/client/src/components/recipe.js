@@ -12,7 +12,9 @@ return (
         <Link to={'/show/' + currentrecord._id}>
           <img
             className="recipe-image mb-2 mx-sm-2"
-            src={currentrecord.image}
+            src={ currentrecord.image !== null && currentrecord.image.slice(0, 4) === 'http'
+                ? currentrecord.image
+                : './images/' + currentrecord.image }
             alt={currentrecord.title}
           />
           <div className="px-1 title">{currentrecord.title}</div>

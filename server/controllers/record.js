@@ -39,7 +39,11 @@ function setObject(reqData) {
       //First, check to see if image is a url
       if (reqData.file) {
         // Replace reqData.file.location with reqData.file.filename if storing images on a local server
-        myObj['image'] = reqData.file.location;
+        if (reqData.file.location) {
+          myObj['image'] = reqData.file.location;
+        } else {
+          myObj['image'] = reqData.file.filename;
+        }
       } else if (!reqData.body.image) {
         myObj['image'] = 'placeholder.jpg';
       } else {
@@ -116,6 +120,8 @@ exports.updateRecord = async (req, res) => {
     const returnedDocument = await returnDocument(db_connect, myQuery);
 
     const myObj = setObject(req);
+    console.log('myObj: ', myObj.image);
+    console.log('returnedDocument: ', returnedDocument.image);
 
     //Remove any previous images saved to the server that have been changed
     if (myObj.image !== returnedDocument.image) {
