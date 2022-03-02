@@ -160,8 +160,6 @@ exports.updateRecord = async (req, res) => {
     const returnedDocument = await returnDocument(db_connect, myQuery);
 
     const myObj = setObject(req);
-    console.log('myObj: ', myObj.image);
-    console.log('returnedDocument: ', returnedDocument.image);
 
     //Remove any previous images saved to the server that have been changed
     if (myObj.image !== returnedDocument.image) {
@@ -171,7 +169,11 @@ exports.updateRecord = async (req, res) => {
           if (err) console.log('No image found to remove: ', err);
         });
       }
+
+      //Remove previous image from s3
+      deleteS3(returnedDocument.image);
     }
+
 
     let newvalues = {
       $set: myObj,
