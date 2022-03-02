@@ -128,7 +128,7 @@ exports.updateRecord = async (req, res) => {
       let filePathAndName = `./client/public/images/${returnedDocument.image}`;
       if (returnedDocument.image !== 'placeholder.jpg') {
         fs.unlink(filePathAndName, (err) => {
-          if (err) console.log(err);
+          if (err) console.log('No image found to remove: ', err);
         });
       }
     }

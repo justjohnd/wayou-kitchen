@@ -78,11 +78,9 @@ export default function Edit() {
         //Various edge cases included here, including possiblity of a null value coming from the database, or a local server being used
         if (!image) {
           formData.append('image', newImage);
-        } else if (image.slice(0, 4) === 'http') {
-          formData.append('image', image);
         } else if (image !== newImage.name && newImage.name !== 'noImage') {
-          formData.append('image', newImage);
-        } else {
+            formData.append('image', newImage);
+          } else {
           formData.append('image', image);
         }
       } else {

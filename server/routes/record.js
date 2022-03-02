@@ -69,7 +69,7 @@ recordRoutes.route('/record/:id').get(getRecord);
 recordRoutes.route('/record/add').post(uploadS3.single('image'), addRecord);
 
 // This section will help you update a record by id.
-recordRoutes.route('/update/:id').post(upload.single('image'), updateRecord);
+recordRoutes.route('/update/:id').post(uploadS3.single('image'), updateRecord);
 
 // This section will help you delete a record
 recordRoutes.route('/:id').delete(deleteRecord);
