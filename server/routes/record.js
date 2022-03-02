@@ -1,7 +1,13 @@
 const express = require('express');
 const multer = require('multer');
 const { v4: uuidv4 } = require('uuid');
+const multerS3 = require('multer-s3');
+const aws = require('aws-sdk');
 let path = require('path');
+
+const S3_KEY_ID = process.env.S3_KEY_ID;
+const S3_SECRET = process.env.S3_SECRET;
+
 // Bring in record controller function
 const { allRecords, getRecord, addRecord, updateRecord, deleteRecord }= require('../controllers/record');
 
@@ -28,7 +34,30 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
+aws.config.update({
+  secretAccessKey: S3_SECRET,
+  accessKeyId: S3_KEY_ID,
+  region: 'ap-northeast-1'
+});
+
+const s3 = new aws.S3();
+
 let upload = multer({ storage, fileFilter });
+
+let uploadS3 = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'veggit-images',
+    acl: 'public-read',
+    metadata: function (req, file, cb) {
+      cb(null, { fieldName: file.fieldname });
+    },
+    key: function (req, file, cb) {
+      console.log(file);
+      cb(null, uuidv4() + '-' + Date.now() + path.extname(file.originalname));
+    },
+  }),
+});
 
 // This section will help you get a list of all the records.
 recordRoutes.route('/record').get(allRecords);
@@ -37,7 +66,7 @@ recordRoutes.route('/record').get(allRecords);
 recordRoutes.route('/record/:id').get(getRecord);
 
 // This section will help you create a new record.
-recordRoutes.route('/record/add').post(upload.single('image'), addRecord);
+recordRoutes.route('/record/add').post(uploadS3.array('image', 1), addRecord);
 
 // This section will help you update a record by id.
 recordRoutes.route('/update/:id').post(upload.single('image'), updateRecord);
