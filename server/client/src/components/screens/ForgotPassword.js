@@ -2,13 +2,14 @@ import { useState } from 'react';
 import axios from 'axios';
 import './ForgotPassword.css';
 
-const ForgotPassword = () => {
+const ForgotPassword = (props) => {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
   const forgotPasswordHandler = async (e) => {
     e.preventDefault();
+    props.loaderCallback(true);
 
     const config = {
       headers: {
@@ -22,9 +23,10 @@ const ForgotPassword = () => {
         { email },
         config
       );
-
+      props.loaderCallback(false);
       setSuccess(data.data);
     } catch (error) {
+      props.loaderCallback(false);
       setError(error.response.data.error);
       setEmail('');
       setTimeout(() => {

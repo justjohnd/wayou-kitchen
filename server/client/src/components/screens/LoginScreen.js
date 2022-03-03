@@ -18,6 +18,7 @@ const LoginScreen = (props) => {
 
   const loginHandler = async (e) => {
     e.preventDefault();
+    props.loaderCallback(true);
 
     const config = {
       header: {
@@ -36,8 +37,10 @@ const LoginScreen = (props) => {
       props.sessionExpiredCallback(false);
 
       navigate("/private");
+      props.loaderCallback(false);
     } catch (error) {
       setError(error.response.data.error);
+      props.loaderCallback(false);
       setTimeout(() => {
         setError('');
       }, 5000);
