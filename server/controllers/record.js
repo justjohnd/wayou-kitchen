@@ -65,7 +65,7 @@ function setObject(reqData) {
   return myObj;
 }
 
-//Delete images from s3
+//Manage s3 images
 const s3 = new aws.S3({
   secretAccessKey: S3_SECRET,
   accessKeyId: S3_KEY_ID,
@@ -73,9 +73,9 @@ const s3 = new aws.S3({
   Bucket: 'veggit-images',
 });
 
+//Delete images from s3
 const deleteS3 = function (image) {
   const filename = image.substring(54);
-  console.log(filename);
 
   const params = {
     Bucket: 'veggit-images',
@@ -134,6 +134,7 @@ exports.getRecord = async (req, res) => {
 };
 
 exports.addRecord = async (req, res) => {
+
   try {
     let db_connect =  await dbo.getDb();
 
@@ -149,6 +150,7 @@ exports.addRecord = async (req, res) => {
   } catch (error) {
     res.json(error);
   }
+
 };
 
 exports.updateRecord = async (req, res) => {
@@ -160,8 +162,6 @@ exports.updateRecord = async (req, res) => {
     const returnedDocument = await returnDocument(db_connect, myQuery);
 
     const myObj = setObject(req);
-    console.log('myObj: ', myObj.image);
-    console.log('returnedDocument: ', returnedDocument.image);
 
     //Remove any previous images saved to the server that have been changed
     if (myObj.image !== returnedDocument.image) {
@@ -171,7 +171,13 @@ exports.updateRecord = async (req, res) => {
           if (err) console.log('No image found to remove: ', err);
         });
       }
+
+      //Remove previous image from s3
+      if (returnedDocument.image !== 'placeholder.jpg') {
+        deleteS3(returnedDocument.image);
+      }
     }
+
 
     let newvalues = {
       $set: myObj,

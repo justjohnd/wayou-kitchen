@@ -94,10 +94,12 @@ export default function Edit() {
     // This will send a post{} request to update the data in the database.
     try {
       await axios.post(`${httpAddress}/update/${params.id}`, formData);
+      navigate('/private');
     } catch (error) {
       setError(error.response.data.error);
       setTimeout(() => {
         setError('');
+        navigate('/login');
       }, 5000);
     }
   }
@@ -142,8 +144,6 @@ export default function Edit() {
         console.log(error);
       });
   }, []);
-
-  console.log(recipe);
 
   // This following section will display the form that takes the input from the user.
   return (
