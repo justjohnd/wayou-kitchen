@@ -32,8 +32,8 @@ const RegisterScreen = (props) => {
     if(password !== confirmPassword) {
       setPassword("");
       setConfirmPassword("");
+      props.loaderCallback(false);
       setTimeout(() => {
-        props.loaderCallback(false);
         setError("");
       }, 5000);
 
