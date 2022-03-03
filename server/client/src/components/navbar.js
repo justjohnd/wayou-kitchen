@@ -36,7 +36,7 @@ const Navbar = (props) => {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           {(!props.sessionExpired && localStorage.getItem('authToken')) ? (
-            <div>
+            <div className="mt-3">
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/private">

@@ -67,7 +67,7 @@ link:hover {
 
 .recipe-section,
 .header-section {
-  gap: 24px;
+  gap: 40px;
 }
 
 .recipe-section li {
@@ -161,7 +161,8 @@ link:hover {
   }
 
   .recipe-image {
-    width: 200px;
+    height: 200px;
+    width: 100%;
     border: none;
   }
 }
@@ -182,7 +183,6 @@ link:hover {
 
 .collapse.navbar-collapse {
   justify-content: unset;
-  margin-top: 16px;
 }
 
 @media screen and (min-width: 992px) {
