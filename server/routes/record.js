@@ -56,7 +56,7 @@ let uploadS3 =
       console.log(file);
       cb(null, uuidv4() + '-' + Date.now() + path.extname(file.originalname));
     }
-   }),
+   }), fileFilter
 }).single('image');
 
 // This section will help you get a list of all the records.
