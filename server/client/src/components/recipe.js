@@ -1,4 +1,5 @@
-import React from 'react';
+import axios from 'axios';
+import { React, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -11,11 +12,9 @@ return (
         <Link to={'/show/' + currentrecord._id}>
           <img
             className="recipe-image mb-2 mx-sm-2"
-            src={
-              currentrecord.image.slice(0, 4) === 'http'
+            src={ currentrecord.image !== null && currentrecord.image.slice(0, 4) === 'http'
                 ? currentrecord.image
-                : './images/' + currentrecord.image
-            }
+                : './images/' + currentrecord.image }
             alt={currentrecord.title}
           />
           <div className="px-1 title">{currentrecord.title}</div>

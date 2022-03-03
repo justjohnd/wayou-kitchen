@@ -103,11 +103,9 @@ export default function Show() {
           <div className="recipe-image-wrapper">
             <img
               className="recipe-image"
-              src={
-                showRecipe.image.slice(0, 4) === 'http'
-                  ? showRecipe.image
-                  : '../../images/' + showRecipe.image
-              }
+              src={ showRecipe.image !== null && showRecipe.image.slice(0, 4) === 'http'
+                ? showRecipe.image
+                : '../images/' + showRecipe.image }
             />
           </div>
           <div className="recipe-header">

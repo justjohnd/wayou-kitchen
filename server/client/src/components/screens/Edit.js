@@ -63,9 +63,6 @@ export default function Edit() {
 
   let params = useParams();
 
-  console.log('image: ', image);
-  console.log('newImage: ', newImage);
-
   // This function will handle the submission.
   const handleRecipe = async (e) => {
     e.preventDefault();
@@ -78,12 +75,12 @@ export default function Edit() {
 
     for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
       if (RECIPE_PROPERTIES[i] === 'image') {
-        // First check to seet if image is a url
-        if (image.slice(0, 4) === 'http') {
-          formData.append('image', image);
-        } else if (image !== newImage.name && newImage.name !== 'noImage') {
+        //Various edge cases included here, including possiblity of a null value coming from the database, or a local server being used
+        if (!image) {
           formData.append('image', newImage);
-        } else {
+        } else if (image !== newImage.name && newImage.name !== 'noImage') {
+            formData.append('image', newImage);
+          } else {
           formData.append('image', image);
         }
       } else {
@@ -116,7 +113,7 @@ export default function Edit() {
           if (RECIPE_PROPERTIES[i] === 'image') {
             setImage(response.data.image);
 
-            if (response.data.image.slice(0, 4) === 'http') {
+            if (response.data.image !== null && response.data.image.slice(0, 4) === 'http') {
               setImagePreview(response.data.image);
             } else {
               setImagePreview('../../images/' + response.data.image);
@@ -145,6 +142,8 @@ export default function Edit() {
         console.log(error);
       });
   }, []);
+
+  console.log(recipe);
 
   // This following section will display the form that takes the input from the user.
   return (
