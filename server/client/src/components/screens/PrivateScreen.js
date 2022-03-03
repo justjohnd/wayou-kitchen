@@ -129,7 +129,7 @@ function displayAll() {
 // This following section will display the table with the records of individuals.
 return (
   error ? (
-    <span className="error-message">{error}</span>
+    <span className="error-message d-flex justify-content-center">{error}</span>
   ) : <div className="p-3 container disable-while-loading">
     <div className="ms-3">
       <CategoryDropdown

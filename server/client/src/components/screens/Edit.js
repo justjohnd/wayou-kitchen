@@ -8,7 +8,7 @@ import httpAddress from '../../javascript/httpAddress';
 // This will require to npm install axios
 import axios from 'axios';
 
-export default function Edit() {
+export default function Edit(props) {
   const [pageType, setPageType] = useState('Edit');
   const [recipe, setRecipe] = useState(RECIPE_OBJECT);
   const [ingredients, setIngredients] = useState([]);
@@ -93,9 +93,14 @@ export default function Edit() {
 
     // This will send a post{} request to update the data in the database.
     try {
+      props.loaderCallback(true);
       await axios.post(`${httpAddress}/update/${params.id}`, formData);
-      navigate('/private');
+      setTimeout(() => {
+        navigate('/private');
+        props.loaderCallback(false);
+      }, 2000);
     } catch (error) {
+      props.loaderCallback(false);
       setError(error.response.data.error);
       setTimeout(() => {
         setError('');

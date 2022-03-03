@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "./RegisterScreen.css";
 
-const RegisterScreen = () => {
+const RegisterScreen = (props) => {
 
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("")
@@ -21,6 +21,7 @@ const RegisterScreen = () => {
 
   const registerHandler = async (e) => {
     e.preventDefault();
+    props.loaderCallback(true);
 
     const config= {
       header: {
@@ -31,6 +32,7 @@ const RegisterScreen = () => {
     if(password !== confirmPassword) {
       setPassword("");
       setConfirmPassword("");
+      props.loaderCallback(false);
       setTimeout(() => {
         setError("");
       }, 5000);
@@ -44,9 +46,11 @@ const RegisterScreen = () => {
       localStorage.setItem("authToken", data.token);
 
       navigate("/");
+      props.loaderCallback(false);
     } catch (error) {
       setError(error.response.data.error);
       setTimeout(() => {
+        props.loaderCallback(false);
         setError('');
       }, 5000);
     }

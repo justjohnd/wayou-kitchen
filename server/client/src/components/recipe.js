@@ -10,21 +10,26 @@ return (
     return (
       <div key={uuidv4()} className="recipe-home">
         <Link to={'/show/' + currentrecord._id}>
-          <img
-            className="recipe-image mb-2 mx-sm-2"
-            src={ currentrecord.image !== null && currentrecord.image.slice(0, 4) === 'http'
-                ? currentrecord.image
-                : './images/' + currentrecord.image }
-            alt={currentrecord.title}
-          />
+          <div className="image-wrapper">
+            <img
+              className="recipe-image mb-2 mx-sm-2"
+              src={
+                currentrecord.image !== null &&
+                currentrecord.image.slice(0, 4) === 'http'
+                  ? currentrecord.image
+                  : './images/' + currentrecord.image
+              }
+              alt={currentrecord.title}
+            />
+          </div>
           <div className="px-1 title">{currentrecord.title}</div>
         </Link>
         {props.privateScreen ? (
           <div className="px-1">
             <Link to={'/edit/' + currentrecord._id}>Edit</Link> |
-            <a 
-            className="link"
-            onClick={() => {
+            <a
+              className="link"
+              onClick={() => {
                 props.deleteRecord(currentrecord._id);
                 window.location.reload();
               }}

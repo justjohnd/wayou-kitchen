@@ -27,11 +27,11 @@ const App = () => {
     function loaderCallback(data) {
       let links = document.querySelectorAll('.disable-while-loading');
       if (data === true) {
-        document.body.classList.add('overlay');
+        // document.body.classList.add('overlay');
         links.forEach((link) => link.classList.add('disabled'));
         setShowLoader(true);
       } else {
-        document.body.classList.remove('overlay');
+        // document.body.classList.remove('overlay');
         links.forEach((link) => link.classList.remove('disabled'));
         setShowLoader(false);
       }
@@ -62,26 +62,30 @@ const App = () => {
         element={<Show />} />
         <Route 
         path="/edit/:id" 
-        element={<Edit />} />
+        element={<Edit loaderCallback={loaderCallback} />} />
         <Route
           path="/login"
           element={<LoginScreen
+            loaderCallback={loaderCallback}
             sessionExpiredCallback={sessionExpiredCallback}  />}
         />
         <Route 
         path="/register" 
-        element={<RegisterScreen />} />
+        element={<RegisterScreen
+        loaderCallback={loaderCallback} />} />
         <Route
           path="/private"
           element={<PrivateScreen sessionExpiredCallback={sessionExpiredCallback} />}
         />
         <Route 
         path="/forgotpassword" 
-        element={<ForgotPassword />} />
+        element={<ForgotPassword
+        loaderCallback={loaderCallback} />} />
         <Route element={<PrivateRoute />}>
           <Route
             path="/create"
-            element={<Create />}
+            element={<Create
+              loaderCallback={loaderCallback} />}
           />
         </Route>
         <Route 

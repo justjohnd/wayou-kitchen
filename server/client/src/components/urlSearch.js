@@ -3,12 +3,15 @@ import Input from './input';
 import Button from './button';
 import axios from 'axios';
 import httpAddress from '../javascript/httpAddress';
+import { useNavigate } from 'react-router-dom';
 
 export default function UrlSearch(props) {
   const [getUrl, setGetUrl] = useState({
     url: ''
     });
   const [error, setError] = useState('');
+
+  let navigate = useNavigate();
 
   function handleData(e) {
     const { value } = e.target;
@@ -34,17 +37,19 @@ export default function UrlSearch(props) {
       });
 
       if (!response.data.success) {
-        props.loaderCallback(false);
         setError(response.data.data);
         setTimeout(() => {
           setError('');
           setGetUrl({ url: '' });
         }, 5000);
-      } else {
-        window.location.reload();
       }
+
+        props.loaderCallback(false);
+        navigate('/private');
+
     } catch(error) {
       props.loaderCallback(false);
+      navigate('/private');
       setError(error.response.data.error);
       setTimeout(() => {
         setError('');

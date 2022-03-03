@@ -54,6 +54,7 @@ export default function Create(props) {
 
   const handleRecipe = async (e) => {
     e.preventDefault();
+    props.loaderCallback(true);
     // When post request is sent to the create url, axios will add a new record to the database.
     recipe.dateCreated = new Date();
     recipe.userId = localStorage.getItem('userId');
@@ -77,9 +78,14 @@ export default function Create(props) {
     }
 
     try {
+      props.loaderCallback(true);
       await axios.post(`${httpAddress}/record/add`, formData);
-      navigate('/private');
+      setTimeout(() => {
+        navigate('/private');
+        props.loaderCallback(false);
+      }, 2000);
     } catch (error) {
+      props.loaderCallback(false);
       setError(error.response.data.error);
       setTimeout(() => {
         setError('');
