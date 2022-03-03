@@ -236,7 +236,6 @@ export default function TemplateCreateEdit(props) {
         encType="multipart/form-data"
         onSubmit={(e) => {
           props.handleRecipe(e);
-          navigate('/private');
         }}
       >
         <Input

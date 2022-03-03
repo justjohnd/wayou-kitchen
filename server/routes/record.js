@@ -43,7 +43,8 @@ const s3 = new aws.S3({
 
 let upload = multer({ storage, fileFilter });
 
-let uploadS3 = multer({
+let uploadS3 = 
+  multer({
   storage: multerS3({
     s3: s3,
     bucket: 'veggit-images',
@@ -56,7 +57,7 @@ let uploadS3 = multer({
       cb(null, uuidv4() + '-' + Date.now() + path.extname(file.originalname));
     }
    }),
-});
+}).single('image');
 
 // This section will help you get a list of all the records.
 recordRoutes.route('/record').get(allRecords);
@@ -65,10 +66,10 @@ recordRoutes.route('/record').get(allRecords);
 recordRoutes.route('/record/:id').get(getRecord);
 
 // This section will help you create a new record.
-recordRoutes.route('/record/add').post(uploadS3.single('image'), addRecord);
+recordRoutes.route('/record/add').post(uploadS3, addRecord);
 
 // This section will help you update a record by id.
-recordRoutes.route('/update/:id').post(uploadS3.single('image'), updateRecord);
+recordRoutes.route('/update/:id').post(uploadS3, updateRecord);
 
 // This section will help you delete a record
 recordRoutes.route('/:id').delete(deleteRecord);
