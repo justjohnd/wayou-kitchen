@@ -389,7 +389,7 @@ link:hover {
   font-size: 0.8rem;
 }
 
-.login-input {
+.auth-input {
   padding: 10px 20px;
   border: none;
   border-bottom: 3px solid transparent;
