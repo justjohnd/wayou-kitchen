@@ -44,6 +44,7 @@ const RegisterScreen = (props) => {
       const {data} = await axios.post("/api/auth/register", {userName, email, password}, config);
 
       localStorage.setItem("authToken", data.token);
+      localStorage.setItem('userId', data.userId);
 
       navigate("/");
       props.loaderCallback(false);
