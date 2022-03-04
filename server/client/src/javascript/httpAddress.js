@@ -3,6 +3,6 @@ const addresses = {
   production: 'https://secret-springs-85430.herokuapp.com'
 }
 
-const httpAddress = addresses.local;
+const httpAddress = addresses.production;
 
 export default httpAddress;

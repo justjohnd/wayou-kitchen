@@ -5,11 +5,28 @@ import Recipe from '../recipe';
 import RecipeGroup from '../recipeGroup';
 import CategoryDropdown from '../categoryDropdown';
 import useGetRecords from "../../hooks/useGetRecords";
+import Button from '../button';
 
 export default function RecipeList() {
   const records = useGetRecords("/record");
   const [selectedCategories, setSelectedCategories] = useState(null);
   const [recordCategories, setRecordCategories] = useState(null);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [postNumber] = useState(20);
+
+  const currentPageNumber = pageNumber * postNumber - postNumber;
+
+  const splicy = [...records];
+  const paginatedPosts = splicy.splice(currentPageNumber, postNumber);
+
+  const handlePrev = () => {
+    if (pageNumber === 1) return;
+    setPageNumber(pageNumber - 1);
+  };
+
+  const handleNext = () => {
+    setPageNumber(pageNumber + 1);
+  };
 
   //Select by categories
   function categoriesCallback(optionSelected) {
@@ -37,7 +54,34 @@ export default function RecipeList() {
 
 function displayAll() {
   if (selectedCategories === null || selectedCategories.length === 0) {
-    return <Recipe recordArray={records} />;
+    return (
+      <div>
+        <Recipe recordArray={paginatedPosts} />
+        {paginatedPosts.length > 0 && (
+          <div className="pagination-wrapper">
+            <div className="d-flex justify-content-center">
+              Page {pageNumber}{' '}
+            </div>
+            <div className="d-flex">
+              <Button
+                buttonWrapper="w-50"
+                className="float-end me-2"
+                buttonText="Previous"
+                onClick={handlePrev}
+              />
+              {paginatedPosts.length > currentPageNumber && (
+                <Button
+                  buttonWrapper="w-50 text-left"
+                  className="float-start ms-2"
+                  buttonText="Next"
+                  onClick={handleNext}
+                />
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    );
   } 
 }
 
@@ -50,17 +94,19 @@ function displayAll() {
           categoriesCallback={categoriesCallback}
         ></CategoryDropdown>
       </div>
-      <h1 className="mb-4 ms-3">Recipes</h1>
+      <h1 className="mb-4 ms-3">Recently Added</h1>
       {displayAll()}
       {recordCategories ? (
         recordCategories.map((categoryRecords, index) => {
           if (categoryRecords !== []) {
             return (
-              <RecipeGroup
-                key={uuidv4()}
-                index={index}
-                categoryRecords={categoryRecords}
-              />
+              <div>
+                <RecipeGroup
+                  key={uuidv4()}
+                  index={index}
+                  categoryRecords={categoryRecords}
+                />
+              </div>
             );
           }
         })

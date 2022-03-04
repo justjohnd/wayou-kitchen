@@ -126,5 +126,6 @@ exports.resetPassword =async (req, res, next) => {
 const sendToken = (user, statusCode, res) => {
   //Use a method defined in User model
   const token = user.getSignedToken();
-  res.status(statusCode).json({success: true, token});
+  const userId = user._id;
+  res.status(statusCode).json({success: true, token, userId});
 }

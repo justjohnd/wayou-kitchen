@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { categories } from '../../javascript/categories';
 import httpAddress from '../../javascript/httpAddress';
 import Recipe from '../recipe';
+import Button from '../button';
 import RecipeGroup from '../recipeGroup';
 import CategoryDropdown from '../categoryDropdown';
 
@@ -14,6 +15,19 @@ const PrivateScreen = (props) => {
   const [selectedCategories, setSelectedCategories] = useState(null);
   const [recordCategories, setRecordCategories] = useState(null);
   const [records, setRecords] = useState('');
+  const [pageNumber, setPageNumber] = useState(1);
+  const [postNumber] = useState(20);
+
+  const currentPageNumber = pageNumber * postNumber - postNumber;
+  const splicy = [...records];
+  const paginatedPosts = splicy.splice(currentPageNumber, postNumber);
+  const handlePrev = () => {
+    if (pageNumber === 1) return;
+    setPageNumber(pageNumber - 1);
+  };
+  const handleNext = () => {
+    setPageNumber(pageNumber + 1);
+  };
 
   let navigate = useNavigate();
 
@@ -122,7 +136,38 @@ function categoriesCallback(optionSelected) {
 
 function displayAll() {
   if (selectedCategories === null || selectedCategories.length === 0) {
-    return <Recipe privateScreen={privateScreen} recordArray={records} deleteRecord={deleteRecord} />;
+    return (
+      <div>
+        <Recipe
+          privateScreen={privateScreen}
+          recordArray={paginatedPosts}
+          deleteRecord={deleteRecord}
+        />
+        {paginatedPosts.length > 0 && (
+          <div className="pagination-wrapper">
+            <div className="d-flex justify-content-center">
+              Page {pageNumber}{' '}
+            </div>
+            <div className="d-flex">
+              <Button
+                buttonWrapper="w-50"
+                className="float-end me-2"
+                buttonText="Previous"
+                onClick={handlePrev}
+              />
+              {paginatedPosts.length > currentPageNumber && (
+                <Button
+                  buttonWrapper="w-50 text-left"
+                  className="float-start ms-2"
+                  buttonText="Next"
+                  onClick={handleNext}
+                />
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    );
   }
 }
 
@@ -138,7 +183,7 @@ return (
         categoriesCallback={categoriesCallback}
       ></CategoryDropdown>
     </div>
-    <h1 className="mb-4 ms-3">Recipes</h1>
+    <h1 className="mb-4 ms-3">My Recipes</h1>
     {records ? displayAll() : <div></div>}
     {recordCategories ? (
       recordCategories.map((categoryRecords, index) => {

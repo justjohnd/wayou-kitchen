@@ -44,6 +44,8 @@ const RegisterScreen = (props) => {
       const {data} = await axios.post("/api/auth/register", {userName, email, password}, config);
 
       localStorage.setItem("authToken", data.token);
+      localStorage.setItem('userId', data.userId);
+      props.sessionExpiredCallback(false);
 
       navigate("/");
       props.loaderCallback(false);
@@ -61,8 +63,11 @@ const RegisterScreen = (props) => {
         <h3 className="register-screen__title">Register</h3>
         {error && <span className="error-message">{error}</span>}
         <div className="form-group">
-          <label htmlFor="name">Username:</label>
+          <label className="form-label-sm" htmlFor="name">
+            Username:
+          </label>
           <input
+            className="auth-input"
             type="text"
             required
             id="name"
@@ -72,8 +77,11 @@ const RegisterScreen = (props) => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="email">Email:</label>
+          <label className="form-label-sm" htmlFor="email">
+            Email:
+          </label>
           <input
+            className="auth-input"
             type="email"
             required
             id="email"
@@ -83,8 +91,11 @@ const RegisterScreen = (props) => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="password">Password:</label>
+          <label className="form-label-sm" htmlFor="password">
+            Password:
+          </label>
           <input
+            className="auth-input"
             type="password"
             required
             id="password"
@@ -94,8 +105,11 @@ const RegisterScreen = (props) => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="confirmPassword">Confirm Password:</label>
+          <label className="form-label-sm" htmlFor="confirmPassword">
+            Confirm Password:
+          </label>
           <input
+            className="auth-input"
             type="password"
             required
             id="confirmPassword"
@@ -105,8 +119,12 @@ const RegisterScreen = (props) => {
           />
         </div>
 
-        <button type="submit" className="btn btn-primary">Register</button>
-        <span className="register-screen__subtext">Already have an account?<Link to="/login">Login</Link></span>
+        <button type="submit" className="btn btn-primary">
+          Register
+        </button>
+        <span className="register-screen__subtext">
+          Already have an account?<Link to="/login">Login</Link>
+        </span>
       </form>
     </div>
   );

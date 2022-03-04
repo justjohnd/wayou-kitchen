@@ -56,7 +56,7 @@ const LoginScreen = (props) => {
             Email:
           </label>
           <input
-            className="login-input"
+            className="auth-input"
             type="email"
             required
             id="email"
@@ -78,7 +78,7 @@ const LoginScreen = (props) => {
             </Link>
           </label>
           <input
-            className="login-input"
+            className="auth-input"
             autoComplete="on"
             type="password"
             required
