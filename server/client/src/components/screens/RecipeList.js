@@ -28,13 +28,6 @@ export default function RecipeList() {
     setPageNumber(pageNumber + 1);
   };
 
-  // console.log('paginatedPosts: ', paginatedPosts);
-  // console.log('categoryRecords: ', records);
-  // console.log('pag length: ', paginatedPosts.length);
-  // console.log('currentPageNumber: ', currentPageNumber);
-  console.log(recordCategories);
-
-
   //Select by categories
   function categoriesCallback(optionSelected) {
     setSelectedCategories(optionSelected);
@@ -101,7 +94,7 @@ function displayAll() {
           categoriesCallback={categoriesCallback}
         ></CategoryDropdown>
       </div>
-      <h1 className="mb-4 ms-3">Recipes</h1>
+      <h1 className="mb-4 ms-3">Recently Added</h1>
       {displayAll()}
       {recordCategories ? (
         recordCategories.map((categoryRecords, index) => {
