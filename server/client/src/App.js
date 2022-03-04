@@ -54,43 +54,47 @@ const App = () => {
         sessionExpiredCallback={sessionExpiredCallback}
       />
       <Routes>
-        <Route 
-        path="/" 
-        element={<RecipeList />} />
+        <Route path="/" element={<RecipeList />} />
+        <Route path="/show/:id" element={<Show />} />
         <Route
-        path="/show/:id" 
-        element={<Show />} />
-        <Route 
-        path="/edit/:id" 
-        element={<Edit loaderCallback={loaderCallback} />} />
+          path="/edit/:id"
+          element={<Edit loaderCallback={loaderCallback} />}
+        />
         <Route
           path="/login"
-          element={<LoginScreen
-            loaderCallback={loaderCallback}
-            sessionExpiredCallback={sessionExpiredCallback}  />}
+          element={
+            <LoginScreen
+              loaderCallback={loaderCallback}
+              sessionExpiredCallback={sessionExpiredCallback}
+            />
+          }
         />
-        <Route 
-        path="/register" 
-        element={<RegisterScreen
-        loaderCallback={loaderCallback} />} />
+        <Route
+          path="/register"
+          element={
+            <RegisterScreen
+              loaderCallback={loaderCallback}
+              sessionExpiredCallback={sessionExpiredCallback}
+            />
+          }
+        />
         <Route
           path="/private"
-          element={<PrivateScreen sessionExpiredCallback={sessionExpiredCallback} />}
+          element={
+            <PrivateScreen sessionExpiredCallback={sessionExpiredCallback} />
+          }
         />
-        <Route 
-        path="/forgotpassword" 
-        element={<ForgotPassword
-        loaderCallback={loaderCallback} />} />
+        <Route
+          path="/forgotpassword"
+          element={<ForgotPassword loaderCallback={loaderCallback} />}
+        />
         <Route element={<PrivateRoute />}>
           <Route
             path="/create"
-            element={<Create
-              loaderCallback={loaderCallback} />}
+            element={<Create loaderCallback={loaderCallback} />}
           />
         </Route>
-        <Route 
-        path="*" 
-        element={<RecipeList to="/" />} />
+        <Route path="*" element={<RecipeList to="/" />} />
       </Routes>
     </div>
   );

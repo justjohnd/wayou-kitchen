@@ -45,6 +45,7 @@ const RegisterScreen = (props) => {
 
       localStorage.setItem("authToken", data.token);
       localStorage.setItem('userId', data.userId);
+      props.sessionExpiredCallback(false);
 
       navigate("/");
       props.loaderCallback(false);
