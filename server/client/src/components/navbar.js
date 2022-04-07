@@ -44,24 +44,27 @@ const Navbar = (props) => {
           {!props.sessionExpired && localStorage.getItem('authToken') ? (
             <div className="mt-3">
               <ul className="navbar-nav ml-auto">
-                <li className="nav-item me-md-4">
+                <li className="nav-item mb-4 me-md-4">
+                  <WebIcon className="d-lg-none me-3 align-middle" />
                   <UrlSearch
                     className="nav-link"
                     loaderCallback={props.loaderCallback}
                   />
                 </li>
-                <li className="nav-item me-md-4">
+                <li className="nav-item mb-4 me-md-4">
                   <NavLink className="nav-link" to="/create">
+                    <CreateIcon className="d-lg-none me-3 align-middle" />
                     new
                   </NavLink>
                 </li>
-                <li className="nav-item me-md-4">
+                <li className="nav-item mb-4 me-md-4">
                   <NavLink className="nav-link" to="/private">
                     <LocalDiningIcon className="d-lg-none me-3 align-middle" />
                     Cookbook
                   </NavLink>
                 </li>
-                <li className="nav-item me-md-4">
+                <li className="nav-item mb-4 me-md-4">
+                  <LogoutIcon className="d-lg-none me-3 align-middle" />
                   <Link
                     className="nav-link"
                     to="login"
