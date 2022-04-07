@@ -4,11 +4,11 @@ import { categories } from '../../javascript/categories';
 import Recipe from '../recipe';
 import RecipeGroup from '../recipeGroup';
 import CategoryDropdown from '../categoryDropdown';
-import useGetRecords from "../../hooks/useGetRecords";
+import useGetRecords from '../../hooks/useGetRecords';
 import Button from '../button';
 
 export default function RecipeList() {
-  const records = useGetRecords("/record");
+  const records = useGetRecords('/record');
   const [selectedCategories, setSelectedCategories] = useState(null);
   const [recordCategories, setRecordCategories] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
@@ -46,55 +46,55 @@ export default function RecipeList() {
       }
 
       return newArray;
-    }
+    };
 
     const groupsToShow = groupArray();
     setRecordCategories(groupsToShow);
   }
 
-function displayAll() {
-  if (selectedCategories === null || selectedCategories.length === 0) {
-    return (
-      <div>
-        <Recipe recordArray={paginatedPosts} />
-        {paginatedPosts.length > 0 && (
-          <div className="pagination-wrapper">
-            <div className="d-flex justify-content-center">
-              Page {pageNumber}{' '}
-            </div>
-            <div className="d-flex">
-              <Button
-                buttonWrapper="w-50"
-                className="float-end me-2"
-                buttonText="Previous"
-                onClick={handlePrev}
-              />
-              {paginatedPosts.length > currentPageNumber && (
+  function displayAll() {
+    if (selectedCategories === null || selectedCategories.length === 0) {
+      return (
+        <div>
+          <Recipe recordArray={paginatedPosts} />
+          {paginatedPosts.length > 0 && (
+            <div className="pagination-wrapper">
+              <div className="d-flex justify-content-center">
+                Page {pageNumber}{' '}
+              </div>
+              <div className="d-flex">
                 <Button
-                  buttonWrapper="w-50 text-left"
-                  className="float-start ms-2"
-                  buttonText="Next"
-                  onClick={handleNext}
+                  buttonWrapper="w-50"
+                  className="float-end me-2"
+                  buttonText="Previous"
+                  onClick={handlePrev}
                 />
-              )}
+                {paginatedPosts.length > currentPageNumber && (
+                  <Button
+                    buttonWrapper="w-50 text-left"
+                    className="float-start ms-2"
+                    buttonText="Next"
+                    onClick={handleNext}
+                  />
+                )}
+              </div>
             </div>
-          </div>
-        )}
-      </div>
-    );
-  } 
-}
+          )}
+        </div>
+      );
+    }
+  }
 
   // This following section will display the table with the records of individuals.
   return (
     <div className="p-3 container disable-while-loading">
-      <div className="ms-3">
+      <div>
         <CategoryDropdown
           selectedCategories={selectedCategories}
           categoriesCallback={categoriesCallback}
         ></CategoryDropdown>
       </div>
-      <h1 className="mb-4 ms-3">Recently Added</h1>
+      <h1 className="mb-4">Recently Added</h1>
       {displayAll()}
       {recordCategories ? (
         recordCategories.map((categoryRecords, index) => {
