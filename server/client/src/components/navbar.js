@@ -1,9 +1,15 @@
 import { React } from 'react';
 import { Link, useNavigate, NavLink } from 'react-router-dom';
 
-// We import bootstrap to make our application look better.
+import LocalDiningIcon from '@mui/icons-material/LocalDining';
+import CreateIcon from '@mui/icons-material/Create';
+import WebIcon from '@mui/icons-material/Web';
+import LogoutIcon from '@mui/icons-material/Logout';
+
+// Note that the bootstrap import below is necessary for navbar behavior
 import 'bootstrap/dist/css/bootstrap.css';
 import bootstrap from 'bootstrap';
+
 import '../index.css';
 import UrlSearch from './urlSearch';
 
@@ -20,9 +26,9 @@ const Navbar = (props) => {
   return (
     <div className="disable-while-loading">
       <nav className="p-3 my-3 my-sm-5 container navbar navbar-expand-lg">
-          <NavLink className="navbar-brand" to="/">
-            veggit
-          </NavLink>
+        <NavLink className="navbar-brand" to="/">
+          veggit
+        </NavLink>
         <button
           className="navbar-toggler custom-toggler"
           type="button"
@@ -35,30 +41,35 @@ const Navbar = (props) => {
           <span className="custom-toggler navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          {(!props.sessionExpired && localStorage.getItem('authToken')) ? (
+          {!props.sessionExpired && localStorage.getItem('authToken') ? (
             <div className="mt-3">
               <ul className="navbar-nav ml-auto">
-                <li className="nav-item">
-                  <NavLink className="nav-link" to="/private">
-                    My Cookbook
-                  </NavLink>
-                </li>
-                <li className="nav-item">
-                  <NavLink className="nav-link" to="/create">
-                    new
-                  </NavLink>
-                </li>
-                <li className="nav-item">
+                <li className="nav-item me-md-4">
                   <UrlSearch
                     className="nav-link"
                     loaderCallback={props.loaderCallback}
                   />
                 </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="login" onClick={() => {
-                    handleLogout();
-                    props.sessionExpiredCallback(true);
-                  }}>
+                <li className="nav-item me-md-4">
+                  <NavLink className="nav-link" to="/create">
+                    new
+                  </NavLink>
+                </li>
+                <li className="nav-item me-md-4">
+                  <NavLink className="nav-link" to="/private">
+                    <LocalDiningIcon className="d-lg-none me-3 align-middle" />
+                    Cookbook
+                  </NavLink>
+                </li>
+                <li className="nav-item me-md-4">
+                  <Link
+                    className="nav-link"
+                    to="login"
+                    onClick={() => {
+                      handleLogout();
+                      props.sessionExpiredCallback(true);
+                    }}
+                  >
                     Logout
                   </Link>
                 </li>

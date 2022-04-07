@@ -282,9 +282,13 @@ link:hover {
   pointer-events: none;
 }
 
+.url-input {
+  width: 400px;
+}
+
 @media (min-width: 576px) {
   .url-input {
-    width: 400px;
+    width: 300px;
   }
 
   .nav-link {
@@ -318,13 +322,18 @@ link:hover {
 
 @media (min-width: 576px) {
   .recipe-home {
-    margin: 8px 8px 40px 8px;
+    margin: 8px 0 40px 0;
     padding: 0;
-    max-width: 240px;
+    flex-grow: 1;
+    flex-basis: 0;
   }
 
   .recipe-home .recipe-image {
-    width: 240px;
+    min-width: 240px;
+  }
+
+  .recipe-home-container {
+    gap: 12px;
   }
 }
 /* Edit Page */
