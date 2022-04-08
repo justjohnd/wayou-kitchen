@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import axios from 'axios';
+
+import httpAddress from '../javascript/httpAddress';
+import { getWithExpiry } from '../hooks/localStorageWithExpiry';
+
 import Input from './input';
 import Button from './button';
-import axios from 'axios';
-import httpAddress from '../javascript/httpAddress';
-import { useNavigate } from 'react-router-dom';
 
 export default function UrlSearch(props) {
   const [getUrl, setGetUrl] = useState({
@@ -19,7 +23,7 @@ export default function UrlSearch(props) {
     setGetUrl(() => {
       return {
         url: value,
-        userId: localStorage.getItem('userId'),
+        userId: getWithExpiry('userId'),
       };
     });
   }

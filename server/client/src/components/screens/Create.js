@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import TemplateCreateEdit from '../templateCreateEdit';
-import RECIPE_PROPERTIES, { RECIPE_OBJECT } from '../../javascript/RECIPE_PROPERTIES';
-import httpAddress from '../../javascript/httpAddress';
+
 import axios from 'axios';
+
+import RECIPE_PROPERTIES, {
+  RECIPE_OBJECT,
+} from '../../javascript/RECIPE_PROPERTIES';
+import httpAddress from '../../javascript/httpAddress';
+import { getWithExpiry } from '../../hooks/localStorageWithExpiry';
+
+import TemplateCreateEdit from '../templateCreateEdit';
 
 export default function Create(props) {
   const [recipe, setRecipe] = useState(RECIPE_OBJECT);
   const [ingredients, setIngredients] = useState([]);
   const [dataArray, setDataArray] = useState([]);
   const [imagePreview, setImagePreview] = useState('');
-  const [error, setError ] = useState('');
+  const [error, setError] = useState('');
   const pageType = 'Create';
   const changeImage = true;
 
@@ -57,7 +63,7 @@ export default function Create(props) {
     props.loaderCallback(true);
     // When post request is sent to the create url, axios will add a new record to the database.
     recipe.dateCreated = new Date();
-    recipe.userId = localStorage.getItem('userId');
+    recipe.userId = getWithExpiry('userId');
 
     const formData = new FormData();
     // For File objects (such as image) do not stringify
@@ -66,7 +72,7 @@ export default function Create(props) {
         formData.append(RECIPE_PROPERTIES[i], recipe[RECIPE_PROPERTIES[i]]);
       } else if (RECIPE_PROPERTIES[i] === 'image') {
         //Do not send recipe.image unless an image exists
-        if (recipe.image !== "") {
+        if (recipe.image !== '') {
           formData.append('image', recipe.image);
         }
       } else {
@@ -92,7 +98,7 @@ export default function Create(props) {
         navigate('/login');
       }, 5000);
     }
-  }
+  };
 
   // This following section will display the form that takes the input from the user.
   return (

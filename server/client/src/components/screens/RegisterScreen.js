@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+
+import axios from 'axios';
+
 import "./RegisterScreen.css";
+
+import {
+  setWithExpiry,
+  getWithExpiry,
+} from '../../hooks/localStorageWithExpiry';
 
 const RegisterScreen = (props) => {
 
@@ -14,7 +21,7 @@ const RegisterScreen = (props) => {
   const navigate = useNavigate();
 
     useEffect(() => {
-      if (localStorage.getItem('authToken')) {
+      if (getWithExpiry('authToken')) {
         navigate('/');
       }
     }, []);
@@ -43,8 +50,8 @@ const RegisterScreen = (props) => {
     try {
       const {data} = await axios.post("/api/auth/register", {userName, email, password}, config);
 
-      localStorage.setItem("authToken", data.token);
-      localStorage.setItem('userId', data.userId);
+      setWithExpiry("authToken", data.token);
+      setWithExpiry('userId', data.userId);
       props.sessionExpiredCallback(false);
 
       navigate("/");
