@@ -95,7 +95,6 @@ const PrivateScreen = (props) => {
       } catch (error) {
         localStorage.removeItem('authToken');
         localStorage.removeItem('userId');
-        props.sessionExpiredCallback(true);
         setError('You are not authorized please login');
         console.log(error);
       }

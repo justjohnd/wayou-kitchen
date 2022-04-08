@@ -11,7 +11,7 @@ import bootstrap from 'bootstrap';
 
 import '../index.css';
 
-import { setWithExpiry, getWithExpiry } from '../hooks/localStorageWithExpiry';
+import { getWithExpiry } from '../hooks/localStorageWithExpiry';
 
 import UrlSearch from './urlSearch';
 
@@ -72,7 +72,6 @@ const Navbar = (props) => {
                     to="login"
                     onClick={() => {
                       handleLogout();
-                      props.sessionExpiredCallback(true);
                     }}
                   >
                     Logout

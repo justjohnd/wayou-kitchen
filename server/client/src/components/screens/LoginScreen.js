@@ -41,7 +41,6 @@ const LoginScreen = (props) => {
       );
 
       setWithExpiry('authToken', data.token);
-      props.sessionExpiredCallback(false);
 
       navigate('/private');
       props.loaderCallback(false);
