@@ -25,6 +25,17 @@ export default function useGetRecords(route) {
           }
         }
 
+        // Check and remove any duplicates (based on sourcrUrl)
+        let sourceUrlHash = {};
+        response.data.forEach((item, index) => {
+          console.log(item.sourceUrl);
+          if (sourceUrlHash[item.sourceUrl]) {
+            response.data.splice(index, 1);
+          } else {
+            sourceUrlHash[item.sourceUrl] = 1;
+          }
+        });
+
         //Order recipes for display with most recent data created first
         const ordered = [];
 
@@ -55,5 +66,4 @@ export default function useGetRecords(route) {
   }, []);
 
   return records;
-
 }
