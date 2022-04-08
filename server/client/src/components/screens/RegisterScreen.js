@@ -1,53 +1,62 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-import "./RegisterScreen.css";
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+import axios from 'axios';
+
+import './RegisterScreen.css';
+
+import {
+  setWithExpiry,
+  getWithExpiry,
+} from '../../hooks/localStorageWithExpiry';
 
 const RegisterScreen = (props) => {
-
-  const [userName, setUserName] = useState("");
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError]= useState("");
+  const [userName, setUserName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
 
   const navigate = useNavigate();
 
-    useEffect(() => {
-      if (localStorage.getItem('authToken')) {
-        navigate('/');
-      }
-    }, []);
+  useEffect(() => {
+    if (getWithExpiry('authToken')) {
+      navigate('/');
+    }
+  }, []);
 
   const registerHandler = async (e) => {
     e.preventDefault();
     props.loaderCallback(true);
 
-    const config= {
+    const config = {
       header: {
-        "Cntent-Type": "application/json"
-      }
-    }
+        'Cntent-Type': 'application/json',
+      },
+    };
 
-    if(password !== confirmPassword) {
-      setPassword("");
-      setConfirmPassword("");
+    if (password !== confirmPassword) {
+      setPassword('');
+      setConfirmPassword('');
       props.loaderCallback(false);
       setTimeout(() => {
-        setError("");
+        setError('');
       }, 5000);
 
-      return setError("Passwords do not match.");
+      return setError('Passwords do not match.');
     }
 
     try {
-      const {data} = await axios.post("/api/auth/register", {userName, email, password}, config);
+      const { data } = await axios.post(
+        '/api/auth/register',
+        { userName, email, password },
+        config
+      );
 
-      localStorage.setItem("authToken", data.token);
-      localStorage.setItem('userId', data.userId);
-      props.sessionExpiredCallback(false);
+      setWithExpiry('authToken', data.token);
+      setWithExpiry('userId', data.userId);
 
-      navigate("/");
+      navigate('/');
       props.loaderCallback(false);
     } catch (error) {
       setError(error.response.data.error);
@@ -56,7 +65,7 @@ const RegisterScreen = (props) => {
         setError('');
       }, 5000);
     }
-  }
+  };
   return (
     <div className="register-screen">
       <form onSubmit={registerHandler} className="register-screen__form">
@@ -128,6 +137,6 @@ const RegisterScreen = (props) => {
       </form>
     </div>
   );
-}
+};
 
 export default RegisterScreen;

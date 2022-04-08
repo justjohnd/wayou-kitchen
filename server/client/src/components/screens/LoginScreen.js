@@ -1,7 +1,14 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+
+import axios from 'axios';
+
 import './LoginScreen.css';
+
+import {
+  setWithExpiry,
+  getWithExpiry,
+} from '../../hooks/localStorageWithExpiry';
 
 const LoginScreen = (props) => {
   const [email, setEmail] = useState('');
@@ -11,9 +18,9 @@ const LoginScreen = (props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (localStorage.getItem("authToken")) {
-      navigate("/");
-    } 
+    if (getWithExpiry('authToken')) {
+      navigate('/');
+    }
   }, []);
 
   const loginHandler = async (e) => {
@@ -33,10 +40,9 @@ const LoginScreen = (props) => {
         config
       );
 
-      localStorage.setItem('authToken', data.token);
-      props.sessionExpiredCallback(false);
+      setWithExpiry('authToken', data.token);
 
-      navigate("/private");
+      navigate('/private');
       props.loaderCallback(false);
     } catch (error) {
       setError(error.response.data.error);
@@ -46,6 +52,7 @@ const LoginScreen = (props) => {
       }, 5000);
     }
   };
+
   return (
     <div className="login-screen">
       <form onSubmit={loginHandler} className="login-screen__form">

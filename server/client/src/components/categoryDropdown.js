@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { categories } from '../javascript/categories.js';
+
 import { default as ReactSelect } from 'react-select';
 import { components } from 'react-select';
+
+import { categories } from '../javascript/categories.js';
 
 const Option = (props) => {
   return (
@@ -20,7 +22,6 @@ const Option = (props) => {
 
 export default function CategoryDropdown(props) {
   function handleChange(selected) {
-    // setOptionSelected(selected);
     props.categoriesCallback(selected);
   }
 
@@ -41,7 +42,6 @@ export default function CategoryDropdown(props) {
         }}
         onChange={handleChange}
         allowSelectAll={true}
-        value={props.selectedCategories}
       />
     </span>
   );
