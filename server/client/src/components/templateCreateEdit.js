@@ -1,6 +1,7 @@
-import React, { useState} from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import { v4 as uuidv4 } from 'uuid';
 
 import IngredientCreate from './ingredientCreate';
 import InstructionCreate from './instructionCreate';
@@ -10,7 +11,6 @@ import Button from './button';
 import CategoryDropdown from './categoryDropdown';
 
 export default function TemplateCreateEdit(props) {
-
   // data contains instruction (or header) content
   const [data, setData] = useState('');
 
@@ -53,7 +53,7 @@ export default function TemplateCreateEdit(props) {
     sanitizeIngredient(e, ingredient, setIngredient);
   }
 
-    function editIngredientCallback(e) {
+  function editIngredientCallback(e) {
     sanitizeIngredient(e, editIngredient, setEditIngredient);
   }
 
@@ -68,7 +68,7 @@ export default function TemplateCreateEdit(props) {
       unit: ingredient.unit,
       group: ingredient.group,
       id: ingredient.id,
-    }
+    };
     const string = ingredientClone.group;
     ingredientClone.group = parseInt(string, 10);
 
@@ -94,21 +94,12 @@ export default function TemplateCreateEdit(props) {
     });
   }
 
-  function addIngredientCallback() {
-    if (!ingredient.id) {
-      ingredient.id = uuidv4();
-    }
+  function addIngredientCallback(ingredient) {
+    ingredient.id = uuidv4();
 
     const ingredientsClone = [...props.ingredients, ingredient];
     props.ingredientsCallback(ingredientsClone);
     AddIngredientsToRecipe(ingredientsClone);
-    setIngredient({
-      nameClean: '',
-      amount: '',
-      unit: '',
-      group: 0,
-      id: '',
-    });
   }
 
   function AddIngredientsToRecipe(ingredientsParameter) {
@@ -163,11 +154,10 @@ export default function TemplateCreateEdit(props) {
   }
 
   function addInstructionCallback(header) {
-
     let instructionObject = {
       step: data,
       isHeader: header,
-    }
+    };
 
     props.dataArrayCallback((prevVal) => [...prevVal, instructionObject]);
     const dataArrayClone = [...props.dataArray, instructionObject];
@@ -177,12 +167,11 @@ export default function TemplateCreateEdit(props) {
 
   function editInstructionCallback(index, value, header) {
     const newArray = [...props.dataArray];
-    newArray.splice(index, 1, 
-      {
-        number: index,
-        step: value,
-        isHeader: header
-      });
+    newArray.splice(index, 1, {
+      number: index,
+      step: value,
+      isHeader: header,
+    });
     props.dataArrayCallback(newArray);
     AddInstructionToRecipe(newArray);
   }
@@ -209,7 +198,7 @@ export default function TemplateCreateEdit(props) {
     const newArray = [...props.dataArray];
     newArray.splice(idx, 0, {
       step: '',
-      isHeader: false
+      isHeader: false,
     });
     props.dataArrayCallback(newArray);
     AddInstructionToRecipe(newArray);
@@ -250,7 +239,7 @@ export default function TemplateCreateEdit(props) {
         />
         <div className="form-group mb-5">
           <h4 className="mb-3">Image</h4>
-          {props.pageType === 'Edit' && (
+          {props.pageType === 'Edit' ? (
             <div className="mb-5 d-flex">
               <img
                 className="recipe-image"
@@ -277,9 +266,10 @@ export default function TemplateCreateEdit(props) {
                 )}
               </div>
             </div>
-          )}
-          {props.pageType === 'Create' && (
-            <div className={`mb-5 ${props.imagePreview ? 'd-flex' : 'w-sm-50'}`}>
+          ) : (
+            <div
+              className={`mb-5 ${props.imagePreview ? 'd-flex' : 'w-sm-50'}`}
+            >
               {props.imagePreview && (
                 <img
                   className="recipe-image"
@@ -290,7 +280,7 @@ export default function TemplateCreateEdit(props) {
               )}
               <InputFile
                 onChange={(e) => props.imageCallback(e.target.files[0])}
-                className={props.imagePreview && "mx-3"}
+                className={props.imagePreview && 'mx-3'}
               />
             </div>
           )}

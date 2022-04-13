@@ -10,7 +10,7 @@ const RECIPE_PROPERTIES = [
   'servings',
   'categories',
   'dateCreated',
-  'userId'
+  'userId',
 ];
 
 let RECIPE_OBJECT = {};
@@ -20,5 +20,3 @@ for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
 
 export default RECIPE_PROPERTIES;
 export { RECIPE_OBJECT };
-
-

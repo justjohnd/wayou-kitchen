@@ -28,7 +28,6 @@ export default function useGetRecords(route) {
         // Check and remove any duplicates (based on sourcrUrl)
         let sourceUrlHash = {};
         response.data.forEach((item, index) => {
-          console.log(item.sourceUrl);
           if (sourceUrlHash[item.sourceUrl]) {
             response.data.splice(index, 1);
           } else {

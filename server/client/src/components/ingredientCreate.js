@@ -1,18 +1,39 @@
-import React from 'react';
+import { React, useState } from 'react';
+
 import IngredientEdit from './ingredientEdit';
 import Input from './input';
 import Button from './button';
 
 export default function IngredientCreate(props) {
-    function deleteIngredient(e, id) {
-      e.preventDefault();
-      props.deleteIngredientCallback(id);
-    }
+  const INGREDIENT = {
+    amount: '',
+    group: 0,
+    nameClean: '',
+    id: '',
+    unit: '',
+  };
 
-    function insertIngredient(e, idx) {
-      e.preventDefault();
-      props.insertIngredientCallback(idx);
-    }
+  const [ingredient, setIngredient] = useState(INGREDIENT);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setIngredient((prevValue) => {
+      return {
+        ...prevValue,
+        [name]: value,
+      };
+    });
+  };
+
+  function deleteIngredient(e, id) {
+    e.preventDefault();
+    props.deleteIngredientCallback(id);
+  }
+
+  function insertIngredient(e, idx) {
+    e.preventDefault();
+    props.insertIngredientCallback(idx);
+  }
 
   return (
     <div className="form-group mb-5">
@@ -25,10 +46,10 @@ export default function IngredientCreate(props) {
               wrapperClassName="d-sm-inline-block me-4"
               name="nameClean"
               type="text"
-              value={props.ingredient.nameClean}
+              value={ingredient.nameClean}
               onChange={(e) => {
                 e.preventDefault();
-                props.createIngredientCallback(e);
+                handleChange(e);
               }}
             />
             <Input
@@ -36,9 +57,9 @@ export default function IngredientCreate(props) {
               wrapperClassName="input-short d-inline-block me-4"
               name="amount"
               type="text"
-              value={props.ingredient.amount}
+              value={ingredient.amount}
               onChange={(e) => {
-                props.createIngredientCallback(e);
+                handleChange(e);
               }}
               placeholder=""
             />
@@ -47,9 +68,9 @@ export default function IngredientCreate(props) {
               wrapperClassName="input-short d-inline-block me-4"
               name="unit"
               type="text"
-              value={props.ingredient.unit}
+              value={ingredient.unit}
               onChange={(e) => {
-                props.createIngredientCallback(e);
+                handleChange(e);
               }}
               placeholder=""
             />
@@ -58,8 +79,10 @@ export default function IngredientCreate(props) {
               <label>
                 <select
                   className="selector-input form-control"
-                  onChange={(e) => props.createIngredientCallback(e)}
-                  value={props.ingredient.group}
+                  onChange={(e) => {
+                    handleChange(e);
+                  }}
+                  value={ingredient.group}
                   selected
                   name="group"
                   type="number"
@@ -83,7 +106,8 @@ export default function IngredientCreate(props) {
             className="ms-sm-2 mt-2 mt-sm-0"
             onClick={(e) => {
               e.preventDefault();
-              props.addIngredientCallback();
+              props.addIngredientCallback(ingredient);
+              setIngredient(INGREDIENT);
             }}
             buttonText="Add"
           />
