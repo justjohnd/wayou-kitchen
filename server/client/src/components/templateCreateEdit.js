@@ -32,7 +32,18 @@ export default function TemplateCreateEdit(props) {
     id: '',
   });
 
-  let navigate = useNavigate();
+  //Ingredients refactor
+  function addIngredientCallback(ingredient) {
+    ingredient.id = uuidv4();
+
+    const ingredientsClone = [...props.ingredients, ingredient];
+    props.setRecipe((prevValue) => {
+      return {
+        ...prevValue,
+        extendedIngredients: ingredientsClone,
+      };
+    });
+  }
 
   //Set ingredient based on data entered into ingredientsCreate fields
   function sanitizeIngredient(e, stateConstant, setStateConstant) {
@@ -92,14 +103,6 @@ export default function TemplateCreateEdit(props) {
       group: 0,
       id: '',
     });
-  }
-
-  function addIngredientCallback(ingredient) {
-    ingredient.id = uuidv4();
-
-    const ingredientsClone = [...props.ingredients, ingredient];
-    props.ingredientsCallback(ingredientsClone);
-    AddIngredientsToRecipe(ingredientsClone);
   }
 
   function AddIngredientsToRecipe(ingredientsParameter) {

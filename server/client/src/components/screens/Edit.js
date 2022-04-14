@@ -164,7 +164,8 @@ export default function Edit(props) {
         handleRecipe={handleRecipe}
         recipe={recipe}
         recipeCallback={recipeCallback}
-        ingredients={ingredients}
+        setRecipe={setRecipe}
+        ingredients={recipe.extendedIngredients}
         ingredientsCallback={ingredientsCallback}
         dataArray={dataArray}
         dataArrayCallback={dataArrayCallback}
