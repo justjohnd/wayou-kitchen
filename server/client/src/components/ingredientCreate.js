@@ -36,6 +36,43 @@ export default function IngredientCreate(props) {
   };
 
   //Relating to editing the ingredients
+
+  //Set ingredient based on data entered into ingredientsCreate fields
+  function sanitizeIngredient(e, stateConstant, setStateConstant) {
+    const { name, value } = e.target;
+
+    const ingredientClone = {
+      ...stateConstant,
+      [name]: value,
+    };
+
+    const string = ingredientClone.group;
+    ingredientClone.group = parseInt(string, 10);
+
+    setStateConstant(ingredientClone);
+  }
+
+  function updateRecipeIngredients(data) {
+    props.setRecipe((prevValue) => {
+      return {
+        ...prevValue,
+        extendedIngredients: data,
+      };
+    });
+  }
+
+  function addIngredient(ingredient) {
+    ingredient.id = uuidv4();
+
+    const ingredientsClone = [...props.ingredients, ingredient];
+    props.setRecipe((prevValue) => {
+      return {
+        ...prevValue,
+        extendedIngredients: ingredientsClone,
+      };
+    });
+  }
+
   function editIngredientCallback(e) {
     sanitizeIngredient(e, editIngredient, setEditIngredient);
   }
@@ -70,58 +107,13 @@ export default function IngredientCreate(props) {
     });
   }
 
-  function deleteIngredientCallback(id) {
+  function deleteIngredient(e, id) {
+    e.preventDefault();
     const ingredientsClone = [...props.ingredients];
     const filtered = ingredientsClone.filter((item, index) => {
       return index !== id;
     });
     updateRecipeIngredients(filtered);
-  }
-
-  //Set ingredient based on data entered into ingredientsCreate fields
-  function sanitizeIngredient(e, stateConstant, setStateConstant) {
-    const { name, value } = e.target;
-
-    const ingredientClone = {
-      ...stateConstant,
-      [name]: value,
-    };
-
-    const string = ingredientClone.group;
-    ingredientClone.group = parseInt(string, 10);
-
-    setStateConstant(ingredientClone);
-  }
-
-  function createIngredientCallback(e) {
-    sanitizeIngredient(e, ingredient, setIngredient);
-  }
-
-  function deleteIngredient(e, id) {
-    e.preventDefault();
-    deleteIngredientCallback(id);
-  }
-
-  //Refactored
-  function updateRecipeIngredients(data) {
-    props.setRecipe((prevValue) => {
-      return {
-        ...prevValue,
-        extendedIngredients: data,
-      };
-    });
-  }
-
-  function addIngredient(ingredient) {
-    ingredient.id = uuidv4();
-
-    const ingredientsClone = [...props.ingredients, ingredient];
-    props.setRecipe((prevValue) => {
-      return {
-        ...prevValue,
-        extendedIngredients: ingredientsClone,
-      };
-    });
   }
 
   return (
