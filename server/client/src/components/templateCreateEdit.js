@@ -33,17 +33,17 @@ export default function TemplateCreateEdit(props) {
   });
 
   //Ingredients refactor
-  function addIngredientCallback(ingredient) {
-    ingredient.id = uuidv4();
+  // function addIngredientCallback(ingredient) {
+  //   ingredient.id = uuidv4();
 
-    const ingredientsClone = [...props.ingredients, ingredient];
-    props.setRecipe((prevValue) => {
-      return {
-        ...prevValue,
-        extendedIngredients: ingredientsClone,
-      };
-    });
-  }
+  //   const ingredientsClone = [...props.ingredients, ingredient];
+  //   props.setRecipe((prevValue) => {
+  //     return {
+  //       ...prevValue,
+  //       extendedIngredients: ingredientsClone,
+  //     };
+  //   });
+  // }
 
   //Set ingredient based on data entered into ingredientsCreate fields
   function sanitizeIngredient(e, stateConstant, setStateConstant) {
@@ -73,13 +73,7 @@ export default function TemplateCreateEdit(props) {
       ingredient.id = uuidv4();
     }
 
-    const ingredientClone = {
-      nameClean: ingredient.nameClean,
-      amount: ingredient.amount,
-      unit: ingredient.unit,
-      group: ingredient.group,
-      id: ingredient.id,
-    };
+    const ingredientClone = ingredient;
     const string = ingredientClone.group;
     ingredientClone.group = parseInt(string, 10);
 
@@ -293,10 +287,11 @@ export default function TemplateCreateEdit(props) {
           ingredient={ingredient}
           ingredients={props.ingredients}
           editIngredient={editIngredient}
+          setRecipe={props.setRecipe}
           showIngredientCallback={showIngredientCallback}
           onSave={onSave}
           createIngredientCallback={createIngredientCallback}
-          addIngredientCallback={addIngredientCallback}
+          // addIngredientCallback={addIngredientCallback}
           editIngredientCallback={editIngredientCallback}
           deleteIngredientCallback={deleteIngredientCallback}
           insertIngredientCallback={insertIngredientCallback}

@@ -14,7 +14,6 @@ import TemplateCreateEdit from '../templateCreateEdit';
 export default function Create(props) {
   const [recipe, setRecipe] = useState(RECIPE_OBJECT);
   const [imagePreview, setImagePreview] = useState('');
-  const [ingredients, setIngredients] = useState([]);
   const [dataArray, setDataArray] = useState([]);
   const [error, setError] = useState('');
   const pageType = 'Create';
@@ -42,7 +41,12 @@ export default function Create(props) {
   }
 
   function ingredientsCallback(data) {
-    setIngredients(data);
+    setRecipe((prevValue) => {
+      return {
+        ...prevValue,
+        extendedIngredients: data,
+      };
+    });
   }
 
   function dataArrayCallback(data) {
@@ -108,8 +112,9 @@ export default function Create(props) {
         pageType={pageType}
         handleRecipe={handleRecipe}
         recipe={recipe}
+        setRecipe={setRecipe}
         recipeCallback={recipeCallback}
-        ingredients={ingredients}
+        ingredients={recipe.extendedIngredients}
         ingredientsCallback={ingredientsCallback}
         dataArray={dataArray}
         dataArrayCallback={dataArrayCallback}

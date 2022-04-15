@@ -46,7 +46,12 @@ export default function Edit(props) {
   }
 
   function ingredientsCallback(data) {
-    setIngredients(data);
+    setRecipe((prevValue) => {
+      return {
+        ...prevValue,
+        extendedIngredients: data,
+      };
+    });
   }
 
   function dataArrayCallback(data) {

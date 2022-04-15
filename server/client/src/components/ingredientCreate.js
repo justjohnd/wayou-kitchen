@@ -1,5 +1,7 @@
 import { React, useState } from 'react';
 
+import { v4 as uuidv4 } from 'uuid';
+
 import IngredientEdit from './ingredientEdit';
 import Input from './input';
 import Button from './button';
@@ -25,6 +27,18 @@ export default function IngredientCreate(props) {
     });
   };
 
+  function addIngredient(ingredient) {
+    ingredient.id = uuidv4();
+
+    const ingredientsClone = [...props.ingredients, ingredient];
+    props.setRecipe((prevValue) => {
+      return {
+        ...prevValue,
+        extendedIngredients: ingredientsClone,
+      };
+    });
+  }
+
   function deleteIngredient(e, id) {
     e.preventDefault();
     props.deleteIngredientCallback(id);
@@ -34,6 +48,8 @@ export default function IngredientCreate(props) {
     e.preventDefault();
     props.insertIngredientCallback(idx);
   }
+
+  console.log(props.ingredients, ingredient);
 
   return (
     <div className="form-group mb-5">
@@ -106,7 +122,7 @@ export default function IngredientCreate(props) {
             className="ms-sm-2 mt-2 mt-sm-0"
             onClick={(e) => {
               e.preventDefault();
-              props.addIngredientCallback(ingredient);
+              addIngredient(ingredient);
               setIngredient(INGREDIENT);
             }}
             buttonText="Add"
