@@ -24,112 +24,95 @@ export default function TemplateCreateEdit(props) {
   });
 
   // Edit ingredients
-  const [editIngredient, setEditIngredient] = useState({
-    nameClean: '',
-    amount: '',
-    unit: '',
-    group: 0,
-    id: '',
-  });
+  // const [editIngredient, setEditIngredient] = useState({
+  //   nameClean: '',
+  //   amount: '',
+  //   unit: '',
+  //   group: 0,
+  //   id: '',
+  // });
 
-  //Ingredients refactor
-  // function addIngredientCallback(ingredient) {
-  //   ingredient.id = uuidv4();
+  // //Set ingredient based on data entered into ingredientsCreate fields
+  // function sanitizeIngredient(e, stateConstant, setStateConstant) {
+  //   const { name, value } = e.target;
 
-  //   const ingredientsClone = [...props.ingredients, ingredient];
-  //   props.setRecipe((prevValue) => {
+  //   const ingredientClone = {
+  //     ...stateConstant,
+  //     [name]: value,
+  //   };
+
+  //   const string = ingredientClone.group;
+  //   ingredientClone.group = parseInt(string, 10);
+
+  //   setStateConstant(ingredientClone);
+  // }
+
+  // function createIngredientCallback(e) {
+  //   sanitizeIngredient(e, ingredient, setIngredient);
+  // }
+
+  // function showIngredientCallback(ingredient) {
+  //   if (!ingredient.id) {
+  //     ingredient.id = uuidv4();
+  //   }
+
+  //   const ingredientClone = ingredient;
+  //   const string = ingredientClone.group;
+  //   ingredientClone.group = parseInt(string, 10);
+
+  //   setEditIngredient(ingredientClone);
+  // }
+
+  // function onSave(idx) {
+  //   const ingredientsClone = [...props.ingredients];
+  //   const filtered = ingredientsClone.filter((ingredient) => {
+  //     return ingredient.id !== editIngredient.id;
+  //   });
+
+  //   filtered.splice(idx, 0, editIngredient);
+  //   props.ingredientsCallback(filtered);
+
+  //   AddIngredientsToRecipe(filtered);
+  //   setEditIngredient({
+  //     nameClean: '',
+  //     amount: '',
+  //     unit: '',
+  //     group: 0,
+  //     id: '',
+  //   });
+  // }
+
+  // function AddIngredientsToRecipe(ingredientsParameter) {
+  //   props.recipeCallback((prevValue) => {
   //     return {
   //       ...prevValue,
-  //       extendedIngredients: ingredientsClone,
+  //       extendedIngredients: ingredientsParameter,
   //     };
   //   });
   // }
 
-  //Set ingredient based on data entered into ingredientsCreate fields
-  function sanitizeIngredient(e, stateConstant, setStateConstant) {
-    const { name, value } = e.target;
+  // function deleteIngredientCallback(id) {
+  //   const ingredientsClone = [...props.ingredients];
+  //   const filtered = ingredientsClone.filter((item, index) => {
+  //     return index !== id;
+  //   });
+  //   props.ingredientsCallback(filtered);
+  //   AddIngredientsToRecipe(filtered);
+  // }
 
-    const ingredientClone = {
-      ...stateConstant,
-      [name]: value,
-    };
-
-    const string = ingredientClone.group;
-    ingredientClone.group = parseInt(string, 10);
-
-    setStateConstant(ingredientClone);
-  }
-
-  function createIngredientCallback(e) {
-    sanitizeIngredient(e, ingredient, setIngredient);
-  }
-
-  function editIngredientCallback(e) {
-    sanitizeIngredient(e, editIngredient, setEditIngredient);
-  }
-
-  function showIngredientCallback(ingredient) {
-    if (!ingredient.id) {
-      ingredient.id = uuidv4();
-    }
-
-    const ingredientClone = ingredient;
-    const string = ingredientClone.group;
-    ingredientClone.group = parseInt(string, 10);
-
-    setEditIngredient(ingredientClone);
-  }
-
-  function onSave(idx) {
-    const ingredientsClone = [...props.ingredients];
-    const filtered = ingredientsClone.filter((ingredient) => {
-      return ingredient.id !== editIngredient.id;
-    });
-
-    filtered.splice(idx, 0, editIngredient);
-    props.ingredientsCallback(filtered);
-
-    AddIngredientsToRecipe(filtered);
-    setEditIngredient({
-      nameClean: '',
-      amount: '',
-      unit: '',
-      group: 0,
-      id: '',
-    });
-  }
-
-  function AddIngredientsToRecipe(ingredientsParameter) {
-    props.recipeCallback((prevValue) => {
-      return {
-        ...prevValue,
-        extendedIngredients: ingredientsParameter,
-      };
-    });
-  }
-
-  function deleteIngredientCallback(id) {
-    const ingredientsClone = [...props.ingredients];
-    const filtered = ingredientsClone.filter((item, index) => {
-      return index !== id;
-    });
-    props.ingredientsCallback(filtered);
-    AddIngredientsToRecipe(filtered);
-  }
-
-  function insertIngredientCallback(idx) {
-    props.ingredientsCallback((prevVal) => {
-      const newArray = [...prevVal];
-      newArray.splice(idx, 0, {
-        nameClean: '',
-        amount: '',
-        unit: '',
-        group: 0,
-      });
-      console.log(idx);
-      return newArray;
-    });
-  }
+  // function insertIngredientCallback(idx) {
+  //   props.ingredientsCallback((prevVal) => {
+  //     const newArray = [...prevVal];
+  //     newArray.splice(idx, 0, {
+  //       nameClean: '',
+  //       amount: '',
+  //       unit: '',
+  //       group: 0,
+  //     });
+  //     console.log(idx);
+  //     return newArray;
+  //   });
+  // }
   //These functions use callbacks from InstructionCreate to set data and dataArray for instructions information
 
   // Any time dataArray is changed, instructions are updated in recipe
@@ -286,15 +269,17 @@ export default function TemplateCreateEdit(props) {
         <IngredientCreate
           ingredient={ingredient}
           ingredients={props.ingredients}
-          editIngredient={editIngredient}
+          // editIngredient={editIngredient}
           setRecipe={props.setRecipe}
-          showIngredientCallback={showIngredientCallback}
-          onSave={onSave}
-          createIngredientCallback={createIngredientCallback}
+          recipeCallback={props.recipeCallback}
+          ingredientsCallback={props.ingredientsCallback}
+          // showIngredientCallback={showIngredientCallback}
+          // onSave={onSave}
+          // createIngredientCallback={createIngredientCallback}
           // addIngredientCallback={addIngredientCallback}
-          editIngredientCallback={editIngredientCallback}
-          deleteIngredientCallback={deleteIngredientCallback}
-          insertIngredientCallback={insertIngredientCallback}
+          // editIngredientCallback={editIngredientCallback}
+          // deleteIngredientCallback={deleteIngredientCallback}
+          // insertIngredientCallback={insertIngredientCallback}
         />
         <InstructionCreate
           data={data}

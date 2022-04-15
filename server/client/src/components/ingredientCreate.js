@@ -17,6 +17,14 @@ export default function IngredientCreate(props) {
 
   const [ingredient, setIngredient] = useState(INGREDIENT);
 
+  const [editIngredient, setEditIngredient] = useState({
+    nameClean: '',
+    amount: '',
+    unit: '',
+    group: 0,
+    id: '',
+  });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setIngredient((prevValue) => {
@@ -27,6 +35,104 @@ export default function IngredientCreate(props) {
     });
   };
 
+  //Relating to editing the ingredients
+  function editIngredientCallback(e) {
+    sanitizeIngredient(e, editIngredient, setEditIngredient);
+  }
+
+  function showIngredientCallback(ingredient) {
+    if (!ingredient.id) {
+      ingredient.id = uuidv4();
+    }
+
+    const ingredientClone = ingredient;
+    const string = ingredientClone.group;
+    ingredientClone.group = parseInt(string, 10);
+
+    setEditIngredient(ingredientClone);
+  }
+
+  function onSave(idx) {
+    const ingredientsClone = [...props.ingredients];
+    const filtered = ingredientsClone.filter((ingredient) => {
+      return ingredient.id !== editIngredient.id;
+    });
+
+    filtered.splice(idx, 0, editIngredient);
+    props.ingredientsCallback(filtered);
+
+    AddIngredientsToRecipe(filtered);
+    setEditIngredient({
+      nameClean: '',
+      amount: '',
+      unit: '',
+      group: 0,
+      id: '',
+    });
+  }
+
+  function AddIngredientsToRecipe(ingredientsParameter) {
+    props.recipeCallback((prevValue) => {
+      return {
+        ...prevValue,
+        extendedIngredients: ingredientsParameter,
+      };
+    });
+  }
+
+  function deleteIngredientCallback(id) {
+    const ingredientsClone = [...props.ingredients];
+    const filtered = ingredientsClone.filter((item, index) => {
+      return index !== id;
+    });
+    props.ingredientsCallback(filtered);
+    AddIngredientsToRecipe(filtered);
+  }
+
+  function insertIngredientCallback(idx) {
+    props.ingredientsCallback((prevVal) => {
+      const newArray = [...prevVal];
+      newArray.splice(idx, 0, {
+        nameClean: '',
+        amount: '',
+        unit: '',
+        group: 0,
+      });
+      console.log(idx);
+      return newArray;
+    });
+  }
+
+  //Set ingredient based on data entered into ingredientsCreate fields
+  function sanitizeIngredient(e, stateConstant, setStateConstant) {
+    const { name, value } = e.target;
+
+    const ingredientClone = {
+      ...stateConstant,
+      [name]: value,
+    };
+
+    const string = ingredientClone.group;
+    ingredientClone.group = parseInt(string, 10);
+
+    setStateConstant(ingredientClone);
+  }
+
+  function createIngredientCallback(e) {
+    sanitizeIngredient(e, ingredient, setIngredient);
+  }
+
+  function deleteIngredient(e, id) {
+    e.preventDefault();
+    deleteIngredientCallback(id);
+  }
+
+  function insertIngredient(e, idx) {
+    e.preventDefault();
+    props.insertIngredientCallback(idx);
+  }
+
+  //Refactored
   function addIngredient(ingredient) {
     ingredient.id = uuidv4();
 
@@ -37,16 +143,6 @@ export default function IngredientCreate(props) {
         extendedIngredients: ingredientsClone,
       };
     });
-  }
-
-  function deleteIngredient(e, id) {
-    e.preventDefault();
-    props.deleteIngredientCallback(id);
-  }
-
-  function insertIngredient(e, idx) {
-    e.preventDefault();
-    props.insertIngredientCallback(idx);
   }
 
   console.log(props.ingredients, ingredient);
@@ -135,10 +231,10 @@ export default function IngredientCreate(props) {
               index={index}
               ingredient={ingredient}
               ingredients={props.ingredients}
-              editIngredient={props.editIngredient}
-              showIngredientCallback={props.showIngredientCallback}
-              onSave={props.onSave}
-              editIngredientCallback={props.editIngredientCallback}
+              editIngredient={editIngredient}
+              showIngredientCallback={showIngredientCallback}
+              onSave={onSave}
+              editIngredientCallback={editIngredientCallback}
               deleteIngredient={deleteIngredient}
               insertIngredient={insertIngredient}
             />
