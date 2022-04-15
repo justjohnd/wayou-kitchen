@@ -40,15 +40,6 @@ export default function Create(props) {
     setRecipe(data);
   }
 
-  function ingredientsCallback(data) {
-    setRecipe((prevValue) => {
-      return {
-        ...prevValue,
-        extendedIngredients: data,
-      };
-    });
-  }
-
   function dataArrayCallback(data) {
     setDataArray(data);
   }
@@ -115,7 +106,6 @@ export default function Create(props) {
         setRecipe={setRecipe}
         recipeCallback={recipeCallback}
         ingredients={recipe.extendedIngredients}
-        ingredientsCallback={ingredientsCallback}
         dataArray={dataArray}
         dataArrayCallback={dataArrayCallback}
         imageCallback={imageCallback}

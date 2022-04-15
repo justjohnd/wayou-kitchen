@@ -59,9 +59,8 @@ export default function IngredientCreate(props) {
     });
 
     filtered.splice(idx, 0, editIngredient);
-    props.ingredientsCallback(filtered);
+    updateRecipeIngredients(filtered);
 
-    AddIngredientsToRecipe(filtered);
     setEditIngredient({
       nameClean: '',
       amount: '',
@@ -71,22 +70,12 @@ export default function IngredientCreate(props) {
     });
   }
 
-  function AddIngredientsToRecipe(ingredientsParameter) {
-    props.recipeCallback((prevValue) => {
-      return {
-        ...prevValue,
-        extendedIngredients: ingredientsParameter,
-      };
-    });
-  }
-
   function deleteIngredientCallback(id) {
     const ingredientsClone = [...props.ingredients];
     const filtered = ingredientsClone.filter((item, index) => {
       return index !== id;
     });
-    props.ingredientsCallback(filtered);
-    AddIngredientsToRecipe(filtered);
+    updateRecipeIngredients(filtered);
   }
 
   //Set ingredient based on data entered into ingredientsCreate fields
@@ -114,6 +103,15 @@ export default function IngredientCreate(props) {
   }
 
   //Refactored
+  function updateRecipeIngredients(data) {
+    props.setRecipe((prevValue) => {
+      return {
+        ...prevValue,
+        extendedIngredients: data,
+      };
+    });
+  }
+
   function addIngredient(ingredient) {
     ingredient.id = uuidv4();
 
@@ -125,8 +123,6 @@ export default function IngredientCreate(props) {
       };
     });
   }
-
-  console.log(props.ingredients, ingredient);
 
   return (
     <div className="form-group mb-5">
