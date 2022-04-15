@@ -13,16 +13,16 @@ import TemplateCreateEdit from '../templateCreateEdit';
 
 export default function Create(props) {
   const [recipe, setRecipe] = useState(RECIPE_OBJECT);
-  const [ingredients, setIngredients] = useState([]);
-  const [dataArray, setDataArray] = useState([]);
   const [imagePreview, setImagePreview] = useState('');
+  const [dataArray, setDataArray] = useState([]);
   const [error, setError] = useState('');
   const pageType = 'Create';
   const changeImage = true;
 
   const navigate = useNavigate();
 
-  //Set image as a file before sending
+  //Convert image upload File into DOMString for instant preview on the page
+  // Note that File inputs do not have values, hence recipe image value must be set here
   function imageCallback(data) {
     if (data) {
       setImagePreview(URL.createObjectURL(data));
@@ -38,10 +38,6 @@ export default function Create(props) {
 
   function recipeCallback(data) {
     setRecipe(data);
-  }
-
-  function ingredientsCallback(data) {
-    setIngredients(data);
   }
 
   function dataArrayCallback(data) {
@@ -107,9 +103,9 @@ export default function Create(props) {
         pageType={pageType}
         handleRecipe={handleRecipe}
         recipe={recipe}
+        ingredients={recipe.extendedIngredients}
+        setRecipe={setRecipe}
         recipeCallback={recipeCallback}
-        ingredients={ingredients}
-        ingredientsCallback={ingredientsCallback}
         dataArray={dataArray}
         dataArrayCallback={dataArrayCallback}
         imageCallback={imageCallback}

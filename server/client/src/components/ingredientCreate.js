@@ -1,18 +1,118 @@
-import React from 'react';
+import { React, useState } from 'react';
+
+import { v4 as uuidv4 } from 'uuid';
+
 import IngredientEdit from './ingredientEdit';
 import Input from './input';
 import Button from './button';
 
 export default function IngredientCreate(props) {
-    function deleteIngredient(e, id) {
-      e.preventDefault();
-      props.deleteIngredientCallback(id);
+  const INGREDIENT = {
+    amount: '',
+    group: 0,
+    nameClean: '',
+    id: '',
+    unit: '',
+  };
+
+  const [ingredient, setIngredient] = useState(INGREDIENT);
+
+  const [editIngredient, setEditIngredient] = useState({
+    nameClean: '',
+    amount: '',
+    unit: '',
+    group: 0,
+    id: '',
+  });
+
+  //Set ingredient based on data entered into ingredientsCreate fields
+  function sanitizeIngredient(e, stateConstant, setStateConstant) {
+    const { name, value } = e.target;
+
+    const ingredientClone = {
+      ...stateConstant,
+      [name]: value,
+    };
+
+    const string = ingredientClone.group;
+    ingredientClone.group = parseInt(string, 10);
+
+    setStateConstant(ingredientClone);
+  }
+
+  function updateRecipeIngredients(data) {
+    props.setRecipe((prevValue) => {
+      return {
+        ...prevValue,
+        extendedIngredients: data,
+      };
+    });
+  }
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setIngredient((prevValue) => {
+      return {
+        ...prevValue,
+        [name]: value,
+      };
+    });
+  };
+
+  const addIngredient = (ingredient) => {
+    ingredient.id = uuidv4();
+
+    const ingredientsClone = [...props.ingredients, ingredient];
+    props.setRecipe((prevValue) => {
+      return {
+        ...prevValue,
+        extendedIngredients: ingredientsClone,
+      };
+    });
+  };
+
+  const editIngredientCallback = (e) => {
+    sanitizeIngredient(e, editIngredient, setEditIngredient);
+  };
+
+  const showIngredientCallback = (ingredient) => {
+    if (!ingredient.id) {
+      ingredient.id = uuidv4();
     }
 
-    function insertIngredient(e, idx) {
-      e.preventDefault();
-      props.insertIngredientCallback(idx);
-    }
+    const ingredientClone = ingredient;
+    const string = ingredientClone.group;
+    ingredientClone.group = parseInt(string, 10);
+
+    setEditIngredient(ingredientClone);
+  };
+
+  const onSave = (idx) => {
+    const ingredientsClone = [...props.ingredients];
+    const filtered = ingredientsClone.filter((ingredient) => {
+      return ingredient.id !== editIngredient.id;
+    });
+
+    filtered.splice(idx, 0, editIngredient);
+    updateRecipeIngredients(filtered);
+
+    setEditIngredient({
+      nameClean: '',
+      amount: '',
+      unit: '',
+      group: 0,
+      id: '',
+    });
+  };
+
+  const deleteIngredient = (e, id) => {
+    e.preventDefault();
+    const ingredientsClone = [...props.ingredients];
+    const filtered = ingredientsClone.filter((item, index) => {
+      return index !== id;
+    });
+    updateRecipeIngredients(filtered);
+  };
 
   return (
     <div className="form-group mb-5">
@@ -25,10 +125,10 @@ export default function IngredientCreate(props) {
               wrapperClassName="d-sm-inline-block me-4"
               name="nameClean"
               type="text"
-              value={props.ingredient.nameClean}
+              value={ingredient.nameClean}
               onChange={(e) => {
                 e.preventDefault();
-                props.createIngredientCallback(e);
+                handleChange(e);
               }}
             />
             <Input
@@ -36,9 +136,9 @@ export default function IngredientCreate(props) {
               wrapperClassName="input-short d-inline-block me-4"
               name="amount"
               type="text"
-              value={props.ingredient.amount}
+              value={ingredient.amount}
               onChange={(e) => {
-                props.createIngredientCallback(e);
+                handleChange(e);
               }}
               placeholder=""
             />
@@ -47,9 +147,9 @@ export default function IngredientCreate(props) {
               wrapperClassName="input-short d-inline-block me-4"
               name="unit"
               type="text"
-              value={props.ingredient.unit}
+              value={ingredient.unit}
               onChange={(e) => {
-                props.createIngredientCallback(e);
+                handleChange(e);
               }}
               placeholder=""
             />
@@ -58,8 +158,10 @@ export default function IngredientCreate(props) {
               <label>
                 <select
                   className="selector-input form-control"
-                  onChange={(e) => props.createIngredientCallback(e)}
-                  value={props.ingredient.group}
+                  onChange={(e) => {
+                    handleChange(e);
+                  }}
+                  value={ingredient.group}
                   selected
                   name="group"
                   type="number"
@@ -83,7 +185,8 @@ export default function IngredientCreate(props) {
             className="ms-sm-2 mt-2 mt-sm-0"
             onClick={(e) => {
               e.preventDefault();
-              props.addIngredientCallback();
+              addIngredient(ingredient);
+              setIngredient(INGREDIENT);
             }}
             buttonText="Add"
           />
@@ -95,12 +198,11 @@ export default function IngredientCreate(props) {
               index={index}
               ingredient={ingredient}
               ingredients={props.ingredients}
-              editIngredient={props.editIngredient}
-              showIngredientCallback={props.showIngredientCallback}
-              onSave={props.onSave}
-              editIngredientCallback={props.editIngredientCallback}
+              editIngredient={editIngredient}
+              showIngredientCallback={showIngredientCallback}
+              onSave={onSave}
+              editIngredientCallback={editIngredientCallback}
               deleteIngredient={deleteIngredient}
-              insertIngredient={insertIngredient}
             />
           ))}
       </section>

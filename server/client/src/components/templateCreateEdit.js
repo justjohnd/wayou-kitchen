@@ -1,6 +1,4 @@
-import React, { useState} from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 
 import IngredientCreate from './ingredientCreate';
 import InstructionCreate from './instructionCreate';
@@ -10,7 +8,6 @@ import Button from './button';
 import CategoryDropdown from './categoryDropdown';
 
 export default function TemplateCreateEdit(props) {
-
   // data contains instruction (or header) content
   const [data, setData] = useState('');
 
@@ -23,125 +20,6 @@ export default function TemplateCreateEdit(props) {
     id: '',
   });
 
-  // Edit ingredients
-  const [editIngredient, setEditIngredient] = useState({
-    nameClean: '',
-    amount: '',
-    unit: '',
-    group: 0,
-    id: '',
-  });
-
-  let navigate = useNavigate();
-
-  //Set ingredient based on data entered into ingredientsCreate fields
-  function sanitizeIngredient(e, stateConstant, setStateConstant) {
-    const { name, value } = e.target;
-
-    const ingredientClone = {
-      ...stateConstant,
-      [name]: value,
-    };
-
-    const string = ingredientClone.group;
-    ingredientClone.group = parseInt(string, 10);
-
-    setStateConstant(ingredientClone);
-  }
-
-  function createIngredientCallback(e) {
-    sanitizeIngredient(e, ingredient, setIngredient);
-  }
-
-    function editIngredientCallback(e) {
-    sanitizeIngredient(e, editIngredient, setEditIngredient);
-  }
-
-  function showIngredientCallback(ingredient) {
-    if (!ingredient.id) {
-      ingredient.id = uuidv4();
-    }
-
-    const ingredientClone = {
-      nameClean: ingredient.nameClean,
-      amount: ingredient.amount,
-      unit: ingredient.unit,
-      group: ingredient.group,
-      id: ingredient.id,
-    }
-    const string = ingredientClone.group;
-    ingredientClone.group = parseInt(string, 10);
-
-    setEditIngredient(ingredientClone);
-  }
-
-  function onSave(idx) {
-    const ingredientsClone = [...props.ingredients];
-    const filtered = ingredientsClone.filter((ingredient) => {
-      return ingredient.id !== editIngredient.id;
-    });
-
-    filtered.splice(idx, 0, editIngredient);
-    props.ingredientsCallback(filtered);
-
-    AddIngredientsToRecipe(filtered);
-    setEditIngredient({
-      nameClean: '',
-      amount: '',
-      unit: '',
-      group: 0,
-      id: '',
-    });
-  }
-
-  function addIngredientCallback() {
-    if (!ingredient.id) {
-      ingredient.id = uuidv4();
-    }
-
-    const ingredientsClone = [...props.ingredients, ingredient];
-    props.ingredientsCallback(ingredientsClone);
-    AddIngredientsToRecipe(ingredientsClone);
-    setIngredient({
-      nameClean: '',
-      amount: '',
-      unit: '',
-      group: 0,
-      id: '',
-    });
-  }
-
-  function AddIngredientsToRecipe(ingredientsParameter) {
-    props.recipeCallback((prevValue) => {
-      return {
-        ...prevValue,
-        extendedIngredients: ingredientsParameter,
-      };
-    });
-  }
-
-  function deleteIngredientCallback(id) {
-    const ingredientsClone = [...props.ingredients];
-    const filtered = ingredientsClone.filter((item, index) => {
-      return index !== id;
-    });
-    props.ingredientsCallback(filtered);
-    AddIngredientsToRecipe(filtered);
-  }
-
-  function insertIngredientCallback(idx) {
-    props.ingredientsCallback((prevVal) => {
-      const newArray = [...prevVal];
-      newArray.splice(idx, 0, {
-        nameClean: '',
-        amount: '',
-        unit: '',
-        group: 0,
-      });
-      console.log(idx);
-      return newArray;
-    });
-  }
   //These functions use callbacks from InstructionCreate to set data and dataArray for instructions information
 
   // Any time dataArray is changed, instructions are updated in recipe
@@ -163,11 +41,10 @@ export default function TemplateCreateEdit(props) {
   }
 
   function addInstructionCallback(header) {
-
     let instructionObject = {
       step: data,
       isHeader: header,
-    }
+    };
 
     props.dataArrayCallback((prevVal) => [...prevVal, instructionObject]);
     const dataArrayClone = [...props.dataArray, instructionObject];
@@ -177,12 +54,11 @@ export default function TemplateCreateEdit(props) {
 
   function editInstructionCallback(index, value, header) {
     const newArray = [...props.dataArray];
-    newArray.splice(index, 1, 
-      {
-        number: index,
-        step: value,
-        isHeader: header
-      });
+    newArray.splice(index, 1, {
+      number: index,
+      step: value,
+      isHeader: header,
+    });
     props.dataArrayCallback(newArray);
     AddInstructionToRecipe(newArray);
   }
@@ -209,7 +85,7 @@ export default function TemplateCreateEdit(props) {
     const newArray = [...props.dataArray];
     newArray.splice(idx, 0, {
       step: '',
-      isHeader: false
+      isHeader: false,
     });
     props.dataArrayCallback(newArray);
     AddInstructionToRecipe(newArray);
@@ -250,7 +126,7 @@ export default function TemplateCreateEdit(props) {
         />
         <div className="form-group mb-5">
           <h4 className="mb-3">Image</h4>
-          {props.pageType === 'Edit' && (
+          {props.pageType === 'Edit' ? (
             <div className="mb-5 d-flex">
               <img
                 className="recipe-image"
@@ -277,9 +153,10 @@ export default function TemplateCreateEdit(props) {
                 )}
               </div>
             </div>
-          )}
-          {props.pageType === 'Create' && (
-            <div className={`mb-5 ${props.imagePreview ? 'd-flex' : 'w-sm-50'}`}>
+          ) : (
+            <div
+              className={`mb-5 ${props.imagePreview ? 'd-flex' : 'w-sm-50'}`}
+            >
               {props.imagePreview && (
                 <img
                   className="recipe-image"
@@ -290,23 +167,15 @@ export default function TemplateCreateEdit(props) {
               )}
               <InputFile
                 onChange={(e) => props.imageCallback(e.target.files[0])}
-                className={props.imagePreview && "mx-3"}
+                className={props.imagePreview && 'mx-3'}
               />
             </div>
           )}
         </div>
 
         <IngredientCreate
-          ingredient={ingredient}
           ingredients={props.ingredients}
-          editIngredient={editIngredient}
-          showIngredientCallback={showIngredientCallback}
-          onSave={onSave}
-          createIngredientCallback={createIngredientCallback}
-          addIngredientCallback={addIngredientCallback}
-          editIngredientCallback={editIngredientCallback}
-          deleteIngredientCallback={deleteIngredientCallback}
-          insertIngredientCallback={insertIngredientCallback}
+          setRecipe={props.setRecipe}
         />
         <InstructionCreate
           data={data}

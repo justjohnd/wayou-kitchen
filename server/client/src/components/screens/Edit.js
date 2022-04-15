@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import TemplateCreateEdit from '../templateCreateEdit';
 
-import RECIPE_PROPERTIES, { RECIPE_OBJECT } from '../../javascript/RECIPE_PROPERTIES';
+import RECIPE_PROPERTIES, {
+  RECIPE_OBJECT,
+} from '../../javascript/RECIPE_PROPERTIES';
 import httpAddress from '../../javascript/httpAddress';
 
 // This will require to npm install axios
@@ -25,7 +27,7 @@ export default function Edit(props) {
     setChangeImage(true);
     if (data === 'remove') {
       setNewImage({ name: 'noImage' });
-      setImagePreview('../../images/placeholder.jpg');  
+      setImagePreview('../../images/placeholder.jpg');
       setImage('placeholder.jpg');
       setChangeImage(false);
     }
@@ -39,12 +41,8 @@ export default function Edit(props) {
   function imageCallback(data) {
     setNewImage(data);
     if (data) {
-    setImagePreview(URL.createObjectURL(data));
+      setImagePreview(URL.createObjectURL(data));
     }
-    }
-
-  function ingredientsCallback(data) {
-    setIngredients(data);
   }
 
   function dataArrayCallback(data) {
@@ -69,7 +67,7 @@ export default function Edit(props) {
 
     const formData = new FormData();
 
-    if(!recipe.dateCreated) {
+    if (!recipe.dateCreated) {
       recipe.dateCreated = new Date();
     }
 
@@ -79,8 +77,8 @@ export default function Edit(props) {
         if (!image) {
           formData.append('image', newImage);
         } else if (image !== newImage.name && newImage.name !== 'noImage') {
-            formData.append('image', newImage);
-          } else {
+          formData.append('image', newImage);
+        } else {
           formData.append('image', image);
         }
       } else {
@@ -107,7 +105,7 @@ export default function Edit(props) {
         navigate('/login');
       }, 5000);
     }
-  }
+  };
 
   // This will get the record based on the id from the database.
   useEffect(() => {
@@ -120,12 +118,14 @@ export default function Edit(props) {
           if (RECIPE_PROPERTIES[i] === 'image') {
             setImage(response.data.image);
 
-            if (response.data.image !== null && response.data.image.slice(0, 4) === 'http') {
+            if (
+              response.data.image !== null &&
+              response.data.image.slice(0, 4) === 'http'
+            ) {
               setImagePreview(response.data.image);
             } else {
               setImagePreview('../../images/' + response.data.image);
             }
-
           } else {
             myObj[RECIPE_PROPERTIES[i]] = response.data[RECIPE_PROPERTIES[i]];
           }
@@ -150,6 +150,8 @@ export default function Edit(props) {
       });
   }, []);
 
+  console.log(recipe);
+
   // This following section will display the form that takes the input from the user.
   return (
     <div>
@@ -158,8 +160,8 @@ export default function Edit(props) {
         handleRecipe={handleRecipe}
         recipe={recipe}
         recipeCallback={recipeCallback}
-        ingredients={ingredients}
-        ingredientsCallback={ingredientsCallback}
+        setRecipe={setRecipe}
+        ingredients={recipe.extendedIngredients}
         dataArray={dataArray}
         dataArrayCallback={dataArrayCallback}
         image={image}

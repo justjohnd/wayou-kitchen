@@ -6,7 +6,7 @@ function IngredientEdit(props) {
   const [isVisible, setIsVisible] = useState(true);
 
   function handleEdit(e) {
-    e.preventDefault(); 
+    e.preventDefault();
     setIsVisible(!isVisible);
     props.showIngredientCallback(props.ingredient);
 
@@ -14,7 +14,7 @@ function IngredientEdit(props) {
       props.onSave(props.index);
     }
   }
-  
+
   return (
     <div className="input-left">
       <div>
