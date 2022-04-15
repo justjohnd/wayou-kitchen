@@ -25,18 +25,6 @@ export default function IngredientCreate(props) {
     id: '',
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setIngredient((prevValue) => {
-      return {
-        ...prevValue,
-        [name]: value,
-      };
-    });
-  };
-
-  //Relating to editing the ingredients
-
   //Set ingredient based on data entered into ingredientsCreate fields
   function sanitizeIngredient(e, stateConstant, setStateConstant) {
     const { name, value } = e.target;
@@ -61,7 +49,17 @@ export default function IngredientCreate(props) {
     });
   }
 
-  function addIngredient(ingredient) {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setIngredient((prevValue) => {
+      return {
+        ...prevValue,
+        [name]: value,
+      };
+    });
+  };
+
+  const addIngredient = (ingredient) => {
     ingredient.id = uuidv4();
 
     const ingredientsClone = [...props.ingredients, ingredient];
@@ -71,13 +69,13 @@ export default function IngredientCreate(props) {
         extendedIngredients: ingredientsClone,
       };
     });
-  }
+  };
 
-  function editIngredientCallback(e) {
+  const editIngredientCallback = (e) => {
     sanitizeIngredient(e, editIngredient, setEditIngredient);
-  }
+  };
 
-  function showIngredientCallback(ingredient) {
+  const showIngredientCallback = (ingredient) => {
     if (!ingredient.id) {
       ingredient.id = uuidv4();
     }
@@ -87,9 +85,9 @@ export default function IngredientCreate(props) {
     ingredientClone.group = parseInt(string, 10);
 
     setEditIngredient(ingredientClone);
-  }
+  };
 
-  function onSave(idx) {
+  const onSave = (idx) => {
     const ingredientsClone = [...props.ingredients];
     const filtered = ingredientsClone.filter((ingredient) => {
       return ingredient.id !== editIngredient.id;
@@ -105,16 +103,16 @@ export default function IngredientCreate(props) {
       group: 0,
       id: '',
     });
-  }
+  };
 
-  function deleteIngredient(e, id) {
+  const deleteIngredient = (e, id) => {
     e.preventDefault();
     const ingredientsClone = [...props.ingredients];
     const filtered = ingredientsClone.filter((item, index) => {
       return index !== id;
     });
     updateRecipeIngredients(filtered);
-  }
+  };
 
   return (
     <div className="form-group mb-5">

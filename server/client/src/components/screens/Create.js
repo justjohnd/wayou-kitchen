@@ -103,9 +103,9 @@ export default function Create(props) {
         pageType={pageType}
         handleRecipe={handleRecipe}
         recipe={recipe}
+        ingredients={recipe.extendedIngredients}
         setRecipe={setRecipe}
         recipeCallback={recipeCallback}
-        ingredients={recipe.extendedIngredients}
         dataArray={dataArray}
         dataArrayCallback={dataArrayCallback}
         imageCallback={imageCallback}

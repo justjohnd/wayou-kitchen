@@ -174,10 +174,8 @@ export default function TemplateCreateEdit(props) {
         </div>
 
         <IngredientCreate
-          ingredient={ingredient}
           ingredients={props.ingredients}
           setRecipe={props.setRecipe}
-          recipeCallback={props.recipeCallback}
         />
         <InstructionCreate
           data={data}

@@ -4,17 +4,6 @@ import Button from './button';
 
 function IngredientEdit(props) {
   const [isVisible, setIsVisible] = useState(true);
-  const [ingredient, setIngredient] = useState(props.ingredient);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setIngredient((prevValue) => {
-      return {
-        ...prevValue,
-        [name]: value,
-      };
-    });
-  };
 
   function handleEdit(e) {
     e.preventDefault();
@@ -25,8 +14,6 @@ function IngredientEdit(props) {
       props.onSave(props.index);
     }
   }
-
-  console.log(ingredient);
 
   return (
     <div className="input-left">
