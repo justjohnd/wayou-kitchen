@@ -89,20 +89,6 @@ export default function IngredientCreate(props) {
     AddIngredientsToRecipe(filtered);
   }
 
-  function insertIngredientCallback(idx) {
-    props.ingredientsCallback((prevVal) => {
-      const newArray = [...prevVal];
-      newArray.splice(idx, 0, {
-        nameClean: '',
-        amount: '',
-        unit: '',
-        group: 0,
-      });
-      console.log(idx);
-      return newArray;
-    });
-  }
-
   //Set ingredient based on data entered into ingredientsCreate fields
   function sanitizeIngredient(e, stateConstant, setStateConstant) {
     const { name, value } = e.target;
@@ -125,11 +111,6 @@ export default function IngredientCreate(props) {
   function deleteIngredient(e, id) {
     e.preventDefault();
     deleteIngredientCallback(id);
-  }
-
-  function insertIngredient(e, idx) {
-    e.preventDefault();
-    props.insertIngredientCallback(idx);
   }
 
   //Refactored
@@ -236,7 +217,6 @@ export default function IngredientCreate(props) {
               onSave={onSave}
               editIngredientCallback={editIngredientCallback}
               deleteIngredient={deleteIngredient}
-              insertIngredient={insertIngredient}
             />
           ))}
       </section>
