@@ -1,10 +1,12 @@
+This app is built with the MERN stack, and allows users to save recipes from other sites, or create new recipes from scratch.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
-In the project directory, you can run:
+In `server/client`, you can run:
 
 ### `npm start`
 

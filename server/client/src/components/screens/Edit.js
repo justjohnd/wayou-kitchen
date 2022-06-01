@@ -1,34 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import TemplateCreateEdit from '../templateCreateEdit';
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import TemplateCreateEdit from "../templateCreateEdit";
 
 import RECIPE_PROPERTIES, {
   RECIPE_OBJECT,
-} from '../../javascript/RECIPE_PROPERTIES';
-import httpAddress from '../../javascript/httpAddress';
+} from "../../javascript/RECIPE_PROPERTIES";
+import httpAddress from "../../javascript/httpAddress";
 
 // This will require to npm install axios
-import axios from 'axios';
+import axios from "axios";
 
 export default function Edit(props) {
-  const [pageType, setPageType] = useState('Edit');
+  const [pageType, setPageType] = useState("Edit");
   const [recipe, setRecipe] = useState(RECIPE_OBJECT);
   const [ingredients, setIngredients] = useState([]);
   const [dataArray, setDataArray] = useState([]);
-  const [newImage, setNewImage] = useState({ name: 'noImage' });
-  const [image, setImage] = useState('');
+  const [newImage, setNewImage] = useState({ name: "noImage" });
+  const [image, setImage] = useState("");
   const [changeImage, setChangeImage] = useState(false);
-  const [error, setError] = useState('');
-  const [imagePreview, setImagePreview] = useState('');
+  const [error, setError] = useState("");
+  const [imagePreview, setImagePreview] = useState("");
 
   const navigate = useNavigate();
 
   function changeImageCallback(data) {
     setChangeImage(true);
-    if (data === 'remove') {
-      setNewImage({ name: 'noImage' });
-      setImagePreview('../../images/placeholder.jpg');
-      setImage('placeholder.jpg');
+    if (data === "remove") {
+      setNewImage({ name: "noImage" });
+      setImagePreview("../../images/placeholder.jpg");
+      setImage("placeholder.jpg");
       setChangeImage(false);
     }
   }
@@ -72,14 +72,14 @@ export default function Edit(props) {
     }
 
     for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
-      if (RECIPE_PROPERTIES[i] === 'image') {
+      if (RECIPE_PROPERTIES[i] === "image") {
         //Various edge cases included here, including possiblity of a null value coming from the database, or a local server being used
         if (!image) {
-          formData.append('image', newImage);
-        } else if (image !== newImage.name && newImage.name !== 'noImage') {
-          formData.append('image', newImage);
+          formData.append("image", newImage);
+        } else if (image !== newImage.name && newImage.name !== "noImage") {
+          formData.append("image", newImage);
         } else {
-          formData.append('image', image);
+          formData.append("image", image);
         }
       } else {
         formData.append(
@@ -94,63 +94,59 @@ export default function Edit(props) {
       props.loaderCallback(true);
       await axios.post(`${httpAddress}/update/${params.id}`, formData);
       setTimeout(() => {
-        navigate('/private');
+        navigate("/private");
         props.loaderCallback(false);
       }, 2000);
     } catch (error) {
       props.loaderCallback(false);
       setError(error.response.data.error);
       setTimeout(() => {
-        setError('');
-        navigate('/login');
+        setError("");
+        navigate("/login");
       }, 5000);
     }
   };
 
   // This will get the record based on the id from the database.
   useEffect(() => {
-    axios
-      .get(`${httpAddress}/record/${params.id}`)
-      .then((response) => {
+    try {
+      const fetchData = async () => {
+        const { data } = await axios.get(`${httpAddress}/record/${params.id}`);
+
         // image will load separately in the image varialbe, apart from other properties in the receipe variable
         let myObj = {};
         for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
-          if (RECIPE_PROPERTIES[i] === 'image') {
-            setImage(response.data.image);
+          if (RECIPE_PROPERTIES[i] === "image") {
+            setImage(data.image);
 
-            if (
-              response.data.image !== null &&
-              response.data.image.slice(0, 4) === 'http'
-            ) {
-              setImagePreview(response.data.image);
+            if (data.image !== null && data.image.slice(0, 4) === "http") {
+              setImagePreview(data.image);
             } else {
-              setImagePreview('../../images/' + response.data.image);
+              setImagePreview("../../images/" + data.image);
             }
           } else {
-            myObj[RECIPE_PROPERTIES[i]] = response.data[RECIPE_PROPERTIES[i]];
+            myObj[RECIPE_PROPERTIES[i]] = data[RECIPE_PROPERTIES[i]];
           }
         }
 
         setRecipe(myObj);
 
-        const ingredientsWithId = response.data.extendedIngredients.map(
-          (ingredient) => {
-            return {
-              ...ingredient,
-              id: ingredient.id,
-            };
-          }
-        );
+        const ingredientsWithId = data.extendedIngredients.map((ingredient) => {
+          return {
+            ...ingredient,
+            id: ingredient.id,
+          };
+        });
 
         setIngredients(ingredientsWithId);
-        setDataArray(response.data.analyzedInstructions);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }, []);
+        setDataArray(data.analyzedInstructions);
+      };
 
-  console.log(recipe);
+      fetchData();
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
 
   // This following section will display the form that takes the input from the user.
   return (
