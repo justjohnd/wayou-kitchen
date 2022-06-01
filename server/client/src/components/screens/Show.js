@@ -1,26 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
-import RECIPE_PROPERTIES from '../../javascript/RECIPE_PROPERTIES';
-import httpAddress from '../../javascript/httpAddress';
-import IngredientGroup from '../ingredientGroup';
+import RECIPE_PROPERTIES from "../../javascript/RECIPE_PROPERTIES";
+import httpAddress from "../../javascript/httpAddress";
+import IngredientGroup from "../ingredientGroup";
 
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 // This will require to npm install axios
-import axios from 'axios';
+import axios from "axios";
 
 export default function Show() {
   const [showRecipe, setShowRecipe] = useState({
-    title: '',
-    preparationMinutes: '',
-    cookingMinutes: '',
-    readyInMinutes: '',
-    sourceUrl: '',
-    image: '',
+    title: "",
+    preparationMinutes: "",
+    cookingMinutes: "",
+    readyInMinutes: "",
+    sourceUrl: "",
+    image: "",
     extendedIngredients: [],
     analyzedInstructions: [],
-    servings: '',
+    servings: "",
   });
   const [ingredients, setIngredients] = useState([]);
   const [instructions, setInstructions] = useState([]);
@@ -29,28 +29,31 @@ export default function Show() {
   let navigate = useNavigate();
   // This will get the record based on the id from the database.
   useEffect(() => {
-    axios
-      .get(`${httpAddress}/record/${params.id}`)
-      .then((response) => {
+    try {
+      const showData = async () => {
+        const { data } = await axios.get(`${httpAddress}/record/${params.id}`);
+
         let myObj = {};
         for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
-          myObj[RECIPE_PROPERTIES[i]] = response.data[RECIPE_PROPERTIES[i]];
+          myObj[RECIPE_PROPERTIES[i]] = data[RECIPE_PROPERTIES[i]];
         }
 
         setShowRecipe(myObj);
 
-        setIngredients(response.data.extendedIngredients);
+        setIngredients(data.extendedIngredients);
 
-        setInstructions(response.data.analyzedInstructions);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+        setInstructions(data.analyzedInstructions);
+      };
+
+      showData();
+    } catch (err) {
+      console.log(err);
+    }
   }, []);
 
   // Create sequence of step numbers that omit headers
   const filtered = instructions.filter(
-    (instruction) => instruction.isHeader !== 'true'
+    (instruction) => instruction.isHeader !== "true"
   );
 
   let j = [];
@@ -61,7 +64,7 @@ export default function Show() {
   const numberArray = instructions.map((instruction) => {
     let number;
     if (instruction.isHeader === true) {
-      number = 'none';
+      number = "none";
     } else {
       number = j[0];
       j.shift();
@@ -71,30 +74,32 @@ export default function Show() {
 
   //Ingredient groups section
   let ingredientGroups;
-  if(ingredients[0] !== "") {
-  //Find maximum number of possible ingredient groups presented on the page
-  const ingredientGroupNumbers = ingredients.map(ingredient => {
-    if (!ingredient.group) {
-      ingredient.group = 0;
-    }
-    return ingredient.group;
-  });
-  const maxGroupNumber = Math.max(...ingredientGroupNumbers);
-  const numberOfGroups = maxGroupNumber + 1;
+  if (ingredients[0] !== "") {
+    //Find maximum number of possible ingredient groups presented on the page
+    const ingredientGroupNumbers = ingredients.map((ingredient) => {
+      if (!ingredient.group) {
+        ingredient.group = 0;
+      }
+      return ingredient.group;
+    });
+    const maxGroupNumber = Math.max(...ingredientGroupNumbers);
+    const numberOfGroups = maxGroupNumber + 1;
 
-  //Put ingredients in their on groups
-  const groupArray = (numberOfGroups) => {
-    let newArray = [];
-    for (let i = 0; i < numberOfGroups; i++) {
-      const group = ingredients.filter((ingredient) => ingredient.group === i);
-      newArray.push(group);
-    }
+    //Put ingredients in their on groups
+    const groupArray = (numberOfGroups) => {
+      let newArray = [];
+      for (let i = 0; i < numberOfGroups; i++) {
+        const group = ingredients.filter(
+          (ingredient) => ingredient.group === i
+        );
+        newArray.push(group);
+      }
 
-    return newArray;
-  };
+      return newArray;
+    };
 
-  ingredientGroups = groupArray(numberOfGroups);
-}
+    ingredientGroups = groupArray(numberOfGroups);
+  }
 
   return (
     <div className="show-wrapper">
@@ -103,9 +108,12 @@ export default function Show() {
           <div className="recipe-image-wrapper">
             <img
               className="recipe-image"
-              src={ showRecipe.image !== null && showRecipe.image.slice(0, 4) === 'http'
-                ? showRecipe.image
-                : '../images/' + showRecipe.image }
+              src={
+                showRecipe.image !== null &&
+                showRecipe.image.slice(0, 4) === "http"
+                  ? showRecipe.image
+                  : "../images/" + showRecipe.image
+              }
             />
           </div>
           <div className="recipe-header">
@@ -125,7 +133,7 @@ export default function Show() {
           </div>
         </section>
         <section className="d-sm-flex recipe-section">
-          {ingredients[0] !== '' && (
+          {ingredients[0] !== "" && (
             <section className="recipe-ingredients">
               <h2>Ingredients</h2>
               {ingredientGroups.map((group) => (
@@ -138,12 +146,12 @@ export default function Show() {
             {instructions.map((instruction, index) => {
               return (
                 <li
-                  className={instruction.isHeader ? 'instruction-header' : ''}
+                  className={instruction.isHeader ? "instruction-header" : ""}
                   key={index}
                 >
                   {!instruction.isHeader && (
                     <span className="instruction-number">
-                      {numberArray[index]}{' '}
+                      {numberArray[index]}{" "}
                     </span>
                   )}
                   {instruction.step}
