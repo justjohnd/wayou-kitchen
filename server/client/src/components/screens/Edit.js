@@ -6,6 +6,7 @@ import RECIPE_PROPERTIES, {
   RECIPE_OBJECT,
 } from "../../javascript/RECIPE_PROPERTIES";
 import httpAddress from "../../javascript/httpAddress";
+import { getWithExpiry } from "../../hooks/localStorageWithExpiry";
 
 // This will require to npm install axios
 import axios from "axios";
@@ -109,6 +110,12 @@ export default function Edit(props) {
 
   // This will get the record based on the id from the database.
   useEffect(() => {
+    // Make sure user session hasn't expired
+    if (!getWithExpiry("authToken")) {
+      navigate("/login");
+      setError("Sorry, you are not logged in.");
+    }
+
     try {
       const fetchData = async () => {
         const { data } = await axios.get(`${httpAddress}/record/${params.id}`);

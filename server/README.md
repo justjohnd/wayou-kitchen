@@ -8,6 +8,10 @@ To open your developer environment:
 - Connect to the server by navigating to `server` directory and running `node nodemon.js`
 - In `server/client/src/javascript/httpAddress.js` make sure that `const httpAddress = addresses.local;`
 
+## Structure
+
+- The routing is contained in `client/src/App.js`
+
 ## Deployment and Git
 
 Note that there are two seperate git repositories currently set up for the site. The repo in the project directory is used for GitHub, while the repo inside `/server` is specifically used for pushing to heroku.

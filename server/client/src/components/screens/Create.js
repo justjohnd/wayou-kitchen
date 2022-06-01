@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
@@ -99,9 +99,14 @@ export default function Create(props) {
     }
   };
 
-  console.log(recipe);
+  //Make sure user is still logged in, in case they reload the page
+  useEffect(() => {
+    if (!getWithExpiry("authToken")) {
+      navigate("/login");
+      setError("Sorry, you are not logged in.");
+    }
+  }, []);
 
-  // This following section will display the form that takes the input from the user.
   return (
     <div>
       <TemplateCreateEdit
