@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import Input from './input';
-import TextArea from './TextArea';
-import Button from './button';
-import '../index.css';
+import { useState } from "react";
+import TextArea from "./TextArea";
+import Button from "./button";
+import "../index.css";
 
 function InstructionEdit(props) {
-  const [instructionHeader, setInstructionHeader] = useState(props.dataArray[props.index].isHeader);
+  const [instructionHeader, setInstructionHeader] = useState(
+    props.instructions[props.index].isHeader
+  );
 
   function handleHeader() {
     const newHeader = !instructionHeader;
@@ -15,10 +16,10 @@ function InstructionEdit(props) {
 
   function editInstruction(e) {
     props.editInstructionCallback(
-              props.index,
-              e.target.value,
-              instructionHeader
-            );
+      props.index,
+      e.target.value,
+      instructionHeader
+    );
   }
 
   return (
@@ -30,7 +31,7 @@ function InstructionEdit(props) {
             className="form-control textarea"
             name="instruction"
             type="text"
-            value={props.dataArray[props.index].step}
+            value={props.instructions[props.index].step}
             callbackFunction={editInstruction}
             placeholder="Start Entering Instructions Here"
           />

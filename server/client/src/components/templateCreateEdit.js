@@ -11,17 +11,7 @@ export default function TemplateCreateEdit(props) {
   // data contains instruction (or header) content
   const [data, setData] = useState("");
 
-  // Ingredients data
-  const [ingredient, setIngredient] = useState({
-    nameClean: "",
-    amount: "",
-    unit: "",
-    group: 0,
-    id: "",
-  });
-
-  //These functions use callbacks from InstructionCreate to set data and dataArray for instructions information
-  // Any time dataArray is changed, instructions are updated in recipe
+  // Instructions functions
   function AddInstructionToRecipe(arrayParameter) {
     props.recipeCallback((prevValue) => {
       return {
@@ -45,48 +35,48 @@ export default function TemplateCreateEdit(props) {
       isHeader: header,
     };
 
-    props.dataArrayCallback((prevVal) => [...prevVal, instructionObject]);
-    const dataArrayClone = [...props.dataArray, instructionObject];
-    AddInstructionToRecipe(dataArrayClone);
+    props.instructionsCallback((prevVal) => [...prevVal, instructionObject]);
+    const instructionsClone = [...props.instructions, instructionObject];
+    AddInstructionToRecipe(instructionsClone);
     setData("");
   }
 
   function editInstructionCallback(index, value, header) {
-    const newArray = [...props.dataArray];
+    const newArray = [...props.instructions];
     newArray.splice(index, 1, {
       number: index,
       step: value,
       isHeader: header,
     });
-    props.dataArrayCallback(newArray);
+    props.instructionsCallback(newArray);
     AddInstructionToRecipe(newArray);
   }
 
   function headerCallback(index, header) {
-    let instructionClone = props.dataArray[index];
+    let instructionClone = props.instructions[index];
     instructionClone.isHeader = header;
-    const newArray = [...props.dataArray];
+    const newArray = [...props.instructions];
     newArray.splice(index, 1, instructionClone);
-    props.dataArrayCallback(newArray);
+    props.instructionsCallback(newArray);
     AddInstructionToRecipe(newArray);
   }
 
   function deleteInstructionCallback(id) {
-    const newArray = [...props.dataArray];
+    const newArray = [...props.instructions];
     const filtered = newArray.filter((item, index) => {
       return index !== id;
     });
-    props.dataArrayCallback(filtered);
+    props.instructionsCallback(filtered);
     AddInstructionToRecipe(filtered);
   }
 
   function insertInstruction(idx) {
-    const newArray = [...props.dataArray];
+    const newArray = [...props.instructions];
     newArray.splice(idx, 0, {
       step: "",
       isHeader: false,
     });
-    props.dataArrayCallback(newArray);
+    props.instructionsCallback(newArray);
     AddInstructionToRecipe(newArray);
   }
 
@@ -178,7 +168,7 @@ export default function TemplateCreateEdit(props) {
         />
         <InstructionCreate
           data={data}
-          dataArray={props.dataArray}
+          instructions={props.instructions}
           handleInstructionCallback={handleInstructionCallback}
           addInstructionCallback={addInstructionCallback}
           editInstructionCallback={editInstructionCallback}

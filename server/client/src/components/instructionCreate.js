@@ -50,12 +50,12 @@ export default function InstructionCreate(props) {
             buttonText="Add"
           />
         </div>
-        {props.dataArray &&
-          props.dataArray.map((data, index) => (
+        {props.instructions &&
+          props.instructions.map((data, index) => (
             <InstructionEdit
               key={index}
               index={index}
-              dataArray={props.dataArray}
+              instructions={props.instructions}
               editInstructionCallback={props.editInstructionCallback}
               deleteInstruction={deleteInstruction}
               insertInstruction={props.insertInstruction}
