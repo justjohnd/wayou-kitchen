@@ -49,6 +49,10 @@ const App = () => {
           element={<Edit loaderCallback={loaderCallback} />}
         />
         <Route
+          path="/create"
+          element={<Create loaderCallback={loaderCallback} />}
+        />
+        <Route
           path="/login"
           element={<LoginScreen loaderCallback={loaderCallback} />}
         />
@@ -61,12 +65,7 @@ const App = () => {
           path="/forgotpassword"
           element={<ForgotPassword loaderCallback={loaderCallback} />}
         />
-        <Route element={<PrivateRoute />}>
-          <Route
-            path="/create"
-            element={<Create loaderCallback={loaderCallback} />}
-          />
-        </Route>
+        <Route element={<PrivateRoute />}></Route>
         <Route path="*" element={<RecipeList to="/" />} />
       </Routes>
     </div>
