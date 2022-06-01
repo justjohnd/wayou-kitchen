@@ -17,7 +17,6 @@ export default function Create(props) {
   const [dataArray, setDataArray] = useState([]);
   const [error, setError] = useState("");
   const pageType = "Create";
-  const changeImage = true;
 
   const navigate = useNavigate();
 
@@ -113,14 +112,12 @@ export default function Create(props) {
         pageType={pageType}
         handleRecipe={handleRecipe}
         recipe={recipe}
-        ingredients={recipe.extendedIngredients}
         setRecipe={setRecipe}
         recipeCallback={recipeCallback}
         dataArray={dataArray}
         dataArrayCallback={dataArrayCallback}
         imageCallback={imageCallback}
         imagePreview={imagePreview}
-        changeImage={changeImage}
         categoriesCallback={categoriesCallback}
       />
     </div>
