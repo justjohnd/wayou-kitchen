@@ -5,7 +5,7 @@ import "../index.css";
 
 function InstructionEdit(props) {
   const [instructionHeader, setInstructionHeader] = useState(
-    props.instructions[props.index].isHeader
+    props.instruction.isHeader
   );
 
   function handleHeader() {
@@ -22,6 +22,8 @@ function InstructionEdit(props) {
     );
   }
 
+  console.log(props);
+
   return (
     <div className="input-left">
       <div className="input-left mb-0">
@@ -31,7 +33,7 @@ function InstructionEdit(props) {
             className="form-control textarea"
             name="instruction"
             type="text"
-            value={props.instructions[props.index].step}
+            value={props.instruction.step}
             callbackFunction={editInstruction}
             placeholder="Start Entering Instructions Here"
           />

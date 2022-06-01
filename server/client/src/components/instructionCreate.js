@@ -1,19 +1,91 @@
-import React, { useState } from 'react';
-import InstructionEdit from './instructionEdit';
-import TextArea from './TextArea';
-import Button from './button';
+import React, { useState } from "react";
+import InstructionEdit from "./instructionEdit";
+import TextArea from "./TextArea";
+import Button from "./button";
 
 export default function InstructionCreate(props) {
-    const [header, setHeader] = useState(false);
+  // data contains instruction (or header) content
+  const [data, setData] = useState("");
+  const [header, setHeader] = useState(false);
 
-    function deleteInstruction(e, id) {
-      e.preventDefault();
-      props.deleteInstructionCallback(id);
-    }
+  // Update recipe whenever there is a change to an instruction (add, edit, insert, or delete)
+  function AddInstructionToRecipe(arrayParameter) {
+    props.recipeCallback((prevValue) => {
+      return {
+        ...prevValue,
+        analyzedInstructions: arrayParameter.map((data, index) => ({
+          number: index,
+          step: data.step,
+          isHeader: data.isHeader,
+        })),
+      };
+    });
+  }
 
-    function handleHeader() {
-      setHeader(!header);
-    }
+  function addInstruction(header) {
+    //Assign header as true or false
+    let instructionObject = {
+      step: data,
+      isHeader: header,
+    };
+
+    //Set instructions to be able to be viewed in the form
+    props.instructionsCallback((prevVal) => [...prevVal, instructionObject]);
+
+    //Add to recipe
+    const instructionsClone = [...props.instructions, instructionObject];
+    AddInstructionToRecipe(instructionsClone);
+    setData("");
+  }
+
+  function editInstructionCallback(index, value, header) {
+    const newArray = [...props.instructions];
+    newArray.splice(index, 1, {
+      number: index,
+      step: value,
+      isHeader: header,
+    });
+    props.instructionsCallback(newArray);
+    AddInstructionToRecipe(newArray);
+  }
+
+  function headerCallback(index, header) {
+    let instructionClone = props.instructions[index];
+    instructionClone.isHeader = header;
+    const newArray = [...props.instructions];
+    newArray.splice(index, 1, instructionClone);
+    props.instructionsCallback(newArray);
+    AddInstructionToRecipe(newArray);
+  }
+
+  function insertInstruction(idx) {
+    const newArray = [...props.instructions];
+    newArray.splice(idx, 0, {
+      step: "",
+      isHeader: false,
+    });
+    props.instructionsCallback(newArray);
+    AddInstructionToRecipe(newArray);
+  }
+
+  function deleteInstruction(e, id) {
+    e.preventDefault();
+    const newArray = [...props.instructions];
+    const filtered = newArray.filter((item, index) => {
+      return index !== id;
+    });
+    props.instructionsCallback(filtered);
+    AddInstructionToRecipe(filtered);
+  }
+
+  function handleHeader() {
+    setHeader(!header);
+  }
+
+  // Updates field for new instructions only
+  function handleInstruction(e) {
+    setData(e.target.value);
+  }
 
   return (
     <div className="form-group mb-5">
@@ -28,8 +100,8 @@ export default function InstructionCreate(props) {
                 className="form-control textarea"
                 name="instruction"
                 type="text"
-                value={props.data}
-                callbackFunction={props.handleInstructionCallback}
+                value={data}
+                callbackFunction={handleInstruction}
                 placeholder="Start Entering Instructions Here"
               />
             </div>
@@ -45,25 +117,24 @@ export default function InstructionCreate(props) {
             buttonWrapper="d-inline-block"
             onClick={(e) => {
               e.preventDefault();
-              props.addInstructionCallback(header);
+              addInstruction(header);
             }}
             buttonText="Add"
           />
         </div>
         {props.instructions &&
-          props.instructions.map((data, index) => (
+          props.instructions.map((instruction, index) => (
             <InstructionEdit
               key={index}
               index={index}
-              instructions={props.instructions}
-              editInstructionCallback={props.editInstructionCallback}
+              instruction={instruction}
+              editInstructionCallback={editInstructionCallback}
               deleteInstruction={deleteInstruction}
-              insertInstruction={props.insertInstruction}
-              headerCallback={props.headerCallback}
+              insertInstruction={insertInstruction}
+              headerCallback={headerCallback}
             />
           ))}
       </section>
     </div>
   );
-
 }

@@ -8,78 +8,6 @@ import Button from "./button";
 import CategoryDropdown from "./categoryDropdown";
 
 export default function TemplateCreateEdit(props) {
-  // data contains instruction (or header) content
-  const [data, setData] = useState("");
-
-  // Instructions functions
-  function AddInstructionToRecipe(arrayParameter) {
-    props.recipeCallback((prevValue) => {
-      return {
-        ...prevValue,
-        analyzedInstructions: arrayParameter.map((data, index) => ({
-          number: index,
-          step: data.step,
-          isHeader: data.isHeader,
-        })),
-      };
-    });
-  }
-
-  function handleInstructionCallback(e) {
-    setData(e.target.value);
-  }
-
-  function addInstructionCallback(header) {
-    let instructionObject = {
-      step: data,
-      isHeader: header,
-    };
-
-    props.instructionsCallback((prevVal) => [...prevVal, instructionObject]);
-    const instructionsClone = [...props.instructions, instructionObject];
-    AddInstructionToRecipe(instructionsClone);
-    setData("");
-  }
-
-  function editInstructionCallback(index, value, header) {
-    const newArray = [...props.instructions];
-    newArray.splice(index, 1, {
-      number: index,
-      step: value,
-      isHeader: header,
-    });
-    props.instructionsCallback(newArray);
-    AddInstructionToRecipe(newArray);
-  }
-
-  function headerCallback(index, header) {
-    let instructionClone = props.instructions[index];
-    instructionClone.isHeader = header;
-    const newArray = [...props.instructions];
-    newArray.splice(index, 1, instructionClone);
-    props.instructionsCallback(newArray);
-    AddInstructionToRecipe(newArray);
-  }
-
-  function deleteInstructionCallback(id) {
-    const newArray = [...props.instructions];
-    const filtered = newArray.filter((item, index) => {
-      return index !== id;
-    });
-    props.instructionsCallback(filtered);
-    AddInstructionToRecipe(filtered);
-  }
-
-  function insertInstruction(idx) {
-    const newArray = [...props.instructions];
-    newArray.splice(idx, 0, {
-      step: "",
-      isHeader: false,
-    });
-    props.instructionsCallback(newArray);
-    AddInstructionToRecipe(newArray);
-  }
-
   function handleData(e) {
     e.preventDefault();
     const { name, value } = e.target;
@@ -92,8 +20,6 @@ export default function TemplateCreateEdit(props) {
     });
   }
 
-  // This following section will display the form that takes the input from the user.
-  // render() {
   return (
     <div className="my-5 container container-record-form">
       <h3 className="mb-4">{props.pageType} New Record</h3>
@@ -167,14 +93,9 @@ export default function TemplateCreateEdit(props) {
           setRecipe={props.setRecipe}
         />
         <InstructionCreate
-          data={data}
+          recipeCallback={props.recipeCallback}
           instructions={props.instructions}
-          handleInstructionCallback={handleInstructionCallback}
-          addInstructionCallback={addInstructionCallback}
-          editInstructionCallback={editInstructionCallback}
-          deleteInstructionCallback={deleteInstructionCallback}
-          insertInstruction={insertInstruction}
-          headerCallback={headerCallback}
+          instructionsCallback={props.instructionsCallback}
         />
         <div className="mb-5">
           <h4>Categories</h4>
