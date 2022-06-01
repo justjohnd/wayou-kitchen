@@ -26,6 +26,9 @@ export default function Create(props) {
   function imageCallback(data) {
     if (data) {
       setImagePreview(URL.createObjectURL(data));
+    } else {
+      //Remove image preview if user removes the image
+      setImagePreview("");
     }
 
     setRecipe((prevValue) => {
