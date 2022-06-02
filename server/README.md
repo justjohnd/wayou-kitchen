@@ -1,5 +1,16 @@
-#Welcome to veggit!
+# Welcome to veggit!
+
 Here are some helpful notes on development and deployment of this site.
+
+To open your developer environment:
+
+- Navigate to `server/client` and run `npm start`
+- Connect to the server by navigating to `server` directory and running `node nodemon.js`
+- In `server/client/src/javascript/httpAddress.js` make sure that `const httpAddress = addresses.local;`
+
+## Structure
+
+- The routing is contained in `client/src/App.js`
 
 ## Deployment and Git
 
