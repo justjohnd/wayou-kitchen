@@ -10,13 +10,15 @@ export default function TemplateCreateEdit(props) {
     e.preventDefault();
     const { name, value } = e.target;
 
-    props.recipeCallback((prevValue) => {
+    props.setRecipe((prevValue) => {
       return {
         ...prevValue,
         [name]: value,
       };
     });
   }
+
+  console.log(props.recipe);
 
   return (
     <div className="my-5 container container-record-form">
@@ -91,7 +93,7 @@ export default function TemplateCreateEdit(props) {
           setRecipe={props.setRecipe}
         />
         <InstructionsSection
-          recipeCallback={props.recipeCallback}
+          setRecipe={props.setRecipe}
           instructions={props.instructions}
           instructionsCallback={props.instructionsCallback}
         />

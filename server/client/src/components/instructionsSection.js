@@ -10,7 +10,7 @@ export default function InstructionsSection(props) {
 
   // Update recipe whenever there is a change to an instruction (add, edit, insert, or delete)
   function AddInstructionToRecipe(arrayParameter) {
-    props.recipeCallback((prevValue) => {
+    props.setRecipe((prevValue) => {
       return {
         ...prevValue,
         analyzedInstructions: arrayParameter.map((data, index) => ({

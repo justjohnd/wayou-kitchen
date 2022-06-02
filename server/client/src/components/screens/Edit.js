@@ -34,10 +34,6 @@ export default function Edit(props) {
     }
   }
 
-  function recipeCallback(data) {
-    setRecipe(data);
-  }
-
   // Triggered by image input field
   function imageCallback(data) {
     setNewImage(data);
@@ -162,7 +158,6 @@ export default function Edit(props) {
         pageType={pageType}
         handleRecipe={handleRecipe}
         recipe={recipe}
-        recipeCallback={recipeCallback}
         setRecipe={setRecipe}
         instructions={instructions}
         instructionsCallback={instructionsCallback}
