@@ -14,7 +14,6 @@ import TemplateCreateEdit from "../templateCreateEdit";
 export default function Create(props) {
   const [recipe, setRecipe] = useState(RECIPE_OBJECT);
   const [imagePreview, setImagePreview] = useState("");
-  const [instructions, setInstructions] = useState([]);
   const [error, setError] = useState("");
   const pageType = "Create";
 
