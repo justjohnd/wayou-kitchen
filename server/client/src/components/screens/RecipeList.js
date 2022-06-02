@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import React, { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
-import { categories } from '../../javascript/categories';
-import useGetRecords from '../../hooks/useGetRecords';
+import { categories } from "../../javascript/categories";
+import useGetRecords from "../../hooks/useGetRecords";
 
-import Recipe from '../recipe';
-import RecipeGroup from '../recipeGroup';
-import CategoryDropdown from '../categoryDropdown';
-import Button from '../button';
+import Recipe from "../recipe";
+import RecipeGroup from "../recipeGroup";
+import CategoryDropdown from "../categoryDropdown";
+import Button from "../button";
 
 export default function RecipeList() {
-  const records = useGetRecords('/record');
+  const records = useGetRecords("/record");
   const [showAll, setShowAll] = useState(true);
   const [recordCategories, setRecordCategories] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
@@ -59,7 +59,6 @@ export default function RecipeList() {
     setRecordCategories(groupsToShow);
   }
 
-  // This following section will display the table with the records of individuals.
   return (
     <div className="p-3 container disable-while-loading">
       <div>
@@ -75,7 +74,7 @@ export default function RecipeList() {
           {paginatedPosts.length > 0 && (
             <div className="pagination-wrapper">
               <div className="d-flex justify-content-center">
-                Page {pageNumber}{' '}
+                Page {pageNumber}{" "}
               </div>
               <div className="d-flex">
                 <Button
@@ -96,23 +95,21 @@ export default function RecipeList() {
             </div>
           )}
         </div>
-      ) : (
+      ) : recordCategories ? (
         <>
           {recordCategories.map((categoryRecords, index) => {
-            if (categoryRecords !== []) {
-              return (
-                <div>
-                  <RecipeGroup
-                    key={uuidv4()}
-                    index={index}
-                    categoryRecords={categoryRecords}
-                  />
-                </div>
-              );
-            }
+            return (
+              <div>
+                <RecipeGroup
+                  key={uuidv4()}
+                  index={index}
+                  categoryRecords={categoryRecords}
+                />
+              </div>
+            );
           })}
         </>
-      )}
+      ) : null}
     </div>
   );
 }
