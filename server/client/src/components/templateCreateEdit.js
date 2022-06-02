@@ -95,7 +95,6 @@ export default function TemplateCreateEdit(props) {
         <InstructionsSection
           setRecipe={props.setRecipe}
           instructions={props.instructions}
-          instructionsCallback={props.instructionsCallback}
         />
         <div className="mb-5">
           <h4>Categories</h4>

@@ -29,9 +29,6 @@ export default function InstructionsSection(props) {
       isHeader: header,
     };
 
-    //Set instructions to be able to be viewed in the form
-    props.instructionsCallback((prevVal) => [...prevVal, instructionObject]);
-
     //Add to recipe
     const instructionsClone = [...props.instructions, instructionObject];
     AddInstructionToRecipe(instructionsClone);
@@ -45,7 +42,7 @@ export default function InstructionsSection(props) {
       step: value,
       isHeader: header,
     });
-    props.instructionsCallback(newArray);
+
     AddInstructionToRecipe(newArray);
   }
 
@@ -54,7 +51,7 @@ export default function InstructionsSection(props) {
     instructionClone.isHeader = header;
     const newArray = [...props.instructions];
     newArray.splice(index, 1, instructionClone);
-    props.instructionsCallback(newArray);
+
     AddInstructionToRecipe(newArray);
   }
 
@@ -64,7 +61,7 @@ export default function InstructionsSection(props) {
       step: "",
       isHeader: false,
     });
-    props.instructionsCallback(newArray);
+
     AddInstructionToRecipe(newArray);
   }
 
@@ -74,7 +71,7 @@ export default function InstructionsSection(props) {
     const filtered = newArray.filter((item, index) => {
       return index !== id;
     });
-    props.instructionsCallback(filtered);
+
     AddInstructionToRecipe(filtered);
   }
 

@@ -38,15 +38,6 @@ export default function Create(props) {
     });
   }
 
-  function instructionsCallback(data) {
-    setRecipe((prevValue) => {
-      return {
-        ...prevValue,
-        analyzedInsructions: data,
-      };
-    });
-  }
-
   //Receive selected categories and set to recipe
   function categoriesCallback(optionSelected) {
     setRecipe((prevValue) => {
@@ -115,7 +106,6 @@ export default function Create(props) {
         recipe={recipe}
         setRecipe={setRecipe}
         instructions={recipe.analyzedInstructions}
-        instructionsCallback={instructionsCallback}
         imageCallback={imageCallback}
         imagePreview={imagePreview}
         categoriesCallback={categoriesCallback}

@@ -42,10 +42,6 @@ export default function Edit(props) {
     }
   }
 
-  function instructionsCallback(data) {
-    setInstructions(data);
-  }
-
   //Receive selected categories and set to recipe
   function categoriesCallback(optionSelected) {
     setRecipe((prevValue) => {
@@ -159,8 +155,7 @@ export default function Edit(props) {
         handleRecipe={handleRecipe}
         recipe={recipe}
         setRecipe={setRecipe}
-        instructions={instructions}
-        instructionsCallback={instructionsCallback}
+        instructions={recipe.analyzedInstructions}
         image={image}
         imagePreview={imagePreview}
         imageCallback={imageCallback}
