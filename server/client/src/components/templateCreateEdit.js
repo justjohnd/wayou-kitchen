@@ -1,7 +1,5 @@
-import React, { useState } from "react";
-
 import IngredientCreate from "./ingredientCreate";
-import InstructionCreate from "./instructionCreate";
+import InstructionsSection from "./instructionsSection";
 import Input from "./input";
 import InputFile from "./InputFile";
 import Button from "./button";
@@ -92,7 +90,7 @@ export default function TemplateCreateEdit(props) {
           ingredients={props.recipe.extendedIngredients}
           setRecipe={props.setRecipe}
         />
-        <InstructionCreate
+        <InstructionsSection
           recipeCallback={props.recipeCallback}
           instructions={props.instructions}
           instructionsCallback={props.instructionsCallback}

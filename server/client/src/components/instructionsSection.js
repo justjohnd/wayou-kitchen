@@ -3,7 +3,7 @@ import InstructionEdit from "./instructionEdit";
 import TextArea from "./TextArea";
 import Button from "./button";
 
-export default function InstructionCreate(props) {
+export default function InstructionsSection(props) {
   // data contains instruction (or header) content
   const [data, setData] = useState("");
   const [header, setHeader] = useState(false);
