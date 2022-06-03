@@ -16,18 +16,23 @@ export default function RecipeList() {
   const [pageNumber, setPageNumber] = useState(1);
   const [postNumber] = useState(20);
 
+  // Pagination. Note that pagination currently is only set up for when all posts are shown
+  // Calculate currentPageNumber as multiple of postNumber, starting at 0
   const currentPageNumber = pageNumber * postNumber - postNumber;
 
+  //PaginatedPosts will be spliced from the total record set
   const splicy = [...records];
   const paginatedPosts = splicy.splice(currentPageNumber, postNumber);
 
   const handlePrev = () => {
     if (pageNumber === 1) return;
     setPageNumber(pageNumber - 1);
+    window.scrollTo(0, 0);
   };
 
   const handleNext = () => {
     setPageNumber(pageNumber + 1);
+    window.scrollTo(0, 0);
   };
 
   //Select by categories

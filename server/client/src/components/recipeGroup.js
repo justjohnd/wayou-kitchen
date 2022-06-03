@@ -5,9 +5,7 @@ function RecipeGroup(props) {
   let category;
   if (props.categoryRecords[0]) {
     category = props.categoryRecords[0].categories[0].value;
-    if (category === undefined) {
-      return null;
-    }
+    if (category === undefined) return null;
     category = category.charAt(0).toUpperCase() + category.slice(1);
   }
 
