@@ -3,11 +3,11 @@ import { v4 as uuidv4 } from "uuid";
 
 function Recipe(props) {
   return (
-    <div>
-      <div className="recipe-home-container">
+    <div class="container">
+      <div className="row">
         {props.recordArray.map((currentrecord) => {
           return (
-            <div key={uuidv4()} className="recipe-home">
+            <div key={uuidv4()} className="recipe-home col-6 col-md-4 col-lg-3">
               <Link to={"/show/" + currentrecord._id}>
                 <div className="image-wrapper">
                   <img

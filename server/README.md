@@ -18,6 +18,8 @@ Note that there are two seperate git repositories currently set up for the site.
 
 The `/client` directory in the main project directory is used to store the `/build`.
 
+- In `server/client/src/javascript/httpAddress.js` make sure that `const httpAddress = addresses.production`
+- From the `/server/client` directory run `npm run build`
 - From the `/server` directory, enter `heroku login`. The browser will open. Click the Login button.
 - Make any git commits.
 - Enter `git push heroku master`
