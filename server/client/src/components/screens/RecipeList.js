@@ -22,7 +22,7 @@ export default function RecipeList() {
 
   //PaginatedPosts will be spliced from the total record set
   const splicy = [...records];
-  const paginatedPosts = splicy.splice(currentPageNumber, postNumber);
+  let paginatedPosts = splicy.splice(currentPageNumber, postNumber);
 
   const handlePrev = () => {
     if (pageNumber === 1) return;
@@ -76,7 +76,7 @@ export default function RecipeList() {
         <div>
           <h1 className="mb-4">Recently Added</h1>
           <Recipe recordArray={paginatedPosts} />
-          {paginatedPosts.length > 0 && (
+          {
             <div className="pagination-wrapper">
               <div className="d-flex justify-content-center">
                 Page {pageNumber}{" "}
@@ -84,32 +84,28 @@ export default function RecipeList() {
               <div className="d-flex">
                 <Button
                   buttonWrapper="w-50"
-                  className="float-end me-2"
+                  className={`float-end me-2 ${pageNumber === 1 && "disabled"}`}
                   buttonText="Previous"
                   onClick={handlePrev}
                 />
-                {paginatedPosts.length > currentPageNumber && (
-                  <Button
-                    buttonWrapper="w-50 text-left"
-                    className="float-start ms-2"
-                    buttonText="Next"
-                    onClick={handleNext}
-                  />
-                )}
+                <Button
+                  buttonWrapper="w-50 text-left"
+                  className={`float-start ms-2 ${
+                    paginatedPosts.length < postNumber && "disabled"
+                  }`}
+                  buttonText="Next"
+                  onClick={handleNext}
+                />
               </div>
             </div>
-          )}
+          }
         </div>
       ) : recordCategories ? (
         <>
           {recordCategories.map((categoryRecords, index) => {
             return (
-              <div>
-                <RecipeGroup
-                  key={uuidv4()}
-                  index={index}
-                  categoryRecords={categoryRecords}
-                />
+              <div key={uuidv4()}>
+                <RecipeGroup index={index} categoryRecords={categoryRecords} />
               </div>
             );
           })}
