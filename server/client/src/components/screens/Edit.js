@@ -14,8 +14,6 @@ import axios from "axios";
 export default function Edit(props) {
   const [pageType, setPageType] = useState("Edit");
   const [recipe, setRecipe] = useState(RECIPE_OBJECT);
-  const [ingredients, setIngredients] = useState([]);
-  const [instructions, setInstructions] = useState([]);
   const [newImage, setNewImage] = useState({ name: "noImage" });
   const [image, setImage] = useState("");
   const [changeImage, setChangeImage] = useState(false);
@@ -129,16 +127,6 @@ export default function Edit(props) {
         }
 
         setRecipe(myObj);
-
-        const ingredientsWithId = data.extendedIngredients.map((ingredient) => {
-          return {
-            ...ingredient,
-            id: ingredient.id,
-          };
-        });
-
-        setIngredients(ingredientsWithId);
-        setInstructions(data.analyzedInstructions);
       };
 
       fetchData();
