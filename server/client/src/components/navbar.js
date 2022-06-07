@@ -1,28 +1,27 @@
-import { React } from 'react';
-import { Link, useNavigate, NavLink } from 'react-router-dom';
+import { Link, useNavigate, NavLink } from "react-router-dom";
 
-import LocalDiningIcon from '@mui/icons-material/LocalDining';
-import CreateIcon from '@mui/icons-material/Create';
-import WebIcon from '@mui/icons-material/Web';
-import LogoutIcon from '@mui/icons-material/Logout';
+import LocalDiningIcon from "@mui/icons-material/LocalDining";
+import CreateIcon from "@mui/icons-material/Create";
+import WebIcon from "@mui/icons-material/Web";
+import LogoutIcon from "@mui/icons-material/Logout";
 // Note that the bootstrap import below is necessary for navbar behavior
-import 'bootstrap/dist/css/bootstrap.css';
-import bootstrap from 'bootstrap';
+import "bootstrap/dist/css/bootstrap.css";
+import bootstrap from "bootstrap";
 
-import '../index.css';
+import "../index.css";
 
-import { getWithExpiry } from '../hooks/localStorageWithExpiry';
+import { getWithExpiry } from "../hooks/localStorageWithExpiry";
 
-import UrlSearch from './urlSearch';
+import UrlSearch from "./urlSearch";
 
 // Here, we display our Navbar
 const Navbar = (props) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('userId');
-    navigate('/login');
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("userId");
+    navigate("/login");
   };
 
   return (
@@ -43,7 +42,7 @@ const Navbar = (props) => {
           <span className="custom-toggler navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          {getWithExpiry('authToken') ? (
+          {getWithExpiry("authToken") ? (
             <div className="mt-3">
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item mb-4 me-md-4">

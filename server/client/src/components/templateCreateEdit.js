@@ -18,8 +18,6 @@ export default function TemplateCreateEdit(props) {
     });
   }
 
-  console.log(props.recipe);
-
   return (
     <div className="my-5 container container-record-form">
       <h3 className="mb-4">{props.pageType} New Record</h3>
@@ -53,6 +51,7 @@ export default function TemplateCreateEdit(props) {
                 <Button
                   buttonWrapper="d-inline mx-3"
                   buttonText="Edit Image"
+                  className="mb-3"
                   onClick={() => props.changeImageCallback()}
                 />
                 <Button
