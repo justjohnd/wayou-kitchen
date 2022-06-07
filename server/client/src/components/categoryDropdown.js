@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import { default as ReactSelect } from "react-select";
+import { components } from "react-select";
 
-import { default as ReactSelect } from 'react-select';
-import { components } from 'react-select';
-
-import { categories } from '../javascript/categories.js';
+import { categories } from "../javascript/categories.js";
 
 const Option = (props) => {
   return (
@@ -13,7 +11,7 @@ const Option = (props) => {
           type="checkbox"
           checked={props.isSelected}
           onChange={() => null}
-        />{' '}
+        />{" "}
         <label>{props.label}</label>
       </components.Option>
     </div>

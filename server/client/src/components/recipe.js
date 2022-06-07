@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 
 function Recipe(props) {
   return (
-    <div class="container">
+    <div className="container">
       <div className="row">
         {props.recordArray.map((currentrecord) => {
           return (

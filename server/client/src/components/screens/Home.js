@@ -9,7 +9,7 @@ import RecipeGroup from "../recipeGroup";
 import CategoryDropdown from "../categoryDropdown";
 import Button from "../button";
 
-export default function RecipeList() {
+export default function Home() {
   const records = useGetRecords("/record");
   const [showAll, setShowAll] = useState(true);
   const [recordCategories, setRecordCategories] = useState(null);
