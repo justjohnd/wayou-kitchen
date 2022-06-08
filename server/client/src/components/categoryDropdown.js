@@ -21,7 +21,6 @@ export default function CategoryDropdown(props) {
       options={categories}
       isMulti
       onChange={(selected) => props.categoriesCallback(selected)}
-      autoFocus
       isSearchable
       className="d-inline-block category-dropdown mb-3"
     />

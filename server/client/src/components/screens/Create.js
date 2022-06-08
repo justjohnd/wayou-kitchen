@@ -11,7 +11,7 @@ import { getWithExpiry } from "../../hooks/localStorageWithExpiry";
 
 import TemplateCreateEdit from "../templateCreateEdit";
 
-export default function Create(props) {
+export default function Create({ loaderCallback }) {
   const [recipe, setRecipe] = useState(RECIPE_OBJECT);
   const [imagePreview, setImagePreview] = useState("");
   const [error, setError] = useState("");
@@ -49,7 +49,7 @@ export default function Create(props) {
 
   const handleRecipe = async (e) => {
     e.preventDefault();
-    props.loaderCallback(true);
+    loaderCallback(true);
     // When post request is sent to the create url, axios will add a new record to the database.
     recipe.dateCreated = new Date();
     recipe.userId = getWithExpiry("userId");
@@ -73,15 +73,16 @@ export default function Create(props) {
     }
 
     try {
-      props.loaderCallback(true);
+      loaderCallback(true);
       await axios.post(`${httpAddress}/record/add`, formData);
       setTimeout(() => {
         navigate("/private");
-        props.loaderCallback(false);
+        loaderCallback(false);
       }, 2000);
     } catch (error) {
-      props.loaderCallback(false);
-      setError(error.response.data.error);
+      window.scrollTo(0, 0);
+      loaderCallback(false);
+      setError("We're sorry, something went wrong!");
       setTimeout(() => {
         setError("");
         navigate("/login");
@@ -99,6 +100,7 @@ export default function Create(props) {
 
   return (
     <div>
+      {error && <div className="error-message">{error}</div>}
       <TemplateCreateEdit
         pageType={pageType}
         handleRecipe={handleRecipe}
