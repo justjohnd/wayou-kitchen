@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import httpAddress from '../javascript/httpAddress';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import httpAddress from "../javascript/httpAddress";
 
 export default function useGetRecords(route) {
   const [records, setRecords] = useState([]);
@@ -19,16 +19,16 @@ export default function useGetRecords(route) {
           }
           // Verify catagegories data is available. If not add value: other
           if (!response.data[i].categories) {
-            response.data[i].categories = [{ value: 'other' }];
+            response.data[i].categories = [{ value: "other" }];
           } else if (response.data[i].categories.length === 0) {
-            response.data[i].categories.push({ value: 'other' });
+            response.data[i].categories.push({ value: "other" });
           }
         }
 
         // Check and remove any duplicates (based on sourcrUrl)
         let sourceUrlHash = {};
         response.data.forEach((item, index) => {
-          if (sourceUrlHash[item.sourceUrl]) {
+          if (sourceUrlHash[item.sourceUrl] && item.sourceUrl !== "") {
             response.data.splice(index, 1);
           } else {
             sourceUrlHash[item.sourceUrl] = 1;

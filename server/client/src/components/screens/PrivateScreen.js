@@ -119,7 +119,6 @@ const PrivateScreen = (props) => {
   function categoriesCallback(optionSelected) {
     setSelectedCategories(optionSelected);
     //Put records in their on groups
-    console.log(optionSelected);
     const categoryTypes = optionSelected.map((category) => category.value);
 
     const groupArray = () => {
