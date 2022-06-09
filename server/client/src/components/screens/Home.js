@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import { categories } from "../../javascript/categories";
@@ -9,7 +9,7 @@ import RecipeGroup from "../recipeGroup";
 import CategoryDropdown from "../categoryDropdown";
 import Button from "../button";
 
-export default function Home() {
+export default function Home({ loaderCallback }) {
   const records = useGetRecords("/record");
   const [showAll, setShowAll] = useState(true);
   const [categorizedRecords, setCategorizedRecords] = useState(null);
@@ -55,7 +55,9 @@ export default function Home() {
             return record;
           }
         });
-        newArray.unshift(group);
+        if (group !== []) {
+          newArray.unshift(group);
+        }
       }
 
       return newArray;
@@ -64,6 +66,13 @@ export default function Home() {
     const groupsToShow = groupArray();
     setCategorizedRecords(groupsToShow);
   }
+
+  useEffect(() => {
+    loaderCallback(true);
+    setTimeout(() => {
+      loaderCallback(false);
+    }, 1000);
+  }, [categorizedRecords]);
 
   return (
     <div className="p-3 container disable-while-loading">

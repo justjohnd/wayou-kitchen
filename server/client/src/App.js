@@ -42,7 +42,7 @@ const App = () => {
       )}
       <Navbar loaderCallback={loaderCallback} />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home loaderCallback={loaderCallback} />} />
         <Route path="/show/:id" element={<Show />} />
         <Route
           path="/edit/:id"
@@ -66,7 +66,10 @@ const App = () => {
           element={<ForgotPassword loaderCallback={loaderCallback} />}
         />
         <Route element={<PrivateRoute />}></Route>
-        <Route path="*" element={<Home to="/" />} />
+        <Route
+          path="*"
+          element={<Home loaderCallback={loaderCallback} to="/" />}
+        />
       </Routes>
     </div>
   );
