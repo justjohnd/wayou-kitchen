@@ -55,7 +55,7 @@ export default function Home() {
             return record;
           }
         });
-        newArray.push(group);
+        newArray.unshift(group);
       }
 
       return newArray;

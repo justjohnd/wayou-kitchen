@@ -62,6 +62,10 @@ export default function Edit(props) {
       recipe.dateCreated = new Date();
     }
 
+    if (recipe.categories[0] === "") {
+      recipe.categories.push({ value: "other", label: "Other" });
+    }
+
     for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
       if (RECIPE_PROPERTIES[i] === "image") {
         //Various edge cases included here, including possiblity of a null value coming from the database, or a local server being used
@@ -134,6 +138,8 @@ export default function Edit(props) {
       console.log(err);
     }
   }, []);
+
+  console.log(recipe);
 
   // This following section will display the form that takes the input from the user.
   return (
