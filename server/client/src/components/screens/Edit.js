@@ -84,10 +84,9 @@ export default function Edit(props) {
       }
     }
 
-    // This will send a post{} request to update the data in the database.
     try {
       props.loaderCallback(true);
-      await axios.post(`${httpAddress}/update/${params.id}`, formData);
+      await axios.put(`${httpAddress}/update/${params.id}`, formData);
       setTimeout(() => {
         navigate("/private");
         props.loaderCallback(false);
