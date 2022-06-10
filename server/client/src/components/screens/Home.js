@@ -49,12 +49,23 @@ export default function Home({ loaderCallback }) {
     // Filter out all records that match any of the categories selected (based on the records first category), and set state with that array
     const groupArray = () => {
       let newArray = [];
-      for (let i = 0; i < categories.length; i++) {
+      for (let i = 0; i < categoryTypes.length; i++) {
         const group = records.filter((record) => {
-          if (record.categories[0].value === categoryTypes[i]) {
+          // If index 0 is "other" but index 1 exists, categorized by index 1
+          let categories = record.categories;
+          if (categories[0].value === "other" && categories[1] !== undefined) {
+            if (categories[1].value === categoryTypes[i]) {
+              record.mainCat = categoryTypes[i];
+              return record;
+            }
+          }
+
+          if (categories[0].value === categoryTypes[i]) {
+            record.mainCat = categoryTypes[i];
             return record;
           }
         });
+        console.log(group);
         if (group !== []) {
           newArray.unshift(group);
         }
@@ -67,14 +78,16 @@ export default function Home({ loaderCallback }) {
     setCategorizedRecords(groupsToShow);
   }
 
+  console.log(records);
+
   useEffect(() => {
-    loaderCallback(true);
-    setTimeout(() => {
-      loaderCallback(false);
-    }, 1000);
+    // loaderCallback(true);
+    // setTimeout(() => {
+    //   loaderCallback(false);
+    // }, 1000);
   }, [categorizedRecords]);
 
-  console.log(records);
+  console.log(categorizedRecords);
 
   return (
     <div className="p-3 container disable-while-loading">
