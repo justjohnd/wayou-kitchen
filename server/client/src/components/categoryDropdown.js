@@ -21,6 +21,7 @@ export default function CategoryDropdown(props) {
       options={categories}
       isMulti
       onChange={(selected) => props.categoriesCallback(selected)}
+      value={props.selectedCategories}
       isSearchable
       className="d-inline-block category-dropdown mb-3"
     />

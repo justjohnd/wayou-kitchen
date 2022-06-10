@@ -1,22 +1,32 @@
 const RECIPE_PROPERTIES = [
-  'title',
-  'preparationMinutes',
-  'cookingMinutes',
-  'readyInMinutes',
-  'sourceUrl',
-  'image',
-  'extendedIngredients',
-  'analyzedInstructions',
-  'servings',
-  'categories',
-  'dateCreated',
-  'userId',
+  "title",
+  "preparationMinutes",
+  "cookingMinutes",
+  "readyInMinutes",
+  "sourceUrl",
+  "image",
+  "extendedIngredients",
+  "analyzedInstructions",
+  "servings",
+  "categories",
+  "dateCreated",
+  "userId",
 ];
 
-let RECIPE_OBJECT = {};
-for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
-  RECIPE_OBJECT[RECIPE_PROPERTIES[i]] = '';
-}
+let RECIPE_OBJECT = {
+  title: "",
+  preparationMinutes: "",
+  cookingMinutes: "",
+  readyInMinutes: "",
+  sourceUrl: "",
+  image: "",
+  extendedIngredients: "",
+  analyzedInstructions: "",
+  servings: "",
+  categories: [],
+  dateCreated: "",
+  userId: "",
+};
 
 export default RECIPE_PROPERTIES;
 export { RECIPE_OBJECT };

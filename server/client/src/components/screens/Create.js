@@ -54,6 +54,14 @@ export default function Create({ loaderCallback }) {
     recipe.dateCreated = new Date();
     recipe.userId = getWithExpiry("userId");
 
+    //Add category "other" if not category is selected
+    if (recipe.categories[0] === undefined) {
+      recipe.categories.push({
+        value: "other",
+        label: "Other",
+      });
+    }
+
     const formData = new FormData();
     // For File objects (such as image) do not stringify
     for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
@@ -97,6 +105,8 @@ export default function Create({ loaderCallback }) {
       setError("Sorry, you are not logged in.");
     }
   }, []);
+
+  console.log(recipe);
 
   return (
     <div>

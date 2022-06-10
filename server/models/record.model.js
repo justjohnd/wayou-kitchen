@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const { stringify } = require('uuid');
+const mongoose = require("mongoose");
+const { stringify } = require("uuid");
 
 const Schema = mongoose.Schema;
 
@@ -11,7 +11,7 @@ const recordSchema = new Schema({
   },
   dateCreated: {
     type: Date,
-    required: true
+    required: true,
   },
   extendedIngredients: [
     {
@@ -35,18 +35,18 @@ const recordSchema = new Schema({
   },
   image: {
     type: String,
-    required: true
+    required: true,
   },
   analyzedInstructions: [{ number: Number, step: String, isHeader: Boolean }],
-  categories: [{ value: String }],
+  categories: [{ value: String, label: String }],
   servings: {
     type: String,
   },
   userId: {
-    type: String
-  }
+    type: String,
+  },
 });
 
-const Record = mongoose.model('Record', recordSchema);
+const Record = mongoose.model("Record", recordSchema);
 
 module.exports = Record;

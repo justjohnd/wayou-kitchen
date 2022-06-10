@@ -62,7 +62,7 @@ export default function Edit(props) {
       recipe.dateCreated = new Date();
     }
 
-    if (recipe.categories[0] === "") {
+    if (recipe.categories[0] === undefined) {
       recipe.categories.push({ value: "other", label: "Other" });
     }
 
