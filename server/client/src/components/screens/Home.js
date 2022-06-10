@@ -78,13 +78,11 @@ export default function Home({ loaderCallback }) {
     setCategorizedRecords(groupsToShow);
   }
 
-  console.log(records);
-
   useEffect(() => {
-    // loaderCallback(true);
-    // setTimeout(() => {
-    //   loaderCallback(false);
-    // }, 1000);
+    loaderCallback(true);
+    setTimeout(() => {
+      loaderCallback(false);
+    }, 1000);
   }, [categorizedRecords]);
 
   console.log(categorizedRecords);

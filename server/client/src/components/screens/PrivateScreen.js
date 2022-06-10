@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
-import Recipe from "../recipesSelected";
+import RecipesSelected from "../recipesSelected";
 import Button from "../button";
 import RecipeGroup from "../recipeGroup";
 import CategoryDropdown from "../categoryDropdown";
@@ -16,7 +16,7 @@ import {
   getWithExpiry,
 } from "../../hooks/localStorageWithExpiry";
 
-const PrivateScreen = (props) => {
+const PrivateScreen = () => {
   const [error, setError] = useState("");
   const [privateScreen, setPrivateScreen] = useState(true);
   const [selectedCategories, setSelectedCategories] = useState(null);
@@ -143,7 +143,7 @@ const PrivateScreen = (props) => {
     if (selectedCategories === null || selectedCategories.length === 0) {
       return (
         <div>
-          <Recipe
+          <RecipesSelected
             privateScreen={privateScreen}
             recordArray={paginatedPosts}
             deleteRecord={deleteRecord}
@@ -176,7 +176,8 @@ const PrivateScreen = (props) => {
     }
   }
 
-  // This following section will display the table with the records of individuals.
+  console.log(records);
+
   return error ? (
     <span className="error-message d-flex justify-content-center">{error}</span>
   ) : (
