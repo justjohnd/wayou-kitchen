@@ -11,33 +11,41 @@ import { getWithExpiry } from "../../hooks/localStorageWithExpiry";
 // This will require to npm install axios
 import axios from "axios";
 
-export default function Edit(props) {
-  const [pageType, setPageType] = useState("Edit");
+export default function Edit({ loaderCallback }) {
   const [recipe, setRecipe] = useState(RECIPE_OBJECT);
-  const [newImage, setNewImage] = useState({ name: "noImage" });
-  const [image, setImage] = useState("");
-  const [changeImage, setChangeImage] = useState(false);
   const [error, setError] = useState("");
-  const [imagePreview, setImagePreview] = useState("");
+  const [imagePreview, setImagePreview] = useState(
+    "../../images/placeholder.jpg"
+  );
+
+  const pageType = "Edit";
 
   const navigate = useNavigate();
 
-  function changeImageCallback(data) {
-    setChangeImage(true);
-    if (data === "remove") {
-      setNewImage({ name: "noImage" });
-      setImagePreview("../../images/placeholder.jpg");
-      setImage("placeholder.jpg");
-      setChangeImage(false);
-    }
+  function imageCallback(data) {
+    console.log("hello", data);
+
+    if (data === undefined) return;
+
+    setImagePreview(URL.createObjectURL(data));
+
+    setRecipe((prevValue) => {
+      return {
+        ...prevValue,
+        image: data,
+      };
+    });
   }
 
-  // Triggered by image input field
-  function imageCallback(data) {
-    setNewImage(data);
-    if (data) {
-      setImagePreview(URL.createObjectURL(data));
-    }
+  function removeImage() {
+    //Remove image preview if user removes the image
+    setImagePreview("../../images/placeholder.jpg");
+    setRecipe((prevValue) => {
+      return {
+        ...prevValue,
+        image: "",
+      };
+    });
   }
 
   //Receive selected categories and set to recipe
@@ -67,14 +75,12 @@ export default function Edit(props) {
     }
 
     for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
-      if (RECIPE_PROPERTIES[i] === "image") {
-        //Various edge cases included here, including possiblity of a null value coming from the database, or a local server being used
-        if (!image) {
-          formData.append("image", newImage);
-        } else if (image !== newImage.name && newImage.name !== "noImage") {
-          formData.append("image", newImage);
-        } else {
-          formData.append("image", image);
+      if (recipe[RECIPE_PROPERTIES[i]] instanceof File) {
+        formData.append(RECIPE_PROPERTIES[i], recipe[RECIPE_PROPERTIES[i]]);
+      } else if (RECIPE_PROPERTIES[i] === "image") {
+        //If an image is entered and then removed, recipe.image will set to undefined. Changing to "", will cause a stock image to automatically load on the backend
+        if (recipe.image !== "") {
+          formData.append("image", "");
         }
       } else {
         formData.append(
@@ -85,14 +91,14 @@ export default function Edit(props) {
     }
 
     try {
-      props.loaderCallback(true);
+      loaderCallback(true);
       await axios.put(`${httpAddress}/update/${params.id}`, formData);
       setTimeout(() => {
         navigate("/private");
-        props.loaderCallback(false);
+        loaderCallback(false);
       }, 2000);
     } catch (error) {
-      props.loaderCallback(false);
+      loaderCallback(false);
       setError(error.response.data.error);
       setTimeout(() => {
         setError("");
@@ -117,7 +123,7 @@ export default function Edit(props) {
         let myObj = {};
         for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
           if (RECIPE_PROPERTIES[i] === "image") {
-            setImage(data.image);
+            myObj.image = data.image;
 
             if (data.image !== null && data.image.slice(0, 4) === "http") {
               setImagePreview(data.image);
@@ -138,22 +144,19 @@ export default function Edit(props) {
     }
   }, []);
 
-  console.log(recipe);
-
   // This following section will display the form that takes the input from the user.
   return (
     <div>
+      {error && <div className="error-message">{error}</div>}
       <TemplateCreateEdit
         pageType={pageType}
         handleRecipe={handleRecipe}
         recipe={recipe}
         setRecipe={setRecipe}
         instructions={recipe.analyzedInstructions}
-        image={image}
         imagePreview={imagePreview}
         imageCallback={imageCallback}
-        changeImage={changeImage}
-        changeImageCallback={changeImageCallback}
+        removeImage={removeImage}
         categoriesCallback={categoriesCallback}
       />
     </div>

@@ -13,26 +13,44 @@ import TemplateCreateEdit from "../templateCreateEdit";
 
 export default function Create({ loaderCallback }) {
   const [recipe, setRecipe] = useState(RECIPE_OBJECT);
-  const [imagePreview, setImagePreview] = useState("");
+  const [imagePreview, setImagePreview] = useState(
+    "../../images/placeholder.jpg"
+  );
   const [error, setError] = useState("");
+
   const pageType = "Create";
 
   const navigate = useNavigate();
 
+  //Make sure user is still logged in, in case their session has expired, but the frontend doesn't know
+  useEffect(() => {
+    if (!getWithExpiry("authToken")) {
+      navigate("/login");
+      setError("Sorry, you are not logged in.");
+    }
+  }, []);
   //Convert image upload File into DOMString for instant preview on the page
   // Note that File inputs do not have values, hence recipe image value must be set here
   function imageCallback(data) {
-    if (data) {
-      setImagePreview(URL.createObjectURL(data));
-    } else {
-      //Remove image preview if user removes the image
-      setImagePreview("");
-    }
+    if (data === undefined) return;
+
+    setImagePreview(URL.createObjectURL(data));
 
     setRecipe((prevValue) => {
       return {
         ...prevValue,
         image: data,
+      };
+    });
+  }
+
+  function removeImage() {
+    //Remove image preview if user removes the image
+    setImagePreview("../../images/placeholder.jpg");
+    setRecipe((prevValue) => {
+      return {
+        ...prevValue,
+        image: "",
       };
     });
   }
@@ -49,7 +67,6 @@ export default function Create({ loaderCallback }) {
 
   const handleRecipe = async (e) => {
     e.preventDefault();
-    loaderCallback(true);
     // When post request is sent to the create url, axios will add a new record to the database.
     recipe.dateCreated = new Date();
     recipe.userId = getWithExpiry("userId");
@@ -98,16 +115,6 @@ export default function Create({ loaderCallback }) {
     }
   };
 
-  //Make sure user is still logged in, in case they reload the page
-  useEffect(() => {
-    if (!getWithExpiry("authToken")) {
-      navigate("/login");
-      setError("Sorry, you are not logged in.");
-    }
-  }, []);
-
-  console.log(recipe);
-
   return (
     <div>
       {error && <div className="error-message">{error}</div>}
@@ -119,6 +126,7 @@ export default function Create({ loaderCallback }) {
         instructions={recipe.analyzedInstructions}
         imageCallback={imageCallback}
         imagePreview={imagePreview}
+        removeImage={removeImage}
         categoriesCallback={categoriesCallback}
       />
     </div>
