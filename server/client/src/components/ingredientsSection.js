@@ -1,28 +1,28 @@
-import { React, useState } from 'react';
+import { React, useState } from "react";
 
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
-import IngredientEdit from './ingredientEdit';
-import Input from './input';
-import Button from './button';
+import IngredientEdit from "./ingredientEdit";
+import Input from "./input";
+import Button from "./button";
 
-export default function IngredientCreate(props) {
+export default function IngredientsSection(props) {
   const INGREDIENT = {
-    amount: '',
+    amount: "",
     group: 0,
-    nameClean: '',
-    id: '',
-    unit: '',
+    nameClean: "",
+    id: "",
+    unit: "",
   };
 
   const [ingredient, setIngredient] = useState(INGREDIENT);
 
   const [editIngredient, setEditIngredient] = useState({
-    nameClean: '',
-    amount: '',
-    unit: '',
+    nameClean: "",
+    amount: "",
+    unit: "",
     group: 0,
-    id: '',
+    id: "",
   });
 
   //Set ingredient based on data entered into ingredientsCreate fields
@@ -97,11 +97,11 @@ export default function IngredientCreate(props) {
     updateRecipeIngredients(filtered);
 
     setEditIngredient({
-      nameClean: '',
-      amount: '',
-      unit: '',
+      nameClean: "",
+      amount: "",
+      unit: "",
       group: 0,
-      id: '',
+      id: "",
     });
   };
 
