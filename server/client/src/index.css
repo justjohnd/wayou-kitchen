@@ -415,7 +415,8 @@ link:hover {
 }
 
 .error-message {
-  display: inline-block;
+  display: flex;
+  justify-content: center;
   padding: 5px;
   background: var(--color-primary);
   color: #fff;
@@ -431,4 +432,9 @@ link:hover {
   color: #fff;
   text-align: center;
   margin: 0.5rem 0;
+}
+
+/* File upload */
+input[type="file"] {
+  display: none;
 }

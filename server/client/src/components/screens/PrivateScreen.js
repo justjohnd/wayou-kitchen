@@ -1,27 +1,27 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-import axios from 'axios';
-import { v4 as uuidv4 } from 'uuid';
+import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
-import Recipe from '../recipe';
-import Button from '../button';
-import RecipeGroup from '../recipeGroup';
-import CategoryDropdown from '../categoryDropdown';
+import RecipesSelected from "../recipesSelected";
+import Button from "../button";
+import RecipeGroup from "../recipeGroup";
+import CategoryDropdown from "../categoryDropdown";
 
-import { categories } from '../../javascript/categories';
-import httpAddress from '../../javascript/httpAddress';
+import { categories } from "../../javascript/categories";
+import httpAddress from "../../javascript/httpAddress";
 import {
   setWithExpiry,
   getWithExpiry,
-} from '../../hooks/localStorageWithExpiry';
+} from "../../hooks/localStorageWithExpiry";
 
-const PrivateScreen = (props) => {
-  const [error, setError] = useState('');
+const PrivateScreen = () => {
+  const [error, setError] = useState("");
   const [privateScreen, setPrivateScreen] = useState(true);
   const [selectedCategories, setSelectedCategories] = useState(null);
   const [recordCategories, setRecordCategories] = useState(null);
-  const [records, setRecords] = useState('');
+  const [records, setRecords] = useState("");
   const [pageNumber, setPageNumber] = useState(1);
   const [postNumber] = useState(20);
 
@@ -39,21 +39,21 @@ const PrivateScreen = (props) => {
   let navigate = useNavigate();
 
   useEffect(() => {
-    if (!getWithExpiry('authToken')) {
-      navigate('/login');
-      setError('Sorry, you are not logged in.');
+    if (!getWithExpiry("authToken")) {
+      navigate("/login");
+      setError("Sorry, you are not logged in.");
     }
 
     const fetchPrivateData = async () => {
       const config = {
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${getWithExpiry('authToken')}`,
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getWithExpiry("authToken")}`,
         },
       };
 
       try {
-        const { data } = await axios.get('/api/private', config);
+        const { data } = await axios.get("/api/private", config);
 
         for (let i = 0; i < data.records.length; i++) {
           // Verify lastModified data is available, if not, add arbitrary older date to place those items at bottom of list
@@ -64,9 +64,9 @@ const PrivateScreen = (props) => {
           }
           // Verify catagegories data is available. If not add value: other
           if (!data.records[i].categories) {
-            data.records[i].categories = [{ value: 'other' }];
+            data.records[i].categories = [{ value: "other" }];
           } else if (data.records[i].categories.length === 0) {
-            data.records[i].categories.push({ value: 'other' });
+            data.records[i].categories.push({ value: "other" });
           }
         }
 
@@ -91,11 +91,11 @@ const PrivateScreen = (props) => {
         }
 
         setRecords(ordered);
-        setWithExpiry('userId', data.id);
+        setWithExpiry("userId", data.id);
       } catch (error) {
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('userId');
-        setError('You are not authorized please login');
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("userId");
+        setError("You are not authorized please login");
         console.log(error);
       }
     };
@@ -110,7 +110,7 @@ const PrivateScreen = (props) => {
     } catch (error) {
       setError(error.response.data.error);
       setTimeout(() => {
-        setError('');
+        setError("");
       }, 5000);
     }
   };
@@ -119,7 +119,6 @@ const PrivateScreen = (props) => {
   function categoriesCallback(optionSelected) {
     setSelectedCategories(optionSelected);
     //Put records in their on groups
-    console.log(optionSelected);
     const categoryTypes = optionSelected.map((category) => category.value);
 
     const groupArray = () => {
@@ -144,7 +143,7 @@ const PrivateScreen = (props) => {
     if (selectedCategories === null || selectedCategories.length === 0) {
       return (
         <div>
-          <Recipe
+          <RecipesSelected
             privateScreen={privateScreen}
             recordArray={paginatedPosts}
             deleteRecord={deleteRecord}
@@ -152,7 +151,7 @@ const PrivateScreen = (props) => {
           {paginatedPosts.length > 0 && (
             <div className="pagination-wrapper">
               <div className="d-flex justify-content-center">
-                Page {pageNumber}{' '}
+                Page {pageNumber}{" "}
               </div>
               <div className="d-flex">
                 <Button
@@ -177,7 +176,8 @@ const PrivateScreen = (props) => {
     }
   }
 
-  // This following section will display the table with the records of individuals.
+  console.log(records);
+
   return error ? (
     <span className="error-message d-flex justify-content-center">{error}</span>
   ) : (

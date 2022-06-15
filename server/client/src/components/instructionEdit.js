@@ -22,8 +22,6 @@ function InstructionEdit(props) {
     );
   }
 
-  console.log(props);
-
   return (
     <div className="input-left">
       <div className="input-left mb-0">

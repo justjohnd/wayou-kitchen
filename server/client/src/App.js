@@ -6,7 +6,7 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Edit from "./components/screens/Edit";
 import Create from "./components/screens/Create";
-import RecipeList from "./components/screens/RecipeList";
+import Home from "./components/screens/Home";
 import Show from "./components/screens/Show";
 import LoginScreen from "./components/screens/LoginScreen";
 import RegisterScreen from "./components/screens/RegisterScreen";
@@ -42,7 +42,7 @@ const App = () => {
       )}
       <Navbar loaderCallback={loaderCallback} />
       <Routes>
-        <Route path="/" element={<RecipeList />} />
+        <Route path="/" element={<Home loaderCallback={loaderCallback} />} />
         <Route path="/show/:id" element={<Show />} />
         <Route
           path="/edit/:id"
@@ -66,7 +66,10 @@ const App = () => {
           element={<ForgotPassword loaderCallback={loaderCallback} />}
         />
         <Route element={<PrivateRoute />}></Route>
-        <Route path="*" element={<RecipeList to="/" />} />
+        <Route
+          path="*"
+          element={<Home loaderCallback={loaderCallback} to="/" />}
+        />
       </Routes>
     </div>
   );

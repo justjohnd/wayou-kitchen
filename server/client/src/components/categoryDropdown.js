@@ -1,48 +1,29 @@
-import React, { useState } from 'react';
-
-import { default as ReactSelect } from 'react-select';
-import { components } from 'react-select';
-
-import { categories } from '../javascript/categories.js';
-
-const Option = (props) => {
-  return (
-    <div>
-      <components.Option {...props}>
-        <input
-          type="checkbox"
-          checked={props.isSelected}
-          onChange={() => null}
-        />{' '}
-        <label>{props.label}</label>
-      </components.Option>
-    </div>
-  );
-};
+import { default as ReactSelect } from "react-select";
+import makeAnimated from "react-select/animated";
+import { categories } from "../javascript/categories.js";
 
 export default function CategoryDropdown(props) {
-  function handleChange(selected) {
-    props.categoriesCallback(selected);
+  function customTheme(theme) {
+    return {
+      ...theme,
+      colors: {
+        ...theme.colors,
+        primary25: "#ff7f3f",
+        primary: "#77d970",
+      },
+    };
   }
 
   return (
-    <span
+    <ReactSelect
+      theme={customTheme}
+      components={makeAnimated()}
+      options={categories}
+      isMulti
+      onChange={(selected) => props.categoriesCallback(selected)}
+      value={props.selectedCategories}
+      isSearchable
       className="d-inline-block category-dropdown mb-3"
-      data-toggle="popover"
-      data-trigger="focus"
-      data-content="Please selecet account(s)"
-    >
-      <ReactSelect
-        options={categories}
-        isMulti
-        closeMenuOnSelect={false}
-        hideSelectedOptions={false}
-        components={{
-          Option,
-        }}
-        onChange={handleChange}
-        allowSelectAll={true}
-      />
-    </span>
+    />
   );
 }

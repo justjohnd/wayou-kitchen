@@ -11,48 +11,38 @@ import { getWithExpiry } from "../../hooks/localStorageWithExpiry";
 
 import TemplateCreateEdit from "../templateCreateEdit";
 
-export default function Create(props) {
+export default function Create({ loaderCallback }) {
   const [recipe, setRecipe] = useState(RECIPE_OBJECT);
-  const [imagePreview, setImagePreview] = useState("");
+  const [imagePreview, setImagePreview] = useState(
+    "../../images/placeholder.jpg"
+  );
   const [error, setError] = useState("");
+
   const pageType = "Create";
 
   const navigate = useNavigate();
 
-  //Convert image upload File into DOMString for instant preview on the page
-  // Note that File inputs do not have values, hence recipe image value must be set here
-  function imageCallback(data) {
-    if (data) {
-      setImagePreview(URL.createObjectURL(data));
-    } else {
-      //Remove image preview if user removes the image
-      setImagePreview("");
+  //Make sure user is still logged in, in case their session has expired, but the frontend doesn't know
+  useEffect(() => {
+    if (!getWithExpiry("authToken")) {
+      navigate("/login");
+      setError("Sorry, you are not logged in.");
     }
-
-    setRecipe((prevValue) => {
-      return {
-        ...prevValue,
-        image: data,
-      };
-    });
-  }
-
-  //Receive selected categories and set to recipe
-  function categoriesCallback(optionSelected) {
-    setRecipe((prevValue) => {
-      return {
-        ...prevValue,
-        categories: optionSelected,
-      };
-    });
-  }
+  }, []);
 
   const handleRecipe = async (e) => {
     e.preventDefault();
-    props.loaderCallback(true);
     // When post request is sent to the create url, axios will add a new record to the database.
     recipe.dateCreated = new Date();
     recipe.userId = getWithExpiry("userId");
+
+    //Add category "other" if not category is selected
+    if (recipe.categories[0] === undefined) {
+      recipe.categories.push({
+        value: "other",
+        label: "Other",
+      });
+    }
 
     const formData = new FormData();
     // For File objects (such as image) do not stringify
@@ -73,15 +63,16 @@ export default function Create(props) {
     }
 
     try {
-      props.loaderCallback(true);
+      loaderCallback(true);
       await axios.post(`${httpAddress}/record/add`, formData);
       setTimeout(() => {
         navigate("/private");
-        props.loaderCallback(false);
+        loaderCallback(false);
       }, 2000);
     } catch (error) {
-      props.loaderCallback(false);
-      setError(error.response.data.error);
+      window.scrollTo(0, 0);
+      loaderCallback(false);
+      setError("We're sorry, something went wrong!");
       setTimeout(() => {
         setError("");
         navigate("/login");
@@ -89,25 +80,17 @@ export default function Create(props) {
     }
   };
 
-  //Make sure user is still logged in, in case they reload the page
-  useEffect(() => {
-    if (!getWithExpiry("authToken")) {
-      navigate("/login");
-      setError("Sorry, you are not logged in.");
-    }
-  }, []);
-
   return (
     <div>
+      {error && <div className="error-message">{error}</div>}
       <TemplateCreateEdit
         pageType={pageType}
         handleRecipe={handleRecipe}
         recipe={recipe}
         setRecipe={setRecipe}
         instructions={recipe.analyzedInstructions}
-        imageCallback={imageCallback}
         imagePreview={imagePreview}
-        categoriesCallback={categoriesCallback}
+        setImagePreview={setImagePreview}
       />
     </div>
   );

@@ -18,11 +18,45 @@ export default function TemplateCreateEdit(props) {
     });
   }
 
-  console.log(props.recipe);
+  //Convert image upload File into DOMString for instant preview on the page
+  // Note that File inputs do not have values, hence recipe image value must be set here
+  function imageCallback(data) {
+    if (data === undefined) return;
+
+    props.setImagePreview(URL.createObjectURL(data));
+
+    props.setRecipe((prevValue) => {
+      return {
+        ...prevValue,
+        image: data,
+      };
+    });
+  }
+
+  function removeImage() {
+    //Remove image preview if user removes the image
+    props.setImagePreview("../../images/placeholder.jpg");
+    props.setRecipe((prevValue) => {
+      return {
+        ...prevValue,
+        image: "",
+      };
+    });
+  }
+
+  //Receive selected categories and set to recipe
+  function categoriesCallback(optionSelected) {
+    props.setRecipe((prevValue) => {
+      return {
+        ...prevValue,
+        categories: optionSelected,
+      };
+    });
+  }
 
   return (
     <div className="my-5 container container-record-form">
-      <h3 className="mb-4">{props.pageType} New Record</h3>
+      <h3 className="mb-4">{props.pageType} Record</h3>
       <form
         encType="multipart/form-data"
         onSubmit={(e) => {
@@ -41,51 +75,21 @@ export default function TemplateCreateEdit(props) {
         />
         <div className="form-group mb-5">
           <h4 className="mb-3">Image</h4>
-          {props.pageType === "Edit" ? (
-            <div className="mb-5 d-flex">
-              <img
-                className="recipe-image"
-                id="image-preview"
-                src={props.imagePreview}
-                alt={props.recipe.title}
-              />
-              <div>
-                <Button
-                  buttonWrapper="d-inline mx-3"
-                  buttonText="Edit Image"
-                  onClick={() => props.changeImageCallback()}
-                />
-                <Button
-                  buttonWrapper="d-inline mx-3"
-                  buttonText="Remove Image"
-                  onClick={() => props.changeImageCallback("remove")}
-                />
-                {props.changeImage === true && (
-                  <InputFile
-                    onChange={(e) => props.imageCallback(e.target.files[0])}
-                    className="mx-3"
-                  />
-                )}
-              </div>
-            </div>
-          ) : (
-            <div
-              className={`mb-5 ${props.imagePreview ? "d-flex" : "w-sm-50"}`}
-            >
-              {props.imagePreview && (
-                <img
-                  className="recipe-image"
-                  id="image-preview"
-                  src={props.imagePreview}
-                  alt={props.recipe.title}
-                />
-              )}
-              <InputFile
-                onChange={(e) => props.imageCallback(e.target.files[0])}
-                className={props.imagePreview && "mx-3"}
-              />
-            </div>
-          )}
+          <div className="mb-5 d-flex align-items-end w-sm-50">
+            <img
+              className="recipe-image small"
+              id="image-preview"
+              src={props.imagePreview}
+              alt={props.recipe.title}
+            />
+            <InputFile imageCallback={imageCallback} className="mx-3" />
+
+            <Button
+              buttonWrapper="d-inline mx-3"
+              buttonText="Remove Image"
+              onClick={() => removeImage()}
+            />
+          </div>
         </div>
 
         <IngredientCreate
@@ -100,7 +104,7 @@ export default function TemplateCreateEdit(props) {
           <h4>Categories</h4>
           <CategoryDropdown
             selectedCategories={props.recipe.categories}
-            categoriesCallback={props.categoriesCallback}
+            categoriesCallback={categoriesCallback}
           ></CategoryDropdown>
         </div>
         <Input

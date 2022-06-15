@@ -23,3 +23,12 @@ The `/client` directory in the main project directory is used to store the `/bui
 - From the `/server` directory, enter `heroku login`. The browser will open. Click the Login button.
 - Make any git commits.
 - Enter `git push heroku master`
+
+## MongoDB cheatsheet
+
+These commands can be used when conntecting via MongoDB shell:
+
+- `show dbs`
+- `show collections`
+- `db.<collection name>.find()`
+- `db.<collection name>.find({<keyname>:<value>})`

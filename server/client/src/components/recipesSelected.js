@@ -1,35 +1,36 @@
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
-function Recipe(props) {
+function RecipesSelected({ recordArray, privateScreen, deleteRecord }) {
   return (
-    <div class="container">
+    <div className="container">
       <div className="row">
-        {props.recordArray.map((currentrecord) => {
+        {recordArray.map((currentrecord) => {
+          const { _id, image, title } = currentrecord;
+
           return (
             <div key={uuidv4()} className="recipe-home col-6 col-md-4 col-lg-3">
-              <Link to={"/show/" + currentrecord._id}>
+              <Link to={"/show/" + _id}>
                 <div className="image-wrapper">
                   <img
                     className="recipe-image mb-2"
                     src={
-                      currentrecord.image !== null &&
-                      currentrecord.image.slice(0, 4) === "http"
-                        ? currentrecord.image
-                        : "./images/" + currentrecord.image
+                      image !== null && image.slice(0, 4) === "http"
+                        ? image
+                        : "./images/" + image
                     }
-                    alt={currentrecord.title}
+                    alt={title}
                   />
                 </div>
-                <div className="px-1 title">{currentrecord.title}</div>
+                <div className="px-1 title">{title}</div>
               </Link>
-              {props.privateScreen ? (
+              {privateScreen ? (
                 <div className="px-1">
-                  <Link to={"/edit/" + currentrecord._id}>Edit</Link> |
+                  <Link to={"/edit/" + _id}>Edit</Link> |
                   <a
                     className="link"
                     onClick={() => {
-                      props.deleteRecord(currentrecord._id);
+                      deleteRecord(_id);
                       window.location.reload();
                     }}
                   >
@@ -47,4 +48,4 @@ function Recipe(props) {
   );
 }
 
-export default Recipe;
+export default RecipesSelected;
