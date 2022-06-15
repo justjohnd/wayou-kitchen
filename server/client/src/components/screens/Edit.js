@@ -22,42 +22,6 @@ export default function Edit({ loaderCallback }) {
 
   const navigate = useNavigate();
 
-  function imageCallback(data) {
-    console.log("hello", data);
-
-    if (data === undefined) return;
-
-    setImagePreview(URL.createObjectURL(data));
-
-    setRecipe((prevValue) => {
-      return {
-        ...prevValue,
-        image: data,
-      };
-    });
-  }
-
-  function removeImage() {
-    //Remove image preview if user removes the image
-    setImagePreview("../../images/placeholder.jpg");
-    setRecipe((prevValue) => {
-      return {
-        ...prevValue,
-        image: "",
-      };
-    });
-  }
-
-  //Receive selected categories and set to recipe
-  function categoriesCallback(optionSelected) {
-    setRecipe((prevValue) => {
-      return {
-        ...prevValue,
-        categories: optionSelected,
-      };
-    });
-  }
-
   let params = useParams();
 
   // This function will handle the submission.
@@ -155,9 +119,7 @@ export default function Edit({ loaderCallback }) {
         setRecipe={setRecipe}
         instructions={recipe.analyzedInstructions}
         imagePreview={imagePreview}
-        imageCallback={imageCallback}
-        removeImage={removeImage}
-        categoriesCallback={categoriesCallback}
+        setImagePreview={setImagePreview}
       />
     </div>
   );

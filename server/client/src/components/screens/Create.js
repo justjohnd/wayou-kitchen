@@ -29,41 +29,6 @@ export default function Create({ loaderCallback }) {
       setError("Sorry, you are not logged in.");
     }
   }, []);
-  //Convert image upload File into DOMString for instant preview on the page
-  // Note that File inputs do not have values, hence recipe image value must be set here
-  function imageCallback(data) {
-    if (data === undefined) return;
-
-    setImagePreview(URL.createObjectURL(data));
-
-    setRecipe((prevValue) => {
-      return {
-        ...prevValue,
-        image: data,
-      };
-    });
-  }
-
-  function removeImage() {
-    //Remove image preview if user removes the image
-    setImagePreview("../../images/placeholder.jpg");
-    setRecipe((prevValue) => {
-      return {
-        ...prevValue,
-        image: "",
-      };
-    });
-  }
-
-  //Receive selected categories and set to recipe
-  function categoriesCallback(optionSelected) {
-    setRecipe((prevValue) => {
-      return {
-        ...prevValue,
-        categories: optionSelected,
-      };
-    });
-  }
 
   const handleRecipe = async (e) => {
     e.preventDefault();
@@ -124,10 +89,8 @@ export default function Create({ loaderCallback }) {
         recipe={recipe}
         setRecipe={setRecipe}
         instructions={recipe.analyzedInstructions}
-        imageCallback={imageCallback}
         imagePreview={imagePreview}
-        removeImage={removeImage}
-        categoriesCallback={categoriesCallback}
+        setImagePreview={setImagePreview}
       />
     </div>
   );

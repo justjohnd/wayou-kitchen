@@ -18,6 +18,42 @@ export default function TemplateCreateEdit(props) {
     });
   }
 
+  //Convert image upload File into DOMString for instant preview on the page
+  // Note that File inputs do not have values, hence recipe image value must be set here
+  function imageCallback(data) {
+    if (data === undefined) return;
+
+    props.setImagePreview(URL.createObjectURL(data));
+
+    props.setRecipe((prevValue) => {
+      return {
+        ...prevValue,
+        image: data,
+      };
+    });
+  }
+
+  function removeImage() {
+    //Remove image preview if user removes the image
+    props.setImagePreview("../../images/placeholder.jpg");
+    props.setRecipe((prevValue) => {
+      return {
+        ...prevValue,
+        image: "",
+      };
+    });
+  }
+
+  //Receive selected categories and set to recipe
+  function categoriesCallback(optionSelected) {
+    props.setRecipe((prevValue) => {
+      return {
+        ...prevValue,
+        categories: optionSelected,
+      };
+    });
+  }
+
   return (
     <div className="my-5 container container-record-form">
       <h3 className="mb-4">{props.pageType} Record</h3>
@@ -46,12 +82,12 @@ export default function TemplateCreateEdit(props) {
               src={props.imagePreview}
               alt={props.recipe.title}
             />
-            <InputFile imageCallback={props.imageCallback} className="mx-3" />
+            <InputFile imageCallback={imageCallback} className="mx-3" />
 
             <Button
               buttonWrapper="d-inline mx-3"
               buttonText="Remove Image"
-              onClick={() => props.removeImage()}
+              onClick={() => removeImage()}
             />
           </div>
         </div>
@@ -68,7 +104,7 @@ export default function TemplateCreateEdit(props) {
           <h4>Categories</h4>
           <CategoryDropdown
             selectedCategories={props.recipe.categories}
-            categoriesCallback={props.categoriesCallback}
+            categoriesCallback={categoriesCallback}
           ></CategoryDropdown>
         </div>
         <Input

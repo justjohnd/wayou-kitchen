@@ -17,7 +17,7 @@ export default function InputFile(props) {
             props.imageCallback(e.target.files[0]);
           }}
         />
-        "Change Image"
+        Change Image
       </label>
     </div>
   );
