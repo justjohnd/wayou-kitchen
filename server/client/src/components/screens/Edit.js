@@ -43,7 +43,7 @@ export default function Edit({ loaderCallback }) {
         formData.append(RECIPE_PROPERTIES[i], recipe[RECIPE_PROPERTIES[i]]);
       } else if (RECIPE_PROPERTIES[i] === "image") {
         //If an image is entered and then removed, recipe.image will set to undefined. Changing to "", will cause a stock image to automatically load on the backend
-        if (recipe.image !== "") {
+        if (recipe.image === "") {
           formData.append("image", "");
         }
       } else {
@@ -51,6 +51,7 @@ export default function Edit({ loaderCallback }) {
           RECIPE_PROPERTIES[i],
           JSON.stringify(recipe[RECIPE_PROPERTIES[i]])
         );
+        console.log(RECIPE_PROPERTIES[i], recipe[RECIPE_PROPERTIES[i]]);
       }
     }
 
@@ -87,7 +88,8 @@ export default function Edit({ loaderCallback }) {
         let myObj = {};
         for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
           if (RECIPE_PROPERTIES[i] === "image") {
-            myObj.image = data.image;
+            // Only set the image. recipe.image will remain undefined until an image is loaded
+            setImagePreview(data.image);
 
             if (data.image !== null && data.image.slice(0, 4) === "http") {
               setImagePreview(data.image);
@@ -107,6 +109,8 @@ export default function Edit({ loaderCallback }) {
       console.log(err);
     }
   }, []);
+
+  console.log(recipe);
 
   // This following section will display the form that takes the input from the user.
   return (
