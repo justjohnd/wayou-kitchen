@@ -1,25 +1,25 @@
-import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-import axios from 'axios';
+import axios from "axios";
 
-import './LoginScreen.css';
+import "./LoginScreen.css";
 
 import {
   setWithExpiry,
   getWithExpiry,
-} from '../../hooks/localStorageWithExpiry';
+} from "../../hooks/localStorageWithExpiry";
 
 const LoginScreen = (props) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (getWithExpiry('authToken')) {
-      navigate('/');
+    if (getWithExpiry("authToken")) {
+      navigate("/");
     }
   }, []);
 
@@ -29,34 +29,37 @@ const LoginScreen = (props) => {
 
     const config = {
       header: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     };
 
     try {
+      //Return succss and token as data
       const { data } = await axios.post(
-        '/api/auth/login',
+        // Routes are set in server.js
+        "/api/auth/login",
         { email, password },
         config
       );
 
-      setWithExpiry('authToken', data.token);
+      setWithExpiry("authToken", data.token);
 
-      navigate('/private');
+      navigate("/private");
       props.loaderCallback(false);
     } catch (error) {
+      //The error above is the error thrown by a failed try...catch. The data below is error data
       setError(error.response.data.error);
       props.loaderCallback(false);
       setTimeout(() => {
-        setError('');
+        setError("");
       }, 5000);
     }
   };
 
   return (
     <div className="login-screen">
-      <form onSubmit={loginHandler} className="login-screen__form">
-        <h3 className="login-screen__title">Login</h3>
+      <form onSubmit={loginHandler} className="login-screen-form">
+        <h3 className="login-screen-title">Login</h3>
         {error && <span className="error-message">{error}</span>}
         <div className="form-group">
           <label className="form-label-sm" htmlFor="email">
@@ -78,7 +81,7 @@ const LoginScreen = (props) => {
             Password:
             <Link
               to="/forgotpassword"
-              className="login-screen__forgotpassword"
+              className="login-screen-forgotpassword"
               tabIndex={4}
             >
               Forgot Password?
@@ -100,7 +103,7 @@ const LoginScreen = (props) => {
         <button type="submit" className="btn btn-primary" tabIndex={3}>
           Login
         </button>
-        <span className="login-screen__subtext">
+        <span className="login-screen-subtext">
           Don't have an account?<Link to="/register">Register</Link>
         </span>
       </form>
