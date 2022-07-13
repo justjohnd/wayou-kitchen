@@ -8,9 +8,11 @@ To open your developer environment:
 - Connect to the server by navigating to `server` directory and running `node nodemon.js`
 - In `server/client/src/javascript/httpAddress.js` make sure that `const httpAddress = addresses.local;`
 
-## Structure
+## Misc. Notes
 
 - The routing is contained in `client/src/App.js`
+- Currently userId is being stored in local storage
+- Reset password is not connected yet
 
 ## Deployment and Git
 
