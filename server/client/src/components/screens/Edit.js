@@ -28,22 +28,23 @@ export default function Edit({ loaderCallback }) {
   const handleRecipe = async (e) => {
     e.preventDefault();
 
+    //Formata() object replicates functions of HTML form, but bundles each element in an array. this is necessary to be able to send uploaded files
     const formData = new FormData();
 
     if (!recipe.dateCreated) {
       recipe.dateCreated = new Date();
     }
 
-    if (recipe.categories[0] === undefined) {
+    //At minimum, categeory "Other" will always be set if no other categories are set
+    !recipe.categories[0] &&
       recipe.categories.push({ value: "other", label: "Other" });
-    }
 
     for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
       if (recipe[RECIPE_PROPERTIES[i]] instanceof File) {
         formData.append(RECIPE_PROPERTIES[i], recipe[RECIPE_PROPERTIES[i]]);
       } else if (RECIPE_PROPERTIES[i] === "image") {
         //If an image is entered and then removed, recipe.image will set to undefined. Changing to "", will cause a stock image to automatically load on the backend
-        if (recipe.image !== "") {
+        if (recipe.image === "") {
           formData.append("image", "");
         }
       } else {
@@ -51,6 +52,7 @@ export default function Edit({ loaderCallback }) {
           RECIPE_PROPERTIES[i],
           JSON.stringify(recipe[RECIPE_PROPERTIES[i]])
         );
+        console.log(RECIPE_PROPERTIES[i], recipe[RECIPE_PROPERTIES[i]]);
       }
     }
 
@@ -81,19 +83,15 @@ export default function Edit({ loaderCallback }) {
 
     try {
       const fetchData = async () => {
+        //Destructure the data object payload
         const { data } = await axios.get(`${httpAddress}/record/${params.id}`);
 
-        // image will load separately in the image varialbe, apart from other properties in the receipe variable
         let myObj = {};
         for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
+          // Only set the image. recipe.image will remain undefined until either a new image is loaded or the existing image is removed
           if (RECIPE_PROPERTIES[i] === "image") {
-            myObj.image = data.image;
-
-            if (data.image !== null && data.image.slice(0, 4) === "http") {
-              setImagePreview(data.image);
-            } else {
-              setImagePreview("../../images/" + data.image);
-            }
+            //Image is set as a url
+            setImagePreview(data.image);
           } else {
             myObj[RECIPE_PROPERTIES[i]] = data[RECIPE_PROPERTIES[i]];
           }

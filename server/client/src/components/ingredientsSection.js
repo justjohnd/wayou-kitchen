@@ -1,55 +1,32 @@
-import { React, useState } from 'react';
+import { React, useState } from "react";
 
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
-import IngredientEdit from './ingredientEdit';
-import Input from './input';
-import Button from './button';
+import IngredientEdit from "./ingredientEdit";
+import Input from "./input";
+import Button from "./button";
 
-export default function IngredientCreate(props) {
+export default function IngredientsSection(props) {
   const INGREDIENT = {
-    amount: '',
+    amount: "",
     group: 0,
-    nameClean: '',
-    id: '',
-    unit: '',
+    nameClean: "",
+    id: "",
+    unit: "",
   };
 
   const [ingredient, setIngredient] = useState(INGREDIENT);
 
   const [editIngredient, setEditIngredient] = useState({
-    nameClean: '',
-    amount: '',
-    unit: '',
+    nameClean: "",
+    amount: "",
+    unit: "",
     group: 0,
-    id: '',
+    id: "",
   });
 
-  //Set ingredient based on data entered into ingredientsCreate fields
-  function sanitizeIngredient(e, stateConstant, setStateConstant) {
-    const { name, value } = e.target;
-
-    const ingredientClone = {
-      ...stateConstant,
-      [name]: value,
-    };
-
-    const string = ingredientClone.group;
-    ingredientClone.group = parseInt(string, 10);
-
-    setStateConstant(ingredientClone);
-  }
-
-  function updateRecipeIngredients(data) {
-    props.setRecipe((prevValue) => {
-      return {
-        ...prevValue,
-        extendedIngredients: data,
-      };
-    });
-  }
-
-  const handleChange = (e) => {
+  //Handle all changes for the new ingredients field
+  const handleChangeCreate = (e) => {
     const { name, value } = e.target;
     setIngredient((prevValue) => {
       return {
@@ -59,7 +36,8 @@ export default function IngredientCreate(props) {
     });
   };
 
-  const addIngredient = (ingredient) => {
+  //Add new ingredient to the ingredients list
+  const saveIngredientCreate = (ingredient) => {
     ingredient.id = uuidv4();
 
     const ingredientsClone = [...props.ingredients, ingredient];
@@ -71,10 +49,62 @@ export default function IngredientCreate(props) {
     });
   };
 
-  const editIngredientCallback = (e) => {
-    sanitizeIngredient(e, editIngredient, setEditIngredient);
+  //These functions control the ingredients list portion of the form
+  //Handle changes to ingredient being edited from the ingredients list
+  const handleChangeEdit = (e) => {
+    const { name, value } = e.target;
+
+    const ingredientClone = {
+      ...editIngredient,
+      [name]: value,
+    };
+
+    const string = ingredientClone.group;
+    ingredientClone.group = parseInt(string, 10);
+
+    setEditIngredient(ingredientClone);
   };
 
+  //Save any changes to any ingredients in state (not yet to the backend).Triggered by the Save and Delete buttons
+  function saveIngredientEdit(data) {
+    props.setRecipe((prevValue) => {
+      return {
+        ...prevValue,
+        extendedIngredients: data,
+      };
+    });
+  }
+
+  // Save button from ingredients list
+  const onSave = (idx) => {
+    const ingredientsClone = [...props.ingredients];
+    const filtered = ingredientsClone.filter((ingredient) => {
+      return ingredient.id !== editIngredient.id;
+    });
+
+    filtered.splice(idx, 0, editIngredient);
+    saveIngredientEdit(filtered);
+
+    setEditIngredient({
+      nameClean: "",
+      amount: "",
+      unit: "",
+      group: 0,
+      id: "",
+    });
+  };
+
+  //Delete button from ingredients list
+  const deleteIngredient = (e, id) => {
+    e.preventDefault();
+    const ingredientsClone = [...props.ingredients];
+    const filtered = ingredientsClone.filter((item, index) => {
+      return index !== id;
+    });
+    saveIngredientEdit(filtered);
+  };
+
+  //Saves changes to editIngredient
   const showIngredientCallback = (ingredient) => {
     if (!ingredient.id) {
       ingredient.id = uuidv4();
@@ -87,38 +117,11 @@ export default function IngredientCreate(props) {
     setEditIngredient(ingredientClone);
   };
 
-  const onSave = (idx) => {
-    const ingredientsClone = [...props.ingredients];
-    const filtered = ingredientsClone.filter((ingredient) => {
-      return ingredient.id !== editIngredient.id;
-    });
-
-    filtered.splice(idx, 0, editIngredient);
-    updateRecipeIngredients(filtered);
-
-    setEditIngredient({
-      nameClean: '',
-      amount: '',
-      unit: '',
-      group: 0,
-      id: '',
-    });
-  };
-
-  const deleteIngredient = (e, id) => {
-    e.preventDefault();
-    const ingredientsClone = [...props.ingredients];
-    const filtered = ingredientsClone.filter((item, index) => {
-      return index !== id;
-    });
-    updateRecipeIngredients(filtered);
-  };
-
   return (
     <div className="form-group mb-5">
       <h4 className="mb-3">Ingredients</h4>
       <section className="recipe-section-wrapper">
-        <div className="input-left">
+        <div className="input-left new-ingredient">
           <div>
             <Input
               label="Ingredient:"
@@ -128,7 +131,7 @@ export default function IngredientCreate(props) {
               value={ingredient.nameClean}
               onChange={(e) => {
                 e.preventDefault();
-                handleChange(e);
+                handleChangeCreate(e);
               }}
             />
             <Input
@@ -138,7 +141,7 @@ export default function IngredientCreate(props) {
               type="text"
               value={ingredient.amount}
               onChange={(e) => {
-                handleChange(e);
+                handleChangeCreate(e);
               }}
               placeholder=""
             />
@@ -149,7 +152,7 @@ export default function IngredientCreate(props) {
               type="text"
               value={ingredient.unit}
               onChange={(e) => {
-                handleChange(e);
+                handleChangeCreate(e);
               }}
               placeholder=""
             />
@@ -159,7 +162,7 @@ export default function IngredientCreate(props) {
                 <select
                   className="selector-input form-control"
                   onChange={(e) => {
-                    handleChange(e);
+                    handleChangeCreate(e);
                   }}
                   value={ingredient.group}
                   selected
@@ -185,7 +188,7 @@ export default function IngredientCreate(props) {
             className="ms-sm-2 mt-2 mt-sm-0"
             onClick={(e) => {
               e.preventDefault();
-              addIngredient(ingredient);
+              saveIngredientCreate(ingredient);
               setIngredient(INGREDIENT);
             }}
             buttonText="Add"
@@ -201,7 +204,7 @@ export default function IngredientCreate(props) {
               editIngredient={editIngredient}
               showIngredientCallback={showIngredientCallback}
               onSave={onSave}
-              editIngredientCallback={editIngredientCallback}
+              handleChangeEdit={handleChangeEdit}
               deleteIngredient={deleteIngredient}
             />
           ))}

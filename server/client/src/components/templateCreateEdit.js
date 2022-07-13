@@ -1,4 +1,4 @@
-import IngredientCreate from "./ingredientCreate";
+import IngredientsSection from "./ingredientsSection";
 import InstructionsSection from "./instructionsSection";
 import Input from "./input";
 import InputFile from "./InputFile";
@@ -92,7 +92,7 @@ export default function TemplateCreateEdit(props) {
           </div>
         </div>
 
-        <IngredientCreate
+        <IngredientsSection
           ingredients={props.recipe.extendedIngredients}
           setRecipe={props.setRecipe}
         />

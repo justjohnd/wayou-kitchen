@@ -25,7 +25,7 @@ export default function useGetRecords(route) {
           }
         }
 
-        // Check and remove any duplicates (based on sourcrUrl)
+        // Check and remove any duplicates (based on sourcrUrl).
         let sourceUrlHash = {};
         response.data.forEach((item, index) => {
           if (item.sourceUrl !== "") {
