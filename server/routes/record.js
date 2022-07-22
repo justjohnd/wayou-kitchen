@@ -22,15 +22,6 @@ const {
 // The router will be added as a middleware and will take control of requests starting with path /record.
 const recordRoutes = express.Router();
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./client/public/images");
-  },
-  filename: function (req, file, cb) {
-    cb(null, uuidv4() + "-" + Date.now() + path.extname(file.originalname));
-  },
-});
-
 const fileFilter = (req, file, cb) => {
   const allowedFileTypes = ["image/jpeg", "image/jpg", "image/png"];
   if (allowedFileTypes.includes(file.mimetype)) {
@@ -46,8 +37,6 @@ const s3 = new aws.S3({
   region: "ap-northeast-1",
   Bucket: "veggit-images",
 });
-
-let upload = multer({ storage, fileFilter });
 
 let uploadS3 = multer({
   storage: multerS3({
