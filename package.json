@@ -16,5 +16,8 @@
     "url": "https://github.com/justjohnd/wayou-kitchen/issues"
   },
   "homepage": "https://github.com/justjohnd/wayou-kitchen#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "multer-sharp-s3": "^0.2.5"
+  }
 }
