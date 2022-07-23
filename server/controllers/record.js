@@ -43,8 +43,10 @@ function setObject(reqData) {
       //First, check to see if image is a url
       if (reqData.file) {
         // Replace reqData.file.location with reqData.file.filename if storing images on a local server
-        if (reqData.file.location) {
-          myObj["image"] = reqData.file.location;
+        if (reqData.file.Location) {
+          //This is actually set when multerS3 runs, setting it to the file url on AWS s3
+          //Note that Location key MUST be capitalized to m
+          myObj["image"] = reqData.file.Location;
         } else {
           myObj["image"] = reqData.file.filename;
         }
@@ -138,7 +140,6 @@ exports.addRecord = async (req, res) => {
     let db_connect = await dbo.getDb();
 
     const myObj = setObject(req);
-    console.log(myObj);
 
     const newRecord = new Record(myObj);
 

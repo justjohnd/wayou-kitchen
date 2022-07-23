@@ -1,7 +1,8 @@
 const express = require("express");
-const multer = require("multer");
+const multer = require("multer"); //node.js middleware for handling multipart/form-data
+const s3Storage = require("multer-sharp-s3");
 const { v4: uuidv4 } = require("uuid");
-const multerS3 = require("multer-s3");
+const multerS3 = require("multer-s3"); //streaming multer storage engine for S3
 const aws = require("aws-sdk");
 let path = require("path");
 
@@ -22,15 +23,7 @@ const {
 // The router will be added as a middleware and will take control of requests starting with path /record.
 const recordRoutes = express.Router();
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./client/public/images");
-  },
-  filename: function (req, file, cb) {
-    cb(null, uuidv4() + "-" + Date.now() + path.extname(file.originalname));
-  },
-});
-
+//fileFilter key is an option to filter acceptable incoming files. Call 'cb' with a boolean to return true or false
 const fileFilter = (req, file, cb) => {
   const allowedFileTypes = ["image/jpeg", "image/jpg", "image/png"];
   if (allowedFileTypes.includes(file.mimetype)) {
@@ -47,8 +40,9 @@ const s3 = new aws.S3({
   Bucket: "veggit-images",
 });
 
-let upload = multer({ storage, fileFilter });
-
+//Pass to the multer functon object storage type and fileFilter.
+//Inside storage furn multerS3, setting the bucket, metadata, and key (filename)
+//Specify that a single file be uploaded, passing the input's "name" attribute
 let uploadS3 = multer({
   storage: multerS3({
     s3: s3,
@@ -58,12 +52,31 @@ let uploadS3 = multer({
       cb(null, { fieldName: file.fieldname });
     },
     key: function (req, file, cb) {
-      console.log(file);
       cb(null, uuidv4() + "-" + Date.now() + path.extname(file.originalname));
     },
   }),
   fileFilter,
 }).single("image");
+
+//Set up image resizing
+const storage2 = s3Storage({
+  Key: function (req, file, cb) {
+    cb(null, file.originalname);
+    console.log(file);
+  },
+  metadata: function (req, file, cb) {
+    cb(null, { fieldName: file.fieldname });
+  },
+  s3,
+  Bucket: "veggit-images",
+  ACL: "public-read",
+  resize: {
+    width: 400,
+  },
+  max: true,
+});
+
+const upload2 = multer({ storage: storage2 });
 
 // This section will help you get a list of all the records.
 recordRoutes.route("/record").get(allRecords);
@@ -72,10 +85,10 @@ recordRoutes.route("/record").get(allRecords);
 recordRoutes.route("/record/:id").get(getRecord);
 
 // This section will help you create a new record.
-recordRoutes.route("/record/add").post(uploadS3, addRecord);
+recordRoutes.route("/record/add").post(upload2.single("image"), addRecord);
 
 // This section will help you update a record by id.
-recordRoutes.route("/update/:id").put(uploadS3, updateRecord);
+recordRoutes.route("/update/:id").put(upload2.single("image"), updateRecord);
 
 // This section will help you delete a record
 recordRoutes.route("/:id").delete(deleteRecord);

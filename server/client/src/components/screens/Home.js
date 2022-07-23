@@ -65,7 +65,6 @@ export default function Home({ loaderCallback }) {
             return record;
           }
         });
-        console.log(group);
         if (group !== []) {
           newArray.unshift(group);
         }
