@@ -5,6 +5,8 @@ import RECIPE_PROPERTIES from "../../javascript/RECIPE_PROPERTIES";
 import httpAddress from "../../javascript/httpAddress";
 import IngredientGroup from "../ingredientGroup";
 
+import "./Show.css";
+
 import { v4 as uuidv4 } from "uuid";
 
 // This will require to npm install axios
