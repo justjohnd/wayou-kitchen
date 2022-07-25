@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-import { categories } from "../../javascript/categories";
 import useGetRecords from "../../hooks/useGetRecords";
 
-import RecipesSelected from "../recipesSelected";
+import RecipesSelected from "../RecipesSelected";
 import RecipeGroup from "../recipeGroup";
 import CategoryDropdown from "../categoryDropdown";
 import Button from "../button";

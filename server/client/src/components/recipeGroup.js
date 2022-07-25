@@ -1,4 +1,4 @@
-import RecipesSelected from "./recipesSelected";
+import RecipesSelected from "./RecipesSelected";
 
 function RecipeGroup({ categoryRecords, deleteRecord, privateScreen }) {
   let category = categoryRecords[0].mainCat;
