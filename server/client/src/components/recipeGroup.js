@@ -1,6 +1,11 @@
 import RecipesSelected from "./RecipesSelected";
 
-function RecipeGroup({ categoryRecords, deleteRecord, privateScreen }) {
+function RecipeGroup({
+  categoryRecords,
+  deleteRecord,
+  privateScreen,
+  showAll,
+}) {
   let category = categoryRecords[0].mainCat;
   category = category.charAt(0).toUpperCase() + category.slice(1);
 
@@ -13,6 +18,7 @@ function RecipeGroup({ categoryRecords, deleteRecord, privateScreen }) {
             recordArray={categoryRecords}
             deleteRecord={deleteRecord}
             privateScreen={privateScreen}
+            showAll={showAll}
           />
         </div>
       )}
