@@ -1,0 +1,57 @@
+/* Show page */
+.show-wrapper {
+  padding: 0 8px;
+}
+
+.recipe-container {
+  border: none;
+  padding: unset;
+  margin: unset;
+}
+
+.recipe-header,
+.recipe-instructions {
+  flex: 3;
+}
+
+.recipe-image-wrapper,
+.recipe-ingredients {
+  flex: 1.5;
+}
+
+.recipe-ingredients li,
+.recipe-instructions li {
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.recipe-ingredients .group {
+  border-radius: 8px;
+  padding: 4px;
+  margin-bottom: 8px;
+}
+
+.instruction-number {
+  font-weight: 700;
+  color: #f90716;
+  font-size: 20px;
+}
+
+.instruction-header {
+  font-weight: 800;
+  font-size: 32px;
+}
+
+@media (min-width: 576px) {
+  .show-wrapper {
+    padding: 0;
+  }
+
+  .recipe-container {
+    width: 900px;
+    border: 1px solid var(--color-secondary);
+    border-radius: 28px;
+    padding: 0;
+    margin: 0 auto;
+  }
+}
