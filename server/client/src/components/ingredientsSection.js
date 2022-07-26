@@ -2,9 +2,9 @@ import { React, useState } from "react";
 
 import { v4 as uuidv4 } from "uuid";
 
-import IngredientEdit from "./ingredientEdit";
+import IngredientEdit from "./IngredientEdit";
 import Input from "./input";
-import Button from "./button";
+import Button from "./Button";
 
 export default function IngredientsSection(props) {
   const INGREDIENT = {

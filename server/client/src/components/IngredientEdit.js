@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import IngredientInput from "./ingredientInput";
-import Button from "./button";
+import IngredientInput from "./IngredientInput";
+import Button from "./Button";
 
 function IngredientEdit(props) {
   const [editable, setEditable] = useState(false);

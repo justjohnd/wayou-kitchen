@@ -2,8 +2,8 @@ import IngredientsSection from "./ingredientsSection";
 import InstructionsSection from "./instructionsSection";
 import Input from "./input";
 import InputFile from "./InputFile";
-import Button from "./button";
-import CategoryDropdown from "./categoryDropdown";
+import Button from "./Button";
+import CategoryDropdown from "./CategoryDropdown";
 
 import "./templateCreateEdit.css";
 

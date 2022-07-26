@@ -7,7 +7,7 @@ import httpAddress from "../javascript/httpAddress";
 import { getWithExpiry } from "../hooks/localStorageWithExpiry";
 
 import Input from "./input";
-import Button from "./button";
+import Button from "./Button";
 
 import "./navbar.css";
 

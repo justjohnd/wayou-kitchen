@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import InstructionEdit from "./instructionEdit";
 import TextArea from "./TextArea";
-import Button from "./button";
+import Button from "./Button";
 
 export default function InstructionsSection(props) {
   // data contains instruction (or header) content

@@ -5,8 +5,8 @@ import useGetRecords from "../../hooks/useGetRecords";
 
 import RecipesSelected from "../RecipesSelected";
 import RecipeGroup from "../recipeGroup";
-import CategoryDropdown from "../categoryDropdown";
-import Button from "../button";
+import CategoryDropdown from "../CategoryDropdown";
+import Button from "../Button";
 
 export default function Home({ loaderCallback }) {
   const records = useGetRecords("/record");
