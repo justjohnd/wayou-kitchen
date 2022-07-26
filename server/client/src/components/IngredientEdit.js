@@ -18,12 +18,12 @@ function IngredientEdit(props) {
 
   return (
     <div className="input-left">
-      <div>
+      <div className="ingredient-info-wrapper">
         <IngredientInput
           editable={editable}
           label="Name"
           placeholder={props.ingredient.nameClean}
-          className="ingredient"
+          className="ingredient-name"
           name="nameClean"
           onChange={(e) => props.handleChangeEdit(e)}
           value={props.editIngredient.nameClean}
@@ -32,7 +32,7 @@ function IngredientEdit(props) {
           editable={editable}
           label="Amount"
           placeholder={props.ingredient.amount}
-          className="amount input-short"
+          className="ingredient-info input-short"
           name="amount"
           onChange={(e) => props.handleChangeEdit(e)}
           value={props.editIngredient.amount}
@@ -41,15 +41,15 @@ function IngredientEdit(props) {
           editable={editable}
           label="Unit"
           placeholder={props.ingredient.unit}
-          className="unit input-short"
+          className="ingredient-info input-short"
           name="unit"
           onChange={(e) => props.handleChangeEdit(e)}
           value={props.editIngredient.unit}
         />
         {editable && (
-          <div className="d-inline-block">
-            <label className="form-label d-block">Group:</label>
-            <label className="d-inline-block me-2">
+          <div className="d-inline-block me-4">
+            <label className="d-block">:</label>
+            <label>
               <select
                 className="selector-input"
                 onChange={(e) => props.handleChangeEdit(e)}
@@ -73,9 +73,9 @@ function IngredientEdit(props) {
           </div>
         )}
         {!editable && (
-          <div className="d-inline-block">
-            <label className="form-label d-block">Group:</label>
-            <label className="d-inline-block me-2">
+          <div className="d-inline-block me-4">
+            <label className="d-block">Group:</label>
+            <label>
               <select
                 className="selector-input form-control disabled"
                 value={props.ingredient.group || ""}
@@ -101,7 +101,7 @@ function IngredientEdit(props) {
       >
         <Button
           buttonWrapper="d-inline-block"
-          className="ms-2"
+          className="ml-md-2 me-2 mt-2"
           onClick={(e) => {
             props.deleteIngredient(e, props.index);
           }}
@@ -112,7 +112,7 @@ function IngredientEdit(props) {
           buttonWrapper="d-inline-block"
           buttonText={editable === false ? "Edit" : "Save"}
           buttonStyle="btn-secondary"
-          className="ms-2"
+          className="ml-md-2 mt-2"
           onClick={(e) => handleEdit(e)}
         />
       </div>

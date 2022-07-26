@@ -1,4 +1,4 @@
-import IngredientsSection from "./ingredientsSection";
+import IngredientsSection from "./IngredientsSection";
 import InstructionsSection from "./instructionsSection";
 import Input from "./input";
 import InputFile from "./InputFile";
@@ -77,9 +77,9 @@ export default function TemplateCreateEdit(props) {
         />
         <div className="form-group mb-5">
           <h4 className="mb-3">Image</h4>
-          <div className="mb-5 d-flex align-items-end w-sm-50">
+          <div className="mb-5 d-sm-flex align-items-end w-sm-50">
             <img
-              className="recipe-image small"
+              className="recipe-image small mb-3 mb-sm-0"
               id="image-preview"
               src={props.imagePreview}
               alt={props.recipe.title}

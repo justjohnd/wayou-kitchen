@@ -2,7 +2,7 @@ import React from "react";
 
 export default function InputFile(props) {
   return (
-    <div>
+    <div className="d-inline-block d-sm-block align-items-sm-end">
       <label
         htmlFor="file-upload"
         className={`btn btn-primary mx-3 ${props.wrapperClassName}`}
