@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
+import "./RecipesSelected.css";
+
 function RecipesSelected({ recordArray, privateScreen, deleteRecord }) {
   return (
     <div className="container">
@@ -20,13 +22,13 @@ function RecipesSelected({ recordArray, privateScreen, deleteRecord }) {
                   }
                   alt={title}
                 />
-                <div className="px-1 title">{title}</div>
+                <div className="px-1 recipe-title">{title}</div>
               </Link>
               {privateScreen ? (
                 <div className="px-1">
                   <Link to={"/edit/" + _id}>Edit</Link> |
                   <a
-                    className="link"
+                    className="recipe-link"
                     onClick={() => {
                       deleteRecord(_id);
                       window.location.reload();

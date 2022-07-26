@@ -32,14 +32,14 @@ code {
 }
 
 a,
-link {
+.recipe-link {
   color: var(--color-dark);
   font-weight: 500;
   text-decoration: none;
 }
 
 a:hover,
-link:hover {
+.recipe-link:hover {
   color: var(--color-primary);
 }
 
@@ -255,26 +255,6 @@ link:hover {
   }
 }
 
-.recipe-home {
-  margin: 0 0 8px 0;
-  padding: 4px;
-}
-
-.recipe-home .recipe-image {
-  border-radius: 12px;
-}
-
-.title {
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 1;
-}
-
-@media (min-width: 576px) {
-  .recipe-home {
-    margin: 8px 0 40px 0;
-  }
-}
 /* Edit Page */
 .container-record-form {
   width: 100%;
