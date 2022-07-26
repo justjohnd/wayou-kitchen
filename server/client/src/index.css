@@ -67,7 +67,7 @@ link:hover {
   object-fit: cover;
   width: 100%;
   border-radius: 8px;
-  height: calc(50vw - 20px);
+  aspect-ratio: 1 / 1;
 }
 
 .recipe-image.small {

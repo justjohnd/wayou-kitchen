@@ -11,17 +11,15 @@ function RecipesSelected({ recordArray, privateScreen, deleteRecord }) {
           return (
             <div key={uuidv4()} className="recipe-home col-6 col-md-4 col-lg-3">
               <Link to={"/show/" + _id}>
-                <div className="image-wrapper">
-                  <img
-                    className="recipe-image mb-2"
-                    src={
-                      image !== null && image.slice(0, 4) === "http"
-                        ? image
-                        : "./images/" + image
-                    }
-                    alt={title}
-                  />
-                </div>
+                <img
+                  className="recipe-image mb-2"
+                  src={
+                    image !== null && image.slice(0, 4) === "http"
+                      ? image
+                      : "./images/" + image
+                  }
+                  alt={title}
+                />
                 <div className="px-1 title">{title}</div>
               </Link>
               {privateScreen ? (
