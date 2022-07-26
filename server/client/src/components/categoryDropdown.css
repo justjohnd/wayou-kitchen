@@ -1,0 +1,19 @@
+.css-319lph-ValueContainer {
+  width: 148px;
+}
+
+.category-dropdown {
+  width: 100%;
+}
+
+@media (min-width: 576px) {
+  .category-dropdown {
+    width: 50%;
+  }
+}
+
+@media (min-width: 992px) {
+  .category-dropdown {
+    width: 25%;
+  }
+}

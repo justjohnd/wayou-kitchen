@@ -32,16 +32,22 @@ code {
 }
 
 a,
-.recipe-link {
+.delete-link {
   color: var(--color-dark);
   font-weight: 500;
   text-decoration: none;
 }
 
 a:hover,
-.recipe-link:hover {
+.delete-link:hover {
   color: var(--color-primary);
 }
+
+.btn {
+  vertical-align: unset;
+}
+
+/* Ingredients and Instructions Sections, Show page */
 
 .recipe-section-wrapper {
   background-color: #77d97010;
@@ -63,17 +69,34 @@ a:hover,
   list-style-type: none;
 }
 
-.recipe-image {
-  object-fit: cover;
-  width: 100%;
-  border-radius: 8px;
-  aspect-ratio: 1 / 1;
+.btn-right {
+  align-self: end;
 }
 
-.recipe-image.small {
-  width: 120px;
-  height: 120px;
+.selector-input {
+  height: 38px;
+  border-radius: 0.25rem;
+  border-color: rgba(118, 118, 118, 0.3);
 }
+
+.selector-input.form-control {
+  appearance: auto;
+}
+
+.selector-input.disabled {
+  background-color: #e9ecef;
+}
+
+@media (min-width: 576px) {
+  .input-left {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 20px;
+  }
+}
+
+/* Borders for ingredients groups */
 
 .group1 {
   border: 2px solid var(--color-tertiary);
@@ -103,98 +126,27 @@ a:hover,
   border: 2px solid #e8e8cc;
 }
 
+/* Recipe Images */
+
+.recipe-image {
+  object-fit: cover;
+  width: 100%;
+  border-radius: 8px;
+  aspect-ratio: 1 / 1;
+}
+
+.recipe-image.small {
+  width: 120px;
+  height: 120px;
+}
+
 @media (min-width: 576px) {
   .recipe-image {
     height: 200px;
   }
 }
 
-/* Navbar */
-/* Change the color in the stroke property of the image data */
-.custom-toggler .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(17, 101, 48, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
-}
-/* Set the border color to the desired color */
-.custom-toggler.navbar-toggler {
-  border-color: var(--color-primary);
-}
-
-.navbar-collapse {
-  flex-grow: unset;
-}
-
-.collapse.navbar-collapse {
-  justify-content: unset;
-}
-
-@media screen and (min-width: 992px) {
-  .navbar-expand-lg {
-    justify-content: space-between;
-  }
-}
-
-.navbar-brand,
-.nav-link {
-  line-height: 1;
-}
-
-/* Note: padding bottom below is a hack to get the brand's bottom edge to roughly align with other nav elements */
-.navbar-brand {
-  font-weight: 700;
-  font-size: 36px;
-  color: var(--color-dark-green);
-  padding-bottom: 1rem 1rem 1.7rem 1rem;
-}
-
-.nav-link {
-  font-size: 20px;
-  text-transform: lowercase;
-  color: var(--color-dark);
-  padding-bottom: 0;
-}
-
-.nav-item {
-  margin-bottom: 0.5rem;
-}
-
-.nav-item,
-.nav-item a {
-  display: flex;
-  align-items: center;
-  padding: 0;
-}
-
-.nav-item .form-control {
-  display: inline-block;
-  margin-bottom: 0;
-}
-
-.nav-item a {
-  color: var(--color-dark);
-}
-
-.nav-item a:hover,
-.nav-link:hover,
-.nav-link:focus {
-  color: var(--color-dark-green);
-}
-
-.btn-nav:hover {
-  color: #fff;
-  background-color: var(--color-secondary);
-}
-
-.btn-nav {
-  border: 1px solid var(--color-dark);
-}
-
-.btn {
-  vertical-align: unset;
-}
-
-.btn-right {
-  align-self: end;
-}
+/* Page loader */
 
 .loader {
   position: fixed;
@@ -224,95 +176,7 @@ a:hover,
   pointer-events: none;
 }
 
-.url-input {
-  width: 100%;
-}
-
-@media (min-width: 576px) {
-  .url-input {
-    width: 300px;
-  }
-
-  .nav-link {
-    padding-bottom: 0;
-  }
-}
-
-/* Home */
-.category-dropdown {
-  width: 100%;
-}
-
-@media (min-width: 576px) {
-  .category-dropdown {
-    width: 50%;
-  }
-}
-
-@media (min-width: 992px) {
-  .category-dropdown {
-    width: 25%;
-  }
-}
-
-/* Edit Page */
-.container-record-form {
-  width: 100%;
-}
-
-.form-label-lg {
-  font-size: 1.5rem;
-  font-weight: 500;
-  line-height: 1.2;
-  margin-bottom: 0.5rem;
-}
-
-.selector-input {
-  height: 38px;
-  border-radius: 0.25rem;
-  border-color: rgba(118, 118, 118, 0.3);
-}
-
-.selector-input.form-control {
-  appearance: auto;
-}
-
-.selector-input.disabled {
-  background-color: #e9ecef;
-}
-
-.textarea {
-  box-sizing: border-box;
-  resize: none;
-  overflow: auto;
-  height: auto;
-  line-height: 24px;
-  min-height: 38px;
-}
-
-@media (min-width: 576px) {
-  .textarea {
-    width: 440px;
-  }
-
-  .input-left {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 20px;
-  }
-
-  .container-record-form {
-    width: 75%;
-  }
-}
-
-/* Targets react-select container */
-.css-319lph-ValueContainer {
-  width: 148px;
-}
-
-/* Auth */
+/* Login, Password, Register screens */
 .form-label-sm {
   font-size: 0.8rem;
 }

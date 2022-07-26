@@ -2,6 +2,8 @@ import { default as ReactSelect } from "react-select";
 import makeAnimated from "react-select/animated";
 import { categories } from "../javascript/categories.js";
 
+import "./categoryDropdown.css";
+
 export default function CategoryDropdown(props) {
   function customTheme(theme) {
     return {

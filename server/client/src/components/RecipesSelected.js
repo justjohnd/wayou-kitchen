@@ -11,7 +11,10 @@ function RecipesSelected({ recordArray, privateScreen, deleteRecord }) {
           const { _id, image, title } = currentrecord;
 
           return (
-            <div key={uuidv4()} className="recipe-home col-6 col-md-4 col-lg-3">
+            <div
+              key={uuidv4()}
+              className="recipe-home mb-4 col-6 col-md-4 col-lg-3"
+            >
               <Link to={"/show/" + _id}>
                 <img
                   className="recipe-image mb-2"
@@ -28,7 +31,7 @@ function RecipesSelected({ recordArray, privateScreen, deleteRecord }) {
                 <div className="px-1">
                   <Link to={"/edit/" + _id}>Edit</Link> |
                   <a
-                    className="recipe-link"
+                    className="delete-link"
                     onClick={() => {
                       deleteRecord(_id);
                       window.location.reload();

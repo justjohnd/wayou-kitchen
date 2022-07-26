@@ -8,7 +8,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import "bootstrap/dist/css/bootstrap.css";
 import bootstrap from "bootstrap";
 
-import "../index.css";
+import "./navbar.css";
 
 import { getWithExpiry } from "../hooks/localStorageWithExpiry";
 
