@@ -125,7 +125,7 @@ export default function IngredientsSection(props) {
           <div className="ingredient-info-wrapper">
             <Input
               label="Ingredient:"
-              wrapperClassName="d-sm-inline-block me-4 ingredient-name"
+              wrapperClassName="d-sm-inline-block me-sm-4 ingredient-name"
               name="nameClean"
               type="text"
               value={ingredient.nameClean}
@@ -134,7 +134,7 @@ export default function IngredientsSection(props) {
                 handleChangeCreate(e);
               }}
             />
-            <div className="d-flex flex-grow-1">
+            <div className="d-sm-flex flex-grow-1">
               <Input
                 label="Amount:"
                 wrapperClassName="input-short ingredient-info d-inline-block me-4"
@@ -148,7 +148,7 @@ export default function IngredientsSection(props) {
               />
               <Input
                 label="Units:"
-                wrapperClassName="input-short ingredient-info d-inline-block me-4"
+                wrapperClassName="input-short ingredient-info d-inline-block me-sm-4"
                 name="unit"
                 type="text"
                 value={ingredient.unit}
@@ -157,7 +157,7 @@ export default function IngredientsSection(props) {
                 }}
                 placeholder=""
               />
-              <div className="d-inline-block me-4">
+              <div className="d-block d-sm-inline-block me-sm-4">
                 <label className="d-block">Group:</label>
                 <label>
                   <select
@@ -187,7 +187,7 @@ export default function IngredientsSection(props) {
           </div>
           <Button
             buttonWrapper="ingredient-btn-wrapper"
-            className="ml-md-2 mt-sm-2"
+            className="ml-md-2 mt-2"
             onClick={(e) => {
               e.preventDefault();
               saveIngredientCreate(ingredient);

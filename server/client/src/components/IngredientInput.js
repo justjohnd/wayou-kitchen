@@ -3,7 +3,7 @@ import Input from "./input";
 
 export default function IngredientInput(props) {
   return (
-    <div className={`d-inline-block me-4 ${props.className}`}>
+    <div className={`d-inline-block me-sm-4 ${props.className}`}>
       {!props.editable && (
         <Input
           disabled="disabled"

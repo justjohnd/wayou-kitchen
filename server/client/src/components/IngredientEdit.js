@@ -32,7 +32,7 @@ function IngredientEdit(props) {
           editable={editable}
           label="Amount"
           placeholder={props.ingredient.amount}
-          className="ingredient-info input-short"
+          className="ingredient-info me-4 input-short"
           name="amount"
           onChange={(e) => props.handleChangeEdit(e)}
           value={props.editIngredient.amount}
@@ -47,7 +47,7 @@ function IngredientEdit(props) {
           value={props.editIngredient.unit}
         />
         {editable && (
-          <div className="d-inline-block me-4">
+          <div className="d-block d-sm-inline-block me-sm-4">
             <label className="d-block">:</label>
             <label>
               <select
@@ -73,7 +73,7 @@ function IngredientEdit(props) {
           </div>
         )}
         {!editable && (
-          <div className="d-inline-block me-4">
+          <div className="d-block d-sm-inline-block me-sm-4">
             <label className="d-block">Group:</label>
             <label>
               <select
