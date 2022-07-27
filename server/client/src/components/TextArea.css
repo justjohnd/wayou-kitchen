@@ -1,0 +1,14 @@
+.textarea {
+  box-sizing: border-box;
+  resize: none;
+  overflow: auto;
+  height: auto;
+  line-height: 24px;
+  min-height: 38px;
+}
+
+@media (min-width: 576px) {
+  .textarea {
+    width: 440px;
+  }
+}

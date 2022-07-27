@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import RECIPE_PROPERTIES from "../../javascript/RECIPE_PROPERTIES";
 import httpAddress from "../../javascript/httpAddress";
-import IngredientGroup from "../ingredientGroup";
+import IngredientGroup from "../IngredientGroup";
 
 import "./Show.css";
 

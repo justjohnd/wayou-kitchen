@@ -1,6 +1,6 @@
 import { useState } from "react";
 import TextArea from "./TextArea";
-import Button from "./button";
+import Button from "./Button";
 import "../index.css";
 
 function InstructionEdit(props) {

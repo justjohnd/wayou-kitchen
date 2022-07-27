@@ -5,9 +5,9 @@ import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
 import RecipesSelected from "../RecipesSelected";
+import Button from "../Button";
 import RecipeGroup from "../recipeGroup";
-import CategoryDropdown from "../categoryDropdown";
-import Button from "../button";
+import CategoryDropdown from "../CategoryDropdown";
 
 import httpAddress from "../../javascript/httpAddress";
 import {

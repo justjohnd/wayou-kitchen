@@ -1,0 +1,92 @@
+/* Navbar */
+/* Change the color in the stroke property of the image data */
+.custom-toggler .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(17, 101, 48, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+/* Set the border color to the desired color */
+.custom-toggler.navbar-toggler {
+  border-color: var(--color-primary);
+}
+
+.navbar-collapse {
+  flex-grow: unset;
+}
+
+.collapse.navbar-collapse {
+  justify-content: unset;
+}
+
+@media screen and (min-width: 992px) {
+  .navbar-expand-lg {
+    justify-content: space-between;
+  }
+}
+
+.navbar-brand,
+.nav-link {
+  line-height: 1;
+}
+
+/* Note: padding bottom below is a hack to get the brand's bottom edge to roughly align with other nav elements */
+.navbar-brand {
+  font-weight: 700;
+  font-size: 36px;
+  color: var(--color-dark-green);
+  padding-bottom: 1rem 1rem 1.7rem 1rem;
+}
+
+.nav-link {
+  font-size: 20px;
+  text-transform: lowercase;
+  color: var(--color-dark);
+  padding-bottom: 0;
+}
+
+.nav-item {
+  margin-bottom: 0.5rem;
+}
+
+.nav-item,
+.nav-item a {
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+.nav-item .form-control {
+  display: inline-block;
+  margin-bottom: 0;
+}
+
+.nav-item a {
+  color: var(--color-dark);
+}
+
+.nav-item a:hover,
+.nav-link:hover,
+.nav-link:focus {
+  color: var(--color-dark-green);
+}
+
+.btn-nav:hover {
+  color: #fff;
+  background-color: var(--color-secondary);
+}
+
+.btn-nav {
+  border: 1px solid var(--color-dark);
+}
+
+.url-input {
+  width: 100%;
+}
+
+@media (min-width: 576px) {
+  .url-input {
+    width: 300px;
+  }
+
+  .nav-link {
+    padding-bottom: 0;
+  }
+}

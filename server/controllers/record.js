@@ -77,6 +77,8 @@ const s3 = new aws.S3({
 
 //Delete images from s3
 const deleteS3 = function (image) {
+  if (!image) return;
+
   const filename = image.substring(54);
 
   const params = {

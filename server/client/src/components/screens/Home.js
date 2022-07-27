@@ -3,10 +3,10 @@ import { v4 as uuidv4 } from "uuid";
 
 import useGetRecords from "../../hooks/useGetRecords";
 
-import Button from "../button";
 import RecipesSelected from "../RecipesSelected";
 import RecipeGroup from "../recipeGroup";
-import CategoryDropdown from "../categoryDropdown";
+import CategoryDropdown from "../CategoryDropdown";
+import Button from "../Button";
 
 export default function Home({ loaderCallback }) {
   const records = useGetRecords("/record");

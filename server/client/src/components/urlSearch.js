@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import axios from 'axios';
+import axios from "axios";
 
-import httpAddress from '../javascript/httpAddress';
-import { getWithExpiry } from '../hooks/localStorageWithExpiry';
+import httpAddress from "../javascript/httpAddress";
+import { getWithExpiry } from "../hooks/localStorageWithExpiry";
 
-import Input from './input';
-import Button from './button';
+import Input from "./input";
+import Button from "./Button";
+
+import "./navbar.css";
 
 export default function UrlSearch(props) {
   const [getUrl, setGetUrl] = useState({
-    url: '',
+    url: "",
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   let navigate = useNavigate();
 
@@ -23,7 +25,7 @@ export default function UrlSearch(props) {
     setGetUrl(() => {
       return {
         url: value,
-        userId: getWithExpiry('userId'),
+        userId: getWithExpiry("userId"),
       };
     });
   }
@@ -36,27 +38,27 @@ export default function UrlSearch(props) {
       props.loaderCallback(true);
       const response = await axios.post(`${httpAddress}/urlSearch`, getUrl, {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       });
 
       if (!response.data.success) {
         setError(response.data.data);
         setTimeout(() => {
-          setError('');
-          setGetUrl({ url: '' });
+          setError("");
+          setGetUrl({ url: "" });
         }, 5000);
       }
 
       props.loaderCallback(false);
-      navigate('/private');
+      navigate("/private");
     } catch (error) {
       props.loaderCallback(false);
-      navigate('/private');
+      navigate("/private");
       setError(error.response.data.error);
       setTimeout(() => {
-        setError('');
-        setGetUrl({ url: '' });
+        setError("");
+        setGetUrl({ url: "" });
       }, 5000);
     }
   }
@@ -68,10 +70,10 @@ export default function UrlSearch(props) {
           wrapperClassName="d-sm-inline-block"
           name="url"
           type="text"
-          className={error ? 'error-message url-input' : 'url-input'}
+          className={error ? "error-message url-input" : "url-input"}
           value={error ? error : getUrl.url}
           onChange={(e) => handleData(e)}
-          placeholder={error ? error : 'Enter a URL to get the recipe'}
+          placeholder={error ? error : "Enter a URL to get the recipe"}
         />
         <Button
           buttonWrapper="d-none d-sm-inline-block"

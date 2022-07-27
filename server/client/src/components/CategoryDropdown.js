@@ -2,6 +2,8 @@ import { default as ReactSelect } from "react-select";
 import makeAnimated from "react-select/animated";
 import { categories } from "../javascript/categories.js";
 
+import "./CategoryDropdown.css";
+
 export default function CategoryDropdown(props) {
   //Select by categories. optionSelected argument is an array containing category objects
   function categoriesCallback(optionSelected) {
