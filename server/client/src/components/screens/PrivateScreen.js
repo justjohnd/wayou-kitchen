@@ -9,7 +9,6 @@ import Button from "../Button";
 import RecipeGroup from "../recipeGroup";
 import CategoryDropdown from "../CategoryDropdown";
 
-import { categories } from "../../javascript/categories";
 import httpAddress from "../../javascript/httpAddress";
 import {
   setWithExpiry,
@@ -19,21 +18,29 @@ import {
 const PrivateScreen = () => {
   const [error, setError] = useState("");
   const [privateScreen, setPrivateScreen] = useState(true);
-  const [selectedCategories, setSelectedCategories] = useState(null);
-  const [recordCategories, setRecordCategories] = useState(null);
+  const [showAll, setShowAll] = useState(true);
   const [records, setRecords] = useState("");
+  const [categorizedRecords, setCategorizedRecords] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [postNumber] = useState(20);
 
+  // Pagination. Note that pagination currently is only set up for when all posts are shown
+  // Calculate currentPageNumber as multiple of postNumber, starting at 0
   const currentPageNumber = pageNumber * postNumber - postNumber;
+
+  //PaginatedPosts will be spliced from the total record set
   const splicy = [...records];
-  const paginatedPosts = splicy.splice(currentPageNumber, postNumber);
+  let paginatedPosts = splicy.splice(currentPageNumber, postNumber);
+
   const handlePrev = () => {
     if (pageNumber === 1) return;
     setPageNumber(pageNumber - 1);
+    window.scrollTo(0, 0);
   };
+
   const handleNext = () => {
     setPageNumber(pageNumber + 1);
+    window.scrollTo(0, 0);
   };
 
   let navigate = useNavigate();
@@ -115,99 +122,69 @@ const PrivateScreen = () => {
     }
   };
 
-  //Select by categories
-  function categoriesCallback(optionSelected) {
-    setSelectedCategories(optionSelected);
-    //Put records in their on groups
-    const categoryTypes = optionSelected.map((category) => category.value);
-
-    const groupArray = () => {
-      let newArray = [];
-      for (let i = 0; i < categories.length; i++) {
-        const group = records.filter((record) => {
-          if (record.categories[0].value === categoryTypes[i]) {
-            return record;
-          }
-        });
-        newArray.push(group);
-      }
-
-      return newArray;
-    };
-
-    const groupsToShow = groupArray();
-    setRecordCategories(groupsToShow);
-  }
-
-  function displayAll() {
-    if (selectedCategories === null || selectedCategories.length === 0) {
-      return (
-        <div>
-          <RecipesSelected
-            privateScreen={privateScreen}
-            recordArray={paginatedPosts}
-            deleteRecord={deleteRecord}
-          />
-          {paginatedPosts.length > 0 && (
-            <div className="pagination-wrapper">
-              <div className="d-flex justify-content-center">
-                Page {pageNumber}{" "}
-              </div>
-              <div className="d-flex">
-                <Button
-                  buttonWrapper="w-50"
-                  className="float-end me-2"
-                  buttonText="Previous"
-                  onClick={handlePrev}
-                />
-                {paginatedPosts.length > currentPageNumber && (
-                  <Button
-                    buttonWrapper="w-50 text-left"
-                    className="float-start ms-2"
-                    buttonText="Next"
-                    onClick={handleNext}
-                  />
-                )}
-              </div>
-            </div>
-          )}
-        </div>
-      );
-    }
-  }
-
   console.log(records);
 
   return error ? (
     <span className="error-message d-flex justify-content-center">{error}</span>
   ) : (
     <div className="p-3 container disable-while-loading">
-      <div className="ms-3">
+      <div>
         <CategoryDropdown
-          className="ms-3"
-          selectedCategories={selectedCategories}
-          categoriesCallback={categoriesCallback}
+          setShowAll={setShowAll}
+          setCategorizedRecords={setCategorizedRecords}
+          records={records}
         ></CategoryDropdown>
       </div>
-      <h1 className="mb-4 ms-3">My Recipes</h1>
-      {records ? displayAll() : <div></div>}
-      {recordCategories ? (
-        recordCategories.map((categoryRecords, index) => {
-          if (categoryRecords !== []) {
-            return (
-              <RecipeGroup
-                key={uuidv4()}
-                index={index}
-                categoryRecords={categoryRecords}
-                deleteRecord={deleteRecord}
-                privateScreen={privateScreen}
+
+      {showAll ? (
+        <>
+          <div>
+            <h1 className="mb-4">Recently Added</h1>
+            <RecipesSelected
+              recordArray={paginatedPosts}
+              deleteRecord={deleteRecord}
+              privateScreen={privateScreen}
+            />
+          </div>
+
+          <div className="pagination-wrapper">
+            <div className="d-flex justify-content-center">
+              Page {pageNumber}{" "}
+            </div>
+            <div className="d-flex">
+              <Button
+                buttonWrapper="w-50"
+                className={`float-end me-2 ${pageNumber === 1 && "disabled"}`}
+                buttonText="Previous"
+                onClick={handlePrev}
               />
+              <Button
+                buttonWrapper="w-50 text-left"
+                className={`float-start ms-2 ${
+                  paginatedPosts.length < postNumber && "disabled"
+                }`}
+                buttonText="Next"
+                onClick={handleNext}
+              />
+            </div>
+          </div>
+        </>
+      ) : categorizedRecords ? (
+        <>
+          {categorizedRecords.map((categoryRecords, index) => {
+            return (
+              <div key={uuidv4()}>
+                <RecipeGroup
+                  index={index}
+                  categoryRecords={categoryRecords}
+                  deleteRecord={deleteRecord}
+                  privateScreen={privateScreen}
+                />
+              </div>
             );
-          }
-        })
-      ) : (
-        <div></div>
-      )}
+          })}
+        </>
+      ) : null}
     </div>
   );
 };

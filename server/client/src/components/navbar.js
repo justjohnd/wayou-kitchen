@@ -73,7 +73,7 @@ const Navbar = (props) => {
                       handleLogout();
                     }}
                   >
-                    Logout
+                    {getWithExpiry("authToken") ? "Logout" : "Login"}
                   </Link>
                 </li>
               </ul>
