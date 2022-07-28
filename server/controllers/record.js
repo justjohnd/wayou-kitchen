@@ -51,7 +51,7 @@ function setObject(reqData) {
           myObj["image"] = reqData.file.filename;
         }
       } else if (reqData.body.image === "") {
-        myObj["image"] = "placeholder.jpg";
+        myObj["image"] = "";
       } else {
         myObj["image"] = reqData.body.image;
       }

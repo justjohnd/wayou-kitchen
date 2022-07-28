@@ -111,10 +111,9 @@ export default function Show() {
             <img
               className="recipe-image"
               src={
-                showRecipe.image !== null &&
-                showRecipe.image.slice(0, 4) === "http"
+                showRecipe.image?.slice(0, 4) === "http"
                   ? showRecipe.image
-                  : "../images/" + showRecipe.image
+                  : "../images/placeholder.jpg"
               }
             />
           </div>

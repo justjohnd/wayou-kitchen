@@ -52,7 +52,6 @@ export default function Edit({ loaderCallback }) {
           RECIPE_PROPERTIES[i],
           JSON.stringify(recipe[RECIPE_PROPERTIES[i]])
         );
-        console.log(RECIPE_PROPERTIES[i], recipe[RECIPE_PROPERTIES[i]]);
       }
     }
 
@@ -87,11 +86,15 @@ export default function Edit({ loaderCallback }) {
         const { data } = await axios.get(`${httpAddress}/record/${params.id}`);
 
         let myObj = {};
+
         for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
           // Only set the image. recipe.image will remain undefined until either a new image is loaded or the existing image is removed
           if (RECIPE_PROPERTIES[i] === "image") {
-            //Image is set as a url
-            setImagePreview(data.image);
+            //The record may or may not have an image property assigned to it
+            if (data.image) {
+              //Image is set as a url
+              setImagePreview(data.image);
+            }
           } else {
             myObj[RECIPE_PROPERTIES[i]] = data[RECIPE_PROPERTIES[i]];
           }
