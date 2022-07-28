@@ -85,33 +85,38 @@ export default function Show() {
   const numArray = getStepNumbers(instructions);
 
   //Ingredient groups section
-  let ingredientGroups;
-  if (ingredients[0] !== "") {
-    //Find maximum number of possible ingredient groups presented on the page
-    const ingredientGroupNumbers = ingredients.map((ingredient) => {
-      if (!ingredient.group) {
-        ingredient.group = 0;
-      }
-      return ingredient.group;
-    });
-    const maxGroupNumber = Math.max(...ingredientGroupNumbers);
-    const numberOfGroups = maxGroupNumber + 1;
+  const ingGroups = (ing) => {
+    if (!ing.length) {
+      return;
+    }
 
-    //Put ingredients in their on groups
-    const groupArray = (numberOfGroups) => {
-      let newArray = [];
-      for (let i = 0; i < numberOfGroups; i++) {
-        const group = ingredients.filter(
-          (ingredient) => ingredient.group === i
-        );
-        newArray.push(group);
-      }
+    if (ingredients[0] !== "") {
+      //Find maximum number of possible ingredient groups presented on the page
+      const ingredientGroupNumbers = ing.map((ingredient) => {
+        if (!ingredient.group) {
+          ingredient.group = 0;
+        }
+        return ingredient.group;
+      });
+      const maxGroupNumber = Math.max(...ingredientGroupNumbers);
+      const numberOfGroups = maxGroupNumber + 1;
 
-      return newArray;
-    };
+      //Put ingredients in their on groups
+      const groupArray = (numberOfGroups) => {
+        let newArray = [];
+        for (let i = 0; i < numberOfGroups; i++) {
+          const group = ing.filter((ingredient) => ingredient.group === i);
+          newArray.push(group);
+        }
 
-    ingredientGroups = groupArray(numberOfGroups);
-  }
+        return newArray;
+      };
+
+      return groupArray(numberOfGroups);
+    }
+  };
+
+  const ingredientGroups = ingGroups(ingredients);
 
   return (
     <div className="show-wrapper">
@@ -144,18 +149,22 @@ export default function Show() {
           </div>
         </section>
         <section className="d-sm-flex recipe-section">
-          {ingredients[0] !== "" && (
+          {ingredients?.length !== 0 && (
             <section className="recipe-ingredients">
               <h2>Ingredients</h2>
-              {ingredientGroups.map((group) => (
-                <IngredientGroup group={group} key={uuidv4()}></IngredientGroup>
-              ))}
+              {ingredientGroups?.length !== 0 &&
+                ingredientGroups?.map((group) => (
+                  <IngredientGroup
+                    group={group}
+                    key={uuidv4()}
+                  ></IngredientGroup>
+                ))}
             </section>
           )}
           <div className="recipe-instructions">
             <h2>Instructions</h2>
-            {instructions.length &&
-              instructions.map((instruction, index) => {
+            {instructions?.length !== 0 &&
+              instructions?.map((instruction, index) => {
                 return (
                   <li
                     className={instruction.isHeader ? "instruction-header" : ""}
