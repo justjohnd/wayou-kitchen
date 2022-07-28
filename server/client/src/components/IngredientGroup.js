@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
 function IngredientGroup(props) {
   let groupNumber;
   if (props.group[0]) {
     groupNumber = props.group[0].group;
   } else {
-    groupNumber = 'No group';
+    groupNumber = "No group";
   }
 
   return (
@@ -18,9 +18,9 @@ function IngredientGroup(props) {
               {
                 return (
                   <li key={index}>
-                    {ingredient.amount ? ingredient.amount : ''}{' '}
-                    {ingredient.unit ? ingredient.unit : ''}{' '}
-                    {ingredient.nameClean ? ingredient.nameClean : ''}
+                    {ingredient.amount ? ingredient.amount : ""}{" "}
+                    {ingredient.unit ? ingredient.unit : ""}{" "}
+                    {ingredient.nameClean ? ingredient.nameClean : ""}
                   </li>
                 );
               }

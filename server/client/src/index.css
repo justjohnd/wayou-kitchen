@@ -36,6 +36,7 @@ a,
   color: var(--color-dark);
   font-weight: 500;
   text-decoration: none;
+  cursor: pointer;
 }
 
 a:hover,
@@ -109,6 +110,7 @@ a:hover,
 .ingredient-info-wrapper {
   flex-wrap: wrap;
   display: flex;
+  gap: 1rem;
 }
 
 @media (min-width: 768px) {
@@ -193,7 +195,7 @@ a:hover,
 .disabled {
   box-shadow: none;
   cursor: not-allowed;
-  opacity: 0.5;
+  /* opacity: 0.5; */
   pointer-events: none;
 }
 

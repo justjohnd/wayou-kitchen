@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import IngredientInput from "./IngredientInput";
+import IngredientOptionsDropdown from "./IngredientOptionsDropdown";
 import Button from "./Button";
 
 function IngredientEdit(props) {
@@ -15,6 +16,8 @@ function IngredientEdit(props) {
       props.onSave(props.index);
     }
   }
+
+  console.log(props.ingredient);
 
   return (
     <div className="input-left">
@@ -32,7 +35,7 @@ function IngredientEdit(props) {
           editable={editable}
           label="Amount"
           placeholder={props.ingredient.amount}
-          className="ingredient-info me-4 input-short"
+          className="ingredient-info input-short"
           name="amount"
           onChange={(e) => props.handleChangeEdit(e)}
           value={props.editIngredient.amount}
@@ -47,48 +50,16 @@ function IngredientEdit(props) {
           value={props.editIngredient.unit}
         />
         {editable && (
-          <div className="d-block d-sm-inline-block me-sm-4">
-            <label className="d-block">:</label>
-            <label>
-              <select
-                className="selector-input"
-                onChange={(e) => props.handleChangeEdit(e)}
-                value={props.editIngredient.group || ""}
-                selected
-                name="group"
-                type="number"
-              >
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="10">Optional</option>
-              </select>
-            </label>
-          </div>
+          <IngredientOptionsDropdown
+            group={props.editIngredient.group}
+            disabled={false}
+          />
         )}
         {!editable && (
-          <div className="d-block d-sm-inline-block me-sm-4">
-            <label className="d-block">Group:</label>
-            <label>
-              <select
-                className="selector-input form-control disabled"
-                value={props.ingredient.group || ""}
-                selected
-                name="group"
-                type="number"
-                disabled="disabled"
-              >
-                <option value="0">0</option>
-                <option value="10">Optional</option>
-              </select>
-            </label>
-          </div>
+          <IngredientOptionsDropdown
+            group={props.ingredient.group}
+            disabled={true}
+          />
         )}
       </div>
       <div

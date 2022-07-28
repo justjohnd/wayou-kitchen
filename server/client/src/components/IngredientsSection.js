@@ -125,7 +125,7 @@ export default function IngredientsSection(props) {
           <div className="ingredient-info-wrapper">
             <Input
               label="Ingredient:"
-              wrapperClassName="d-sm-inline-block me-sm-4 ingredient-name"
+              wrapperClassName="d-sm-inline-block ingredient-name"
               name="nameClean"
               type="text"
               value={ingredient.nameClean}
@@ -134,55 +134,53 @@ export default function IngredientsSection(props) {
                 handleChangeCreate(e);
               }}
             />
-            <div className="d-sm-flex flex-grow-1">
-              <Input
-                label="Amount:"
-                wrapperClassName="input-short ingredient-info d-inline-block me-4"
-                name="amount"
-                type="text"
-                value={ingredient.amount}
-                onChange={(e) => {
-                  handleChangeCreate(e);
-                }}
-                placeholder=""
-              />
-              <Input
-                label="Units:"
-                wrapperClassName="input-short ingredient-info d-inline-block me-sm-4"
-                name="unit"
-                type="text"
-                value={ingredient.unit}
-                onChange={(e) => {
-                  handleChangeCreate(e);
-                }}
-                placeholder=""
-              />
-              <div className="d-block d-sm-inline-block me-sm-4">
-                <label className="d-block">Group:</label>
-                <label>
-                  <select
-                    className="selector-input form-control"
-                    onChange={(e) => {
-                      handleChangeCreate(e);
-                    }}
-                    value={ingredient.group}
-                    selected
-                    name="group"
-                    type="number"
-                  >
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="10">Optional</option>
-                  </select>
-                </label>
-              </div>
+            <Input
+              label="Amount:"
+              wrapperClassName="input-short ingredient-info d-inline-block"
+              name="amount"
+              type="text"
+              value={ingredient.amount}
+              onChange={(e) => {
+                handleChangeCreate(e);
+              }}
+              placeholder=""
+            />
+            <Input
+              label="Units:"
+              wrapperClassName="input-short ingredient-info d-inline-block"
+              name="unit"
+              type="text"
+              value={ingredient.unit}
+              onChange={(e) => {
+                handleChangeCreate(e);
+              }}
+              placeholder=""
+            />
+            <div className="d-block d-sm-inline-block">
+              <label className="d-block">Group:</label>
+              <label>
+                <select
+                  className="selector-input form-control"
+                  onChange={(e) => {
+                    handleChangeCreate(e);
+                  }}
+                  value={ingredient.group}
+                  selected
+                  name="group"
+                  type="number"
+                >
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="10">Optional</option>
+                </select>
+              </label>
             </div>
           </div>
           <Button
