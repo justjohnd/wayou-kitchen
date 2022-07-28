@@ -20,9 +20,9 @@ function RecipesSelected({ recordArray, privateScreen, deleteRecord }) {
                 <img
                   className="recipe-image mb-2"
                   src={
-                    image !== null && image?.slice(0, 4) === "http"
+                    image?.slice(0, 4) === "http"
                       ? image
-                      : "./images/" + image
+                      : "./images/placeholder.jpg"
                   }
                   alt={title}
                 />
