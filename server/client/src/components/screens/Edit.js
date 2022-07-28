@@ -90,8 +90,8 @@ export default function Edit({ loaderCallback }) {
         for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {
           // Only set the image. recipe.image will remain undefined until either a new image is loaded or the existing image is removed
           if (RECIPE_PROPERTIES[i] === "image") {
-            //The record may or may not have an image property assigned to it
-            if (data.image) {
+            //The record may or may not have an image property assigned to it. Some records may have the property "placeholder.jpg" assigned to their image
+            if (data.image && data.image !== "placeholder.jpg") {
               //Image is set as a url
               setImagePreview(data.image);
             }
@@ -108,6 +108,8 @@ export default function Edit({ loaderCallback }) {
       console.log(err);
     }
   }, []);
+
+  console.log(recipe, imagePreview);
 
   // This following section will display the form that takes the input from the user.
   return (
