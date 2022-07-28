@@ -137,7 +137,7 @@ const PrivateScreen = () => {
       {showAll ? (
         <>
           <div>
-            <h1 className="mb-4">Recently Added</h1>
+            <h1 className="mb-4">My Recipes</h1>
             <RecipesSelected
               recordArray={paginatedPosts}
               deleteRecord={deleteRecord}

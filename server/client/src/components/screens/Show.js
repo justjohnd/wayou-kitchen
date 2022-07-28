@@ -54,25 +54,35 @@ export default function Show() {
   }, []);
 
   // Create sequence of step numbers that omit headers
-  const filtered = instructions.filter(
-    (instruction) => instruction.isHeader !== "true"
-  );
-
-  let j = [];
-  for (let i = 1; i < filtered.length + 1; i++) {
-    j.push(i);
-  }
-
-  const numberArray = instructions.map((instruction) => {
-    let number;
-    if (instruction.isHeader === true) {
-      number = "none";
-    } else {
-      number = j[0];
-      j.shift();
+  const getStepNumbers = (inst) => {
+    if (!inst.length) {
+      return;
     }
-    return number;
-  });
+
+    const filtered = inst.filter(
+      (instruction) => instruction.isHeader !== "true"
+    );
+
+    let j = [];
+    for (let i = 1; i < filtered.length + 1; i++) {
+      j.push(i);
+    }
+
+    const numberArray = inst.map((instruction) => {
+      let number;
+      if (instruction.isHeader === true) {
+        number = "none";
+      } else {
+        number = j[0];
+        j.shift();
+      }
+      return number;
+    });
+
+    return numberArray;
+  };
+
+  const numArray = getStepNumbers(instructions);
 
   //Ingredient groups section
   let ingredientGroups;
@@ -144,21 +154,22 @@ export default function Show() {
           )}
           <div className="recipe-instructions">
             <h2>Instructions</h2>
-            {instructions.map((instruction, index) => {
-              return (
-                <li
-                  className={instruction.isHeader ? "instruction-header" : ""}
-                  key={index}
-                >
-                  {!instruction.isHeader && (
-                    <span className="instruction-number">
-                      {numberArray[index]}{" "}
-                    </span>
-                  )}
-                  {instruction.step}
-                </li>
-              );
-            })}
+            {instructions.length &&
+              instructions.map((instruction, index) => {
+                return (
+                  <li
+                    className={instruction.isHeader ? "instruction-header" : ""}
+                    key={index}
+                  >
+                    {!instruction.isHeader && (
+                      <span className="instruction-number">
+                        {numArray[index]}{" "}
+                      </span>
+                    )}
+                    {instruction.step}
+                  </li>
+                );
+              })}
           </div>
         </section>
       </div>
