@@ -9,7 +9,7 @@ import RECIPE_PROPERTIES, {
 import httpAddress from "../../javascript/httpAddress";
 import { getWithExpiry } from "../../hooks/localStorageWithExpiry";
 
-import TemplateCreateEdit from "../templateCreateEdit";
+import TemplateCreateEdit from "../TemplateCreateEdit";
 
 export default function Create({ loaderCallback }) {
   const [recipe, setRecipe] = useState(RECIPE_OBJECT);

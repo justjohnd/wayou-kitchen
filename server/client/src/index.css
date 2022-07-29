@@ -159,10 +159,6 @@ a:hover,
 }
 
 @media (min-width: 576px) {
-  .recipe-image {
-    height: 200px;
-  }
-
   .recipe-image.small {
     width: 120px;
     height: 120px;

@@ -5,7 +5,7 @@ import InputFile from "./InputFile";
 import Button from "./Button";
 import CategoryDropdown from "./CategoryDropdown";
 
-import "./templateCreateEdit.css";
+import "./TemplateCreateEdit.css";
 
 export default function TemplateCreateEdit(props) {
   function handleData(e) {

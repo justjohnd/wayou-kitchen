@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import TemplateCreateEdit from "../templateCreateEdit";
+import TemplateCreateEdit from "../TemplateCreateEdit";
 
 import RECIPE_PROPERTIES, {
   RECIPE_OBJECT,
