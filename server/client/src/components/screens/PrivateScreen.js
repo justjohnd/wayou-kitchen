@@ -122,6 +122,8 @@ const PrivateScreen = () => {
     }
   };
 
+  console.log(records);
+
   return error ? (
     <span className="error-message d-flex justify-content-center">{error}</span>
   ) : (

@@ -34,6 +34,8 @@ export default function UrlSearch(props) {
   async function handleGetRecipe(e) {
     e.preventDefault();
 
+    props.handleClick();
+
     try {
       props.loaderCallback(true);
       const response = await axios.post(`${httpAddress}/urlSearch`, getUrl, {
@@ -50,7 +52,15 @@ export default function UrlSearch(props) {
         }, 5000);
       }
 
+      //Add another try catch to run after 5 secconds
+      //Make an api call to get the record by its id
+      //If it is a success turn off the loader and navigate to private
+
+      //Next wrap the above in a while loop
+      //The while loop will be controlled by a boolean success variable. A success will end the loop
+
       props.loaderCallback(false);
+      console.log("Response:", response.data);
       navigate("/private");
     } catch (error) {
       props.loaderCallback(false);
