@@ -84,13 +84,19 @@ export default function TemplateCreateEdit(props) {
               src={props.imagePreview}
               alt={props.recipe.title}
             />
-            <InputFile imageCallback={imageCallback} className="mx-3" />
+            <div className="image-button-wrapper">
+              <InputFile
+                imageCallback={imageCallback}
+                wrapperClassName="image-button mx-sm-3"
+              />
 
-            <Button
-              buttonWrapper="d-inline mx-3"
-              buttonText="Remove Image"
-              onClick={() => removeImage()}
-            />
+              <Button
+                className="mt-sm-2 image-button"
+                buttonWrapper="d-inline mx-sm-3"
+                buttonText="Remove Image"
+                onClick={() => removeImage()}
+              />
+            </div>
           </div>
         </div>
 

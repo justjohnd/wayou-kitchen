@@ -9,6 +9,26 @@
   margin-bottom: 0.5rem;
 }
 
+.image-button-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+@media (min-width: 576px) {
+  .recipe-image.small {
+    width: auto;
+    aspect-ratio: 4 / 3;
+  }
+
+  .image-button-wrapper {
+    display: block;
+  }
+
+  .image-button {
+    width: 100%;
+  }
+}
+
 @media screen and (min-width: 576px) and (max-width: 992px) {
   .container-record-form {
     width: 100%;

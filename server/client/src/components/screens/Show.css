@@ -1,6 +1,6 @@
 /* Show page */
 .show-wrapper {
-  padding: 0 8px;
+  padding: 0 1rem;
 }
 
 .recipe-container {
@@ -17,6 +17,10 @@
 .recipe-image-wrapper,
 .recipe-ingredients {
   flex: 1.5;
+}
+
+.recipe-image.show {
+  height: auto;
 }
 
 .recipe-ingredients li,

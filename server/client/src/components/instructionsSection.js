@@ -88,36 +88,38 @@ export default function InstructionsSection(props) {
     <div className="form-group mb-5">
       <h4 className="mb-3">Instructions</h4>
       <section className="recipe-section-wrapper">
-        <div className="input-left">
-          <div className="input-left mb-0">
-            <div className="d-sm-inline-block d-none invisible">0</div>
-            <div className="d-sm-inline-block ms-sm-2 instruction-input">
-              <label className="d-sm-inline-block d-none form-label invisible"></label>
-              <TextArea
-                className="form-control textarea"
-                name="instruction"
-                type="text"
-                value={data}
-                callbackFunction={handleInstruction}
-                placeholder="Start Entering Instructions Here"
-              />
+        <div className="d-flex">
+          <div className="invisible">0</div>
+          <div className="instruction-wrapper">
+            <div className="input-left mb-2">
+              <div className="ms-sm-2 instruction-input">
+                <label className="d-sm-inline-block d-none form-label invisible"></label>
+                <TextArea
+                  className="form-control textarea"
+                  name="instruction"
+                  type="text"
+                  value={data}
+                  callbackFunction={handleInstruction}
+                  placeholder="Start Entering Instructions Here"
+                />
+              </div>
+              <div className="mt-2 mt-sm-0 d-sm-inline mx-sm-3">
+                <input title="header" type="checkbox" onClick={handleHeader} />
+                <label className="mx-1" htmlFor="header">
+                  Make Header?
+                </label>
+              </div>
             </div>
-            <div className="mt-2 mt-sm-0 d-sm-inline mx-sm-3">
-              <input title="header" type="checkbox" onClick={handleHeader} />
-              <label className="mx-1" htmlFor="header">
-                Make Header?
-              </label>
-            </div>
+            <Button
+              className="ms-sm-2 mt-2 mt-sm-0 btn-right "
+              buttonWrapper="align-self-start"
+              onClick={(e) => {
+                e.preventDefault();
+                addInstruction(header);
+              }}
+              buttonText="Add"
+            />
           </div>
-          <Button
-            className="ms-sm-2 mt-2 mt-sm-0 btn-right"
-            buttonWrapper="d-inline-block"
-            onClick={(e) => {
-              e.preventDefault();
-              addInstruction(header);
-            }}
-            buttonText="Add"
-          />
         </div>
         {props.instructions &&
           props.instructions.map((instruction, index) => (

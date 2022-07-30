@@ -5,7 +5,7 @@ export default function InputFile(props) {
     <div className="d-inline-block d-sm-block align-items-sm-end">
       <label
         htmlFor="file-upload"
-        className={`btn btn-primary mx-3 ${props.wrapperClassName}`}
+        className={`btn btn-primary ${props.wrapperClassName}`}
       >
         <input
           type="file"
