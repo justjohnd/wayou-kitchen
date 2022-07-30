@@ -56,6 +56,8 @@ export default function TemplateCreateEdit(props) {
     });
   }
 
+  console.log(props.recipe.categories);
+
   return (
     <div className="my-5 container container-record-form">
       <h3 className="mb-4">{props.pageType} Record</h3>

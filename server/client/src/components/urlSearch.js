@@ -66,6 +66,7 @@ export default function UrlSearch(props) {
       props.loaderCallback(false);
       navigate("/private");
       setError(error.response.data.error);
+      console.log(error.response.data.error);
       setTimeout(() => {
         setError("");
         setGetUrl({ url: "" });

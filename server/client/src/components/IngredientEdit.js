@@ -17,8 +17,6 @@ function IngredientEdit(props) {
     }
   }
 
-  console.log(props.ingredient);
-
   return (
     <div className="input-left">
       <div className="ingredient-info-wrapper">
