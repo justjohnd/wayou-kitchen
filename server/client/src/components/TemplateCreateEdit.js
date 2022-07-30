@@ -3,7 +3,7 @@ import InstructionsSection from "./instructionsSection";
 import Input from "./input";
 import InputFile from "./InputFile";
 import Button from "./Button";
-import CategoryDropdown from "./CategoryDropdown";
+import CatDropCreateEdit from "./CatDropCreateEdit";
 
 import "./TemplateCreateEdit.css";
 
@@ -112,10 +112,10 @@ export default function TemplateCreateEdit(props) {
         />
         <div className="mb-5">
           <h4>Categories</h4>
-          <CategoryDropdown
+          <CatDropCreateEdit
             selectedCategories={props.recipe.categories}
             categoriesCallback={categoriesCallback}
-          ></CategoryDropdown>
+          ></CatDropCreateEdit>
         </div>
         <Input
           label="Preparation Minutes:"
