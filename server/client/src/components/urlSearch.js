@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import axios from "axios";
 
@@ -18,6 +18,7 @@ export default function UrlSearch(props) {
   const [error, setError] = useState("");
 
   let navigate = useNavigate();
+  let location = useLocation();
 
   function handleData(e) {
     const { value } = e.target;
@@ -34,6 +35,8 @@ export default function UrlSearch(props) {
   async function handleGetRecipe(e) {
     e.preventDefault();
 
+    props.handleClick();
+
     try {
       props.loaderCallback(true);
       const response = await axios.post(`${httpAddress}/urlSearch`, getUrl, {
@@ -44,18 +47,25 @@ export default function UrlSearch(props) {
 
       if (!response.data.success) {
         setError(response.data.data);
+
+        //Reload window if already on private route
+        if (location.pathname === "/private") {
+          window.location.reload();
+        } else {
+          navigate("/private");
+        }
+
         setTimeout(() => {
           setError("");
           setGetUrl({ url: "" });
+          props.loaderCallback(false);
         }, 5000);
       }
-
-      props.loaderCallback(false);
-      navigate("/private");
     } catch (error) {
       props.loaderCallback(false);
       navigate("/private");
       setError(error.response.data.error);
+      console.log(error.response.data.error);
       setTimeout(() => {
         setError("");
         setGetUrl({ url: "" });

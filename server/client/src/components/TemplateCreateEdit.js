@@ -3,9 +3,9 @@ import InstructionsSection from "./instructionsSection";
 import Input from "./input";
 import InputFile from "./InputFile";
 import Button from "./Button";
-import CategoryDropdown from "./CategoryDropdown";
+import CatDropCreateEdit from "./CatDropCreateEdit";
 
-import "./templateCreateEdit.css";
+import "./TemplateCreateEdit.css";
 
 export default function TemplateCreateEdit(props) {
   function handleData(e) {
@@ -84,13 +84,19 @@ export default function TemplateCreateEdit(props) {
               src={props.imagePreview}
               alt={props.recipe.title}
             />
-            <InputFile imageCallback={imageCallback} className="mx-3" />
+            <div className="image-button-wrapper">
+              <InputFile
+                imageCallback={imageCallback}
+                wrapperClassName="image-button mx-sm-3"
+              />
 
-            <Button
-              buttonWrapper="d-inline mx-3"
-              buttonText="Remove Image"
-              onClick={() => removeImage()}
-            />
+              <Button
+                className="mt-sm-2 image-button"
+                buttonWrapper="d-inline mx-sm-3"
+                buttonText="Remove Image"
+                onClick={() => removeImage()}
+              />
+            </div>
           </div>
         </div>
 
@@ -104,10 +110,10 @@ export default function TemplateCreateEdit(props) {
         />
         <div className="mb-5">
           <h4>Categories</h4>
-          <CategoryDropdown
+          <CatDropCreateEdit
             selectedCategories={props.recipe.categories}
             categoriesCallback={categoriesCallback}
-          ></CategoryDropdown>
+          ></CatDropCreateEdit>
         </div>
         <Input
           label="Preparation Minutes:"

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import TemplateCreateEdit from "../templateCreateEdit";
+import TemplateCreateEdit from "../TemplateCreateEdit";
 
 import RECIPE_PROPERTIES, {
   RECIPE_OBJECT,
@@ -27,6 +27,13 @@ export default function Edit({ loaderCallback }) {
   // This function will handle the submission.
   const handleRecipe = async (e) => {
     e.preventDefault();
+
+    //Make sure title isn't an empty field
+    if (!recipe.title) {
+      setError("Please add a title before submitting.");
+      window.scrollTo(0, 0);
+      return;
+    }
 
     //Formata() object replicates functions of HTML form, but bundles each element in an array. this is necessary to be able to send uploaded files
     const formData = new FormData();
@@ -108,8 +115,6 @@ export default function Edit({ loaderCallback }) {
       console.log(err);
     }
   }, []);
-
-  console.log(recipe, imagePreview);
 
   // This following section will display the form that takes the input from the user.
   return (

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link, useNavigate, NavLink } from "react-router-dom";
 
 import LocalDiningIcon from "@mui/icons-material/LocalDining";
@@ -16,12 +17,18 @@ import UrlSearch from "./urlSearch";
 
 // Here, we display our Navbar
 const Navbar = (props) => {
+  const [collapseNavbar, setCollapseNavbar] = useState(true);
+
   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("userId");
     navigate("/login");
+  };
+
+  const handleClick = () => {
+    setCollapseNavbar(!collapseNavbar);
   };
 
   return (
@@ -31,6 +38,7 @@ const Navbar = (props) => {
           veggit
         </NavLink>
         <button
+          onClick={handleClick}
           className="navbar-toggler custom-toggler"
           type="button"
           data-bs-toggle="collapse"
@@ -41,30 +49,34 @@ const Navbar = (props) => {
         >
           <span className="custom-toggler navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+        <div
+          className={`collapse navbar-collapse ${!collapseNavbar && "show"}`}
+          id="navbarSupportedContent"
+        >
           {getWithExpiry("authToken") ? (
             <div className="mt-3">
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item mb-4 me-md-4">
                   <WebIcon className="d-lg-none me-3 align-middle" />
                   <UrlSearch
+                    handleClick={handleClick}
                     className="nav-link"
                     loaderCallback={props.loaderCallback}
                   />
                 </li>
-                <li className="nav-item mb-4 me-md-4">
+                <li onClick={handleClick} className="nav-item mb-4 me-md-4">
                   <NavLink className="nav-link" to="/create">
                     <CreateIcon className="d-lg-none me-3 align-middle" />
                     new
                   </NavLink>
                 </li>
-                <li className="nav-item mb-4 me-md-4">
+                <li onClick={handleClick} className="nav-item mb-4 me-md-4">
                   <NavLink className="nav-link" to="/private">
                     <LocalDiningIcon className="d-lg-none me-3 align-middle" />
                     Cookbook
                   </NavLink>
                 </li>
-                <li className="nav-item mb-4 me-md-4">
+                <li onClick={handleClick} className="nav-item mb-4 me-md-4">
                   <LogoutIcon className="d-lg-none me-3 align-middle" />
                   <Link
                     className="nav-link"

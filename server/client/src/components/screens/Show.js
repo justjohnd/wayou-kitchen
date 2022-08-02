@@ -124,7 +124,7 @@ export default function Show() {
         <section className="d-sm-flex header-section">
           <div className="recipe-image-wrapper">
             <img
-              className="recipe-image"
+              className="recipe-image show"
               src={
                 showRecipe.image?.slice(0, 4) === "http"
                   ? showRecipe.image
