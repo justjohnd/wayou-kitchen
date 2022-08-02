@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import axios from "axios";
 
@@ -18,6 +18,7 @@ export default function UrlSearch(props) {
   const [error, setError] = useState("");
 
   let navigate = useNavigate();
+  let location = useLocation();
 
   function handleData(e) {
     const { value } = e.target;
@@ -46,22 +47,20 @@ export default function UrlSearch(props) {
 
       if (!response.data.success) {
         setError(response.data.data);
+
+        //Reload window if already on private route
+        if (location.pathname === "/private") {
+          window.location.reload();
+        } else {
+          navigate("/private");
+        }
+
         setTimeout(() => {
           setError("");
           setGetUrl({ url: "" });
+          props.loaderCallback(false);
         }, 5000);
       }
-
-      //Add another try catch to run after 5 secconds
-      //Make an api call to get the record by its id
-      //If it is a success turn off the loader and navigate to private
-
-      //Next wrap the above in a while loop
-      //The while loop will be controlled by a boolean success variable. A success will end the loop
-
-      props.loaderCallback(false);
-      console.log("Response:", response.data);
-      navigate("/private");
     } catch (error) {
       props.loaderCallback(false);
       navigate("/private");
