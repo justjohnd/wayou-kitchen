@@ -104,7 +104,7 @@ const LoginScreen = (props) => {
           Login
         </button>
         <span className="login-screen-subtext">
-          Don't have an account?<Link to="/register">Register</Link>
+          Don't have an account?<Link to="/register"> Register</Link>
         </span>
       </form>
     </div>
