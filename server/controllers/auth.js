@@ -31,13 +31,15 @@ exports.login = async (req, res, next) => {
     const user = await User.findOne({ email }).select("+password");
 
     if (!user) {
-      return next(new ErrorResponse("Invald Credentials", 401));
+      return next(new ErrorResponse("Email incorrect, please try again", 401));
     }
     // Compare password with password in database. Use a special method stored in models. Note that you can create methods can be used on specific objects, such as 'user', and define them in the User model. Password being passed below comes from req.body
     const isMatch = await user.matchPasswords(password);
 
     if (!isMatch) {
-      return next(new ErrorResponse("Invalid Credentials", 401));
+      return next(
+        new ErrorResponse("Password incorrect, please try again", 401)
+      );
     }
     //Respond with a token
     sendToken(user, 200, res);
