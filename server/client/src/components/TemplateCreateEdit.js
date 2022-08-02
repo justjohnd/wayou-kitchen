@@ -56,7 +56,7 @@ export default function TemplateCreateEdit(props) {
     });
   }
 
-  console.log(props.recipe.categories);
+  console.log(props.recipe);
 
   return (
     <div className="my-5 container container-record-form">

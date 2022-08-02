@@ -32,6 +32,13 @@ export default function Create({ loaderCallback }) {
 
   const handleRecipe = async (e) => {
     e.preventDefault();
+
+    //Make sure title isn't an empty field
+    if (!recipe.title) {
+      setError("Please add a title before submitting.");
+      window.scrollTo(0, 0);
+      return;
+    }
     // When post request is sent to the create url, axios will add a new record to the database.
     recipe.dateCreated = new Date();
     recipe.userId = getWithExpiry("userId");
