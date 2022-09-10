@@ -15,7 +15,7 @@ import {
   getWithExpiry,
 } from "../../hooks/localStorageWithExpiry";
 
-const PrivateScreen = () => {
+const PrivateScreen = ({loaderCallback}) => {
   const [error, setError] = useState("");
   const [privateScreen, setPrivateScreen] = useState(true);
   const [showAll, setShowAll] = useState(true);
@@ -59,6 +59,8 @@ const PrivateScreen = () => {
         },
       };
 
+      loaderCallback(true);
+
       try {
         const { data } = await axios.get("/api/private", config);
 
@@ -99,15 +101,18 @@ const PrivateScreen = () => {
 
         setRecords(ordered);
         setWithExpiry("userId", data.id);
+        loaderCallback(false);
       } catch (error) {
         localStorage.removeItem("authToken");
         localStorage.removeItem("userId");
+        loaderCallback(false);
         setError("You are not authorized please login");
         console.log(error);
       }
     };
 
     fetchPrivateData();
+
   }, []);
 
   // This method will delete a record based on the method

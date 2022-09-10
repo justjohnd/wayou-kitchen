@@ -41,8 +41,6 @@ export default function Home({ loaderCallback }) {
     }, 1000);
   }, [categorizedRecords]);
 
-  console.log(records);
-
   return (
     <div className="p-3 container disable-while-loading">
       <div>

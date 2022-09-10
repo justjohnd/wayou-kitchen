@@ -9,7 +9,7 @@ import { getWithExpiry } from "../hooks/localStorageWithExpiry";
 import Input from "./input";
 import Button from "./Button";
 
-import "./navbar.css";
+import "./Navbar.css";
 
 export default function UrlSearch(props) {
   const [getUrl, setGetUrl] = useState({

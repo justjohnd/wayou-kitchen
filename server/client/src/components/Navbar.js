@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, useNavigate, NavLink } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate, NavLink, useLocation } from "react-router-dom";
 
 import LocalDiningIcon from "@mui/icons-material/LocalDining";
 import CreateIcon from "@mui/icons-material/Create";
@@ -9,15 +9,14 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import "bootstrap/dist/css/bootstrap.css";
 import bootstrap from "bootstrap";
 
-import "./navbar.css";
+import "./Navbar.css";
 
 import { getWithExpiry } from "../hooks/localStorageWithExpiry";
 
-import UrlSearch from "./urlSearch";
+import UrlSearch from "./UrlSearch";
 
 // Here, we display our Navbar
 const Navbar = (props) => {
-  const [collapseNavbar, setCollapseNavbar] = useState(true);
 
   const navigate = useNavigate();
 
@@ -28,7 +27,7 @@ const Navbar = (props) => {
   };
 
   const handleClick = () => {
-    setCollapseNavbar(!collapseNavbar);
+    props.setCollapseNavbar(!props.collapseNavbar);
   };
 
   return (
@@ -50,7 +49,7 @@ const Navbar = (props) => {
           <span className="custom-toggler navbar-toggler-icon"></span>
         </button>
         <div
-          className={`collapse navbar-collapse ${!collapseNavbar && "show"}`}
+          className={`collapse navbar-collapse ${!props.collapseNavbar && "show"}`}
           id="navbarSupportedContent"
         >
           {getWithExpiry("authToken") ? (

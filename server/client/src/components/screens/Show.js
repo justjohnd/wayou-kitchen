@@ -12,7 +12,7 @@ import { v4 as uuidv4 } from "uuid";
 // This will require to npm install axios
 import axios from "axios";
 
-export default function Show() {
+export default function Show({loaderCallback}) {
   const [showRecipe, setShowRecipe] = useState({
     title: "",
     preparationMinutes: "",
@@ -31,6 +31,7 @@ export default function Show() {
   let navigate = useNavigate();
   // This will get the record based on the id from the database.
   useEffect(() => {
+
     try {
       const showData = async () => {
         const { data } = await axios.get(`${httpAddress}/record/${params.id}`);
@@ -51,6 +52,8 @@ export default function Show() {
     } catch (err) {
       console.log(err);
     }
+
+    loaderCallback(false);
   }, []);
 
   // Create sequence of step numbers that omit headers
