@@ -85,7 +85,7 @@ a:hover,
 }
 
 .ingredient-btn-wrapper {
-  align-self: end;
+  align-self: flex-end;
 }
 
 .input-left {
@@ -148,7 +148,7 @@ a:hover,
 .btn-right {
   display: flex;
   flex-wrap: nowrap;
-  justify-content: end;
+  justify-content: flex-end;
   align-self: start;
 }
 

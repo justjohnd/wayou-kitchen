@@ -6,6 +6,15 @@
   align-items: center;
 }
 
+@media (max-width: 576px) {
+  .login-screen {
+  height: auto;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  }
+}
+
 .login-screen-form {
   width: 380px;
   padding: 1.5rem;

@@ -3,7 +3,7 @@ import { Circles } from "react-loader-spinner";
 import { Routes, Route } from "react-router-dom";
 
 // We import all the components we need in our app
-import Navbar from "./components/navbar";
+import Navbar from "./components/Navbar";
 import Edit from "./components/screens/Edit";
 import Create from "./components/screens/Create";
 import Home from "./components/screens/Home";
@@ -16,9 +16,13 @@ import ForgotPassword from "./components/screens/ForgotPassword";
 
 const App = () => {
   const [showLoader, setShowLoader] = useState(false);
+  const [collapseNavbar, setCollapseNavbar] = useState(true);
 
   //Loader
   function loaderCallback(data) {
+
+    setCollapseNavbar(true);
+
     let links = document.querySelectorAll(".disable-while-loading");
     if (data === true) {
       // document.body.classList.add('overlay');
@@ -40,10 +44,10 @@ const App = () => {
           </div>
         </div>
       )}
-      <Navbar loaderCallback={loaderCallback} />
+      <Navbar loaderCallback={loaderCallback} collapseNavbar={collapseNavbar} setCollapseNavbar={setCollapseNavbar} />
       <Routes>
         <Route path="/" element={<Home loaderCallback={loaderCallback} />} />
-        <Route path="/show/:id" element={<Show />} />
+        <Route path="/show/:id" element={<Show loaderCallback={loaderCallback} />} />
         <Route
           path="/edit/:id"
           element={<Edit loaderCallback={loaderCallback} />}
@@ -60,7 +64,7 @@ const App = () => {
           path="/register"
           element={<RegisterScreen loaderCallback={loaderCallback} />}
         />
-        <Route path="/private" element={<PrivateScreen />} />
+        <Route path="/private" element={<PrivateScreen loaderCallback={loaderCallback} />} />
         <Route
           path="/forgotpassword"
           element={<ForgotPassword loaderCallback={loaderCallback} />}
