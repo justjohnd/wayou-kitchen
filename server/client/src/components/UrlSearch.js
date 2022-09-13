@@ -3,7 +3,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 import axios from "axios";
 
-import httpAddress from "../javascript/httpAddress";
 import { getWithExpiry } from "../hooks/localStorageWithExpiry";
 
 import Input from "./input";
@@ -39,7 +38,7 @@ export default function UrlSearch(props) {
 
     try {
       props.loaderCallback(true);
-      const response = await axios.post(`${httpAddress}/urlSearch`, getUrl, {
+      const response = await axios.post(`/urlSearch`, getUrl, {
         headers: {
           "Content-Type": "application/json",
         },

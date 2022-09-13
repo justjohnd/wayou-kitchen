@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import RECIPE_PROPERTIES from "../../javascript/RECIPE_PROPERTIES";
-import httpAddress from "../../javascript/httpAddress";
 import IngredientGroup from "../IngredientGroup";
 
 import "./Show.css";
@@ -12,7 +11,7 @@ import { v4 as uuidv4 } from "uuid";
 // This will require to npm install axios
 import axios from "axios";
 
-export default function Show({loaderCallback}) {
+export default function Show({ loaderCallback }) {
   const [showRecipe, setShowRecipe] = useState({
     title: "",
     preparationMinutes: "",
@@ -34,7 +33,7 @@ export default function Show({loaderCallback}) {
 
     try {
       const showData = async () => {
-        const { data } = await axios.get(`${httpAddress}/record/${params.id}`);
+        const { data } = await axios.get(`/record/${params.id}`);
 
         let myObj = {};
         for (let i = 0; i < RECIPE_PROPERTIES.length; i++) {

@@ -6,7 +6,6 @@ import axios from "axios";
 import RECIPE_PROPERTIES, {
   RECIPE_OBJECT,
 } from "../../javascript/RECIPE_PROPERTIES";
-import httpAddress from "../../javascript/httpAddress";
 import { getWithExpiry } from "../../hooks/localStorageWithExpiry";
 
 import TemplateCreateEdit from "../TemplateCreateEdit";
@@ -71,7 +70,7 @@ export default function Create({ loaderCallback }) {
 
     try {
       loaderCallback(true);
-      await axios.post(`${httpAddress}/record/add`, formData);
+      await axios.post(`/record/add`, formData);
       setTimeout(() => {
         navigate("/private");
         loaderCallback(false);
