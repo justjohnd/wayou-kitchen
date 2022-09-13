@@ -94,6 +94,8 @@ export default function IngredientsSection(props) {
     });
   };
 
+  console.log("props.ingredients", props.ingredients);
+
   //Delete button from ingredients list
   const deleteIngredient = (e, id) => {
     e.preventDefault();

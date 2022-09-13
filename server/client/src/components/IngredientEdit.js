@@ -51,19 +51,22 @@ function IngredientEdit(props) {
           <IngredientOptionsDropdown
             group={props.editIngredient.group}
             disabled={false}
+            handleChangeEdit={props.handleChangeEdit}
+            name="group"
           />
         )}
         {!editable && (
           <IngredientOptionsDropdown
             group={props.ingredient.group}
             disabled={true}
+            name="group"
           />
         )}
       </div>
       <div
         className={
           props.editIngredient.id === props.ingredient.id ||
-          props.editIngredient.id === ""
+            props.editIngredient.id === ""
             ? "btn-right"
             : "d-none"
         }
