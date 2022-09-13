@@ -5,7 +5,6 @@ import TemplateCreateEdit from "../TemplateCreateEdit";
 import RECIPE_PROPERTIES, {
   RECIPE_OBJECT,
 } from "../../javascript/RECIPE_PROPERTIES";
-import httpAddress from "../../javascript/httpAddress";
 import { getWithExpiry } from "../../hooks/localStorageWithExpiry";
 
 // This will require to npm install axios
@@ -64,7 +63,7 @@ export default function Edit({ loaderCallback }) {
 
     try {
       loaderCallback(true);
-      await axios.put(`${httpAddress}/update/${params.id}`, formData);
+      await axios.put(`/update/${params.id}`, formData);
       setTimeout(() => {
         navigate("/private");
         loaderCallback(false);
@@ -90,7 +89,7 @@ export default function Edit({ loaderCallback }) {
     try {
       const fetchData = async () => {
         //Destructure the data object payload
-        const { data } = await axios.get(`${httpAddress}/record/${params.id}`);
+        const { data } = await axios.get(`/record/${params.id}`);
 
         let myObj = {};
 

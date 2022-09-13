@@ -9,13 +9,12 @@ import Button from "../Button";
 import RecipeGroup from "../recipeGroup";
 import CategoryDropdown from "../CategoryDropdown";
 
-import httpAddress from "../../javascript/httpAddress";
 import {
   setWithExpiry,
   getWithExpiry,
 } from "../../hooks/localStorageWithExpiry";
 
-const PrivateScreen = ({loaderCallback}) => {
+const PrivateScreen = ({ loaderCallback }) => {
   const [error, setError] = useState("");
   const [privateScreen, setPrivateScreen] = useState(true);
   const [showAll, setShowAll] = useState(true);
@@ -118,7 +117,7 @@ const PrivateScreen = ({loaderCallback}) => {
   // This method will delete a record based on the method
   const deleteRecord = async (id) => {
     try {
-      await axios.delete(`${httpAddress}/${id}`);
+      await axios.delete(`/${id}`);
     } catch (error) {
       setError(error.response.data.error);
       setTimeout(() => {
@@ -163,9 +162,8 @@ const PrivateScreen = ({loaderCallback}) => {
               />
               <Button
                 buttonWrapper="w-50 text-left"
-                className={`float-start ms-2 ${
-                  paginatedPosts.length < postNumber && "disabled"
-                }`}
+                className={`float-start ms-2 ${paginatedPosts.length < postNumber && "disabled"
+                  }`}
                 buttonText="Next"
                 onClick={handleNext}
               />

@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import httpAddress from "../javascript/httpAddress";
 
 export default function useGetRecords(route) {
   const [records, setRecords] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`${httpAddress}${route}/`)
+      .get(`${route}/`)
       .then((response) => {
         for (let i = 0; i < response.data.length; i++) {
           // Verify lastModified data is available, if not, add arbitrary older date to place   those items at bottom of list
