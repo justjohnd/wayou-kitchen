@@ -149,7 +149,7 @@ a:hover,
   display: flex;
   flex-wrap: nowrap;
   justify-content: flex-end;
-  align-self: start;
+  align-self: flex-end;
 }
 
 .instruction-btn {

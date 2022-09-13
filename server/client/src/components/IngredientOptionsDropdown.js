@@ -1,17 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 
-function IngredientOptionsDropdown({ group, disabled }) {
+function IngredientOptionsDropdown({ handleChangeEdit, group, disabled, name }) {
+
+  const handleChange = (e) => {
+    handleChangeEdit(e);
+  }
+
   return (
     <div className="d-block d-sm-inline-block">
       <label className="d-block">Group:</label>
       <label>
         <select
           className="selector-input form-control"
-          value={group || ""}
-          selected
-          name="group"
+          name={name}
           type="number"
           disabled={disabled}
+          value={group}
+          onChange={handleChange}
         >
           <option value="0">0</option>
           <option value="1">1</option>
@@ -25,7 +30,7 @@ function IngredientOptionsDropdown({ group, disabled }) {
           <option value="10">Optional</option>
         </select>
       </label>
-    </div>
+    </div >
   );
 }
 
