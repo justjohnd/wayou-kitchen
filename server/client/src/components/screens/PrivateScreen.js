@@ -61,7 +61,7 @@ const PrivateScreen = ({ loaderCallback }) => {
       loaderCallback(true);
 
       try {
-        const { data } = await axios.get("/api/private", config);
+        const { data } = await axios.get("http://localhost:5000/api/private", config);
 
         for (let i = 0; i < data.records.length; i++) {
           // Verify lastModified data is available, if not, add arbitrary older date to place those items at bottom of list
