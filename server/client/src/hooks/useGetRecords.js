@@ -6,7 +6,7 @@ export default function useGetRecords(route) {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000${route}/`)
+      .get(`https://veggit.onrender.com${route}/`)
       .then((response) => {
         for (let i = 0; i < response.data.length; i++) {
           // Verify lastModified data is available, if not, add arbitrary older date to place   those items at bottom of list
